@@ -9,7 +9,8 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        ResourceConfig resourceConfig = new ResourceConfig();
+        HealthResource healthResource = new HealthResource();
+        ResourceConfig resourceConfig = new ResourceConfig().register(healthResource);
         URI uri = URI.create("http://localhost:8080/");
 
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, resourceConfig);
