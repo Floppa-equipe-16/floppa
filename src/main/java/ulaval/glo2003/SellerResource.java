@@ -30,11 +30,9 @@ public class SellerResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createSeller(@Context UriInfo uriInfo, Seller seller) {
         sellerMissingParameter(seller);
-
         sellerInvalidParameter(seller);
-            //throw new ValidationException("INVALID_PARAMETER");
         sellers.add(seller);
-        return Response.status(Response.Status.CREATED).entity(seller.id).header("Location", uriInfo.getAbsolutePath() + "/" + seller.id).build();
+        return Response.status(Response.Status.CREATED).header("Location", uriInfo.getAbsolutePath() + "/" + seller.id).build();
     }
 
 
