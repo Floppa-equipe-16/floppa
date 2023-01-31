@@ -11,9 +11,13 @@ public class Main {
     public static void main(String[] args) throws IOException {
         HealthResource healthResource = new HealthResource();
         SellerResource sellerResource = new SellerResource();
-        ResourceConfig resourceConfig = new ResourceConfig()
-                .register(healthResource)
-                .register(sellerResource);
+        NotFoundExceptionMapper notFoundExceptionMapper = new NotFoundExceptionMapper();
+        ResourceConfig resourceConfig =
+                new ResourceConfig()
+                        .register(healthResource)
+                        .register(sellerResource)
+                        .register(notFoundExceptionMapper);
+
         URI uri = URI.create("http://localhost:8080/");
 
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, resourceConfig);
