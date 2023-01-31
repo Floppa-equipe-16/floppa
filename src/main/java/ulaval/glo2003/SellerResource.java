@@ -8,8 +8,6 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
-
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,13 +21,13 @@ public class SellerResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createSeller(Seller seller) {
+    public Response createSeller(@Context UriInfo uriInfo, Seller seller) {
         if (isSellerMissingParameter(seller))
             throw new ValidationException("MISSING_PARAMETER");
         if (isSellerInvalidParameter(seller))
             throw new ValidationException("INVALID_PARAMETER");
         sellers.add(seller);
-        return Response.status(Response.Status.CREATED).build();
+        return Response.status(Response.Status.CREATED).header("Location", uriInfo.getAbsolutePath() + "/" + seller.id).build();
     }
 
     private boolean isSellerMissingParameter(Seller seller){
