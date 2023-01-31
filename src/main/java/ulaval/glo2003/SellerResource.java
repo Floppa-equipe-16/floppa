@@ -24,16 +24,6 @@ public class SellerResource {
         return Response.ok().entity(getSellerById(sellerId)).build();
     }
 
-    private Seller getSellerById(String sellerId) {
-        for (Seller seller : sellers) {
-            if (seller.id.equals(sellerId)) {
-                return seller;
-            }
-        }
-
-        throw new NotFoundException(String.format("Seller with id '%s' not found", sellerId));
-    }
-
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createSeller(@Context UriInfo uriInfo, Seller seller) {
@@ -44,6 +34,18 @@ public class SellerResource {
         sellers.add(seller);
         return Response.status(Response.Status.CREATED).entity(seller.id).header("Location", uriInfo.getAbsolutePath() + "/" + seller.id).build();
     }
+
+
+    private Seller getSellerById(String sellerId) {
+        for (Seller seller : sellers) {
+            if (seller.id.equals(sellerId)) {
+                return seller;
+            }
+        }
+
+        throw new NotFoundException(String.format("Seller with id '%s' not found", sellerId));
+    }
+
 
     private boolean isSellerMissingParameter(Seller seller){
         return (seller.name == null ||
