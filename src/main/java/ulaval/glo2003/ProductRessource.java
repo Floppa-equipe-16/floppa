@@ -18,11 +18,28 @@ public class ProductRessource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createProducts(Product product, @HeaderParam("X-Seller-Id") String xSellerId, @Context UriInfo uriInfo) {
-        if(product.title == null || product.title.equals("") || product.description == null || product.description.equals("") || product.suggestedPrice.intValue() < 1 ){
-            throw new InvalidParameterException(String.format("Product as a invalid parameter"));
+        if(product.title == null){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        else if (product.title.isEmpty()) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        else if (product.description == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        else if (product.description.isEmpty()) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        else if (product.suggestedPrice.intValue() < 1) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        try {
+            ProductCategory.valueOf(product.category);
+        }catch (Exception e){
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
         String location = uriInfo.getAbsolutePath().toString() + "/" + product.id;
-
         products.add(product);
         return Response.status(Response.Status.CREATED).header("Location",location).build();
     }

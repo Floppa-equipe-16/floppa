@@ -7,6 +7,7 @@ public class Product {
     public String title;
     public String description;
     public Number suggestedPrice;
+
     public String category;
 
     public String id;
