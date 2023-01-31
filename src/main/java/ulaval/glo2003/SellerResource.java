@@ -1,6 +1,5 @@
 package ulaval.glo2003;
 
-import jakarta.validation.ValidationException;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
@@ -8,9 +7,12 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 @Path("/sellers")
 public class SellerResource {
@@ -27,10 +29,10 @@ public class SellerResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createSeller(@Context UriInfo uriInfo, Seller seller) {
-        if (isSellerMissingParameter(seller))
-            throw new ValidationException("MISSING_PARAMETER");
-        if (isSellerInvalidParameter(seller))
-            throw new ValidationException("INVALID_PARAMETER");
+        sellerMissingParameter(seller);
+
+        sellerInvalidParameter(seller);
+            //throw new ValidationException("INVALID_PARAMETER");
         sellers.add(seller);
         return Response.status(Response.Status.CREATED).entity(seller.id).header("Location", uriInfo.getAbsolutePath() + "/" + seller.id).build();
     }
@@ -47,34 +49,48 @@ public class SellerResource {
     }
 
 
-    private boolean isSellerMissingParameter(Seller seller){
-        return (seller.name == null ||
-                seller.email == null ||
-                seller.birthdate == null ||
-                seller.phoneNumber == null ||
-                seller.bio == null);
+    private void sellerMissingParameter(Seller seller){
+        if (seller.name == null)
+            throw new SellerException(new Suberror("MISSING_PARAMETER","Missing name value"));
+        if (seller.email == null)
+            throw new SellerException(new Suberror("MISSING_PARAMETER","Missing email value"));
+        if (seller.birthdate == null)
+            throw new SellerException(new Suberror("MISSING_PARAMETER","Missing birthdate value"));
+        if (seller.phoneNumber == null)
+            throw new SellerException(new Suberror("MISSING_PARAMETER","Missing Phone number"));
+        if (seller.bio == null)
+            throw new SellerException(new Suberror("MISSING_PARAMETER","Missing bio value"));
+
     }
 
-    private boolean isSellerInvalidParameter(Seller seller){
-        return (seller.name.isEmpty() ||
-                isBirthdateInvalid(seller.birthdate) ||
-                isEmailInvalid(seller.email) ||
-                isPhoneInvalid(seller.phoneNumber) ||
-                seller.bio.isEmpty());
+    private void sellerInvalidParameter(Seller seller){
+        if (seller.name.trim().isEmpty())
+            throw new SellerException(new Suberror("INVALID_PARAMETER","Invalid name value"));
+        if (isBirthdateInvalid(seller.birthdate))
+            throw new SellerException(new Suberror("INVALID_PARAMETER","Invalid birthdate value"));
+        if (isEmailInvalid(seller.email))
+            throw new SellerException(new Suberror("INVALID_PARAMETER","Invalid email value"));
+        if (isPhoneInvalid(seller.phoneNumber))
+            throw new SellerException(new Suberror("INVALID_PARAMETER","Invalid phone number"));
+        if (seller.bio.trim().isEmpty())
+            throw new SellerException(new Suberror("INVALID_PARAMETER","Invalid bio value"));
     }
 
     private boolean isBirthdateInvalid(String birthdate){
-
-        return (!(isDateValid("dd-MM-yyyy",birthdate) ||
-                  isDateValid("dd/MM/yyyy",birthdate) ||
-                  isDateValid("dd MM yyyy",birthdate) ||
-                  isDateValid("yyyy-MM-dd",birthdate) ||
-                  isDateValid("yyyy/MM/dd",birthdate) ||
-                  isDateValid("yyyy MM dd",birthdate)));
+        return !(isDateValid("yyyy-MM-dd",birthdate) &&
+                is18OrMore("yyyy-MM-dd",birthdate));
     }
 
+    private boolean is18OrMore(String pattern, String birthday){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(pattern);
+        LocalDate now = LocalDate.now();
+        LocalDate birthdayDate =  LocalDate.parse(birthday, dtf);
+        LocalDate birthday18Plus = birthdayDate.plusYears(18);
+        return (birthday18Plus.isBefore(now));
+    }
     private boolean isEmailInvalid(String email){
-        Pattern p = Pattern.compile("^(.+)@(.+)$");
+
+        Pattern p = Pattern.compile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$");
         Matcher m = p.matcher(email);
         return !m.matches();
     }
