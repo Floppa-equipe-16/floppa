@@ -12,10 +12,12 @@ public class Main {
         HealthResource healthResource = new HealthResource();
         SellerResource sellerResource = new SellerResource();
         SellerExceptionMapper sellerExceptionMapper = new SellerExceptionMapper();
+        NotFoundExceptionMapper notFoundExceptionMapper = new NotFoundExceptionMapper();
         ResourceConfig resourceConfig = new ResourceConfig()
                 .register(healthResource)
                 .register(sellerResource)
-                .register(sellerExceptionMapper);
+                .register(sellerExceptionMapper)
+                .register(notFoundExceptionMapper);;
         URI uri = URI.create("http://localhost:8080/");
 
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, resourceConfig);
