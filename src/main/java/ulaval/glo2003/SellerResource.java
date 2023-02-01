@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -47,7 +48,7 @@ public class SellerResource {
     }
 
 
-    private void sellerMissingParameter(Seller seller){
+    protected void sellerMissingParameter(Seller seller){
         if (seller.name == null)
             throw new SellerException(new Suberror("MISSING_PARAMETER","Missing name value"));
         if (seller.email == null)
@@ -55,14 +56,14 @@ public class SellerResource {
         if (seller.birthdate == null)
             throw new SellerException(new Suberror("MISSING_PARAMETER","Missing birthdate value"));
         if (seller.phoneNumber == null)
-            throw new SellerException(new Suberror("MISSING_PARAMETER","Missing Phone number"));
+            throw new SellerException(new Suberror("MISSING_PARAMETER","Missing phone number"));
         if (seller.bio == null)
             throw new SellerException(new Suberror("MISSING_PARAMETER","Missing bio value"));
 
     }
 
     private void sellerInvalidParameter(Seller seller){
-        if (seller.name.trim().isEmpty())
+        if (isStringEmpty(seller.name))
             throw new SellerException(new Suberror("INVALID_PARAMETER","Invalid name value"));
         if (isBirthdateInvalid(seller.birthdate))
             throw new SellerException(new Suberror("INVALID_PARAMETER","Invalid birthdate value"));
@@ -70,33 +71,39 @@ public class SellerResource {
             throw new SellerException(new Suberror("INVALID_PARAMETER","Invalid email value"));
         if (isPhoneInvalid(seller.phoneNumber))
             throw new SellerException(new Suberror("INVALID_PARAMETER","Invalid phone number"));
-        if (seller.bio.trim().isEmpty())
+        if (isStringEmpty(seller.bio))
             throw new SellerException(new Suberror("INVALID_PARAMETER","Invalid bio value"));
     }
 
-    private boolean isBirthdateInvalid(String birthdate){
+    protected boolean isStringEmpty(String s){
+        return s.trim().isEmpty();
+    }
+
+    protected boolean isBirthdateInvalid(String birthdate){
         return !(isDateValid("yyyy-MM-dd",birthdate) &&
                 is18OrMore("yyyy-MM-dd",birthdate));
     }
 
-    private boolean is18OrMore(String pattern, String birthday){
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(pattern);
-        LocalDate now = LocalDate.now();
-        LocalDate birthdayDate =  LocalDate.parse(birthday, dtf);
-        LocalDate birthday18Plus = birthdayDate.plusYears(18);
-        return (birthday18Plus.isBefore(now));
-    }
-    private boolean isEmailInvalid(String email){
+    protected boolean isEmailInvalid(String email){
 
         Pattern p = Pattern.compile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$");
         Matcher m = p.matcher(email);
         return !m.matches();
     }
 
-    private boolean isPhoneInvalid(String phone){
-        Pattern p = Pattern.compile("^(\\+\\d{1,3}( )?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$");
-        Matcher m = p.matcher(phone);
-        return !m.matches();
+    protected boolean isPhoneInvalid(String phone){
+        if (phone.length() != 11)
+            return true;
+        if (phone.charAt(0) == '-' || phone.charAt(0) == '+')
+            return true;
+        try{
+            System.out.println(Integer.parseInt(phone.substring(0,6)));
+            Integer.parseInt(phone.substring(5,11));
+            System.out.println("False");
+        }catch (NumberFormatException e){
+            return true;
+        }
+        return false;
     }
 
     private boolean isDateValid(String pattern, String s){
@@ -105,6 +112,18 @@ public class SellerResource {
             dateFormat.parse(s);
             return true;
         }catch (ParseException ignored){
+            return false;
+        }
+    }
+
+    private boolean is18OrMore(String pattern, String birthday){
+        try {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern(pattern);
+            LocalDate now = LocalDate.now();
+            LocalDate birthdayDate = LocalDate.parse(birthday, dtf);
+            LocalDate birthday18Plus = birthdayDate.plusYears(18);
+            return (birthday18Plus.isBefore(now));
+        }catch (DateTimeParseException e) {
             return false;
         }
     }
