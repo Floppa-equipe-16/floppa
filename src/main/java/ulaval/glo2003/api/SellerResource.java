@@ -5,9 +5,8 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
-import ulaval.glo2003.domain.Seller;
-
 import java.util.List;
+import ulaval.glo2003.domain.Seller;
 
 @Path("/sellers")
 public class SellerResource {
@@ -28,6 +27,7 @@ public class SellerResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createSeller(@Context UriInfo uriInfo, SellerRequest sellerRequest) {
+        sellerRequest.validateSellerNonNullParameter();
         Seller seller =
                 new Seller(
                         sellerRequest.name,
