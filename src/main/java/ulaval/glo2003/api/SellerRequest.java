@@ -1,7 +1,6 @@
 package ulaval.glo2003.api;
 
-import ulaval.glo2003.api.exceptionHandling.ErrorDescription;
-import ulaval.glo2003.api.exceptionHandling.SellerException;
+import ulaval.glo2003.api.exceptionHandling.SellerMissingParamException;
 
 public class SellerRequest {
 
@@ -13,19 +12,14 @@ public class SellerRequest {
 
     public void validateSellerNonNullParameter() {
         if (name == null)
-            throw new SellerException(
-                    new ErrorDescription("MISSING_PARAMETER", "Missing name value"));
+            throw new SellerMissingParamException("Missing name value");
         if (email == null)
-            throw new SellerException(
-                    new ErrorDescription("MISSING_PARAMETER", "Missing email value"));
+            throw new SellerMissingParamException("Missing email value");
         if (birthdate == null)
-            throw new SellerException(
-                    new ErrorDescription("MISSING_PARAMETER", "Missing birthdate value"));
+            throw new SellerMissingParamException("Missing birthdate value");
         if (phoneNumber == null)
-            throw new SellerException(
-                    new ErrorDescription("MISSING_PARAMETER", "Missing phone number"));
+            throw new SellerMissingParamException("Missing phone number");
         if (bio == null)
-            throw new SellerException(
-                    new ErrorDescription("MISSING_PARAMETER", "Missing bio value"));
+            throw new SellerMissingParamException("Missing bio value");
     }
 }
