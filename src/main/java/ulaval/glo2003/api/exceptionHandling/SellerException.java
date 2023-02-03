@@ -1,11 +1,11 @@
-package ulaval.glo2003;
+package ulaval.glo2003.api.exceptionHandling;
 
 import jakarta.validation.ValidationException;
 
 public class SellerException extends ValidationException {
-    public final Suberror subError;
+    public final ErrorDescription subError;
 
-    public SellerException(Suberror error) {
+    public SellerException(ErrorDescription error) {
         this.subError = error;
     }
 }

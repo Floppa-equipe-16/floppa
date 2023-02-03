@@ -1,10 +1,10 @@
-package ulaval.glo2003;
+package ulaval.glo2003.api.exceptionHandling;
 
-public class Suberror {
+public class ErrorDescription {
     public final String code;
     public final String description;
 
-    public Suberror(String code, String description) {
+    public ErrorDescription(String code, String description) {
         this.code = code;
         this.description = description;
     }

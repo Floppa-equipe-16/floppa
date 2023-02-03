@@ -1,4 +1,4 @@
-package ulaval.glo2003;
+package ulaval.glo2003.api.exceptionHandling;
 
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
