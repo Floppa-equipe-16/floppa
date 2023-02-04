@@ -6,10 +6,14 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import ulaval.glo2003.api.exceptionHandling.SellerInvalidParamException;
+
+import javax.swing.text.Position;
 
 public class Seller {
     private final String name;
@@ -21,12 +25,16 @@ public class Seller {
     private final String id;
     private final String createdAt;
 
+    private final List<Product> products;
+
+
     public Seller(String name, String birthdate, String email, String phoneNumber, String bio) {
         this.name = name;
         this.birthdate = birthdate;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.bio = bio;
+        this.products = new ArrayList<Product>();
 
         validateSellerParameters();
 
@@ -61,6 +69,9 @@ public class Seller {
     public String getCreatedAt() {
         return createdAt;
     }
+
+    public List<Product> getProducts() {return products;}
+    public void addProducts(Product product) {products.add(product);}
 
     private void validateSellerParameters() {
         if (isStringEmpty(name))

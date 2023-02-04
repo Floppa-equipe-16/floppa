@@ -2,17 +2,39 @@ package ulaval.glo2003;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
+import ulaval.glo2003.api.HealthResource;
+import ulaval.glo2003.api.ProductRessource;
+import ulaval.glo2003.api.SellerResource;
+import ulaval.glo2003.api.exceptionHandling.NotFoundExceptionMapper;
+import ulaval.glo2003.api.exceptionHandling.ProductException;
+import ulaval.glo2003.api.exceptionHandling.ProductExceptionMapper;
+import ulaval.glo2003.api.exceptionHandling.SellerExceptionMapper;
+import ulaval.glo2003.domain.Seller;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
+        List<Seller> sellers = new ArrayList<>();
+
         HealthResource healthResource = new HealthResource();
-        ProductRessource productRessource = new ProductRessource();
-        ResourceConfig resourceConfig = new ResourceConfig().register(healthResource)
-                .register(productRessource);
+        SellerResource sellerResource = new SellerResource(sellers);
+        ProductRessource productRessource = new ProductRessource(sellers);
+        SellerExceptionMapper sellerExceptionMapper = new SellerExceptionMapper();
+        ProductExceptionMapper productExceptionMapper = new ProductExceptionMapper();
+        NotFoundExceptionMapper notFoundExceptionMapper = new NotFoundExceptionMapper();
+        ResourceConfig resourceConfig =
+                new ResourceConfig()
+                        .register(healthResource)
+                        .register(sellerResource)
+                        .register(productRessource)
+                        .register(sellerExceptionMapper)
+                        .register(productExceptionMapper)
+                        .register(notFoundExceptionMapper);
         URI uri = URI.create("http://localhost:8080/");
 
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, resourceConfig);
