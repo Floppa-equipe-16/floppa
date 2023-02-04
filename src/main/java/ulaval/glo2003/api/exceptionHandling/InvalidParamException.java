@@ -1,8 +1,11 @@
 package ulaval.glo2003.api.exceptionHandling;
 
-public class SellerInvalidParamException extends SellerException{
+public class InvalidParamException extends ParamValidationException {
 
-    public SellerInvalidParamException(String message) {
-        super(new ErrorDescription("INVALID_PARAMETER", message));
+    public InvalidParamException(String invalidParameter) {
+        super(
+                new ErrorDescription(
+                        "INVALID_PARAMETER",
+                        String.format("Invalid parameter '%s'.", invalidParameter)));
     }
 }
