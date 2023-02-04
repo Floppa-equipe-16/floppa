@@ -18,6 +18,8 @@ public class ProductRessource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createProducts(Product product, @HeaderParam("X-Seller-Id") String xSellerId, @Context UriInfo uriInfo) {
+
+
         if(isMissingParameter(product)){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
