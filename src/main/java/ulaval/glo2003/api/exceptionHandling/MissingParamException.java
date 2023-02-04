@@ -5,6 +5,6 @@ public class SellerMissingParamException extends SellerException{
 
     public SellerMissingParamException(String message) {
 
-        super(new ErrorDescription("MISSING_PARAMETER",message));
+        super(new ErrorDescription("MISSING_PARAMETER", message));
     }
 }
