@@ -3,10 +3,9 @@ package ulaval.glo2003.api;
 import ulaval.glo2003.api.exceptionHandling.MissingParamException;
 
 public class ProductRequest {
-
     public String title;
     public String description;
-    public Number suggestedPrice;
+    public Double suggestedPrice;
     public String category;
 
     public void validateProductNonNullParameter() {

@@ -5,10 +5,8 @@ import ulaval.glo2003.domain.Seller;
 import java.util.ArrayList;
 
 public class SellerResponse {
-
     public String id;
     public String createAt;
-
     public String name;
     public String birthdate;
     public String email;

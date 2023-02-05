@@ -1,5 +1,6 @@
 package ulaval.glo2003.domain;
 
+import java.text.DecimalFormat;
 import java.time.Instant;
 import java.util.UUID;
 import ulaval.glo2003.api.ProductCategory;
@@ -8,15 +9,15 @@ import ulaval.glo2003.api.exceptionHandling.InvalidParamException;
 public class Product {
     private final String title;
     private final String description;
-    private final Number suggestedPrice;
+    private final Double suggestedPrice;
     private final String category;
     private final String id;
     private final String createdAt;
 
-    public Product(String title, String description, Number suggestedPrice, String category) {
+    public Product(String title, String description, Double suggestedPrice, String category) {
         this.title = title;
         this.description = description;
-        this.suggestedPrice = suggestedPrice;
+        this.suggestedPrice = Double.parseDouble((new DecimalFormat("#.##")).format(suggestedPrice));
         this.category = category;
 
         validateProductParameters();
@@ -40,7 +41,7 @@ public class Product {
         return description;
     }
 
-    public Number getSuggestedPrice() {
+    public Double getSuggestedPrice() {
         return suggestedPrice;
     }
 

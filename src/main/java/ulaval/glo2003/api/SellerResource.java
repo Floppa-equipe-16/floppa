@@ -10,7 +10,6 @@ import ulaval.glo2003.domain.Seller;
 
 @Path("/sellers")
 public class SellerResource {
-
     private final List<Seller> sellers;
 
     public SellerResource(List<Seller> sellers) {

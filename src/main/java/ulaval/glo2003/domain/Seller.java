@@ -20,10 +20,8 @@ public class Seller {
     private final String email;
     private final String phoneNumber;
     private final String bio;
-
     private final String id;
     private final String createdAt;
-
     private final ArrayList<Product> products;
 
     public Seller(String name, String birthdate, String email, String phoneNumber, String bio) {
