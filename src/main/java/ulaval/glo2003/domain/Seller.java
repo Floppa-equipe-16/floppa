@@ -25,7 +25,7 @@ public class Seller {
     private final String id;
     private final String createdAt;
 
-    private final List<Product> products;
+    private final ArrayList<Product> products;
 
 
     public Seller(String name, String birthdate, String email, String phoneNumber, String bio) {

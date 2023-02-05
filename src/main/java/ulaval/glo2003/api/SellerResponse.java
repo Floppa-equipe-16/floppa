@@ -1,5 +1,9 @@
 package ulaval.glo2003.api;
 
+import ulaval.glo2003.domain.Product;
+
+import java.util.ArrayList;
+
 public class SellerResponse {
 
     public String id;
@@ -10,7 +14,7 @@ public class SellerResponse {
     public String email;
     public String phoneNumber;
     public String bio;
-    // public ArrayList<Product> products;
+    public ArrayList<Product> products;
 
     public SellerResponse(
             String id,
