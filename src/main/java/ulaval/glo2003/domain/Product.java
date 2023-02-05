@@ -1,23 +1,15 @@
 package ulaval.glo2003.domain;
 
-import ulaval.glo2003.api.ProductCategory;
-import ulaval.glo2003.api.exceptionHandling.ProductInvalidParamException;
-import ulaval.glo2003.api.exceptionHandling.SellerInvalidParamException;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.UUID;
+import ulaval.glo2003.api.ProductCategory;
+import ulaval.glo2003.api.exceptionHandling.InvalidParamException;
 
 public class Product {
     private final String title;
     private final String description;
     private final Number suggestedPrice;
     private final String category;
-
     private final String id;
     private final String createdAt;
 
@@ -34,15 +26,12 @@ public class Product {
     }
 
     private void validateProductParameters() {
-        if (isStringEmpty(title))
-            throw new ProductInvalidParamException("Invalid title value");
-        if (isStringEmpty(description))
-            throw new ProductInvalidParamException("Invalid description value");
-        if (isCategoryExist(category))
-            throw new ProductInvalidParamException("Invalid category value");
-        if (isSuggestedPriceUnder1())
-            throw new ProductInvalidParamException("Invalid suggestedPrice number");
+        if (isStringEmpty(title)) throw new InvalidParamException("title");
+        if (isStringEmpty(description)) throw new InvalidParamException("description");
+        if (!doesCategoryExist(category)) throw new InvalidParamException("category");
+        if (isSuggestedPriceUnder1()) throw new InvalidParamException("suggestedPrice");
     }
+
     public String getTitle() {
         return title;
     }
@@ -75,10 +64,11 @@ public class Product {
         return suggestedPrice.intValue() < 1;
     }
 
-    private boolean isCategoryExist(String categorie){
+    private boolean doesCategoryExist(String category) {
+        System.out.print(category);
         try {
-            ProductCategory.valueOf(categorie);
-        }catch (Exception e){
+            ProductCategory.valueOf(category);
+        } catch (Exception e) {
             return false;
         }
         return true;

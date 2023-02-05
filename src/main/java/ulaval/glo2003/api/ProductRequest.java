@@ -1,7 +1,6 @@
 package ulaval.glo2003.api;
 
-import ulaval.glo2003.api.exceptionHandling.ProductMissingParamException;
-import ulaval.glo2003.api.exceptionHandling.SellerMissingParamException;
+import ulaval.glo2003.api.exceptionHandling.MissingParamException;
 
 public class ProductRequest {
 
@@ -11,13 +10,9 @@ public class ProductRequest {
     public String category;
 
     public void validateProductNonNullParameter() {
-        if (title == null)
-            throw new ProductMissingParamException("Missing title value");
-        if (description == null)
-            throw new ProductMissingParamException("Missing descritpion value");
-        if (suggestedPrice == null)
-            throw new ProductMissingParamException("Missing suggestedPrice number");
-        if (category == null)
-            throw new ProductMissingParamException("Missing category value");
+        if (title == null) throw new MissingParamException("title");
+        if (description == null) throw new MissingParamException("description");
+        if (suggestedPrice == null) throw new MissingParamException("suggestedPrice");
+        if (category == null) throw new MissingParamException("category");
     }
 }

@@ -11,9 +11,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import ulaval.glo2003.api.ProductResponse;
 import ulaval.glo2003.api.exceptionHandling.InvalidParamException;
-
-import javax.swing.text.Position;
 
 public class Seller {
     private final String name;
@@ -27,7 +26,6 @@ public class Seller {
 
     private final ArrayList<Product> products;
 
-
     public Seller(String name, String birthdate, String email, String phoneNumber, String bio) {
         this.name = name;
         this.birthdate = birthdate;
@@ -39,6 +37,7 @@ public class Seller {
         validateSellerParameters();
 
         id = UUID.randomUUID().toString();
+        System.out.print(id);
         createdAt = Instant.now().toString();
     }
 
@@ -70,8 +69,21 @@ public class Seller {
         return createdAt;
     }
 
-    public List<Product> getProducts() {return products;}
-    public void addProducts(Product product) {products.add(product);}
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public ArrayList<ProductResponse> getProductResponses() {
+        ArrayList<ProductResponse> productResponses = new ArrayList<ProductResponse>();
+        for (Product product : products) {
+            productResponses.add(new ProductResponse(product));
+        }
+        return productResponses;
+    }
+
+    public void addProducts(Product product) {
+        products.add(product);
+    }
 
     private void validateSellerParameters() {
         if (isStringEmpty(name)) throw new InvalidParamException("name");

@@ -53,13 +53,6 @@ public class SellerResource {
                                                         "Seller with id '%s' not found",
                                                         sellerId)));
 
-        return new SellerResponse(
-                foundSeller.getId(),
-                foundSeller.getCreatedAt(),
-                foundSeller.getName(),
-                foundSeller.getBirthdate(),
-                foundSeller.getEmail(),
-                foundSeller.getPhoneNumber(),
-                foundSeller.getBio());
+        return new SellerResponse(foundSeller);
     }
 }
