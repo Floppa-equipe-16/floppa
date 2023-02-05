@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import ulaval.glo2003.api.exceptionHandling.SellerInvalidParamException;
+import ulaval.glo2003.api.exceptionHandling.InvalidParamException;
 
 import javax.swing.text.Position;
 
@@ -74,16 +74,11 @@ public class Seller {
     public void addProducts(Product product) {products.add(product);}
 
     private void validateSellerParameters() {
-        if (isStringEmpty(name))
-            throw new SellerInvalidParamException("Invalid name value");
-        if (isBirthdateInvalid())
-            throw new SellerInvalidParamException("Invalid birthdate value");
-        if (isEmailInvalid(email))
-            throw new SellerInvalidParamException("Invalid email value");
-        if (isPhoneInvalid(phoneNumber))
-            throw new SellerInvalidParamException("Invalid phone number");
-        if (isStringEmpty(bio))
-            throw new SellerInvalidParamException("Invalid bio value");
+        if (isStringEmpty(name)) throw new InvalidParamException("name");
+        if (isBirthdateInvalid()) throw new InvalidParamException("birthdate");
+        if (isEmailInvalid(email)) throw new InvalidParamException("email");
+        if (isPhoneInvalid(phoneNumber)) throw new InvalidParamException("phone number");
+        if (isStringEmpty(bio)) throw new InvalidParamException("bio");
     }
 
     private boolean isStringEmpty(String s) {
