@@ -65,7 +65,6 @@ public class Product {
     }
 
     private boolean doesCategoryExist(String category) {
-        System.out.print(category);
         try {
             ProductCategory.valueOf(category);
         } catch (Exception e) {

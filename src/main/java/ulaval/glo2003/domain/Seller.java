@@ -37,7 +37,6 @@ public class Seller {
         validateSellerParameters();
 
         id = UUID.randomUUID().toString();
-        System.out.print(id);
         createdAt = Instant.now().toString();
     }
 
