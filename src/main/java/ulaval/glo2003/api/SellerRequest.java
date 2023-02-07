@@ -3,7 +3,6 @@ package ulaval.glo2003.api;
 import ulaval.glo2003.api.exceptionHandling.MissingParamException;
 
 public class SellerRequest {
-
     public String name;
     public String birthdate;
     public String email;

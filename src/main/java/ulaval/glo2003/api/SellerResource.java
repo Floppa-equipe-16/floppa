@@ -10,7 +10,6 @@ import ulaval.glo2003.domain.Seller;
 
 @Path("/sellers")
 public class SellerResource {
-
     private final List<Seller> sellers;
 
     public SellerResource(List<Seller> sellers) {
@@ -53,13 +52,6 @@ public class SellerResource {
                                                         "Seller with id '%s' not found",
                                                         sellerId)));
 
-        return new SellerResponse(
-                foundSeller.getId(),
-                foundSeller.getCreatedAt(),
-                foundSeller.getName(),
-                foundSeller.getBirthdate(),
-                foundSeller.getEmail(),
-                foundSeller.getPhoneNumber(),
-                foundSeller.getBio());
+        return new SellerResponse(foundSeller);
     }
 }

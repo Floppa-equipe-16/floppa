@@ -7,6 +7,8 @@ public class ParamExceptionMapper implements ExceptionMapper<ParamValidationExce
 
     @Override
     public Response toResponse(ParamValidationException exception) {
-        return Response.status(Response.Status.BAD_REQUEST).entity(exception.subError).build();
+        return Response.status(Response.Status.BAD_REQUEST)
+                .entity(exception.errorDescription)
+                .build();
     }
 }

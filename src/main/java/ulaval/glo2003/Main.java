@@ -11,10 +11,6 @@ import ulaval.glo2003.api.HealthResource;
 import ulaval.glo2003.api.ProductRessource;
 import ulaval.glo2003.api.SellerResource;
 import ulaval.glo2003.api.exceptionHandling.NotFoundExceptionMapper;
-
-import ulaval.glo2003.api.exceptionHandling.ProductException;
-import ulaval.glo2003.api.exceptionHandling.ProductExceptionMapper;
-
 import ulaval.glo2003.api.exceptionHandling.ParamExceptionMapper;
 import ulaval.glo2003.domain.Seller;
 
@@ -27,8 +23,6 @@ public class Main {
         SellerResource sellerResource = new SellerResource(sellers);
 
         ProductRessource productRessource = new ProductRessource(sellers);
-        SellerExceptionMapper sellerExceptionMapper = new SellerExceptionMapper();
-        ProductExceptionMapper productExceptionMapper = new ProductExceptionMapper();
 
         ParamExceptionMapper paramExceptionMapper = new ParamExceptionMapper();
         NotFoundExceptionMapper notFoundExceptionMapper = new NotFoundExceptionMapper();
@@ -37,8 +31,6 @@ public class Main {
                         .register(healthResource)
                         .register(sellerResource)
                         .register(productRessource)
-                        .register(sellerExceptionMapper)
-                        .register(productExceptionMapper)
                         .register(paramExceptionMapper)
                         .register(notFoundExceptionMapper);
         URI uri = URI.create("http://localhost:8080/");
