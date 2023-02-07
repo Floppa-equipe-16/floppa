@@ -45,3 +45,8 @@ Issue # 3
   ![pr3](https://cdn.discordapp.com/attachments/1069318680736964628/1072632281568657508/image.png)
   ### Arbre de commits
 ![a1](https://cdn.discordapp.com/attachments/1069318680736964628/1072633487720468560/image.png)
+
+  ### Github Project
+  ![g1](https://cdn.discordapp.com/attachments/1069318680736964628/1072636279881203712/image.png)
+  ### Milestone
+  ![m1](https://cdn.discordapp.com/attachments/1069318680736964628/1072636832057143356/image.png)
