@@ -1,7 +1,7 @@
 # TP1
 
 ## Convention des commits
-[- message de commit en anglais
+- message de commit en anglais
 - Utilisations des tags avant le message :
     - build : changements qui affectent le système de build ou des dépendances externes (npm, make…)
     - ci : changements concernant les fichiers et scripts d’intégration ou de configuration (Travis, Ansible, BrowserStack…)
