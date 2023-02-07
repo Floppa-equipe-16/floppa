@@ -8,7 +8,7 @@ import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import ulaval.glo2003.api.HealthResource;
-import ulaval.glo2003.api.ProductRessource;
+import ulaval.glo2003.api.ProductResource;
 import ulaval.glo2003.api.SellerResource;
 import ulaval.glo2003.api.exceptionHandling.NotFoundExceptionMapper;
 import ulaval.glo2003.api.exceptionHandling.ParamExceptionMapper;
@@ -22,7 +22,7 @@ public class Main {
         HealthResource healthResource = new HealthResource();
         SellerResource sellerResource = new SellerResource(sellers);
 
-        ProductRessource productRessource = new ProductRessource(sellers);
+        ProductResource productRessource = new ProductResource(sellers);
 
         ParamExceptionMapper paramExceptionMapper = new ParamExceptionMapper();
         NotFoundExceptionMapper notFoundExceptionMapper = new NotFoundExceptionMapper();

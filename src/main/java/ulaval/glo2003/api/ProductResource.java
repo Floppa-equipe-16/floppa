@@ -10,10 +10,10 @@ import ulaval.glo2003.domain.Product;
 import ulaval.glo2003.domain.Seller;
 
 @Path("/products")
-public class ProductRessource {
+public class ProductResource {
     private final List<Seller> sellers;
 
-    public ProductRessource(List<Seller> sellers) {
+    public ProductResource(List<Seller> sellers) {
         this.sellers = sellers;
     }
 

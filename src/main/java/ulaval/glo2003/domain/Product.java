@@ -1,6 +1,5 @@
 package ulaval.glo2003.domain;
 
-import java.text.DecimalFormat;
 import java.time.Instant;
 import java.util.UUID;
 import ulaval.glo2003.api.ProductCategory;
@@ -17,7 +16,7 @@ public class Product {
     public Product(String title, String description, Double suggestedPrice, String category) {
         this.title = title;
         this.description = description;
-        this.suggestedPrice = Double.parseDouble((new DecimalFormat("#.##")).format(suggestedPrice));
+        this.suggestedPrice = Math.round(suggestedPrice * 100d) / 100d;
         this.category = category;
 
         validateProductParameters();
