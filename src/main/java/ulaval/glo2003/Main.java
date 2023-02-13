@@ -26,13 +26,12 @@ public class Main {
 
         ParamExceptionMapper paramExceptionMapper = new ParamExceptionMapper();
         NotFoundExceptionMapper notFoundExceptionMapper = new NotFoundExceptionMapper();
-        ResourceConfig resourceConfig =
-                new ResourceConfig()
-                        .register(healthResource)
-                        .register(sellerResource)
-                        .register(productRessource)
-                        .register(paramExceptionMapper)
-                        .register(notFoundExceptionMapper);
+        ResourceConfig resourceConfig = new ResourceConfig()
+                .register(healthResource)
+                .register(sellerResource)
+                .register(productRessource)
+                .register(paramExceptionMapper)
+                .register(notFoundExceptionMapper);
         URI uri = URI.create("http://localhost:8080/");
 
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, resourceConfig);

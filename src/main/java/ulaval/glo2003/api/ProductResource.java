@@ -20,27 +20,18 @@ public class ProductResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createProducts(
-            @Context UriInfo uriInfo,
-            @HeaderParam("X-Seller-Id") String xSellerId,
-            ProductRequest productRequest) {
-        Seller foundSeller =
-                sellers.stream()
-                        .filter(seller -> xSellerId.equals(seller.getId()))
-                        .findFirst()
-                        .orElseThrow(
-                                () ->
-                                        new NotFoundException(
-                                                String.format(
-                                                        "Seller with id '%s' not found",
-                                                        xSellerId)));
+            @Context UriInfo uriInfo, @HeaderParam("X-Seller-Id") String xSellerId, ProductRequest productRequest) {
+        Seller foundSeller = sellers.stream()
+                .filter(seller -> xSellerId.equals(seller.getId()))
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException(String.format("Seller with id '%s' not found", xSellerId)));
 
         productRequest.validateProductNonNullParameter();
-        Product product =
-                new Product(
-                        productRequest.title,
-                        productRequest.description,
-                        productRequest.suggestedPrice,
-                        productRequest.category);
+        Product product = new Product(
+                productRequest.title,
+                productRequest.description,
+                productRequest.suggestedPrice,
+                productRequest.category);
         foundSeller.addProducts(product);
         return Response.status(Response.Status.CREATED)
                 .header("Location", uriInfo.getAbsolutePath() + "/" + product.getId())
