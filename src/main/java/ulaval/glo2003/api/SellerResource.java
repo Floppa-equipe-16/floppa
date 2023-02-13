@@ -27,13 +27,12 @@ public class SellerResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createSeller(@Context UriInfo uriInfo, SellerRequest sellerRequest) {
         sellerRequest.validateSellerNonNullParameter();
-        Seller seller =
-                new Seller(
-                        sellerRequest.name,
-                        sellerRequest.birthdate,
-                        sellerRequest.email,
-                        sellerRequest.phoneNumber,
-                        sellerRequest.bio);
+        Seller seller = new Seller(
+                sellerRequest.name,
+                sellerRequest.birthdate,
+                sellerRequest.email,
+                sellerRequest.phoneNumber,
+                sellerRequest.bio);
         sellers.add(seller);
         return Response.status(Response.Status.CREATED)
                 .header("Location", uriInfo.getAbsolutePath() + "/" + seller.getId())
@@ -41,16 +40,10 @@ public class SellerResource {
     }
 
     private SellerResponse getSellerResponseById(String sellerId) {
-        Seller foundSeller =
-                sellers.stream()
-                        .filter(seller -> seller.getId().equals(sellerId))
-                        .findFirst()
-                        .orElseThrow(
-                                () ->
-                                        new NotFoundException(
-                                                String.format(
-                                                        "Seller with id '%s' not found",
-                                                        sellerId)));
+        Seller foundSeller = sellers.stream()
+                .filter(seller -> seller.getId().equals(sellerId))
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException(String.format("Seller with id '%s' not found", sellerId)));
 
         return new SellerResponse(foundSeller);
     }
