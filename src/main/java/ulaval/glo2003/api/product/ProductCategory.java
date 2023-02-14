@@ -1,4 +1,4 @@
-package ulaval.glo2003.api;
+package ulaval.glo2003.api.product;
 
 public enum ProductCategory {
     sport,

@@ -1,6 +1,7 @@
-package ulaval.glo2003.api;
+package ulaval.glo2003.api.seller;
 
 import java.util.ArrayList;
+import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.domain.Seller;
 
 public class SellerResponse {

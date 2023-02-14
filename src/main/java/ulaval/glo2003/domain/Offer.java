@@ -1,7 +1,7 @@
 package ulaval.glo2003.domain;
 
 import java.time.Instant;
-import ulaval.glo2003.api.exceptionHandling.InvalidParamException;
+import ulaval.glo2003.domain.exceptions.InvalidParamException;
 
 public class Offer {
 

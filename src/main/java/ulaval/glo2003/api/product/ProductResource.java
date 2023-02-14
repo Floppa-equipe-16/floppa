@@ -1,4 +1,4 @@
-package ulaval.glo2003.api;
+package ulaval.glo2003.api.product;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
