@@ -89,15 +89,16 @@ public class Product {
     }
 
     private void validateOfferEligible(Offer offer) {
-        if (!isOfferAmountHighEnough(offer.getAmount())) throw new InvalidParamException("amount");
-        if (hasBuyerAlreadyMadeAnOffer(offer.getUsername())) throw new NotPermittedException("username");
+        if (!isOfferAmountAtleastSuggestedPrice(offer.getAmount())) throw new InvalidParamException("amount");
+        if (hasBuyerAlreadyMadeAnOffer(offer.getUsername()))
+            throw new NotPermittedException("user with username " + offer.getUsername() + " has already made an offer");
     }
 
     private boolean hasBuyerAlreadyMadeAnOffer(String buyerUsername) {
         return offers.stream().anyMatch(offer -> buyerUsername.equals(offer.getUsername()));
     }
 
-    private boolean isOfferAmountHighEnough(Double offerAmount) {
+    private boolean isOfferAmountAtleastSuggestedPrice(Double offerAmount) {
         return offerAmount >= suggestedPrice;
     }
 }
