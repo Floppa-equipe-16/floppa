@@ -1,6 +1,6 @@
-package ulaval.glo2003.api;
+package ulaval.glo2003.api.seller;
 
-import ulaval.glo2003.api.exceptionHandling.MissingParamException;
+import ulaval.glo2003.domain.exceptions.MissingParamException;
 
 public class SellerRequest {
     public String name;
