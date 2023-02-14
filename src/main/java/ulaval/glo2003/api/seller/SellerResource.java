@@ -6,7 +6,6 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import java.util.List;
-
 import ulaval.glo2003.domain.Seller;
 
 @Path("/sellers")
