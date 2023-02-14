@@ -12,18 +12,16 @@ import ulaval.glo2003.domain.exceptions.NotPermittedException;
 public class ProductTest {
 
     private Product product;
-    private String validTitle;
-    private String validDescription;
-    private Double validSuggestedPrice;
-    private String validCategory;
+    private final String validTitle = "Iphone XR";
+    private final String validDescription = "A relatively new Iphone working as good as a new one";
+    private final Double validSuggestedPrice = 200d;
+    private final String validCategory = "electronics";
 
-    @BeforeEach
-    public void prepareValidParameters() {
-        validTitle = "Iphone XR";
-        validDescription = "A relatively new Iphone working as good as a new one";
-        validSuggestedPrice = 200d;
-        validCategory = "electronics";
-    }
+    private final Offer validOffer = new Offer(
+            "User0",
+            200d,
+            "Lorem ipsum dolor sit amet, consectetur"
+                    + " adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
 
     @BeforeEach
     public void prepareProduct() {
@@ -68,12 +66,6 @@ public class ProductTest {
 
     @Test
     public void canAddValidOffer() {
-        Offer validOffer = new Offer(
-                "User0",
-                200d,
-                "Lorem ipsum dolor sit amet, consectetur"
-                        + " adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
-
         product.addOffer(validOffer);
 
         Optional<Offer> offer = Optional.ofNullable(product.getOffers().get(0));
@@ -82,29 +74,16 @@ public class ProductTest {
 
     @Test
     public void addOfferMethodthrowsWhenOfferAmountLowerSuggestedPrice() {
-        Offer invalidOffer = new Offer(
-                "User0",
-                100d,
-                "Lorem ipsum dolor sit amet, consectetur"
-                        + " adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
+        Offer invalidOffer = new Offer(validOffer.getUsername(), 150d, validOffer.getMessage());
 
         assertThrows(InvalidParamException.class, () -> product.addOffer(invalidOffer));
     }
 
     @Test
     public void addOfferMethodthrowsWhenBuyerAlreadyMadeOffer() {
-        Offer offer = new Offer(
-                "User0",
-                200d,
-                "Lorem ipsum dolor sit amet, consectetur"
-                        + " adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
-        Offer otherOfferBySameUser = new Offer(
-                "User0",
-                250d,
-                "Lorem ipsum dolor sit amet, consectetur"
-                        + " adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
-        product.addOffer(offer);
+        product.addOffer(validOffer);
+        Offer otherOfferSameUser = new Offer(validOffer.getUsername(), validOffer.getAmount(), validOffer.getMessage());
 
-        assertThrows(NotPermittedException.class, () -> product.addOffer(otherOfferBySameUser));
+        assertThrows(NotPermittedException.class, () -> product.addOffer(otherOfferSameUser));
     }
 }

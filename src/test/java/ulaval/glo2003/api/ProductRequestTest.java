@@ -9,54 +9,41 @@ import ulaval.glo2003.domain.exceptions.MissingParamException;
 
 public class ProductRequestTest {
 
-    private ProductRequest productRequest;
-    private String nonNullTitle;
-    private String nonNullDescription;
-    private Double nonNullSuggestedPrice;
-    private String nonNullCategory;
+    private final ProductRequest productRequest = new ProductRequest();
 
     @BeforeEach
-    public void prepareNonNullParameters() {
-        nonNullTitle = "Iphone XR";
-        nonNullDescription = "A relatively new Iphone working as good as a new one";
-        nonNullSuggestedPrice = 200d;
-        nonNullCategory = "electronics";
-    }
-
-    @BeforeEach
-    public void preparevalidProductRequest() {
-        productRequest = new ProductRequest();
-        productRequest.title = nonNullTitle;
-        productRequest.description = nonNullDescription;
-        productRequest.suggestedPrice = nonNullSuggestedPrice;
-        productRequest.category = nonNullCategory;
+    public void prepareProductRequest() {
+        productRequest.title = "Iphone XR";
+        productRequest.description = "A relatively new Iphone working as good as a new one";
+        productRequest.suggestedPrice = 200d;
+        productRequest.category = "electronics";
     }
 
     @Test
     public void validateMethodThrowsWhenNullTitle() {
         productRequest.title = null;
 
-        assertThrows(MissingParamException.class, () -> productRequest.validateProductNonNullParameter());
+        assertThrows(MissingParamException.class, productRequest::validateProductNonNullParameter);
     }
 
     @Test
     public void validateMethodThrowsWhenNullDescription() {
         productRequest.description = null;
 
-        assertThrows(MissingParamException.class, () -> productRequest.validateProductNonNullParameter());
+        assertThrows(MissingParamException.class, productRequest::validateProductNonNullParameter);
     }
 
     @Test
     public void validateMethodThrowsWhenNullSuggestedPrice() {
         productRequest.suggestedPrice = null;
 
-        assertThrows(MissingParamException.class, () -> productRequest.validateProductNonNullParameter());
+        assertThrows(MissingParamException.class, productRequest::validateProductNonNullParameter);
     }
 
     @Test
     public void validateMethodThrowsWhenNullCategory() {
         productRequest.category = null;
 
-        assertThrows(MissingParamException.class, () -> productRequest.validateProductNonNullParameter());
+        assertThrows(MissingParamException.class, productRequest::validateProductNonNullParameter);
     }
 }
