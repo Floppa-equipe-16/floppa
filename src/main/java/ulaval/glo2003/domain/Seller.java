@@ -1,16 +1,10 @@
 package ulaval.glo2003.domain;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -126,8 +120,7 @@ public class Seller {
             OffsetDateTime now = OffsetDateTime.now();
             OffsetDateTime birthday18Plus = birthdayDate.plusYears(18);
             return (birthday18Plus.isBefore(now));
-        } catch (DateTimeParseException e) {
-
+        } catch (DateTimeParseException ignored) {
             return false;
         }
     }
