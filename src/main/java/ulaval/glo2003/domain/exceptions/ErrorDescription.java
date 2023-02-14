@@ -1,4 +1,4 @@
-package ulaval.glo2003.api.exceptionHandling;
+package ulaval.glo2003.domain.exceptions;
 
 public class ErrorDescription {
     public final String code;

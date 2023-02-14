@@ -1,6 +1,6 @@
 package ulaval.glo2003.api.product;
 
-import ulaval.glo2003.api.exceptionHandling.MissingParamException;
+import ulaval.glo2003.domain.exceptions.MissingParamException;
 
 public class ProductRequest {
     public String title;

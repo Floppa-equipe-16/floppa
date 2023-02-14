@@ -10,7 +10,7 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import ulaval.glo2003.api.product.ProductResponse;
-import ulaval.glo2003.api.exceptionHandling.InvalidParamException;
+import ulaval.glo2003.domain.exceptions.InvalidParamException;
 
 public class Seller {
     private final String name;
