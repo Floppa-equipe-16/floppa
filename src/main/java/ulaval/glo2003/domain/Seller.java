@@ -4,9 +4,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -83,51 +87,47 @@ public class Seller {
     }
 
     private void validateSellerParameters() {
-        if (isStringEmpty(name)) throw new InvalidParamException("name");
+        if (name.isBlank()) throw new InvalidParamException("name");
         if (isBirthdateInvalid()) throw new InvalidParamException("birthdate");
-        if (isEmailInvalid(email)) throw new InvalidParamException("email");
-        if (isPhoneInvalid(phoneNumber)) throw new InvalidParamException("phone number");
-        if (isStringEmpty(bio)) throw new InvalidParamException("bio");
-    }
-
-    private boolean isStringEmpty(String s) {
-        return s.trim().isEmpty();
+        if (isEmailInvalid()) throw new InvalidParamException("email");
+        if (isPhoneInvalid()) throw new InvalidParamException("phone number");
+        if (bio.isBlank()) throw new InvalidParamException("bio");
     }
 
     private boolean isBirthdateInvalid() {
         return !(isDateValid() && is18orMore());
     }
 
-    private boolean isEmailInvalid(String email) {
+    private boolean isEmailInvalid() {
 
         Pattern p = Pattern.compile(
                 "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$");
-        Matcher m = p.matcher(email);
+        Matcher m = p.matcher(this.email);
         return !m.matches();
     }
 
-    private boolean isPhoneInvalid(String phone) {
-        return !phone.chars().allMatch(Character::isDigit) || phone.length() != 11;
+    private boolean isPhoneInvalid() {
+        return !this.phoneNumber.chars().allMatch(Character::isDigit) || this.phoneNumber.length() != 11;
     }
 
     private boolean isDateValid() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            dateFormat.parse(birthdate);
+            LocalDate.parse(birthdate);
             return true;
-        } catch (ParseException ignored) {
+        } catch (DateTimeParseException ignored) {
             return false;
         }
     }
 
     private boolean is18orMore() {
         try {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate now = LocalDate.now();
-            LocalDate birthdayDate = LocalDate.parse(birthdate, dtf);
-            LocalDate birthday18Plus = birthdayDate.plusYears(18);
+            String birthdateOffset = this.birthdate + "T00:00Z";
+            OffsetDateTime birthdayDate = OffsetDateTime.parse(birthdateOffset);
+            OffsetDateTime now = OffsetDateTime.now();
+            OffsetDateTime birthday18Plus = birthdayDate.plusYears(18);
             return (birthday18Plus.isBefore(now));
         } catch (DateTimeParseException e) {
+
             return false;
         }
     }
