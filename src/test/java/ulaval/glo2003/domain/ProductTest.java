@@ -73,14 +73,14 @@ public class ProductTest {
     }
 
     @Test
-    public void addOfferMethodthrowsWhenOfferAmountLowerSuggestedPrice() {
+    public void addOfferMethodThrowsWhenOfferAmountLowerSuggestedPrice() {
         Offer invalidOffer = new Offer(validOffer.getUsername(), 150d, validOffer.getMessage());
 
         assertThrows(InvalidParamException.class, () -> product.addOffer(invalidOffer));
     }
 
     @Test
-    public void addOfferMethodthrowsWhenBuyerAlreadyMadeOffer() {
+    public void addOfferMethodThrowsWhenBuyerAlreadyMadeOffer() {
         product.addOffer(validOffer);
         Offer otherOfferSameUser = new Offer(validOffer.getUsername(), validOffer.getAmount(), validOffer.getMessage());
 
