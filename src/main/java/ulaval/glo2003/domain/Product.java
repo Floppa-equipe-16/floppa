@@ -4,7 +4,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import ulaval.glo2003.api.ProductCategory;
+import ulaval.glo2003.api.product.ProductCategory;
 import ulaval.glo2003.api.exceptionHandling.InvalidParamException;
 import ulaval.glo2003.api.exceptionHandling.NotPermittedException;
 

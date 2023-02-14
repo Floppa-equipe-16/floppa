@@ -1,4 +1,4 @@
-package ulaval.glo2003.api;
+package ulaval.glo2003.api.product;
 
 import ulaval.glo2003.api.exceptionHandling.MissingParamException;
 

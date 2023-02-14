@@ -1,4 +1,4 @@
-package ulaval.glo2003.api;
+package ulaval.glo2003.api.product;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
@@ -6,6 +6,8 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import java.util.List;
+
+import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.domain.Product;
 import ulaval.glo2003.domain.Seller;
 
