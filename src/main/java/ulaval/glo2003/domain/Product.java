@@ -26,9 +26,9 @@ public class Product {
     }
 
     private void validateProductParameters() {
-        if (isStringEmpty(title)) throw new InvalidParamException("title");
-        if (isStringEmpty(description)) throw new InvalidParamException("description");
-        if (!doesCategoryExist(category)) throw new InvalidParamException("category");
+        if (title.isBlank()) throw new InvalidParamException("title");
+        if (description.isBlank()) throw new InvalidParamException("description");
+        if (!doesCategoryExist()) throw new InvalidParamException("category");
         if (isSuggestedPriceUnder1()) throw new InvalidParamException("suggestedPrice");
     }
 
@@ -56,17 +56,13 @@ public class Product {
         return createdAt;
     }
 
-    private boolean isStringEmpty(String s) {
-        return s.trim().isEmpty();
-    }
-
     private boolean isSuggestedPriceUnder1() {
         return suggestedPrice.intValue() < 1;
     }
 
-    private boolean doesCategoryExist(String category) {
+    private boolean doesCategoryExist() {
         try {
-            ProductCategory.valueOf(category);
+            ProductCategory.valueOf(this.category);
         } catch (Exception e) {
             return false;
         }
