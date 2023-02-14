@@ -32,7 +32,7 @@ public class ProductResource {
                 productRequest.description,
                 productRequest.suggestedPrice,
                 productRequest.category);
-        foundSeller.addProducts(product);
+        foundSeller.addProduct(product);
         return Response.status(Response.Status.CREATED)
                 .header("Location", uriInfo.getAbsolutePath() + "/" + product.getId())
                 .build();

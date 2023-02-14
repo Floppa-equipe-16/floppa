@@ -1,9 +1,12 @@
 package ulaval.glo2003.domain;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import ulaval.glo2003.api.ProductCategory;
 import ulaval.glo2003.api.exceptionHandling.InvalidParamException;
+import ulaval.glo2003.api.exceptionHandling.NotPermittedException;
 
 public class Product {
     private final String title;
@@ -13,11 +16,14 @@ public class Product {
     private final String id;
     private final String createdAt;
 
+    private final ArrayList<Offer> offers;
+
     public Product(String title, String description, Double suggestedPrice, String category) {
         this.title = title;
         this.description = description;
         this.suggestedPrice = Math.round(suggestedPrice * 100d) / 100d;
         this.category = category;
+        this.offers = new ArrayList<>();
 
         validateProductParameters();
 
@@ -56,6 +62,15 @@ public class Product {
         return createdAt;
     }
 
+    public List<Offer> getOffers() {
+        return offers;
+    }
+
+    public void addOffer(Offer offer) {
+        validateOfferEligible(offer);
+        offers.add(offer);
+    }
+
     private boolean isSuggestedPriceUnder1() {
         return suggestedPrice.intValue() < 1;
     }
@@ -67,5 +82,19 @@ public class Product {
             return false;
         }
         return true;
+    }
+
+    private void validateOfferEligible(Offer offer) {
+        if (!isOfferAmountAtleastSuggestedPrice(offer.getAmount())) throw new InvalidParamException("amount");
+        if (hasBuyerAlreadyMadeAnOffer(offer.getUsername()))
+            throw new NotPermittedException("user with username " + offer.getUsername() + " has already made an offer");
+    }
+
+    private boolean hasBuyerAlreadyMadeAnOffer(String buyerUsername) {
+        return offers.stream().anyMatch(offer -> buyerUsername.equals(offer.getUsername()));
+    }
+
+    private boolean isOfferAmountAtleastSuggestedPrice(Double offerAmount) {
+        return offerAmount >= suggestedPrice;
     }
 }

@@ -28,7 +28,7 @@ public class Seller {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.bio = bio;
-        this.products = new ArrayList<Product>();
+        this.products = new ArrayList<>();
 
         validateSellerParameters();
 
@@ -69,14 +69,14 @@ public class Seller {
     }
 
     public ArrayList<ProductResponse> getProductResponses() {
-        ArrayList<ProductResponse> productResponses = new ArrayList<ProductResponse>();
+        ArrayList<ProductResponse> productResponses = new ArrayList<>();
         for (Product product : products) {
             productResponses.add(new ProductResponse(product));
         }
         return productResponses;
     }
 
-    public void addProducts(Product product) {
+    public void addProduct(Product product) {
         products.add(product);
     }
 
