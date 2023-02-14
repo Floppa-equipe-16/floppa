@@ -1,8 +1,7 @@
 package ulaval.glo2003.domain;
 
-import ulaval.glo2003.api.exceptionHandling.InvalidParamException;
-
 import java.time.Instant;
+import ulaval.glo2003.api.exceptionHandling.InvalidParamException;
 
 public class Offer {
 
@@ -11,7 +10,7 @@ public class Offer {
     private final String message;
     private final String createdAt;
 
-    public Offer (String username, Double amount, String message) {
+    public Offer(String username, Double amount, String message) {
         this.username = username;
         this.amount = amount;
         this.message = message;

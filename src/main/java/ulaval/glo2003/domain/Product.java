@@ -1,13 +1,12 @@
 package ulaval.glo2003.domain;
 
-import ulaval.glo2003.api.ProductCategory;
-import ulaval.glo2003.api.exceptionHandling.InvalidParamException;
-import ulaval.glo2003.api.exceptionHandling.NotPermittedException;
-
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ulaval.glo2003.api.ProductCategory;
+import ulaval.glo2003.api.exceptionHandling.InvalidParamException;
+import ulaval.glo2003.api.exceptionHandling.NotPermittedException;
 
 public class Product {
     private final String title;
@@ -90,15 +89,14 @@ public class Product {
     }
 
     private void validateOfferEligible(Offer offer) {
-        if (!isOfferAmountHighEnough(offer.getAmount()))
-            throw  new InvalidParamException("amount");
-        if (hasBuyerAlreadyMadeAnOffer(offer.getUsername()))
-            throw new NotPermittedException("username");
+        if (!isOfferAmountHighEnough(offer.getAmount())) throw new InvalidParamException("amount");
+        if (hasBuyerAlreadyMadeAnOffer(offer.getUsername())) throw new NotPermittedException("username");
     }
 
     private boolean hasBuyerAlreadyMadeAnOffer(String buyerUsername) {
         return offers.stream().anyMatch(offer -> buyerUsername.equals(offer.getUsername()));
     }
+
     private boolean isOfferAmountHighEnough(Double offerAmount) {
         return offerAmount >= suggestedPrice;
     }
