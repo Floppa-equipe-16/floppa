@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ulaval.glo2003.api.exceptionHandling.InvalidParamException;
-import ulaval.glo2003.api.exceptionHandling.NotPermittedException;
+import ulaval.glo2003.domain.exceptions.InvalidParamException;
+import ulaval.glo2003.domain.exceptions.NotPermittedException;
 
 public class ProductTest {
 

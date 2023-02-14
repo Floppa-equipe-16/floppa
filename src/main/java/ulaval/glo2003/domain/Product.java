@@ -8,7 +8,6 @@ import ulaval.glo2003.api.product.ProductCategory;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
 import ulaval.glo2003.domain.exceptions.NotPermittedException;
 
-
 public class Product {
     private final String title;
     private final String description;
