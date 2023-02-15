@@ -125,7 +125,7 @@ public class Seller {
         }
     }
 
-    protected OffsetDateTime currentTime(){
+    protected OffsetDateTime currentTime() {
         return OffsetDateTime.now();
     }
 }

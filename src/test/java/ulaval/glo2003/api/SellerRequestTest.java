@@ -1,12 +1,12 @@
 package ulaval.glo2003.api;
 
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.domain.exceptions.MissingParamException;
-
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SellerRequestTest {
 
@@ -30,8 +30,7 @@ public class SellerRequestTest {
         MissingParamException thrownMissingName = assertThrows(
                 MissingParamException.class,
                 sellerRequest::validateSellerNonNullParameters,
-                "Expected new `validateSellerNonNullParameters` to throw"
-        );
+                "Expected new `validateSellerNonNullParameters` to throw");
         assertThat(thrownMissingName.errorDescription.description)
                 .isEqualTo(missingParamException.errorDescription.description);
     }
@@ -41,12 +40,10 @@ public class SellerRequestTest {
         MissingParamException missingParamException = new MissingParamException("birthdate");
         sellerRequest.birthdate = null;
 
-
         MissingParamException thrownMissingBirthdate = assertThrows(
                 MissingParamException.class,
                 sellerRequest::validateSellerNonNullParameters,
-                "Expected new `validateSellerNonNullParameters` to throw"
-        );
+                "Expected new `validateSellerNonNullParameters` to throw");
         assertThat(thrownMissingBirthdate.errorDescription.description)
                 .isEqualTo(missingParamException.errorDescription.description);
     }
@@ -56,12 +53,10 @@ public class SellerRequestTest {
         MissingParamException missingParamException = new MissingParamException("email");
         sellerRequest.email = null;
 
-
         MissingParamException thrownMissingEmail = assertThrows(
                 MissingParamException.class,
                 sellerRequest::validateSellerNonNullParameters,
-                "Expected new `validateSellerNonNullParameters` to throw"
-        );
+                "Expected new `validateSellerNonNullParameters` to throw");
         assertThat(thrownMissingEmail.errorDescription.description)
                 .isEqualTo(missingParamException.errorDescription.description);
     }
@@ -71,12 +66,10 @@ public class SellerRequestTest {
         MissingParamException missingParamException = new MissingParamException("phone number");
         sellerRequest.phoneNumber = null;
 
-
         MissingParamException thrownMissingPhoneNumber = assertThrows(
                 MissingParamException.class,
                 sellerRequest::validateSellerNonNullParameters,
-                "Expected new `validateSellerNonNullParameters` to throw"
-        );
+                "Expected new `validateSellerNonNullParameters` to throw");
         assertThat(thrownMissingPhoneNumber.errorDescription.description)
                 .isEqualTo(missingParamException.errorDescription.description);
     }
@@ -86,15 +79,11 @@ public class SellerRequestTest {
         MissingParamException missingParamException = new MissingParamException("bio");
         sellerRequest.bio = null;
 
-
         MissingParamException thrownMissingBio = assertThrows(
                 MissingParamException.class,
                 sellerRequest::validateSellerNonNullParameters,
-                "Expected new `validateSellerNonNullParameters` to throw"
-        );
+                "Expected new `validateSellerNonNullParameters` to throw");
         assertThat(thrownMissingBio.errorDescription.description)
                 .isEqualTo(missingParamException.errorDescription.description);
     }
-
-
 }
