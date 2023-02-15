@@ -14,6 +14,8 @@ public class SellerResponse {
     public String bio;
     public ArrayList<ProductResponse> products;
 
+    private SellerResponse() {}
+
     public SellerResponse(Seller seller) {
         this.id = seller.getId();
         this.createAt = seller.getCreatedAt();
@@ -23,5 +25,12 @@ public class SellerResponse {
         this.phoneNumber = seller.getPhoneNumber();
         this.bio = seller.getBio();
         this.products = seller.getProductResponses();
+    }
+
+    public static SellerResponse ctorSimplifiedSellerResponse(Seller seller) {
+        SellerResponse sellerResponse = new SellerResponse();
+        sellerResponse.id = seller.getId();
+        sellerResponse.name = seller.getName();
+        return sellerResponse;
     }
 }
