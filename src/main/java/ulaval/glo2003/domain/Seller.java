@@ -76,6 +76,13 @@ public class Seller {
         return productResponses;
     }
 
+    public Product getProductById(String productId) {
+        return products.stream()
+                .filter(product -> product.getId().equals(productId))
+                .findFirst()
+                .orElse(null);
+    }
+
     public void addProduct(Product product) {
         products.add(product);
     }
