@@ -9,7 +9,7 @@ public class SellerRequest {
     public String phoneNumber;
     public String bio;
 
-    public void validateSellerNonNullParameter() {
+    public void validateSellerNonNullParameters() {
         if (name == null) throw new MissingParamException("name");
         if (email == null) throw new MissingParamException("email");
         if (birthdate == null) throw new MissingParamException("birthdate");
