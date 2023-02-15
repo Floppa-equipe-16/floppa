@@ -37,4 +37,19 @@ public class ProductResource {
                 .header("Location", uriInfo.getAbsolutePath() + "/" + product.getId())
                 .build();
     }
+
+    @GET
+    @Path("/{productId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getProduct(@PathParam("productId") String productId) {
+        Seller foundSeller = sellers.stream()
+                .filter(seller -> seller.getProductById(productId) != null)
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException(String.format("Product with id '%s' not found", productId)));
+        Product foundProduct = foundSeller.getProductById(productId);
+
+        return Response.ok()
+                .entity(new ProductResponse(foundSeller, foundProduct))
+                .build();
+    }
 }
