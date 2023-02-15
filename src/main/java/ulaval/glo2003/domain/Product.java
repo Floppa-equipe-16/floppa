@@ -2,9 +2,7 @@ package ulaval.glo2003.domain;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
-import ulaval.glo2003.api.product.ProductCategory;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
 import ulaval.glo2003.domain.exceptions.NotPermittedException;
 
@@ -62,7 +60,7 @@ public class Product {
         return createdAt;
     }
 
-    public List<Offer> getOffers() {
+    public ArrayList<Offer> getOffers() {
         return offers;
     }
 
