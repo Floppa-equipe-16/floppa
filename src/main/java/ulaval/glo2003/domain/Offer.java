@@ -12,7 +12,8 @@ public class Offer {
 
     public Offer(String username, Double amount, String message) {
         this.username = username;
-        this.amount = amount;
+        this.amount = Math.round(amount * 100d) / 100d;
+        ;
         this.message = message;
 
         validateOfferParameters();

@@ -6,6 +6,8 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import java.util.List;
+import ulaval.glo2003.api.offer.OfferRequest;
+import ulaval.glo2003.domain.Offer;
 import ulaval.glo2003.domain.Product;
 import ulaval.glo2003.domain.Seller;
 
@@ -51,5 +53,27 @@ public class ProductResource {
         return Response.ok()
                 .entity(new ProductResponse(foundSeller, foundProduct))
                 .build();
+    }
+
+    @POST
+    @Path("/{productId}/offers")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createOffer(
+            @HeaderParam("X-Buyer-Username") String xBuyerUsername,
+            @PathParam("productId") String productId,
+            OfferRequest offerRequest) {
+
+        Seller foundSeller = sellers.stream()
+                .filter(seller -> seller.getProductById(productId) != null)
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException(String.format("Product with id '%s' not found", productId)));
+
+        offerRequest.validateOfferNonNullParameter();
+
+        Offer offer = new Offer(xBuyerUsername, offerRequest.amount, offerRequest.message);
+
+        foundSeller.getProductById(productId).addOffer(offer);
+
+        return Response.status(Response.Status.CREATED).build();
     }
 }
