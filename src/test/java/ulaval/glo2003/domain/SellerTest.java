@@ -47,23 +47,28 @@ public class SellerTest {
     }
 
     @Test
-    public void constructorThrowsWhenBirthdateFormatInvalid() {
+    public void constructorThrowsWhenBirthdateInvalidFormat() {
         InvalidParamException invalidParamException = new InvalidParamException("birthdate");
-        String invalidDate = "2001-13-20";
         String invalidFormat = "2001/12/20";
-
-        InvalidParamException thrownInvalidDate = assertThrows(
-                InvalidParamException.class,
-                () -> new Seller(validName, invalidDate, validEmail, validPhoneNumber, validBio),
-                "Expected new Seller() to throw");
-        assertThat(thrownInvalidDate.errorDescription.description)
-                .isEqualTo(invalidParamException.errorDescription.description);
 
         InvalidParamException thrownInvalidFormat = assertThrows(
                 InvalidParamException.class,
                 () -> new Seller(validName, invalidFormat, validEmail, validPhoneNumber, validBio),
                 "Expected new Seller() to throw");
         assertThat(thrownInvalidFormat.errorDescription.description)
+                .isEqualTo(invalidParamException.errorDescription.description);
+    }
+
+    @Test
+    public void constructorThrowsWhenBirthdateInvalidDate() {
+        InvalidParamException invalidParamException = new InvalidParamException("birthdate");
+        String invalidDate = "2001-13-20";
+
+        InvalidParamException thrownInvalidDate = assertThrows(
+                InvalidParamException.class,
+                () -> new Seller(validName, invalidDate, validEmail, validPhoneNumber, validBio),
+                "Expected new Seller() to throw");
+        assertThat(thrownInvalidDate.errorDescription.description)
                 .isEqualTo(invalidParamException.errorDescription.description);
     }
 
@@ -82,60 +87,106 @@ public class SellerTest {
     }
 
     @Test
-    public void constructorThrowsWhenEmailInvalid() {
+    public void constructorThrowsWhenEmailMissingIdentifier() {
         InvalidParamException invalidParamException = new InvalidParamException("email");
-        String invalidEmail1 = "Bob.com";
-        String invalidEmail2 = "Bob@gmail";
-        String invalidEmail3 = "Bob@gmail.";
+        String invalidEmail = "@Bob.com";
 
-        InvalidParamException thrownInvalidEmail1 = assertThrows(
+        InvalidParamException thrownInvalidEmail = assertThrows(
                 InvalidParamException.class,
-                () -> new Seller(validName, validBirthdate, invalidEmail1, validPhoneNumber, validBio),
+                () -> new Seller(validName, validBirthdate, invalidEmail, validPhoneNumber, validBio),
                 "Expected new Seller() to throw");
-        assertThat(thrownInvalidEmail1.errorDescription.description)
-                .isEqualTo(invalidParamException.errorDescription.description);
-
-        InvalidParamException thrownInvalidEmail2 = assertThrows(
-                InvalidParamException.class,
-                () -> new Seller(validName, validBirthdate, invalidEmail2, validPhoneNumber, validBio),
-                "Expected new Seller() to throw");
-        assertThat(thrownInvalidEmail2.errorDescription.description)
-                .isEqualTo(invalidParamException.errorDescription.description);
-
-        InvalidParamException thrownInvalidEmail3 = assertThrows(
-                InvalidParamException.class,
-                () -> new Seller(validName, validBirthdate, invalidEmail3, validPhoneNumber, validBio),
-                "Expected new Seller() to throw");
-        assertThat(thrownInvalidEmail3.errorDescription.description)
+        assertThat(thrownInvalidEmail.errorDescription.description)
                 .isEqualTo(invalidParamException.errorDescription.description);
     }
 
     @Test
-    public void constructorThrowsWhenPhoneNumberInvalid() {
+    public void constructorThrowsWhenEmailMissingAt() {
+        InvalidParamException invalidParamException = new InvalidParamException("email");
+        String invalidEmail = "Bob.com";
+
+        InvalidParamException thrownInvalidEmail = assertThrows(
+                InvalidParamException.class,
+                () -> new Seller(validName, validBirthdate, invalidEmail, validPhoneNumber, validBio),
+                "Expected new Seller() to throw");
+        assertThat(thrownInvalidEmail.errorDescription.description)
+                .isEqualTo(invalidParamException.errorDescription.description);
+    }
+
+    @Test
+    public void constructorThrowsWhenEmailMissingService() {
+        InvalidParamException invalidParamException = new InvalidParamException("email");
+        String invalidEmail = "Bob@.com";
+
+        InvalidParamException thrownInvalidEmail = assertThrows(
+                InvalidParamException.class,
+                () -> new Seller(validName, validBirthdate, invalidEmail, validPhoneNumber, validBio),
+                "Expected new Seller() to throw");
+        assertThat(thrownInvalidEmail.errorDescription.description)
+                .isEqualTo(invalidParamException.errorDescription.description);
+    }
+
+    @Test
+    public void constructorThrowsWhenEmailMissingDot() {
+        InvalidParamException invalidParamException = new InvalidParamException("email");
+        String invalidEmail = "Bob@gmailcom";
+
+        InvalidParamException thrownInvalidEmail = assertThrows(
+                InvalidParamException.class,
+                () -> new Seller(validName, validBirthdate, invalidEmail, validPhoneNumber, validBio),
+                "Expected new Seller() to throw");
+        assertThat(thrownInvalidEmail.errorDescription.description)
+                .isEqualTo(invalidParamException.errorDescription.description);
+    }
+
+    @Test
+    public void constructorThrowsWhenEmailMissingExtension() {
+        InvalidParamException invalidParamException = new InvalidParamException("email");
+        String invalidEmail = "Bob@gmail.";
+
+        InvalidParamException thrownInvalidEmail = assertThrows(
+                InvalidParamException.class,
+                () -> new Seller(validName, validBirthdate, invalidEmail, validPhoneNumber, validBio),
+                "Expected new Seller() to throw");
+        assertThat(thrownInvalidEmail.errorDescription.description)
+                .isEqualTo(invalidParamException.errorDescription.description);
+    }
+
+    @Test
+    public void constructorThrowsWhenPhoneNumberIsTooLong() {
         InvalidParamException invalidParamException = new InvalidParamException("phone number");
-        String invalidPhoneNumber1 = "+1234567890";
-        String invalidPhoneNumber2 = "1-418-123-4567";
-        String invalidPhoneNumber3 = "1234567890";
+        String invalidPhoneNumber = "111234567890";
 
-        InvalidParamException thrownInvalidPhoneNumber1 = assertThrows(
+        InvalidParamException thrownInvalidPhoneNumber = assertThrows(
                 InvalidParamException.class,
-                () -> new Seller(validName, validBirthdate, validEmail, invalidPhoneNumber1, validBio),
+                () -> new Seller(validName, validBirthdate, validEmail, invalidPhoneNumber, validBio),
                 "Expected new Seller() to throw");
-        assertThat(thrownInvalidPhoneNumber1.errorDescription.description)
+        assertThat(thrownInvalidPhoneNumber.errorDescription.description)
                 .isEqualTo(invalidParamException.errorDescription.description);
+    }
 
-        InvalidParamException thrownInvalidPhoneNumber2 = assertThrows(
+    @Test
+    public void constructorThrowsWhenPhoneNumberIsTooShort() {
+        InvalidParamException invalidParamException = new InvalidParamException("phone number");
+        String invalidPhoneNumber = "1234567890";
+
+        InvalidParamException thrownInvalidPhoneNumber = assertThrows(
                 InvalidParamException.class,
-                () -> new Seller(validName, validBirthdate, validEmail, invalidPhoneNumber2, validBio),
+                () -> new Seller(validName, validBirthdate, validEmail, invalidPhoneNumber, validBio),
                 "Expected new Seller() to throw");
-        assertThat(thrownInvalidPhoneNumber2.errorDescription.description)
+        assertThat(thrownInvalidPhoneNumber.errorDescription.description)
                 .isEqualTo(invalidParamException.errorDescription.description);
+    }
 
-        InvalidParamException thrownInvalidPhoneNumber3 = assertThrows(
+    @Test
+    public void constructorThrowsWhenPhoneNumberContainOtherChar() {
+        InvalidParamException invalidParamException = new InvalidParamException("phone number");
+        String invalidPhoneNumber = "+1234567890";
+
+        InvalidParamException thrownInvalidPhoneNumber = assertThrows(
                 InvalidParamException.class,
-                () -> new Seller(validName, validBirthdate, validEmail, invalidPhoneNumber3, validBio),
+                () -> new Seller(validName, validBirthdate, validEmail, invalidPhoneNumber, validBio),
                 "Expected new Seller() to throw");
-        assertThat(thrownInvalidPhoneNumber3.errorDescription.description)
+        assertThat(thrownInvalidPhoneNumber.errorDescription.description)
                 .isEqualTo(invalidParamException.errorDescription.description);
     }
 
