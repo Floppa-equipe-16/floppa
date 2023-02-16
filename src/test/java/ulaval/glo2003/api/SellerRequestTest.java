@@ -13,7 +13,7 @@ public class SellerRequestTest {
     private final SellerRequest sellerRequest = new SellerRequest();
 
     @BeforeEach
-    public void prepareProductRequest() {
+    public void prepareSellerRequest() {
         sellerRequest.name = "Bob";
         sellerRequest.birthdate = "2000-01-01";
         sellerRequest.email = "Bob@bob.bob";
