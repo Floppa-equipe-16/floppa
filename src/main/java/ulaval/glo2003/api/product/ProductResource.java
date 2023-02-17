@@ -5,7 +5,6 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
-import ulaval.glo2003.api.offer.OfferRequest;
 import ulaval.glo2003.domain.*;
 
 @Path("/products")
@@ -41,21 +40,5 @@ public class ProductResource {
         return Response.ok()
                 .entity(new ProductResponse(foundSeller, foundProduct))
                 .build();
-    }
-
-    @POST
-    @Path("/{productId}/offers")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response createOffer(
-            @HeaderParam("X-Buyer-Username") String xBuyerUsername,
-            @PathParam("productId") String productId,
-            OfferRequest offerRequest) {
-        offerRequest.validateOfferNonNullParameter();
-
-        Seller foundSeller = sellersDatabase.findSellerByProductId(productId);
-        Offer offer = OfferConverter.offerRequestToOffer(xBuyerUsername, offerRequest);
-        foundSeller.getProductById(productId).addOffer(offer);
-
-        return Response.status(Response.Status.CREATED).build();
     }
 }

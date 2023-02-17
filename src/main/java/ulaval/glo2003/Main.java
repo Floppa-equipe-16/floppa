@@ -8,6 +8,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import ulaval.glo2003.api.HealthResource;
 import ulaval.glo2003.api.exceptionMappers.NotFoundExceptionMapper;
 import ulaval.glo2003.api.exceptionMappers.ParamExceptionMapper;
+import ulaval.glo2003.api.offer.OfferResource;
 import ulaval.glo2003.api.product.ProductResource;
 import ulaval.glo2003.api.seller.SellerResource;
 import ulaval.glo2003.domain.SellersDatabase;
@@ -19,8 +20,8 @@ public class Main {
 
         HealthResource healthResource = new HealthResource();
         SellerResource sellerResource = new SellerResource(sellersDatabase);
-
         ProductResource productRessource = new ProductResource(sellersDatabase);
+        OfferResource offerResource = new OfferResource(sellersDatabase);
 
         ParamExceptionMapper paramExceptionMapper = new ParamExceptionMapper();
         NotFoundExceptionMapper notFoundExceptionMapper = new NotFoundExceptionMapper();
@@ -28,6 +29,7 @@ public class Main {
                 .register(healthResource)
                 .register(sellerResource)
                 .register(productRessource)
+                .register(offerResource)
                 .register(paramExceptionMapper)
                 .register(notFoundExceptionMapper);
         URI uri = URI.create("http://localhost:8080/");
