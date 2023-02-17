@@ -30,10 +30,10 @@ public class Seller {
         this.bio = params.bio;
         this.products = new ArrayList<>();
 
+        validateParameters();
+
         id = UUID.randomUUID().toString();
         createdAt = Instant.now().toString();
-
-        validateParameters();
     }
 
     public String getName() {

@@ -26,7 +26,6 @@ public class SellerRequestTest {
         MissingParamException missingParamException = new MissingParamException("name");
         sellerRequest.name = null;
 
-        assertThrows(MissingParamException.class, sellerRequest::validate);
         MissingParamException thrownMissingName = assertThrows(
                 MissingParamException.class,
                 sellerRequest::validate,
