@@ -5,22 +5,23 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
-import java.util.List;
 import ulaval.glo2003.domain.Seller;
+import ulaval.glo2003.domain.SellersDatabase;
 
 @Path("/sellers")
 public class SellerResource {
-    private final List<Seller> sellers;
+    private final SellersDatabase sellersDatabase;
 
-    public SellerResource(List<Seller> sellers) {
-        this.sellers = sellers;
+    public SellerResource(SellersDatabase sellersDatabase) {
+        this.sellersDatabase = sellersDatabase;
     }
 
     @GET
     @Path("/{sellerId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSeller(@PathParam("sellerId") String sellerId) {
-        return Response.ok().entity(getSellerResponseById(sellerId)).build();
+        Seller foundSeller = sellersDatabase.findSellerBySellerId(sellerId);
+        return Response.ok().entity(new SellerResponse(foundSeller)).build();
     }
 
     @POST
@@ -33,18 +34,9 @@ public class SellerResource {
                 sellerRequest.email,
                 sellerRequest.phoneNumber,
                 sellerRequest.bio);
-        sellers.add(seller);
+        sellersDatabase.addSeller(seller);
         return Response.status(Response.Status.CREATED)
                 .header("Location", uriInfo.getAbsolutePath() + "/" + seller.getId())
                 .build();
-    }
-
-    private SellerResponse getSellerResponseById(String sellerId) {
-        Seller foundSeller = sellers.stream()
-                .filter(seller -> seller.getId().equals(sellerId))
-                .findFirst()
-                .orElseThrow(() -> new NotFoundException(String.format("Seller with id '%s' not found", sellerId)));
-
-        return new SellerResponse(foundSeller);
     }
 }
