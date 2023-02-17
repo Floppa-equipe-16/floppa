@@ -6,10 +6,10 @@ import java.time.OffsetDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
 
 public class Seller {
@@ -68,21 +68,10 @@ public class Seller {
         return products;
     }
 
-    //TODO API in Domain
-    public ArrayList<ProductResponse> getProductResponses() {
-        ArrayList<ProductResponse> productResponses = new ArrayList<>();
-        for (Product product : products) {
-            productResponses.add(new ProductResponse(product));
-        }
-        return productResponses;
-    }
-
-    //TODO Return optional ?
-    public Product getProductById(String productId) {
+    public Optional<Product> getProductById(String productId) {
         return products.stream()
                 .filter(product -> product.getId().equals(productId))
-                .findFirst()
-                .orElse(null);
+                .findFirst();
     }
 
     public void addProduct(Product product) {

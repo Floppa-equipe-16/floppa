@@ -6,83 +6,85 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.api.seller.SellerRequest;
+import ulaval.glo2003.domain.SellerParams;
 import ulaval.glo2003.domain.exceptions.MissingParamException;
 
 public class SellerRequestTest {
+    private static final String NAME = "Bob";
+    private static final String BIRTHDATE = "2000-01-01";
+    private static final String EMAIL = "Bob@bob.bob";
+    private static final String PHONE_NUMBER = "11234567890";
+    private static final String BIO = "My name is Bob.";
 
     private final SellerRequest sellerRequest = new SellerRequest();
 
     @BeforeEach
     public void prepareSellerRequest() {
-        sellerRequest.name = "Bob";
-        sellerRequest.birthdate = "2000-01-01";
-        sellerRequest.email = "Bob@bob.bob";
-        sellerRequest.phoneNumber = "11234567890";
-        sellerRequest.bio = "My name is Bob.";
+        sellerRequest.name = NAME;
+        sellerRequest.birthdate = BIRTHDATE;
+        sellerRequest.email = EMAIL;
+        sellerRequest.phoneNumber = PHONE_NUMBER;
+        sellerRequest.bio = BIO;
     }
 
     @Test
-    public void validateMethodThrowsWhenNullName() {
-        MissingParamException missingParamException = new MissingParamException("name");
+    public void canGetRequestAsParams() {
+        SellerParams params = sellerRequest.asParams();
+
+        assertThat(params.name).isEqualTo(NAME);
+        assertThat(params.birthdate).isEqualTo(BIRTHDATE);
+        assertThat(params.email).isEqualTo(EMAIL);
+        assertThat(params.phoneNumber).isEqualTo(PHONE_NUMBER);
+        assertThat(params.bio).isEqualTo(BIO);
+    }
+
+    @Test
+    public void validateThrowsWhenNameIsNull() {
         sellerRequest.name = null;
 
-        MissingParamException thrownMissingName = assertThrows(
-                MissingParamException.class,
-                sellerRequest::validate,
-                "Expected new `validateSellerNonNullParameters` to throw");
+        MissingParamException thrownMissingName = assertThrows(MissingParamException.class, sellerRequest::validate);
         assertThat(thrownMissingName.errorDescription.description)
-                .isEqualTo(missingParamException.errorDescription.description);
+                .ignoringCase()
+                .contains("name");
     }
 
     @Test
-    public void validateMethodThrowsWhenNullBirthdate() {
-        MissingParamException missingParamException = new MissingParamException("birthdate");
+    public void validateThrowsWhenBirthdateIsNull() {
         sellerRequest.birthdate = null;
 
-        MissingParamException thrownMissingBirthdate = assertThrows(
-                MissingParamException.class,
-                sellerRequest::validate,
-                "Expected new `validateSellerNonNullParameters` to throw");
+        MissingParamException thrownMissingBirthdate =
+                assertThrows(MissingParamException.class, sellerRequest::validate);
         assertThat(thrownMissingBirthdate.errorDescription.description)
-                .isEqualTo(missingParamException.errorDescription.description);
+                .ignoringCase()
+                .contains("birthdate");
     }
 
     @Test
-    public void validateMethodThrowsWhenNullEmail() {
-        MissingParamException missingParamException = new MissingParamException("email");
+    public void validateThrowsWhenEmailIsNull() {
         sellerRequest.email = null;
 
-        MissingParamException thrownMissingEmail = assertThrows(
-                MissingParamException.class,
-                sellerRequest::validate,
-                "Expected new `validateSellerNonNullParameters` to throw");
+        MissingParamException thrownMissingEmail = assertThrows(MissingParamException.class, sellerRequest::validate);
         assertThat(thrownMissingEmail.errorDescription.description)
-                .isEqualTo(missingParamException.errorDescription.description);
+                .ignoringCase()
+                .contains("email");
     }
 
     @Test
-    public void validateMethodThrowsWhenNullPhoneNumber() {
-        MissingParamException missingParamException = new MissingParamException("phone number");
+    public void validateThrowsWhenPhoneNumberIsNull() {
         sellerRequest.phoneNumber = null;
 
-        MissingParamException thrownMissingPhoneNumber = assertThrows(
-                MissingParamException.class,
-                sellerRequest::validate,
-                "Expected new `validateSellerNonNullParameters` to throw");
+        MissingParamException thrownMissingPhoneNumber =
+                assertThrows(MissingParamException.class, sellerRequest::validate);
         assertThat(thrownMissingPhoneNumber.errorDescription.description)
-                .isEqualTo(missingParamException.errorDescription.description);
+                .ignoringCase()
+                .contains("phone number");
     }
 
     @Test
-    public void validateMethodThrowsWhenNullBio() {
-        MissingParamException missingParamException = new MissingParamException("bio");
+    public void validateThrowsWhenBioIsNull() {
         sellerRequest.bio = null;
 
-        MissingParamException thrownMissingBio = assertThrows(
-                MissingParamException.class,
-                sellerRequest::validate,
-                "Expected new `validateSellerNonNullParameters` to throw");
-        assertThat(thrownMissingBio.errorDescription.description)
-                .isEqualTo(missingParamException.errorDescription.description);
+        MissingParamException thrownMissingBio = assertThrows(MissingParamException.class, sellerRequest::validate);
+        assertThat(thrownMissingBio.errorDescription.description).ignoringCase().contains("bio");
     }
 }

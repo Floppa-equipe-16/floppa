@@ -46,13 +46,13 @@ public class ProductResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProduct(@PathParam("productId") String productId) {
         Seller foundSeller = sellers.stream()
-                .filter(seller -> seller.getProductById(productId) != null)
+                .filter(seller -> seller.getProductById(productId).isPresent())
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException(String.format("Product with id '%s' not found", productId)));
-        Product foundProduct = foundSeller.getProductById(productId);
+        Product foundProduct = foundSeller.getProductById(productId).get();
 
         return Response.ok()
-                .entity(new ProductResponse(foundSeller, foundProduct))
+                .entity(ProductResponseFactory.createResponse(foundProduct, foundSeller))
                 .build();
     }
 
@@ -66,12 +66,12 @@ public class ProductResource {
         offerRequest.validateOfferNonNullParameter();
 
         Seller foundSeller = sellers.stream()
-                .filter(seller -> seller.getProductById(productId) != null)
+                .filter(seller -> seller.getProductById(productId).isPresent())
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException(String.format("Product with id '%s' not found", productId)));
 
         Offer offer = new Offer(xBuyerUsername, offerRequest.amount, offerRequest.message);
-        foundSeller.getProductById(productId).addOffer(offer);
+        foundSeller.getProductById(productId).get().addOffer(offer);
 
         return Response.status(Response.Status.CREATED).build();
     }

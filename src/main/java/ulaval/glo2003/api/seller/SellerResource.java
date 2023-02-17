@@ -43,6 +43,6 @@ public class SellerResource {
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException(String.format("Seller with id '%s' not found", sellerId)));
 
-        return new SellerResponse(foundSeller);
+        return SellerResponseFactory.createCompleteResponse(foundSeller);
     }
 }

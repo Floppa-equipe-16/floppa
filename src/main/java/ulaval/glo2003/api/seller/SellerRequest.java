@@ -1,6 +1,5 @@
 package ulaval.glo2003.api.seller;
 
-import ulaval.glo2003.domain.Seller;
 import ulaval.glo2003.domain.SellerParams;
 import ulaval.glo2003.domain.exceptions.MissingParamException;
 
