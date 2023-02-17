@@ -29,6 +29,7 @@ public class SellerResource {
         request.validate();
 
         Seller seller = new Seller(request.asParams());
+
         sellers.add(seller);
 
         return Response.status(Response.Status.CREATED)
