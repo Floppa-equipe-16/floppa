@@ -26,10 +26,10 @@ public class SellerRequestTest {
         MissingParamException missingParamException = new MissingParamException("name");
         sellerRequest.name = null;
 
-        assertThrows(MissingParamException.class, sellerRequest::validateSellerNonNullParameters);
+        assertThrows(MissingParamException.class, sellerRequest::validate);
         MissingParamException thrownMissingName = assertThrows(
                 MissingParamException.class,
-                sellerRequest::validateSellerNonNullParameters,
+                sellerRequest::validate,
                 "Expected new `validateSellerNonNullParameters` to throw");
         assertThat(thrownMissingName.errorDescription.description)
                 .isEqualTo(missingParamException.errorDescription.description);
@@ -42,7 +42,7 @@ public class SellerRequestTest {
 
         MissingParamException thrownMissingBirthdate = assertThrows(
                 MissingParamException.class,
-                sellerRequest::validateSellerNonNullParameters,
+                sellerRequest::validate,
                 "Expected new `validateSellerNonNullParameters` to throw");
         assertThat(thrownMissingBirthdate.errorDescription.description)
                 .isEqualTo(missingParamException.errorDescription.description);
@@ -55,7 +55,7 @@ public class SellerRequestTest {
 
         MissingParamException thrownMissingEmail = assertThrows(
                 MissingParamException.class,
-                sellerRequest::validateSellerNonNullParameters,
+                sellerRequest::validate,
                 "Expected new `validateSellerNonNullParameters` to throw");
         assertThat(thrownMissingEmail.errorDescription.description)
                 .isEqualTo(missingParamException.errorDescription.description);
@@ -68,7 +68,7 @@ public class SellerRequestTest {
 
         MissingParamException thrownMissingPhoneNumber = assertThrows(
                 MissingParamException.class,
-                sellerRequest::validateSellerNonNullParameters,
+                sellerRequest::validate,
                 "Expected new `validateSellerNonNullParameters` to throw");
         assertThat(thrownMissingPhoneNumber.errorDescription.description)
                 .isEqualTo(missingParamException.errorDescription.description);
@@ -81,7 +81,7 @@ public class SellerRequestTest {
 
         MissingParamException thrownMissingBio = assertThrows(
                 MissingParamException.class,
-                sellerRequest::validateSellerNonNullParameters,
+                sellerRequest::validate,
                 "Expected new `validateSellerNonNullParameters` to throw");
         assertThat(thrownMissingBio.errorDescription.description)
                 .isEqualTo(missingParamException.errorDescription.description);
