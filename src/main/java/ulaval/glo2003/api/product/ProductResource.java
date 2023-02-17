@@ -70,7 +70,6 @@ public class ProductResource {
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException(String.format("Product with id '%s' not found", productId)));
 
-
         Offer offer = new Offer(xBuyerUsername, offerRequest.amount, offerRequest.message);
         foundSeller.getProductById(productId).addOffer(offer);
 
