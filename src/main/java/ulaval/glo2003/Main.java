@@ -1,5 +1,7 @@
 package ulaval.glo2003;
 
+import java.io.IOException;
+import java.net.URI;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -9,9 +11,6 @@ import ulaval.glo2003.api.exceptionMappers.ParamExceptionMapper;
 import ulaval.glo2003.api.product.ProductResource;
 import ulaval.glo2003.api.seller.SellerResource;
 import ulaval.glo2003.domain.SellersDatabase;
-
-import java.io.IOException;
-import java.net.URI;
 
 public class Main {
 

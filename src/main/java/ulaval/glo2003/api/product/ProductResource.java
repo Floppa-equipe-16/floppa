@@ -6,10 +6,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import ulaval.glo2003.api.offer.OfferRequest;
-import ulaval.glo2003.domain.Offer;
-import ulaval.glo2003.domain.Product;
-import ulaval.glo2003.domain.Seller;
-import ulaval.glo2003.domain.SellersDatabase;
+import ulaval.glo2003.domain.*;
 
 @Path("/products")
 public class ProductResource {
@@ -26,13 +23,9 @@ public class ProductResource {
         productRequest.validateProductNonNullParameter();
 
         Seller foundSeller = sellersDatabase.findSellerBySellerId(xSellerId);
-
-        Product product = new Product(
-                productRequest.title,
-                productRequest.description,
-                productRequest.suggestedPrice,
-                productRequest.category);
+        Product product = ProductConverter.productRequestToProduct(productRequest);
         foundSeller.addProduct(product);
+
         return Response.status(Response.Status.CREATED)
                 .header("Location", uriInfo.getAbsolutePath() + "/" + product.getId())
                 .build();
@@ -60,8 +53,7 @@ public class ProductResource {
         offerRequest.validateOfferNonNullParameter();
 
         Seller foundSeller = sellersDatabase.findSellerByProductId(productId);
-
-        Offer offer = new Offer(xBuyerUsername, offerRequest.amount, offerRequest.message);
+        Offer offer = OfferConverter.offerRequestToOffer(xBuyerUsername, offerRequest);
         foundSeller.getProductById(productId).addOffer(offer);
 
         return Response.status(Response.Status.CREATED).build();

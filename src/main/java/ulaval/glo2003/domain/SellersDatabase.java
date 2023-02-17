@@ -1,7 +1,6 @@
 package ulaval.glo2003.domain;
 
 import jakarta.ws.rs.NotFoundException;
-
 import java.util.ArrayList;
 
 public class SellersDatabase {
