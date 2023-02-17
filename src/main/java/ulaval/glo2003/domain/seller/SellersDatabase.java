@@ -1,4 +1,4 @@
-package ulaval.glo2003.domain;
+package ulaval.glo2003.domain.seller;
 
 import jakarta.ws.rs.NotFoundException;
 import java.util.ArrayList;

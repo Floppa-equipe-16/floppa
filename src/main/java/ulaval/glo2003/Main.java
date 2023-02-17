@@ -11,7 +11,7 @@ import ulaval.glo2003.api.exceptionMappers.ParamExceptionMapper;
 import ulaval.glo2003.api.offer.OfferResource;
 import ulaval.glo2003.api.product.ProductResource;
 import ulaval.glo2003.api.seller.SellerResource;
-import ulaval.glo2003.domain.SellersDatabase;
+import ulaval.glo2003.domain.seller.SellersDatabase;
 
 public class Main {
 

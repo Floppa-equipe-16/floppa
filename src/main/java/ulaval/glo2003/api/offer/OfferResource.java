@@ -3,10 +3,10 @@ package ulaval.glo2003.api.offer;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import ulaval.glo2003.domain.Offer;
-import ulaval.glo2003.domain.OfferConverter;
-import ulaval.glo2003.domain.Seller;
-import ulaval.glo2003.domain.SellersDatabase;
+import ulaval.glo2003.domain.offer.Offer;
+import ulaval.glo2003.domain.offer.OfferConverter;
+import ulaval.glo2003.domain.seller.Seller;
+import ulaval.glo2003.domain.seller.SellersDatabase;
 
 @Path("/products/{productId}/offers")
 public class OfferResource {

@@ -1,4 +1,4 @@
-package ulaval.glo2003.domain;
+package ulaval.glo2003.domain.product;
 
 import ulaval.glo2003.api.product.ProductRequest;
 

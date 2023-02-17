@@ -5,7 +5,10 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
-import ulaval.glo2003.domain.*;
+import ulaval.glo2003.domain.product.Product;
+import ulaval.glo2003.domain.product.ProductConverter;
+import ulaval.glo2003.domain.seller.Seller;
+import ulaval.glo2003.domain.seller.SellersDatabase;
 
 @Path("/products")
 public class ProductResource {

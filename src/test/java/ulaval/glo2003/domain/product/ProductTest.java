@@ -1,4 +1,4 @@
-package ulaval.glo2003.domain;
+package ulaval.glo2003.domain.product;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
 import ulaval.glo2003.domain.exceptions.NotPermittedException;
+import ulaval.glo2003.domain.offer.Offer;
 
 public class ProductTest {
 

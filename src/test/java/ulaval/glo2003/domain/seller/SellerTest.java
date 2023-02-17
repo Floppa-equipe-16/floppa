@@ -1,4 +1,4 @@
-package ulaval.glo2003.domain;
+package ulaval.glo2003.domain.seller;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Spy;
 import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
+import ulaval.glo2003.domain.product.Product;
 
 public class SellerTest {
 

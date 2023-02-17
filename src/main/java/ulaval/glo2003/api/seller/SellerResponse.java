@@ -2,7 +2,7 @@ package ulaval.glo2003.api.seller;
 
 import java.util.ArrayList;
 import ulaval.glo2003.api.product.ProductResponse;
-import ulaval.glo2003.domain.Seller;
+import ulaval.glo2003.domain.seller.Seller;
 
 public class SellerResponse {
     public String id;

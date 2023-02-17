@@ -1,4 +1,4 @@
-package ulaval.glo2003.domain;
+package ulaval.glo2003.domain.seller;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -11,6 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
+import ulaval.glo2003.domain.product.Product;
 
 public class Seller {
     private final String name;
