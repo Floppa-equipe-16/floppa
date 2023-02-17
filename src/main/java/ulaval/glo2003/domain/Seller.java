@@ -96,7 +96,7 @@ public class Seller {
     }
 
     private boolean isBirthdateInvalid() {
-        return !(isDateValid() && is18orMore());
+        return !(isDateValid() && is18orMore(this.birthdate));
     }
 
     private boolean isEmailInvalid() {
@@ -120,15 +120,19 @@ public class Seller {
         }
     }
 
-    private boolean is18orMore() {
+    protected boolean is18orMore(String birthdate) {
         try {
-            String birthdateOffset = this.birthdate + "T00:00Z";
+            String birthdateOffset = birthdate + "T00:00Z";
             OffsetDateTime birthdayDate = OffsetDateTime.parse(birthdateOffset);
-            OffsetDateTime now = OffsetDateTime.now();
+            OffsetDateTime now = currentTime();
             OffsetDateTime birthday18Plus = birthdayDate.plusYears(18);
-            return (birthday18Plus.isBefore(now));
+            return birthday18Plus.isBefore(now);
         } catch (DateTimeParseException ignored) {
             return false;
         }
+    }
+
+    protected OffsetDateTime currentTime() {
+        return OffsetDateTime.now();
     }
 }

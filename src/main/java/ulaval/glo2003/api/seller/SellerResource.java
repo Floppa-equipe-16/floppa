@@ -26,7 +26,7 @@ public class SellerResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createSeller(@Context UriInfo uriInfo, SellerRequest sellerRequest) {
-        sellerRequest.validateSellerNonNullParameter();
+        sellerRequest.validateSellerNonNullParameters();
         Seller seller = new Seller(
                 sellerRequest.name,
                 sellerRequest.birthdate,
