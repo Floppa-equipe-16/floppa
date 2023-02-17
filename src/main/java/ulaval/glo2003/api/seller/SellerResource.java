@@ -25,15 +25,12 @@ public class SellerResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createSeller(@Context UriInfo uriInfo, SellerRequest sellerRequest) {
-        sellerRequest.validateSellerNonNullParameter();
-        Seller seller = new Seller(
-                sellerRequest.name,
-                sellerRequest.birthdate,
-                sellerRequest.email,
-                sellerRequest.phoneNumber,
-                sellerRequest.bio);
+    public Response createSeller(@Context UriInfo uriInfo, SellerRequest request) {
+        request.validate();
+
+        Seller seller = new Seller(request.asParams());
         sellers.add(seller);
+
         return Response.status(Response.Status.CREATED)
                 .header("Location", uriInfo.getAbsolutePath() + "/" + seller.getId())
                 .build();

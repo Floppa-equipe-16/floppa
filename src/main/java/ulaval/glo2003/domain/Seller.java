@@ -20,20 +20,20 @@ public class Seller {
     private final String bio;
     private final String id;
     private final String createdAt;
-    private final ArrayList<Product> products;
+    private final List<Product> products;
 
-    public Seller(String name, String birthdate, String email, String phoneNumber, String bio) {
-        this.name = name;
-        this.birthdate = birthdate;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.bio = bio;
+    public Seller(SellerParams params) {
+        this.name = params.name;
+        this.birthdate = params.birthdate;
+        this.email = params.email;
+        this.phoneNumber = params.phoneNumber;
+        this.bio = params.bio;
         this.products = new ArrayList<>();
-
-        validateSellerParameters();
 
         id = UUID.randomUUID().toString();
         createdAt = Instant.now().toString();
+
+        validateParameters();
     }
 
     public String getName() {
@@ -68,6 +68,7 @@ public class Seller {
         return products;
     }
 
+    //TODO API in Domain
     public ArrayList<ProductResponse> getProductResponses() {
         ArrayList<ProductResponse> productResponses = new ArrayList<>();
         for (Product product : products) {
@@ -76,6 +77,7 @@ public class Seller {
         return productResponses;
     }
 
+    //TODO Return optional ?
     public Product getProductById(String productId) {
         return products.stream()
                 .filter(product -> product.getId().equals(productId))
@@ -87,7 +89,7 @@ public class Seller {
         products.add(product);
     }
 
-    private void validateSellerParameters() {
+    private void validateParameters() {
         if (name.isBlank()) throw new InvalidParamException("name");
         if (isBirthdateInvalid()) throw new InvalidParamException("birthdate");
         if (isEmailInvalid()) throw new InvalidParamException("email");
