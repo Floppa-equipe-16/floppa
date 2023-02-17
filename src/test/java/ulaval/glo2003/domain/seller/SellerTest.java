@@ -208,7 +208,7 @@ public class SellerTest {
     @Test
     public void canAddProduct() {
         seller.addProduct(validProduct);
-        Optional<Product> product = Optional.ofNullable(seller.getProducts().get(0));
+        Optional<Product> product = Optional.ofNullable(seller.getProductById(validProduct.getId()));
 
         assertThat(seller.getProducts().size()).isEqualTo(1);
         assertThat(product.isPresent()).isTrue();

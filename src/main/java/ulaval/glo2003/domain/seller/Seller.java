@@ -4,9 +4,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import ulaval.glo2003.api.product.ProductResponse;
@@ -21,7 +19,7 @@ public class Seller {
     private final String bio;
     private final String id;
     private final String createdAt;
-    private final ArrayList<Product> products;
+    private final Map<String, Product> productsMap;
 
     public Seller(String name, String birthdate, String email, String phoneNumber, String bio) {
         this.name = name;
@@ -29,7 +27,7 @@ public class Seller {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.bio = bio;
-        this.products = new ArrayList<>();
+        this.productsMap = new HashMap<>();
 
         validateSellerParameters();
 
@@ -65,27 +63,24 @@ public class Seller {
         return createdAt;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public Map<String, Product> getProducts() {
+        return productsMap;
     }
 
     public ArrayList<ProductResponse> getProductResponses() {
         ArrayList<ProductResponse> productResponses = new ArrayList<>();
-        for (Product product : products) {
+        for (Product product : productsMap.values()) {
             productResponses.add(new ProductResponse(product));
         }
         return productResponses;
     }
 
     public Product getProductById(String productId) {
-        return products.stream()
-                .filter(product -> product.getId().equals(productId))
-                .findFirst()
-                .orElse(null);
+        return productsMap.get(productId);
     }
 
     public void addProduct(Product product) {
-        products.add(product);
+        productsMap.put(product.getId(), product);
     }
 
     private void validateSellerParameters() {

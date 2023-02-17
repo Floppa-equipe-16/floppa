@@ -8,14 +8,14 @@ import jakarta.ws.rs.core.UriInfo;
 import ulaval.glo2003.domain.product.Product;
 import ulaval.glo2003.domain.product.ProductConverter;
 import ulaval.glo2003.domain.seller.Seller;
-import ulaval.glo2003.domain.seller.SellersDatabase;
+import ulaval.glo2003.domain.seller.SellersRepository;
 
 @Path("/products")
 public class ProductResource {
-    private final SellersDatabase sellersDatabase;
+    private final SellersRepository sellersRepository;
 
-    public ProductResource(SellersDatabase sellersDatabase) {
-        this.sellersDatabase = sellersDatabase;
+    public ProductResource(SellersRepository sellersRepository) {
+        this.sellersRepository = sellersRepository;
     }
 
     @POST
@@ -24,7 +24,7 @@ public class ProductResource {
             @Context UriInfo uriInfo, @HeaderParam("X-Seller-Id") String xSellerId, ProductRequest productRequest) {
         productRequest.validateProductNonNullParameter();
 
-        Seller foundSeller = sellersDatabase.findSellerBySellerId(xSellerId);
+        Seller foundSeller = sellersRepository.findSellerBySellerId(xSellerId);
         Product product = ProductConverter.productRequestToProduct(productRequest);
         foundSeller.addProduct(product);
 
@@ -37,7 +37,7 @@ public class ProductResource {
     @Path("/{productId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProduct(@PathParam("productId") String productId) {
-        Seller foundSeller = sellersDatabase.findSellerByProductId(productId);
+        Seller foundSeller = sellersRepository.findSellerByProductId(productId);
         Product foundProduct = foundSeller.getProductById(productId);
 
         return Response.ok()

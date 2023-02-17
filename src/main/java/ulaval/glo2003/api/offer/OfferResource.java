@@ -6,14 +6,14 @@ import jakarta.ws.rs.core.Response;
 import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.offer.OfferConverter;
 import ulaval.glo2003.domain.seller.Seller;
-import ulaval.glo2003.domain.seller.SellersDatabase;
+import ulaval.glo2003.domain.seller.SellersRepository;
 
 @Path("/products/{productId}/offers")
 public class OfferResource {
-    private final SellersDatabase sellersDatabase;
+    private final SellersRepository sellersRepository;
 
-    public OfferResource(SellersDatabase sellersDatabase) {
-        this.sellersDatabase = sellersDatabase;
+    public OfferResource(SellersRepository sellersRepository) {
+        this.sellersRepository = sellersRepository;
     }
 
     @POST
@@ -24,7 +24,7 @@ public class OfferResource {
             OfferRequest offerRequest) {
         offerRequest.validateOfferNonNullParameter();
 
-        Seller foundSeller = sellersDatabase.findSellerByProductId(productId);
+        Seller foundSeller = sellersRepository.findSellerByProductId(productId);
         Offer offer = OfferConverter.offerRequestToOffer(xBuyerUsername, offerRequest);
         foundSeller.getProductById(productId).addOffer(offer);
 
