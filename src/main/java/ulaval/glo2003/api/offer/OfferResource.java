@@ -3,18 +3,10 @@ package ulaval.glo2003.api.offer;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import ulaval.glo2003.domain.offer.Offer;
-import ulaval.glo2003.domain.offer.OfferConverter;
-import ulaval.glo2003.domain.seller.Seller;
-import ulaval.glo2003.domain.seller.SellersRepository;
+import ulaval.glo2003.service.RepositoryManager;
 
 @Path("/products/{productId}/offers")
 public class OfferResource {
-    private final SellersRepository sellersRepository;
-
-    public OfferResource(SellersRepository sellersRepository) {
-        this.sellersRepository = sellersRepository;
-    }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -22,12 +14,7 @@ public class OfferResource {
             @HeaderParam("X-Buyer-Username") String xBuyerUsername,
             @PathParam("productId") String productId,
             OfferRequest offerRequest) {
-        offerRequest.validateOfferNonNullParameter();
-
-        Seller foundSeller = sellersRepository.findSellerByProductId(productId);
-        Offer offer = OfferConverter.offerRequestToOffer(xBuyerUsername, offerRequest);
-        foundSeller.getProductById(productId).addOffer(offer);
-
+        RepositoryManager.getInstance().createOffer(xBuyerUsername, productId, offerRequest);
         return Response.status(Response.Status.CREATED).build();
     }
 }

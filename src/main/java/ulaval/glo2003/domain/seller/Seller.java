@@ -7,7 +7,6 @@ import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
 import ulaval.glo2003.domain.product.Product;
 
@@ -65,14 +64,6 @@ public class Seller {
 
     public Map<String, Product> getProducts() {
         return productsMap;
-    }
-
-    public ArrayList<ProductResponse> getProductResponses() {
-        ArrayList<ProductResponse> productResponses = new ArrayList<>();
-        for (Product product : productsMap.values()) {
-            productResponses.add(new ProductResponse(product));
-        }
-        return productResponses;
     }
 
     public Product getProductById(String productId) {

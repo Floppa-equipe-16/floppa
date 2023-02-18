@@ -11,17 +11,14 @@ import ulaval.glo2003.api.exceptionMappers.ParamExceptionMapper;
 import ulaval.glo2003.api.offer.OfferResource;
 import ulaval.glo2003.api.product.ProductResource;
 import ulaval.glo2003.api.seller.SellerResource;
-import ulaval.glo2003.domain.seller.SellersRepository;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        SellersRepository sellersRepository = new SellersRepository();
-
         HealthResource healthResource = new HealthResource();
-        SellerResource sellerResource = new SellerResource(sellersRepository);
-        ProductResource productRessource = new ProductResource(sellersRepository);
-        OfferResource offerResource = new OfferResource(sellersRepository);
+        SellerResource sellerResource = new SellerResource();
+        ProductResource productRessource = new ProductResource();
+        OfferResource offerResource = new OfferResource();
 
         ParamExceptionMapper paramExceptionMapper = new ParamExceptionMapper();
         NotFoundExceptionMapper notFoundExceptionMapper = new NotFoundExceptionMapper();

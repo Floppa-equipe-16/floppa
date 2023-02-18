@@ -5,31 +5,18 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
-import ulaval.glo2003.domain.product.Product;
-import ulaval.glo2003.domain.product.ProductConverter;
-import ulaval.glo2003.domain.seller.Seller;
-import ulaval.glo2003.domain.seller.SellersRepository;
+import ulaval.glo2003.service.RepositoryManager;
 
 @Path("/products")
 public class ProductResource {
-    private final SellersRepository sellersRepository;
-
-    public ProductResource(SellersRepository sellersRepository) {
-        this.sellersRepository = sellersRepository;
-    }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createProducts(
             @Context UriInfo uriInfo, @HeaderParam("X-Seller-Id") String xSellerId, ProductRequest productRequest) {
-        productRequest.validateProductNonNullParameter();
-
-        Seller foundSeller = sellersRepository.findSellerBySellerId(xSellerId);
-        Product product = ProductConverter.productRequestToProduct(productRequest);
-        foundSeller.addProduct(product);
-
+        String productId = RepositoryManager.getInstance().createProduct(xSellerId, productRequest);
         return Response.status(Response.Status.CREATED)
-                .header("Location", uriInfo.getAbsolutePath() + "/" + product.getId())
+                .header("Location", uriInfo.getAbsolutePath() + "/" + productId)
                 .build();
     }
 
@@ -37,11 +24,7 @@ public class ProductResource {
     @Path("/{productId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProduct(@PathParam("productId") String productId) {
-        Seller foundSeller = sellersRepository.findSellerByProductId(productId);
-        Product foundProduct = foundSeller.getProductById(productId);
-
-        return Response.ok()
-                .entity(new ProductResponse(foundSeller, foundProduct))
-                .build();
+        ProductResponse productResponse = RepositoryManager.getInstance().getProduct(productId);
+        return Response.ok().entity(productResponse).build();
     }
 }

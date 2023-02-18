@@ -1,8 +1,7 @@
 package ulaval.glo2003.api.seller;
 
-import java.util.ArrayList;
+import java.util.List;
 import ulaval.glo2003.api.product.ProductResponse;
-import ulaval.glo2003.domain.seller.Seller;
 
 public class SellerResponse {
     public String id;
@@ -12,25 +11,7 @@ public class SellerResponse {
     public String email;
     public String phoneNumber;
     public String bio;
-    public ArrayList<ProductResponse> products;
+    public List<ProductResponse> products;
 
-    private SellerResponse() {}
-
-    public SellerResponse(Seller seller) {
-        this.id = seller.getId();
-        this.createAt = seller.getCreatedAt();
-        this.name = seller.getName();
-        this.birthdate = seller.getBirthdate();
-        this.email = seller.getEmail();
-        this.phoneNumber = seller.getPhoneNumber();
-        this.bio = seller.getBio();
-        this.products = seller.getProductResponses();
-    }
-
-    public static SellerResponse ctorSimplifiedSellerResponse(Seller seller) {
-        SellerResponse sellerResponse = new SellerResponse();
-        sellerResponse.id = seller.getId();
-        sellerResponse.name = seller.getName();
-        return sellerResponse;
-    }
+    public SellerResponse() {}
 }
