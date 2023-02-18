@@ -19,7 +19,7 @@ public class SellerTest {
     private static final String VALID_PHONE_NUMBER = "14181234567";
     private static final String VALID_EMAIL = "bob@gmail.com";
     private static final String VALID_BIO = "My name is Bob!";
-    private final Product validProduct = new Product("Title", "Description", 200.0, "electronics");
+    private Product validProduct;
     private Seller seller;
 
     @Spy
@@ -28,6 +28,7 @@ public class SellerTest {
     @BeforeEach
     public void initSeller() {
         seller = new Seller(VALID_NAME, VALID_BIRTHDATE, VALID_EMAIL, VALID_PHONE_NUMBER, VALID_BIO);
+        validProduct = new Product(seller.getId(), "Title", "Description", 200.0, "electronics");
         sellerSpy = spy(seller);
     }
 

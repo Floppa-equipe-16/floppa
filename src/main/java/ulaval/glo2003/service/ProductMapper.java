@@ -10,8 +10,9 @@ import ulaval.glo2003.domain.seller.Seller;
 
 public class ProductMapper {
 
-    public static Product requestToProduct(ProductRequest productRequest) {
+    public static Product requestToProduct(String sellerId, ProductRequest productRequest) {
         return new Product(
+                sellerId,
                 productRequest.title,
                 productRequest.description,
                 productRequest.suggestedPrice,

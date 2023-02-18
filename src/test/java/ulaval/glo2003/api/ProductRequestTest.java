@@ -23,27 +23,27 @@ public class ProductRequestTest {
     public void validateMethodThrowsWhenNullTitle() {
         productRequest.title = null;
 
-        assertThrows(MissingParamException.class, productRequest::validateProductNonNullParameter);
+        assertThrows(MissingParamException.class, productRequest::validate);
     }
 
     @Test
     public void validateMethodThrowsWhenNullDescription() {
         productRequest.description = null;
 
-        assertThrows(MissingParamException.class, productRequest::validateProductNonNullParameter);
+        assertThrows(MissingParamException.class, productRequest::validate);
     }
 
     @Test
     public void validateMethodThrowsWhenNullSuggestedPrice() {
         productRequest.suggestedPrice = null;
 
-        assertThrows(MissingParamException.class, productRequest::validateProductNonNullParameter);
+        assertThrows(MissingParamException.class, productRequest::validate);
     }
 
     @Test
     public void validateMethodThrowsWhenNullCategory() {
         productRequest.category = null;
 
-        assertThrows(MissingParamException.class, productRequest::validateProductNonNullParameter);
+        assertThrows(MissingParamException.class, productRequest::validate);
     }
 }

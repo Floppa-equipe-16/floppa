@@ -5,37 +5,46 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
+import ulaval.glo2003.domain.exceptions.MissingParamException;
 import ulaval.glo2003.domain.exceptions.NotPermittedException;
 import ulaval.glo2003.domain.offer.Offer;
 
 public class Product {
+    private final String id;
+    private final String sellerId;
     private final String title;
     private final String description;
     private final Double suggestedPrice;
     private final String category;
-    private final String id;
+
     private final String createdAt;
 
     private final ArrayList<Offer> offers;
 
-    public Product(String title, String description, Double suggestedPrice, String category) {
+    public Product(String sellerId, String title, String description, Double suggestedPrice, String category) {
+        this.sellerId = sellerId;
         this.title = title;
         this.description = description;
         this.suggestedPrice = Math.round(suggestedPrice * 100d) / 100d;
         this.category = category;
         this.offers = new ArrayList<>();
 
-        validateProductParameters();
+        validateParameters();
 
         id = UUID.randomUUID().toString();
         createdAt = Instant.now().toString();
     }
 
-    private void validateProductParameters() {
+    private void validateParameters() {
+        if(sellerId.isBlank()) throw new MissingParamException("sellerId");
         if (title.isBlank()) throw new InvalidParamException("title");
         if (description.isBlank()) throw new InvalidParamException("description");
         if (!doesCategoryExist()) throw new InvalidParamException("category");
         if (isSuggestedPriceUnder1()) throw new InvalidParamException("suggestedPrice");
+    }
+
+    public String getSellerId() {
+        return sellerId;
     }
 
     public String getTitle() {

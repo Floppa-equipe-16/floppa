@@ -11,12 +11,12 @@ import ulaval.glo2003.domain.exceptions.InvalidParamException;
 import ulaval.glo2003.domain.product.Product;
 
 public class Seller {
+    private final String id;
     private final String name;
     private final String birthdate;
     private final String email;
     private final String phoneNumber;
     private final String bio;
-    private final String id;
     private final String createdAt;
     private final Map<String, Product> productsMap;
 
@@ -32,6 +32,10 @@ public class Seller {
 
         id = UUID.randomUUID().toString();
         createdAt = Instant.now().toString();
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -52,10 +56,6 @@ public class Seller {
 
     public String getBio() {
         return bio;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getCreatedAt() {

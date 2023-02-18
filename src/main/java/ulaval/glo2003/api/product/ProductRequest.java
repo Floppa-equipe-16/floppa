@@ -8,7 +8,7 @@ public class ProductRequest {
     public Double suggestedPrice;
     public String category;
 
-    public void validateProductNonNullParameter() {
+    public void validate() {
         if (title == null) throw new MissingParamException("title");
         if (description == null) throw new MissingParamException("description");
         if (suggestedPrice == null) throw new MissingParamException("suggestedPrice");

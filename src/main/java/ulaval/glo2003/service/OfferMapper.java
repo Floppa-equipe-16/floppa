@@ -7,8 +7,8 @@ import ulaval.glo2003.domain.offer.Offer;
 
 public class OfferMapper {
 
-    public static Offer requestToOffer(String xBuyerUsername, OfferRequest offerRequest) {
-        return new Offer(xBuyerUsername, offerRequest.amount, offerRequest.message);
+    public static Offer requestToOffer(String productId, String buyerName, OfferRequest offerRequest) {
+        return new Offer(productId, buyerName, offerRequest.amount, offerRequest.message);
     }
 
     public static OffersRepositoryResponse offersListToRepositoryResponse(List<Offer> offers) {
