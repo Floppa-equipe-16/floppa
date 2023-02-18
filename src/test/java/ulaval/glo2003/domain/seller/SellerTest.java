@@ -10,7 +10,6 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Spy;
-import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
 import ulaval.glo2003.domain.product.Product;
 
@@ -212,15 +211,5 @@ public class SellerTest {
 
         assertThat(seller.getProducts().size()).isEqualTo(1);
         assertThat(product.isPresent()).isTrue();
-    }
-
-    @Test
-    public void canGetProductResponses() {
-        ProductResponse productResponseValid = new ProductResponse(validProduct);
-        seller.addProduct(validProduct);
-        ProductResponse productResponseFromSeller = seller.getProductResponses().get(0);
-
-        assertThat(seller.getProductResponses().size()).isEqualTo(1);
-        assertThat(productResponseFromSeller.id).isEqualTo(productResponseValid.id);
     }
 }
