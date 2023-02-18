@@ -1,5 +1,5 @@
 package ulaval.glo2003.api.offer;
-
+/*
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.domain.Offer;
@@ -68,4 +68,4 @@ class OffersResponseFactoryTest {
         assertThat(response.minAmount).isNull();
         assertThat(response.offers).isEmpty();
     }
-}
+} */

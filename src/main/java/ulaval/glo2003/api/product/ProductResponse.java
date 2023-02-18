@@ -1,9 +1,14 @@
 package ulaval.glo2003.api.product;
 
-import ulaval.glo2003.api.offer.OffersResponse;
-import ulaval.glo2003.api.seller.SellerResponse;
+import ulaval.glo2003.api.offer.OffersRepositoryResponse;
 
 public class ProductResponse {
+
+    protected static class SellerInfo {
+        public String id;
+        public String name;
+    }
+
     public String title;
     public String description;
     public Double suggestedPrice;
@@ -11,6 +16,14 @@ public class ProductResponse {
     public String id;
     public String createdAt;
 
-    public SellerResponse seller;
-    public OffersResponse offers;
+    public SellerInfo seller;
+    public OffersRepositoryResponse offers;
+
+    public ProductResponse() {}
+
+    public void addSellerInfo(String id, String name) {
+        seller = new SellerInfo();
+        seller.id = id;
+        seller.name = name;
+    }
 }

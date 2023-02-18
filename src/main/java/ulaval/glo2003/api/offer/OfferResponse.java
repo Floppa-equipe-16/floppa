@@ -1,6 +1,6 @@
 package ulaval.glo2003.api.offer;
 
-import ulaval.glo2003.domain.Offer;
+import ulaval.glo2003.domain.offer.Offer;
 
 public class OfferResponse {
     public String username;

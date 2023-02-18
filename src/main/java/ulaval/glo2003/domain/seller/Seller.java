@@ -1,16 +1,14 @@
-package ulaval.glo2003.domain;
+package ulaval.glo2003.domain.seller;
 
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
+import ulaval.glo2003.domain.product.Product;
 
 public class Seller {
     private final String name;
@@ -20,15 +18,15 @@ public class Seller {
     private final String bio;
     private final String id;
     private final String createdAt;
-    private final List<Product> products;
+    private final Map<String, Product> productsMap;
 
-    public Seller(SellerParams params) {
-        this.name = params.name;
-        this.birthdate = params.birthdate;
-        this.email = params.email;
-        this.phoneNumber = params.phoneNumber;
-        this.bio = params.bio;
-        this.products = new ArrayList<>();
+    public Seller(String name, String birthdate, String email, String phoneNumber, String bio) {
+        this.name = name;
+        this.birthdate = birthdate;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.bio = bio;
+        this.productsMap = new HashMap<>();
 
         validateParameters();
 
@@ -64,18 +62,16 @@ public class Seller {
         return createdAt;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public Map<String, Product> getProducts() {
+        return productsMap;
     }
 
-    public Optional<Product> getProductById(String productId) {
-        return products.stream()
-                .filter(product -> product.getId().equals(productId))
-                .findFirst();
+    public Product getProductById(String productId) {
+        return productsMap.get(productId);
     }
 
     public void addProduct(Product product) {
-        products.add(product);
+        productsMap.put(product.getId(), product);
     }
 
     private void validateParameters() {

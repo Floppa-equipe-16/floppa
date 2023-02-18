@@ -2,8 +2,8 @@ package ulaval.glo2003.api.product;
 
 import ulaval.glo2003.api.offer.OffersResponseFactory;
 import ulaval.glo2003.api.seller.SellerResponseFactory;
-import ulaval.glo2003.domain.Product;
-import ulaval.glo2003.domain.Seller;
+import ulaval.glo2003.domain.product.Product;
+import ulaval.glo2003.domain.seller.Seller;
 
 public class ProductResponseFactory {
     public static ProductResponse createResponseWithOffers(Product product) {
@@ -16,7 +16,7 @@ public class ProductResponseFactory {
 
     public static ProductResponse createResponseWithSummarySellerAndOffers(Product product, Seller seller) {
         ProductResponse response = initializeResponse(product);
-        response.seller = SellerResponseFactory.createSimpleResponse(seller);
+        response.addSellerInfo(seller.getId(), seller.getName());
         response.offers = OffersResponseFactory.createSummaryResponse(product.getOffers());
 
         return response;

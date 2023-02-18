@@ -2,7 +2,7 @@ package ulaval.glo2003.api.seller;
 
 import java.util.stream.Collectors;
 import ulaval.glo2003.api.product.ProductResponseFactory;
-import ulaval.glo2003.domain.Seller;
+import ulaval.glo2003.domain.seller.Seller;
 
 public class SellerResponseFactory {
     public static SellerResponse createSimpleResponse(Seller seller) {
@@ -23,7 +23,7 @@ public class SellerResponseFactory {
         response.phoneNumber = seller.getPhoneNumber();
         response.bio = seller.getBio();
 
-        response.products = seller.getProducts().stream()
+        response.products = seller.getProducts().values().stream()
                 .map(ProductResponseFactory::createResponseWithOffers)
                 .collect(Collectors.toList());
 

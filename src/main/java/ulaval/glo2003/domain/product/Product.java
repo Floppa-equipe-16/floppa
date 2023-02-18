@@ -1,10 +1,12 @@
-package ulaval.glo2003.domain;
+package ulaval.glo2003.domain.product;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
 import ulaval.glo2003.domain.exceptions.NotPermittedException;
+import ulaval.glo2003.domain.offer.Offer;
 
 public class Product {
     private final String title;
@@ -60,7 +62,7 @@ public class Product {
         return createdAt;
     }
 
-    public ArrayList<Offer> getOffers() {
+    public List<Offer> getOffers() {
         return offers;
     }
 

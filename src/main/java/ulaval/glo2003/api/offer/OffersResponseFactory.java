@@ -3,11 +3,11 @@ package ulaval.glo2003.api.offer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import ulaval.glo2003.domain.Offer;
+import ulaval.glo2003.domain.offer.Offer;
 
 public class OffersResponseFactory {
-    public static OffersResponse createSummaryResponse(List<Offer> offers) {
-        OffersResponse response = new OffersResponse();
+    public static OffersRepositoryResponse createSummaryResponse(List<Offer> offers) {
+        OffersRepositoryResponse response = new OffersRepositoryResponse();
         response.count = offers.size();
         double average = offers.stream().mapToDouble(Offer::getAmount).average().orElse(Double.NaN);
 
@@ -18,8 +18,8 @@ public class OffersResponseFactory {
         return response;
     }
 
-    public static OffersResponse createCompleteResponse(List<Offer> offers) {
-        OffersResponse response = new OffersResponse();
+    public static OffersRepositoryResponse createCompleteResponse(List<Offer> offers) {
+        OffersRepositoryResponse response = new OffersRepositoryResponse();
 
         response.count = offers.size();
 
