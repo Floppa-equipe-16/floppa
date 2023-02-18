@@ -52,7 +52,7 @@ public class ProductResource {
         Product foundProduct = foundSeller.getProductById(productId).get();
 
         return Response.ok()
-                .entity(ProductResponseFactory.createResponse(foundProduct, foundSeller))
+                .entity(ProductResponseFactory.createResponseWithSummarySellerAndOffers(foundProduct, foundSeller))
                 .build();
     }
 

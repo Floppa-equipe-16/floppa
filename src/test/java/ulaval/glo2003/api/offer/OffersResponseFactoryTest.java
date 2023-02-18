@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class OffersResponseFactoryTest {
     private static final Double HIGHEST_AMOUNT = 64.50d;

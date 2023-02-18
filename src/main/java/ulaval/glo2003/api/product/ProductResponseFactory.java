@@ -6,7 +6,7 @@ import ulaval.glo2003.domain.Product;
 import ulaval.glo2003.domain.Seller;
 
 public class ProductResponseFactory {
-    public static ProductResponse createResponse(Product product) {
+    public static ProductResponse createResponseWithOffers(Product product) {
         ProductResponse response = initializeResponse(product);
 
         response.offers = OffersResponseFactory.createCompleteResponse(product.getOffers());
@@ -14,7 +14,7 @@ public class ProductResponseFactory {
         return response;
     }
 
-    public static ProductResponse createResponse(Product product, Seller seller) {
+    public static ProductResponse createResponseWithSummarySellerAndOffers(Product product, Seller seller) {
         ProductResponse response = initializeResponse(product);
         response.seller = SellerResponseFactory.createSimpleResponse(seller);
         response.offers = OffersResponseFactory.createSummaryResponse(product.getOffers());

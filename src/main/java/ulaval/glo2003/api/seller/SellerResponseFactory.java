@@ -24,7 +24,7 @@ public class SellerResponseFactory {
         response.bio = seller.getBio();
 
         response.products = seller.getProducts().stream()
-                .map(ProductResponseFactory::createResponse)
+                .map(ProductResponseFactory::createResponseWithOffers)
                 .collect(Collectors.toList());
 
         return response;
