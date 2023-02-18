@@ -1,7 +1,7 @@
 package ulaval.glo2003.api.offer;
 
 import java.util.ArrayList;
-import ulaval.glo2003.domain.Offer;
+import ulaval.glo2003.domain.offer.Offer;
 
 public class OffersResponse {
 

@@ -1,4 +1,4 @@
-package ulaval.glo2003.domain;
+package ulaval.glo2003.domain.seller;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Spy;
 import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
+import ulaval.glo2003.domain.product.Product;
 
 public class SellerTest {
 
@@ -207,7 +208,7 @@ public class SellerTest {
     @Test
     public void canAddProduct() {
         seller.addProduct(validProduct);
-        Optional<Product> product = Optional.ofNullable(seller.getProducts().get(0));
+        Optional<Product> product = Optional.ofNullable(seller.getProductById(validProduct.getId()));
 
         assertThat(seller.getProducts().size()).isEqualTo(1);
         assertThat(product.isPresent()).isTrue();

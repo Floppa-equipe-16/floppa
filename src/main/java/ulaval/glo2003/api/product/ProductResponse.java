@@ -2,8 +2,8 @@ package ulaval.glo2003.api.product;
 
 import ulaval.glo2003.api.offer.OffersResponse;
 import ulaval.glo2003.api.seller.SellerResponse;
-import ulaval.glo2003.domain.Product;
-import ulaval.glo2003.domain.Seller;
+import ulaval.glo2003.domain.product.Product;
+import ulaval.glo2003.domain.seller.Seller;
 
 public class ProductResponse {
     public String title;
