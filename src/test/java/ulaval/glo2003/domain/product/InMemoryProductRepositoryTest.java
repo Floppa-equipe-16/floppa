@@ -47,7 +47,7 @@ class InMemoryProductRepositoryTest {
     void findAllBySellerIdReturnEmptyListWhenNoProducts() {
         List<Product> products = repository.findAllBySellerId(SELLER_ID);
 
-        assertThat(products.isEmpty()).isTrue();
+        assertThat(products).isEmpty();
     }
 
     @Test

@@ -47,7 +47,7 @@ class InMemoryOfferRepositoryTest {
     void findAllByProductIdReturnEmptyListWhenNoOffers() {
         List<Offer> offers = repository.findAllByProductId(PRODUCT_ID);
 
-        assertThat(offers.isEmpty()).isTrue();
+        assertThat(offers).isEmpty();
     }
 
     @Test

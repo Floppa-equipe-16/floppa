@@ -19,7 +19,7 @@ public class Main {
         RepositoryManager repositoryManager = new RepositoryManager();
         HealthResource healthResource = new HealthResource();
         SellerResource sellerResource = new SellerResource(repositoryManager);
-        ProductResource productRessource = new ProductResource(repositoryManager);
+        ProductResource productResource = new ProductResource(repositoryManager);
         OfferResource offerResource = new OfferResource(repositoryManager);
 
         ParamExceptionMapper paramExceptionMapper = new ParamExceptionMapper();
@@ -27,7 +27,7 @@ public class Main {
         ResourceConfig resourceConfig = new ResourceConfig()
                 .register(healthResource)
                 .register(sellerResource)
-                .register(productRessource)
+                .register(productResource)
                 .register(offerResource)
                 .register(paramExceptionMapper)
                 .register(notFoundExceptionMapper);
