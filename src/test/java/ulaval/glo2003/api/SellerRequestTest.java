@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.api.seller.SellerRequest;
-import ulaval.glo2003.domain.SellerParams;
 import ulaval.glo2003.domain.exceptions.MissingParamException;
 
 public class SellerRequestTest {
@@ -25,17 +24,6 @@ public class SellerRequestTest {
         sellerRequest.email = EMAIL;
         sellerRequest.phoneNumber = PHONE_NUMBER;
         sellerRequest.bio = BIO;
-    }
-
-    @Test
-    public void canGetRequestAsParams() {
-        SellerParams params = sellerRequest.asParams();
-
-        assertThat(params.name).isEqualTo(NAME);
-        assertThat(params.birthdate).isEqualTo(BIRTHDATE);
-        assertThat(params.email).isEqualTo(EMAIL);
-        assertThat(params.phoneNumber).isEqualTo(PHONE_NUMBER);
-        assertThat(params.bio).isEqualTo(BIO);
     }
 
     @Test

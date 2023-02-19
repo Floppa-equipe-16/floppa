@@ -6,27 +6,27 @@ import ulaval.glo2003.domain.seller.Seller;
 
 public class SellerMapper {
 
-    public static Seller requestToSeller(SellerRequest sellerRequest) {
+    public static Seller requestToSeller(SellerRequest request) {
         return new Seller(
-                sellerRequest.name,
-                sellerRequest.birthdate,
-                sellerRequest.email,
-                sellerRequest.phoneNumber,
-                sellerRequest.bio);
+                request.name,
+                request.birthdate,
+                request.email,
+                request.phoneNumber,
+                request.bio);
     }
 
     public static SellerResponse sellerToResponse(Seller seller) {
-        SellerResponse sellerResponse = new SellerResponse();
+        SellerResponse response = new SellerResponse();
 
-        sellerResponse.id = seller.getId();
-        sellerResponse.createAt = seller.getCreatedAt();
-        sellerResponse.name = seller.getName();
-        sellerResponse.birthdate = seller.getBirthdate();
-        sellerResponse.email = seller.getEmail();
-        sellerResponse.phoneNumber = seller.getPhoneNumber();
-        sellerResponse.bio = seller.getBio();
-        sellerResponse.products = ProductMapper.productsMapToResponsesList(seller.getProducts());
+        response.id = seller.getId();
+        response.createAt = seller.getCreatedAt();
+        response.name = seller.getName();
+        response.birthdate = seller.getBirthdate();
+        response.email = seller.getEmail();
+        response.phoneNumber = seller.getPhoneNumber();
+        response.bio = seller.getBio();
+        response.products = ProductMapper.productsMapToResponsesList(seller.getProducts());
 
-        return sellerResponse;
+        return response;
     }
 }

@@ -18,7 +18,7 @@ public class InMemoryProductRepository implements IProductRepository {
     @Override
     public Product findById(String id) {
         return Optional.ofNullable(products.get(id))
-                .orElseThrow(() -> new NotFoundException(String.format("Seller with id '%s' not found", id)));
+                .orElseThrow(() -> new NotFoundException(String.format("Product with id '%s' not found", id)));
     }
 
     @Override

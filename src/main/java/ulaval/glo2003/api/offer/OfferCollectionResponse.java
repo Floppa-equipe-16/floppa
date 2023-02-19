@@ -2,7 +2,7 @@ package ulaval.glo2003.api.offer;
 
 import java.util.List;
 
-public class OffersRepositoryResponse {
+public class OfferCollectionResponse {
 
     public Integer count;
     public Double avgAmount;

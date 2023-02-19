@@ -5,6 +5,8 @@ import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
+import ulaval.glo2003.domain.offer.IOfferRepository;
+import ulaval.glo2003.domain.offer.InMemoryOfferRepository;
 import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.product.IProductRepository;
 import ulaval.glo2003.domain.product.InMemoryProductRepository;
@@ -13,14 +15,19 @@ import ulaval.glo2003.domain.seller.ISellerRepository;
 import ulaval.glo2003.domain.seller.Seller;
 import ulaval.glo2003.domain.seller.InMemorySellerRepository;
 
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 public class RepositoryManager {
     private final ISellerRepository sellerRepository;
     private final IProductRepository productRepository;
+    private final IOfferRepository offerRepository;
 
     public RepositoryManager() {
         //TODO Delegate to factory
         sellerRepository = new InMemorySellerRepository();
         productRepository = new InMemoryProductRepository();
+        offerRepository = new InMemoryOfferRepository();
     }
 
     public String createSeller(SellerRequest sellerRequest) {
@@ -33,34 +40,38 @@ public class RepositoryManager {
     }
 
     public SellerResponse getSeller(String sellerId) {
-        Seller foundSeller = sellerRepository.findById(sellerId);
+        Seller seller = sellerRepository.findById(sellerId);
+        productRepository.findAllBySellerId(sellerId).forEach(product -> {
+            offerRepository.findAllByProductId(product.getId()).forEach(product::addOffer);
+            seller.addProduct(product);
+        });
 
-        return SellerMapper.sellerToResponse(foundSeller);
+        return SellerMapper.sellerToResponse(seller);
     }
 
     public String createProduct(String xSellerId, ProductRequest productRequest) {
         productRequest.validate();
 
-        Seller foundSeller = sellerRepository.findById(xSellerId);
         Product product = ProductMapper.requestToProduct(xSellerId, productRequest);
-        foundSeller.addProduct(product);
+        productRepository.add(product);
 
         return product.getId();
     }
 
     public ProductResponse getProduct(String productId) {
-        Seller seller = findSellerByProductId(productId);
-        Product product = seller.getProductById(productId);
+        Product product = productRepository.findById(productId);
+        Seller seller = sellerRepository.findById(product.getSellerId());
 
         return ProductMapper.productToResponseWithSeller(product, seller);
     }
 
-    public void createOffer(String buyerName, String productId, OfferRequest offerRequest) {
-        offerRequest.validateOfferNonNullParameter();
+    public String createOffer(String buyerName, String productId, OfferRequest offerRequest) {
+        offerRequest.validate();
 
-        Seller seller = findSellerByProductId(productId);
         Offer offer = OfferMapper.requestToOffer(productId, buyerName, offerRequest);
-        seller.getProductById(productId).addOffer(offer);
+        offerRepository.add(offer);
+
+        return offer.getId();
     }
 
     private Seller findSellerByProductId(String productId) {

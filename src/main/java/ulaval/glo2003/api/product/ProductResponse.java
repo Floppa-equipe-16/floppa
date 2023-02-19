@@ -1,6 +1,6 @@
 package ulaval.glo2003.api.product;
 
-import ulaval.glo2003.api.offer.OffersRepositoryResponse;
+import ulaval.glo2003.api.offer.OfferCollectionResponse;
 
 public class ProductResponse {
 
@@ -17,7 +17,7 @@ public class ProductResponse {
     public String createdAt;
 
     public SellerInfo seller;
-    public OffersRepositoryResponse offers;
+    public OfferCollectionResponse offers;
 
     public ProductResponse() {}
 
