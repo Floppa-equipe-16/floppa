@@ -69,9 +69,4 @@ public class RepositoryManager {
 
         return offer.getId();
     }
-
-    private Seller findSellerByProductId(String productId) {
-        String sellerId = productRepository.findById(productId).getSellerId();
-        return sellerRepository.findById(sellerId);
-    }
 }
