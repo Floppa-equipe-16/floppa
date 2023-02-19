@@ -19,8 +19,6 @@ public class ProductResponse {
     public SellerInfo seller;
     public OfferCollectionResponse offers;
 
-    public ProductResponse() {}
-
     public void addSellerInfo(String id, String name) {
         seller = new SellerInfo();
         seller.id = id;

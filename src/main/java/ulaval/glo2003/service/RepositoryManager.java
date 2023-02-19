@@ -12,11 +12,8 @@ import ulaval.glo2003.domain.product.IProductRepository;
 import ulaval.glo2003.domain.product.InMemoryProductRepository;
 import ulaval.glo2003.domain.product.Product;
 import ulaval.glo2003.domain.seller.ISellerRepository;
-import ulaval.glo2003.domain.seller.Seller;
 import ulaval.glo2003.domain.seller.InMemorySellerRepository;
-
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import ulaval.glo2003.domain.seller.Seller;
 
 public class RepositoryManager {
     private final ISellerRepository sellerRepository;
@@ -24,7 +21,6 @@ public class RepositoryManager {
     private final IOfferRepository offerRepository;
 
     public RepositoryManager() {
-        //TODO Delegate to factory
         sellerRepository = new InMemorySellerRepository();
         productRepository = new InMemoryProductRepository();
         offerRepository = new InMemoryOfferRepository();

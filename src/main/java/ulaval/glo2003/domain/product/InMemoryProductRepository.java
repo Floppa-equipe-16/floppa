@@ -1,7 +1,6 @@
 package ulaval.glo2003.domain.product;
 
 import jakarta.ws.rs.NotFoundException;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +22,9 @@ public class InMemoryProductRepository implements IProductRepository {
 
     @Override
     public List<Product> findAllBySellerId(String id) {
-        return products.values().stream().filter(product -> product.getSellerId().equals(id)).collect(Collectors.toList());
+        return products.values().stream()
+                .filter(product -> product.getSellerId().equals(id))
+                .collect(Collectors.toList());
     }
 
     @Override

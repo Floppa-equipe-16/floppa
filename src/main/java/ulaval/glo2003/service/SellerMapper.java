@@ -7,12 +7,7 @@ import ulaval.glo2003.domain.seller.Seller;
 public class SellerMapper {
 
     public static Seller requestToSeller(SellerRequest request) {
-        return new Seller(
-                request.name,
-                request.birthdate,
-                request.email,
-                request.phoneNumber,
-                request.bio);
+        return new Seller(request.name, request.birthdate, request.email, request.phoneNumber, request.bio);
     }
 
     public static SellerResponse sellerToResponse(Seller seller) {

@@ -28,10 +28,7 @@ public class ProductTest {
     public void prepareProduct() {
         product = new Product(SELLER_ID, VALID_TITLE, VALID_PRODUCT_DESCRIPTION, VALID_SUGGESTED_PRICE, VALID_CATEGORY);
 
-        validOffer = new Offer(product.getId(),
-                VALID_USERNAME,
-                VALID_OFFER_AMOUNT,
-                VALID_OFFER_MESSAGE);
+        validOffer = new Offer(product.getId(), VALID_USERNAME, VALID_OFFER_AMOUNT, VALID_OFFER_MESSAGE);
     }
 
     @Test
@@ -40,7 +37,8 @@ public class ProductTest {
 
         assertThrows(
                 InvalidParamException.class,
-                () -> new Product(SELLER_ID, emptyTitle, VALID_PRODUCT_DESCRIPTION, VALID_SUGGESTED_PRICE, VALID_CATEGORY));
+                () -> new Product(
+                        SELLER_ID, emptyTitle, VALID_PRODUCT_DESCRIPTION, VALID_SUGGESTED_PRICE, VALID_CATEGORY));
     }
 
     @Test
@@ -58,7 +56,8 @@ public class ProductTest {
 
         assertThrows(
                 InvalidParamException.class,
-                () -> new Product(SELLER_ID, VALID_TITLE, VALID_PRODUCT_DESCRIPTION, under1SuggestedPrice, VALID_CATEGORY));
+                () -> new Product(
+                        SELLER_ID, VALID_TITLE, VALID_PRODUCT_DESCRIPTION, under1SuggestedPrice, VALID_CATEGORY));
     }
 
     @Test
@@ -67,7 +66,8 @@ public class ProductTest {
 
         assertThrows(
                 InvalidParamException.class,
-                () -> new Product(SELLER_ID, VALID_TITLE, VALID_PRODUCT_DESCRIPTION, VALID_SUGGESTED_PRICE, nonExistentCategory));
+                () -> new Product(
+                        SELLER_ID, VALID_TITLE, VALID_PRODUCT_DESCRIPTION, VALID_SUGGESTED_PRICE, nonExistentCategory));
     }
 
     @Test
@@ -88,7 +88,8 @@ public class ProductTest {
     @Test
     public void addOfferMethodThrowsWhenBuyerAlreadyMadeOffer() {
         product.addOffer(validOffer);
-        Offer otherOfferSameUser = new Offer(product.getId(), validOffer.getUsername(), validOffer.getAmount(), validOffer.getMessage());
+        Offer otherOfferSameUser =
+                new Offer(product.getId(), validOffer.getUsername(), validOffer.getAmount(), validOffer.getMessage());
 
         assertThrows(NotPermittedException.class, () -> product.addOffer(otherOfferSameUser));
     }

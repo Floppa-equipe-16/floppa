@@ -2,7 +2,6 @@ package ulaval.glo2003.domain.offer;
 
 import java.time.Instant;
 import java.util.UUID;
-
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
 
 public class Offer {
@@ -29,6 +28,10 @@ public class Offer {
         if (!isMessageLongEnough()) throw new InvalidParamException("message");
     }
 
+    private boolean isMessageLongEnough() {
+        return message.length() >= 100;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -43,10 +46,6 @@ public class Offer {
 
     public String getCreatedAt() {
         return createdAt;
-    }
-
-    private boolean isMessageLongEnough() {
-        return message.length() >= 100;
     }
 
     public String getProductId() {

@@ -3,9 +3,8 @@ package ulaval.glo2003.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import ulaval.glo2003.api.offer.OfferRequest;
 import ulaval.glo2003.api.offer.OfferCollectionResponse;
+import ulaval.glo2003.api.offer.OfferRequest;
 import ulaval.glo2003.api.offer.OfferResponse;
 import ulaval.glo2003.domain.offer.Offer;
 

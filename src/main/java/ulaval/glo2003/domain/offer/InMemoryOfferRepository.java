@@ -1,7 +1,6 @@
 package ulaval.glo2003.domain.offer;
 
 import jakarta.ws.rs.NotFoundException;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +22,9 @@ public class InMemoryOfferRepository implements IOfferRepository {
 
     @Override
     public List<Offer> findAllByProductId(String id) {
-        return offers.values().stream().filter(offer -> offer.getProductId().equals(id)).collect(Collectors.toList());
+        return offers.values().stream()
+                .filter(offer -> offer.getProductId().equals(id))
+                .collect(Collectors.toList());
     }
 
     @Override

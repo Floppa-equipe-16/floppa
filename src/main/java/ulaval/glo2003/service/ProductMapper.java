@@ -3,7 +3,6 @@ package ulaval.glo2003.service;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.domain.product.Product;
@@ -36,12 +35,6 @@ public class ProductMapper {
         return response;
     }
 
-    public static List<ProductResponse> productsMapToResponsesList(Map<String, Product> productsMap) {
-        return productsMap.values().stream()
-                .map(ProductMapper::productToResponse)
-                .collect(Collectors.toList());
-    }
-
     private static ProductResponse initializeResponse(Product product) {
         ProductResponse response = new ProductResponse();
         response.title = product.getTitle();
@@ -52,5 +45,11 @@ public class ProductMapper {
         response.createdAt = product.getCreatedAt();
 
         return response;
+    }
+
+    public static List<ProductResponse> productsMapToResponsesList(Map<String, Product> productsMap) {
+        return productsMap.values().stream()
+                .map(ProductMapper::productToResponse)
+                .collect(Collectors.toList());
     }
 }

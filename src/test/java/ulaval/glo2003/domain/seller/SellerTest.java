@@ -38,7 +38,9 @@ public class SellerTest {
         String invalidName = " \n \r \t";
 
         InvalidParamException thrownInvalidName = assertThrows(
-                InvalidParamException.class, () -> new Seller(invalidName, VALID_BIRTHDATE, VALID_EMAIL, VALID_PHONE_NUMBER, VALID_BIO), "Expected new Seller() to throw");
+                InvalidParamException.class,
+                () -> new Seller(invalidName, VALID_BIRTHDATE, VALID_EMAIL, VALID_PHONE_NUMBER, VALID_BIO),
+                "Expected new Seller() to throw");
 
         assertThat(thrownInvalidName.errorDescription.description)
                 .isEqualTo(invalidParamException.errorDescription.description);
@@ -50,7 +52,9 @@ public class SellerTest {
         String invalidFormat = "2001/12/20";
 
         InvalidParamException thrownInvalidFormat = assertThrows(
-                InvalidParamException.class, () -> new Seller(VALID_NAME, invalidFormat, VALID_EMAIL, VALID_PHONE_NUMBER, VALID_BIO), "Expected new Seller() to throw");
+                InvalidParamException.class,
+                () -> new Seller(VALID_NAME, invalidFormat, VALID_EMAIL, VALID_PHONE_NUMBER, VALID_BIO),
+                "Expected new Seller() to throw");
         assertThat(thrownInvalidFormat.errorDescription.description)
                 .isEqualTo(invalidParamException.errorDescription.description);
     }
@@ -61,7 +65,9 @@ public class SellerTest {
         String invalidDate = "2001-13-20";
 
         InvalidParamException thrownInvalidDate = assertThrows(
-                InvalidParamException.class, () -> new Seller(VALID_NAME, invalidDate, VALID_EMAIL, VALID_PHONE_NUMBER, VALID_BIO), "Expected new Seller() to throw");
+                InvalidParamException.class,
+                () -> new Seller(VALID_NAME, invalidDate, VALID_EMAIL, VALID_PHONE_NUMBER, VALID_BIO),
+                "Expected new Seller() to throw");
         assertThat(thrownInvalidDate.errorDescription.description)
                 .isEqualTo(invalidParamException.errorDescription.description);
     }
@@ -86,7 +92,9 @@ public class SellerTest {
         String invalidEmail = "@Bob.com";
 
         InvalidParamException thrownInvalidEmail = assertThrows(
-                InvalidParamException.class, () -> new Seller(VALID_NAME, VALID_BIRTHDATE, invalidEmail, VALID_PHONE_NUMBER, VALID_BIO), "Expected new Seller() to throw");
+                InvalidParamException.class,
+                () -> new Seller(VALID_NAME, VALID_BIRTHDATE, invalidEmail, VALID_PHONE_NUMBER, VALID_BIO),
+                "Expected new Seller() to throw");
         assertThat(thrownInvalidEmail.errorDescription.description)
                 .isEqualTo(invalidParamException.errorDescription.description);
     }
@@ -97,7 +105,9 @@ public class SellerTest {
         String invalidEmail = "Bob.com";
 
         InvalidParamException thrownInvalidEmail = assertThrows(
-                InvalidParamException.class, () -> new Seller(VALID_NAME, VALID_BIRTHDATE, invalidEmail, VALID_PHONE_NUMBER, VALID_BIO), "Expected new Seller() to throw");
+                InvalidParamException.class,
+                () -> new Seller(VALID_NAME, VALID_BIRTHDATE, invalidEmail, VALID_PHONE_NUMBER, VALID_BIO),
+                "Expected new Seller() to throw");
         assertThat(thrownInvalidEmail.errorDescription.description)
                 .isEqualTo(invalidParamException.errorDescription.description);
     }
@@ -108,7 +118,9 @@ public class SellerTest {
         String invalidEmail = "Bob@.com";
 
         InvalidParamException thrownInvalidEmail = assertThrows(
-                InvalidParamException.class, () -> new Seller(VALID_NAME, VALID_BIRTHDATE, invalidEmail, VALID_PHONE_NUMBER, VALID_BIO), "Expected new Seller() to throw");
+                InvalidParamException.class,
+                () -> new Seller(VALID_NAME, VALID_BIRTHDATE, invalidEmail, VALID_PHONE_NUMBER, VALID_BIO),
+                "Expected new Seller() to throw");
         assertThat(thrownInvalidEmail.errorDescription.description)
                 .isEqualTo(invalidParamException.errorDescription.description);
     }
@@ -119,7 +131,9 @@ public class SellerTest {
         String invalidEmail = "Bob@gmailcom";
 
         InvalidParamException thrownInvalidEmail = assertThrows(
-                InvalidParamException.class, () -> new Seller(VALID_NAME, VALID_BIRTHDATE, invalidEmail, VALID_PHONE_NUMBER, VALID_BIO), "Expected new Seller() to throw");
+                InvalidParamException.class,
+                () -> new Seller(VALID_NAME, VALID_BIRTHDATE, invalidEmail, VALID_PHONE_NUMBER, VALID_BIO),
+                "Expected new Seller() to throw");
         assertThat(thrownInvalidEmail.errorDescription.description)
                 .isEqualTo(invalidParamException.errorDescription.description);
     }
@@ -130,7 +144,9 @@ public class SellerTest {
         String invalidEmail = "Bob@gmail.";
 
         InvalidParamException thrownInvalidEmail = assertThrows(
-                InvalidParamException.class, () -> new Seller(VALID_NAME, VALID_BIRTHDATE, invalidEmail, VALID_PHONE_NUMBER, VALID_BIO), "Expected new Seller() to throw");
+                InvalidParamException.class,
+                () -> new Seller(VALID_NAME, VALID_BIRTHDATE, invalidEmail, VALID_PHONE_NUMBER, VALID_BIO),
+                "Expected new Seller() to throw");
         assertThat(thrownInvalidEmail.errorDescription.description)
                 .isEqualTo(invalidParamException.errorDescription.description);
     }
@@ -141,7 +157,9 @@ public class SellerTest {
         String invalidPhoneNumber = "111234567890";
 
         InvalidParamException thrownInvalidPhoneNumber = assertThrows(
-                InvalidParamException.class, () -> new Seller(VALID_NAME, VALID_BIRTHDATE, VALID_EMAIL, invalidPhoneNumber, VALID_BIO), "Expected new Seller() to throw");
+                InvalidParamException.class,
+                () -> new Seller(VALID_NAME, VALID_BIRTHDATE, VALID_EMAIL, invalidPhoneNumber, VALID_BIO),
+                "Expected new Seller() to throw");
         assertThat(thrownInvalidPhoneNumber.errorDescription.description)
                 .isEqualTo(invalidParamException.errorDescription.description);
     }
@@ -152,7 +170,9 @@ public class SellerTest {
         String invalidPhoneNumber = "1234567890";
 
         InvalidParamException thrownInvalidPhoneNumber = assertThrows(
-                InvalidParamException.class, () -> new Seller(VALID_NAME, VALID_BIRTHDATE, VALID_EMAIL, invalidPhoneNumber, VALID_BIO), "Expected new Seller() to throw");
+                InvalidParamException.class,
+                () -> new Seller(VALID_NAME, VALID_BIRTHDATE, VALID_EMAIL, invalidPhoneNumber, VALID_BIO),
+                "Expected new Seller() to throw");
         assertThat(thrownInvalidPhoneNumber.errorDescription.description)
                 .isEqualTo(invalidParamException.errorDescription.description);
     }
@@ -163,7 +183,9 @@ public class SellerTest {
         String invalidPhoneNumber = "+1234567890";
 
         InvalidParamException thrownInvalidPhoneNumber = assertThrows(
-                InvalidParamException.class, () -> new Seller(VALID_NAME, VALID_BIRTHDATE, VALID_EMAIL, invalidPhoneNumber, VALID_BIO), "Expected new Seller() to throw");
+                InvalidParamException.class,
+                () -> new Seller(VALID_NAME, VALID_BIRTHDATE, VALID_EMAIL, invalidPhoneNumber, VALID_BIO),
+                "Expected new Seller() to throw");
         assertThat(thrownInvalidPhoneNumber.errorDescription.description)
                 .isEqualTo(invalidParamException.errorDescription.description);
     }
@@ -174,7 +196,9 @@ public class SellerTest {
         String invalidBio = " \n \r \t";
 
         InvalidParamException thrownInvalidBio = assertThrows(
-                InvalidParamException.class, () -> new Seller(VALID_NAME, VALID_BIRTHDATE, VALID_EMAIL, VALID_PHONE_NUMBER, invalidBio), "Expected new Seller() to throw");
+                InvalidParamException.class,
+                () -> new Seller(VALID_NAME, VALID_BIRTHDATE, VALID_EMAIL, VALID_PHONE_NUMBER, invalidBio),
+                "Expected new Seller() to throw");
 
         assertThat(thrownInvalidBio.errorDescription.description)
                 .isEqualTo(invalidParamException.errorDescription.description);

@@ -36,7 +36,7 @@ public class Product {
     }
 
     private void validateParameters() {
-        if(sellerId.isBlank()) throw new MissingParamException("sellerId");
+        if (sellerId.isBlank()) throw new MissingParamException("sellerId");
         if (title.isBlank()) throw new InvalidParamException("title");
         if (description.isBlank()) throw new InvalidParamException("description");
         if (!doesCategoryExist()) throw new InvalidParamException("category");
@@ -94,7 +94,7 @@ public class Product {
     }
 
     private void validateOfferEligible(Offer offer) {
-        if (!isOfferAmountAtleastSuggestedPrice(offer.getAmount())) throw new InvalidParamException("amount");
+        if (!isOfferAmountAtLeastSuggestedPrice(offer.getAmount())) throw new InvalidParamException("amount");
         if (hasBuyerAlreadyMadeAnOffer(offer.getUsername()))
             throw new NotPermittedException("user with username " + offer.getUsername() + " has already made an offer");
     }
@@ -103,7 +103,7 @@ public class Product {
         return offers.stream().anyMatch(offer -> buyerUsername.equals(offer.getUsername()));
     }
 
-    private boolean isOfferAmountAtleastSuggestedPrice(Double offerAmount) {
+    private boolean isOfferAmountAtLeastSuggestedPrice(Double offerAmount) {
         return offerAmount >= suggestedPrice;
     }
 }
