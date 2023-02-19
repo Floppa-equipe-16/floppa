@@ -14,20 +14,13 @@ import ulaval.glo2003.domain.seller.Seller;
 import ulaval.glo2003.domain.seller.InMemorySellerRepository;
 
 public class RepositoryManager {
-
-    private static RepositoryManager instance = null;
     private final ISellerRepository sellerRepository;
     private final IProductRepository productRepository;
 
-    private RepositoryManager() {
+    public RepositoryManager() {
         //TODO Delegate to factory
         sellerRepository = new InMemorySellerRepository();
         productRepository = new InMemoryProductRepository();
-    }
-
-    public static RepositoryManager getInstance() {
-        if (instance == null) instance = new RepositoryManager();
-        return instance;
     }
 
     public String createSeller(SellerRequest sellerRequest) {

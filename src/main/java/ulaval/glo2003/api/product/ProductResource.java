@@ -9,12 +9,17 @@ import ulaval.glo2003.service.RepositoryManager;
 
 @Path("/products")
 public class ProductResource {
+    private final RepositoryManager repositoryManager;
+
+    public ProductResource(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createProducts(
             @Context UriInfo uriInfo, @HeaderParam("X-Seller-Id") String xSellerId, ProductRequest productRequest) {
-        String productId = RepositoryManager.getInstance().createProduct(xSellerId, productRequest);
+        String productId = repositoryManager.createProduct(xSellerId, productRequest);
         return Response.status(Response.Status.CREATED)
                 .header("Location", uriInfo.getAbsolutePath() + "/" + productId)
                 .build();
@@ -24,7 +29,7 @@ public class ProductResource {
     @Path("/{productId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProduct(@PathParam("productId") String productId) {
-        ProductResponse productResponse = RepositoryManager.getInstance().getProduct(productId);
+        ProductResponse productResponse = repositoryManager.getProduct(productId);
         return Response.ok().entity(productResponse).build();
     }
 }
