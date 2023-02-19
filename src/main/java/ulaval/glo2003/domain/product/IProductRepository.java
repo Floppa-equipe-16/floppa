@@ -7,5 +7,5 @@ public interface IProductRepository {
 
     List<Product> findAllBySellerId(String id);
 
-    void add(Product product);
+    void save(Product product);
 }

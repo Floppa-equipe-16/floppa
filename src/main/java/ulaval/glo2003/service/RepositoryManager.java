@@ -30,7 +30,7 @@ public class RepositoryManager {
         sellerRequest.validate();
 
         Seller seller = SellerMapper.requestToSeller(sellerRequest);
-        sellerRepository.add(seller);
+        sellerRepository.save(seller);
 
         return seller.getId();
     }
@@ -49,7 +49,7 @@ public class RepositoryManager {
         productRequest.validate();
 
         Product product = ProductMapper.requestToProduct(xSellerId, productRequest);
-        productRepository.add(product);
+        productRepository.save(product);
 
         return product.getId();
     }
@@ -65,7 +65,7 @@ public class RepositoryManager {
         offerRequest.validate();
 
         Offer offer = OfferMapper.requestToOffer(productId, buyerName, offerRequest);
-        offerRepository.add(offer);
+        offerRepository.save(offer);
 
         return offer.getId();
     }

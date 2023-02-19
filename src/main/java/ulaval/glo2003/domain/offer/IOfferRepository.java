@@ -8,5 +8,5 @@ public interface IOfferRepository {
 
     List<Offer> findAllByProductId(String productId);
 
-    void add(Offer offer);
+    void save(Offer offer);
 }

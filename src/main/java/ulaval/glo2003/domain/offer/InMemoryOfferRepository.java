@@ -28,7 +28,7 @@ public class InMemoryOfferRepository implements IOfferRepository {
     }
 
     @Override
-    public void add(Offer offer) {
+    public void save(Offer offer) {
         offers.put(offer.getId(), offer);
     }
 }

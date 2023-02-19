@@ -19,7 +19,7 @@ public class InMemorySellerRepository implements ISellerRepository {
     }
 
     @Override
-    public void add(Seller seller) {
+    public void save(Seller seller) {
         sellers.put(seller.getId(), seller);
     }
 }
