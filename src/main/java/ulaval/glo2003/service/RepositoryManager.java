@@ -5,62 +5,82 @@ import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
+import ulaval.glo2003.domain.offer.IOfferRepository;
+import ulaval.glo2003.domain.offer.InMemoryOfferRepository;
 import ulaval.glo2003.domain.offer.Offer;
+import ulaval.glo2003.domain.product.IProductRepository;
+import ulaval.glo2003.domain.product.InMemoryProductRepository;
 import ulaval.glo2003.domain.product.Product;
+import ulaval.glo2003.domain.seller.ISellerRepository;
+import ulaval.glo2003.domain.seller.InMemorySellerRepository;
 import ulaval.glo2003.domain.seller.Seller;
-import ulaval.glo2003.domain.seller.SellersRepository;
 
 public class RepositoryManager {
+    private final ISellerRepository sellerRepository;
+    private final IProductRepository productRepository;
+    private final IOfferRepository offerRepository;
 
-    private static RepositoryManager instance = null;
-    public SellersRepository sellersRepository;
-
-    private RepositoryManager() {
-        sellersRepository = new SellersRepository();
-    }
-
-    public static RepositoryManager getInstance() {
-        if (instance == null) instance = new RepositoryManager();
-        return instance;
+    public RepositoryManager() {
+        sellerRepository = new InMemorySellerRepository();
+        productRepository = new InMemoryProductRepository();
+        offerRepository = new InMemoryOfferRepository();
     }
 
     public String createSeller(SellerRequest sellerRequest) {
-        sellerRequest.validateSellerNonNullParameters();
+        sellerRequest.validate();
 
         Seller seller = SellerMapper.requestToSeller(sellerRequest);
-        sellersRepository.addSeller(seller);
+        sellerRepository.save(seller);
 
         return seller.getId();
     }
 
     public SellerResponse getSeller(String sellerId) {
-        Seller foundSeller = sellersRepository.findSellerBySellerId(sellerId);
+        Seller seller = sellerRepository.findById(sellerId);
+        productRepository.findAllBySellerId(sellerId).forEach(product -> {
+            offerRepository.findAllByProductId(product.getId()).forEach(product::addOffer);
+            seller.addProduct(product);
+        });
 
-        return SellerMapper.sellerToResponse(foundSeller);
+        return SellerMapper.sellerToResponse(seller);
     }
 
-    public String createProduct(String xSellerId, ProductRequest productRequest) {
-        productRequest.validateProductNonNullParameter();
+    public String createProduct(String sellerId, ProductRequest productRequest) {
+        productRequest.validate();
 
-        Seller foundSeller = sellersRepository.findSellerBySellerId(xSellerId);
-        Product product = ProductMapper.requestToProduct(productRequest);
-        foundSeller.addProduct(product);
+        Product product = ProductMapper.requestToProduct(sellerId, productRequest);
+        Seller seller = sellerRepository.findById(sellerId);
+        seller.addProduct(product);
+
+        productRepository.save(product);
 
         return product.getId();
     }
 
     public ProductResponse getProduct(String productId) {
-        Seller foundSeller = sellersRepository.findSellerByProductId(productId);
-        Product foundProduct = foundSeller.getProductById(productId);
+        Product product = getProductWithOffers(productId);
 
-        return ProductMapper.productToResponseWithSeller(foundProduct, foundSeller);
+        Seller seller = sellerRepository.findById(product.getSellerId());
+
+        return ProductMapper.productToResponseWithSeller(product, seller);
     }
 
-    public void createOffer(String xBuyerUsername, String productId, OfferRequest offerRequest) {
-        offerRequest.validateOfferNonNullParameter();
+    public String createOffer(String buyerName, String productId, OfferRequest offerRequest) {
+        offerRequest.validate();
 
-        Seller foundSeller = sellersRepository.findSellerByProductId(productId);
-        Offer offer = OfferMapper.requestToOffer(xBuyerUsername, offerRequest);
-        foundSeller.getProductById(productId).addOffer(offer);
+        Offer offer = OfferMapper.requestToOffer(productId, buyerName, offerRequest);
+
+        Product product = getProductWithOffers(productId);
+        product.addOffer(offer);
+        offerRepository.save(offer);
+
+        return offer.getId();
+    }
+
+    private Product getProductWithOffers(String id) {
+        Product product = productRepository.findById(id);
+        offerRepository.findAllByProductId(product.getId()).forEach(product::addOffer);
+
+        return product;
     }
 }

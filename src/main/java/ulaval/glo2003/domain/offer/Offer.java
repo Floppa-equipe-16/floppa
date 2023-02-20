@@ -1,27 +1,44 @@
 package ulaval.glo2003.domain.offer;
 
 import java.time.Instant;
+import java.util.UUID;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
 
 public class Offer {
-
+    private final String id;
+    private final String productId;
     private final String username;
     private final Double amount;
     private final String message;
     private final String createdAt;
 
-    public Offer(String username, Double amount, String message) {
+    public Offer(String productId, String username, Double amount, String message) {
+        this.productId = productId;
         this.username = username;
         this.amount = Math.round(amount * 100d) / 100d;
         this.message = message;
 
-        validateOfferParameters();
+        validateParameters();
 
+        id = UUID.randomUUID().toString();
         createdAt = Instant.now().toString();
     }
 
-    private void validateOfferParameters() {
+    public Offer(Offer that) {
+        productId = that.getProductId();
+        username = that.getUsername();
+        amount = that.getAmount();
+        message = that.getMessage();
+        id = that.getId();
+        createdAt = that.getCreatedAt();
+    }
+
+    private void validateParameters() {
         if (!isMessageLongEnough()) throw new InvalidParamException("message");
+    }
+
+    private boolean isMessageLongEnough() {
+        return message.length() >= 100;
     }
 
     public String getUsername() {
@@ -40,7 +57,26 @@ public class Offer {
         return createdAt;
     }
 
-    private boolean isMessageLongEnough() {
-        return message.length() >= 100;
+    public String getProductId() {
+        return productId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Offer) {
+            Offer that = (Offer) obj;
+
+            return id.equalsIgnoreCase(that.getId())
+                    && productId.equalsIgnoreCase(that.getProductId())
+                    && username.equalsIgnoreCase(that.getUsername())
+                    && message.equalsIgnoreCase(that.getMessage())
+                    && amount.equals(that.getAmount())
+                    && createdAt.equalsIgnoreCase(that.getCreatedAt());
+        }
+        return false;
     }
 }

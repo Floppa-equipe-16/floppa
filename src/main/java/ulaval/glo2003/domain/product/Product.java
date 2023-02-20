@@ -2,39 +2,60 @@ package ulaval.glo2003.domain.product;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
+import ulaval.glo2003.domain.exceptions.MissingParamException;
 import ulaval.glo2003.domain.exceptions.NotPermittedException;
 import ulaval.glo2003.domain.offer.Offer;
 
 public class Product {
+    private final String id;
+    private final String sellerId;
     private final String title;
     private final String description;
     private final Double suggestedPrice;
     private final String category;
-    private final String id;
+
     private final String createdAt;
 
     private final ArrayList<Offer> offers;
 
-    public Product(String title, String description, Double suggestedPrice, String category) {
+    public Product(String sellerId, String title, String description, Double suggestedPrice, String category) {
+        this.sellerId = sellerId;
         this.title = title;
         this.description = description;
         this.suggestedPrice = Math.round(suggestedPrice * 100d) / 100d;
         this.category = category;
         this.offers = new ArrayList<>();
 
-        validateProductParameters();
+        validateParameters();
 
         id = UUID.randomUUID().toString();
         createdAt = Instant.now().toString();
     }
 
-    private void validateProductParameters() {
+    public Product(Product that) {
+        sellerId = that.getSellerId();
+        title = that.getTitle();
+        description = that.getDescription();
+        suggestedPrice = that.getSuggestedPrice();
+        category = that.getCategory();
+        id = that.getId();
+        createdAt = that.getCreatedAt();
+        offers = new ArrayList<>();
+    }
+
+    private void validateParameters() {
+        if (sellerId.isBlank()) throw new MissingParamException("sellerId");
         if (title.isBlank()) throw new InvalidParamException("title");
         if (description.isBlank()) throw new InvalidParamException("description");
         if (!doesCategoryExist()) throw new InvalidParamException("category");
         if (isSuggestedPriceUnder1()) throw new InvalidParamException("suggestedPrice");
+    }
+
+    public String getSellerId() {
+        return sellerId;
     }
 
     public String getTitle() {
@@ -61,7 +82,7 @@ public class Product {
         return createdAt;
     }
 
-    public ArrayList<Offer> getOffers() {
+    public List<Offer> getOffers() {
         return offers;
     }
 
@@ -84,7 +105,7 @@ public class Product {
     }
 
     private void validateOfferEligible(Offer offer) {
-        if (!isOfferAmountAtleastSuggestedPrice(offer.getAmount())) throw new InvalidParamException("amount");
+        if (!isOfferAmountAtLeastSuggestedPrice(offer.getAmount())) throw new InvalidParamException("amount");
         if (hasBuyerAlreadyMadeAnOffer(offer.getUsername()))
             throw new NotPermittedException("user with username " + offer.getUsername() + " has already made an offer");
     }
@@ -93,7 +114,23 @@ public class Product {
         return offers.stream().anyMatch(offer -> buyerUsername.equals(offer.getUsername()));
     }
 
-    private boolean isOfferAmountAtleastSuggestedPrice(Double offerAmount) {
+    private boolean isOfferAmountAtLeastSuggestedPrice(Double offerAmount) {
         return offerAmount >= suggestedPrice;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Product) {
+            Product that = (Product) obj;
+
+            return id.equalsIgnoreCase(that.getId())
+                    && sellerId.equalsIgnoreCase(that.getSellerId())
+                    && title.equalsIgnoreCase(that.getTitle())
+                    && description.equalsIgnoreCase(that.getDescription())
+                    && suggestedPrice.equals(that.getSuggestedPrice())
+                    && category.equalsIgnoreCase(that.getCategory())
+                    && createdAt.equalsIgnoreCase(that.getCreatedAt());
+        }
+        return false;
     }
 }

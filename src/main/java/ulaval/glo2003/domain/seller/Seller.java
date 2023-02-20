@@ -11,12 +11,12 @@ import ulaval.glo2003.domain.exceptions.InvalidParamException;
 import ulaval.glo2003.domain.product.Product;
 
 public class Seller {
+    private final String id;
     private final String name;
     private final String birthdate;
     private final String email;
     private final String phoneNumber;
     private final String bio;
-    private final String id;
     private final String createdAt;
     private final Map<String, Product> productsMap;
 
@@ -28,10 +28,26 @@ public class Seller {
         this.bio = bio;
         this.productsMap = new HashMap<>();
 
-        validateSellerParameters();
+        validateParameters();
 
         id = UUID.randomUUID().toString();
         createdAt = Instant.now().toString();
+    }
+
+    public Seller(Seller that) {
+        name = that.getName();
+        birthdate = that.getBirthdate();
+        email = that.getEmail();
+        phoneNumber = that.getPhoneNumber();
+        bio = that.getBio();
+        id = that.getId();
+        createdAt = that.getCreatedAt();
+
+        productsMap = new HashMap<>();
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -54,10 +70,6 @@ public class Seller {
         return bio;
     }
 
-    public String getId() {
-        return id;
-    }
-
     public String getCreatedAt() {
         return createdAt;
     }
@@ -74,7 +86,7 @@ public class Seller {
         productsMap.put(product.getId(), product);
     }
 
-    private void validateSellerParameters() {
+    private void validateParameters() {
         if (name.isBlank()) throw new InvalidParamException("name");
         if (isBirthdateInvalid()) throw new InvalidParamException("birthdate");
         if (isEmailInvalid()) throw new InvalidParamException("email");
@@ -121,5 +133,21 @@ public class Seller {
 
     protected OffsetDateTime currentTime() {
         return OffsetDateTime.now();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Seller) {
+            Seller that = (Seller) obj;
+
+            return id.equalsIgnoreCase(that.getId())
+                    && name.equalsIgnoreCase(that.getName())
+                    && birthdate.equalsIgnoreCase(that.getBirthdate())
+                    && email.equalsIgnoreCase(that.getEmail())
+                    && phoneNumber.equalsIgnoreCase(that.getPhoneNumber())
+                    && bio.equalsIgnoreCase(that.getBio())
+                    && createdAt.equalsIgnoreCase(that.getCreatedAt());
+        }
+        return false;
     }
 }
