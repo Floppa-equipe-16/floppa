@@ -14,8 +14,10 @@ public class InMemorySellerRepository implements ISellerRepository {
 
     @Override
     public Seller findById(String id) {
-        return Optional.ofNullable(sellers.get(id))
+        Seller seller = Optional.ofNullable(sellers.get(id))
                 .orElseThrow(() -> new NotFoundException(String.format("Seller with id '%s' not found", id)));
+
+        return new Seller(seller);
     }
 
     @Override

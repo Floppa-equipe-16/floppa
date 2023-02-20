@@ -24,6 +24,15 @@ public class Offer {
         createdAt = Instant.now().toString();
     }
 
+    public Offer(Offer that) {
+        productId = that.getProductId();
+        username = that.getUsername();
+        amount = that.getAmount();
+        message = that.getMessage();
+        id = that.getId();
+        createdAt = that.getCreatedAt();
+    }
+
     private void validateParameters() {
         if (!isMessageLongEnough()) throw new InvalidParamException("message");
     }
@@ -54,5 +63,20 @@ public class Offer {
 
     public String getId() {
         return id;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Offer) {
+            Offer that = (Offer) obj;
+
+            return id.equalsIgnoreCase(that.getId())
+                    && productId.equalsIgnoreCase(that.getProductId())
+                    && username.equalsIgnoreCase(that.getUsername())
+                    && message.equalsIgnoreCase(that.getMessage())
+                    && amount.equals(that.getAmount())
+                    && createdAt.equalsIgnoreCase(that.getCreatedAt());
+        }
+        return false;
     }
 }

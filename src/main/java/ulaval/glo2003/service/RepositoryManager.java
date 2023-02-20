@@ -45,18 +45,20 @@ public class RepositoryManager {
         return SellerMapper.sellerToResponse(seller);
     }
 
-    public String createProduct(String xSellerId, ProductRequest productRequest) {
+    public String createProduct(String sellerId, ProductRequest productRequest) {
         productRequest.validate();
 
-        Product product = ProductMapper.requestToProduct(xSellerId, productRequest);
+        Product product = ProductMapper.requestToProduct(sellerId, productRequest);
+        Seller seller = sellerRepository.findById(sellerId);
+        seller.addProduct(product);
+
         productRepository.save(product);
 
         return product.getId();
     }
 
     public ProductResponse getProduct(String productId) {
-        Product product = productRepository.findById(productId);
-        offerRepository.findAllByProductId(product.getId()).forEach(product::addOffer);
+        Product product = getProductWithOffers(productId);
 
         Seller seller = sellerRepository.findById(product.getSellerId());
 
@@ -67,8 +69,18 @@ public class RepositoryManager {
         offerRequest.validate();
 
         Offer offer = OfferMapper.requestToOffer(productId, buyerName, offerRequest);
+
+        Product product = getProductWithOffers(productId);
+        product.addOffer(offer);
         offerRepository.save(offer);
 
         return offer.getId();
+    }
+
+    private Product getProductWithOffers(String id) {
+        Product product = productRepository.findById(id);
+        offerRepository.findAllByProductId(product.getId()).forEach(product::addOffer);
+
+        return product;
     }
 }

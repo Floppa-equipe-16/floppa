@@ -19,7 +19,7 @@ public class Product {
 
     private final String createdAt;
 
-    private final List<Offer> offers;
+    private final ArrayList<Offer> offers;
 
     public Product(String sellerId, String title, String description, Double suggestedPrice, String category) {
         this.sellerId = sellerId;
@@ -33,6 +33,17 @@ public class Product {
 
         id = UUID.randomUUID().toString();
         createdAt = Instant.now().toString();
+    }
+
+    public Product(Product that) {
+        sellerId = that.getSellerId();
+        title = that.getTitle();
+        description = that.getDescription();
+        suggestedPrice = that.getSuggestedPrice();
+        category = that.getCategory();
+        id = that.getId();
+        createdAt = that.getCreatedAt();
+        offers = new ArrayList<>();
     }
 
     private void validateParameters() {
@@ -105,5 +116,21 @@ public class Product {
 
     private boolean isOfferAmountAtLeastSuggestedPrice(Double offerAmount) {
         return offerAmount >= suggestedPrice;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Product) {
+            Product that = (Product) obj;
+
+            return id.equalsIgnoreCase(that.getId())
+                    && sellerId.equalsIgnoreCase(that.getSellerId())
+                    && title.equalsIgnoreCase(that.getTitle())
+                    && description.equalsIgnoreCase(that.getDescription())
+                    && suggestedPrice.equals(that.getSuggestedPrice())
+                    && category.equalsIgnoreCase(that.getCategory())
+                    && createdAt.equalsIgnoreCase(that.getCreatedAt());
+        }
+        return false;
     }
 }

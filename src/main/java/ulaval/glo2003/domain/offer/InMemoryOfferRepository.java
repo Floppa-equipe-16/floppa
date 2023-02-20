@@ -16,14 +16,17 @@ public class InMemoryOfferRepository implements IOfferRepository {
 
     @Override
     public Offer findById(String id) {
-        return Optional.ofNullable(offers.get(id))
+        Offer offer = Optional.ofNullable(offers.get(id))
                 .orElseThrow(() -> new NotFoundException(String.format("Offer with id '%s' not found", id)));
+
+        return new Offer(offer);
     }
 
     @Override
     public List<Offer> findAllByProductId(String id) {
         return offers.values().stream()
                 .filter(offer -> offer.getProductId().equals(id))
+                .map(Offer::new)
                 .collect(Collectors.toList());
     }
 

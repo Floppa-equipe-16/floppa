@@ -5,7 +5,7 @@ import ulaval.glo2003.api.product.ProductResponse;
 
 public class SellerResponse {
     public String id;
-    public String createAt;
+    public String createdAt;
     public String name;
     public String birthdate;
     public String email;

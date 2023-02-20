@@ -34,6 +34,18 @@ public class Seller {
         createdAt = Instant.now().toString();
     }
 
+    public Seller(Seller that) {
+        name = that.getName();
+        birthdate = that.getBirthdate();
+        email = that.getEmail();
+        phoneNumber = that.getPhoneNumber();
+        bio = that.getBio();
+        id = that.getId();
+        createdAt = that.getCreatedAt();
+
+        productsMap = new HashMap<>();
+    }
+
     public String getId() {
         return id;
     }
@@ -121,5 +133,21 @@ public class Seller {
 
     protected OffsetDateTime currentTime() {
         return OffsetDateTime.now();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Seller) {
+            Seller that = (Seller) obj;
+
+            return id.equalsIgnoreCase(that.getId())
+                    && name.equalsIgnoreCase(that.getName())
+                    && birthdate.equalsIgnoreCase(that.getBirthdate())
+                    && email.equalsIgnoreCase(that.getEmail())
+                    && phoneNumber.equalsIgnoreCase(that.getPhoneNumber())
+                    && bio.equalsIgnoreCase(that.getBio())
+                    && createdAt.equalsIgnoreCase(that.getCreatedAt());
+        }
+        return false;
     }
 }

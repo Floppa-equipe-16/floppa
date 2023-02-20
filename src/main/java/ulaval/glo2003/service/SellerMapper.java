@@ -14,7 +14,7 @@ public class SellerMapper {
         SellerResponse response = new SellerResponse();
 
         response.id = seller.getId();
-        response.createAt = seller.getCreatedAt();
+        response.createdAt = seller.getCreatedAt();
         response.name = seller.getName();
         response.birthdate = seller.getBirthdate();
         response.email = seller.getEmail();
