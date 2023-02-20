@@ -10,6 +10,10 @@ import org.junit.jupiter.api.Test;
 
 class InMemoryProductRepositoryTest {
     private static final String SELLER_ID = "SELLER";
+    public static final String TITLE = "Title";
+    public static final String DESCRIPTION = "Complete description";
+    public static final double SUGGESTED_PRICE = 10d;
+    public static final String CATEGORY = ProductCategory.other.toString();
     private InMemoryProductRepository repository;
     private Product product;
 
@@ -61,6 +65,6 @@ class InMemoryProductRepositoryTest {
     }
 
     private Product createProduct() {
-        return new Product(SELLER_ID, "Title", "Complete description", 10d, ProductCategory.other.toString());
+        return new Product(SELLER_ID, TITLE, DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
     }
 }

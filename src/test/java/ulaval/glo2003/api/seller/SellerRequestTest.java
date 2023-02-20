@@ -1,4 +1,4 @@
-package ulaval.glo2003.api;
+package ulaval.glo2003.api.seller;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;

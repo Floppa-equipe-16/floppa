@@ -8,13 +8,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class InMemorySellerRepositoryTest {
+    public static final String NAME = "Alice";
+    public static final String BIRTHDATE = "2000-01-01";
+    public static final String EMAIL = "Alice@floppa.com";
+    public static final String PHONE_NUMBER = "14181234567";
+    public static final String BIO = "My name is Alice!";
+
     private InMemorySellerRepository repository;
     private Seller seller;
 
     @BeforeEach
     protected void setUp() {
         repository = new InMemorySellerRepository();
-        seller = new Seller("Alice", "2000-01-01", "Alice@floppa.com", "14181234567", "My name is Alice!");
+        seller = new Seller(NAME, BIRTHDATE, EMAIL, PHONE_NUMBER, BIO);
     }
 
     @Test

@@ -1,4 +1,4 @@
-package ulaval.glo2003.api;
+package ulaval.glo2003.api.product;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -8,15 +8,18 @@ import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.domain.exceptions.MissingParamException;
 
 public class ProductRequestTest {
-
+    public static final String TITLE = "Iphone XR";
+    public static final String DESCRIPTION = "A relatively new Iphone working as good as a new one";
+    public static final double SUGGESTED_PRICE = 200d;
+    public static final String CATEGORY = "electronics";
     private final ProductRequest productRequest = new ProductRequest();
 
     @BeforeEach
     public void prepareProductRequest() {
-        productRequest.title = "Iphone XR";
-        productRequest.description = "A relatively new Iphone working as good as a new one";
-        productRequest.suggestedPrice = 200d;
-        productRequest.category = "electronics";
+        productRequest.title = TITLE;
+        productRequest.description = DESCRIPTION;
+        productRequest.suggestedPrice = SUGGESTED_PRICE;
+        productRequest.category = CATEGORY;
     }
 
     @Test
