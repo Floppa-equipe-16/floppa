@@ -56,6 +56,8 @@ public class RepositoryManager {
 
     public ProductResponse getProduct(String productId) {
         Product product = productRepository.findById(productId);
+        offerRepository.findAllByProductId(product.getId()).forEach(product::addOffer);
+
         Seller seller = sellerRepository.findById(product.getSellerId());
 
         return ProductMapper.productToResponseWithSeller(product, seller);
