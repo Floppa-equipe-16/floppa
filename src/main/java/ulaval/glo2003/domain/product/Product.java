@@ -19,7 +19,7 @@ public class Product {
 
     private final String createdAt;
 
-    private final ArrayList<Offer> offers;
+    private final List<Offer> offers;
 
     public Product(String sellerId, String title, String description, Double suggestedPrice, String category) {
         this.sellerId = sellerId;

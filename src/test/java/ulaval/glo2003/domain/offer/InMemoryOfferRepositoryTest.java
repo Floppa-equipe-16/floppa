@@ -12,7 +12,8 @@ class InMemoryOfferRepositoryTest {
     private static final String PRODUCT_ID = "PRODUCT";
     public static final String USERNAME = "Alice";
     public static final double AMOUNT = 100d;
-    public static final String MESSAGE = "one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen";
+    public static final String MESSAGE =
+            "one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen";
 
     private InMemoryOfferRepository repository;
     private Offer offer;
@@ -65,10 +66,6 @@ class InMemoryOfferRepositoryTest {
     }
 
     private Offer createOffer() {
-        return new Offer(
-                PRODUCT_ID,
-                USERNAME,
-                AMOUNT,
-                MESSAGE);
+        return new Offer(PRODUCT_ID, USERNAME, AMOUNT, MESSAGE);
     }
 }
