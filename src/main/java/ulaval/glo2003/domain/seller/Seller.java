@@ -5,12 +5,12 @@ import java.util.*;
 import ulaval.glo2003.domain.product.Product;
 
 public class Seller {
+    private final String id;
     private final String name;
     private final String birthdate;
     private final String email;
     private final String phoneNumber;
     private final String bio;
-    private final String id;
     private final String createdAt;
     private final Map<String, Product> productsMap;
 
@@ -27,6 +27,22 @@ public class Seller {
 
         id = UUID.randomUUID().toString();
         createdAt = Instant.now().toString();
+    }
+
+    public Seller(Seller that) {
+        name = that.getName();
+        birthdate = that.getBirthdate();
+        email = that.getEmail();
+        phoneNumber = that.getPhoneNumber();
+        bio = that.getBio();
+        id = that.getId();
+        createdAt = that.getCreatedAt();
+
+        productsMap = new HashMap<>();
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -47,10 +63,6 @@ public class Seller {
 
     public String getBio() {
         return bio;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getCreatedAt() {

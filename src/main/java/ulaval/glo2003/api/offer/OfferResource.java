@@ -7,6 +7,11 @@ import ulaval.glo2003.service.RepositoryManager;
 
 @Path("/products/{productId}/offers")
 public class OfferResource {
+    private final RepositoryManager repositoryManager;
+
+    public OfferResource(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -14,7 +19,8 @@ public class OfferResource {
             @HeaderParam("X-Buyer-Username") String xBuyerUsername,
             @PathParam("productId") String productId,
             OfferRequest offerRequest) {
-        RepositoryManager.getInstance().createOffer(xBuyerUsername, productId, offerRequest);
+
+        repositoryManager.createOffer(xBuyerUsername, productId, offerRequest);
         return Response.status(Response.Status.CREATED).build();
     }
 }

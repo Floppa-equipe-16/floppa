@@ -9,18 +9,24 @@ import ulaval.glo2003.service.RepositoryManager;
 
 @Path("/sellers")
 public class SellerResource {
+    private final RepositoryManager repositoryManager;
+
+    public SellerResource(RepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
+    }
+
     @GET
     @Path("/{sellerId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSeller(@PathParam("sellerId") String sellerId) {
-        SellerResponse sellerResponse = RepositoryManager.getInstance().getSeller(sellerId);
+        SellerResponse sellerResponse = repositoryManager.getSeller(sellerId);
         return Response.ok().entity(sellerResponse).build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createSeller(@Context UriInfo uriInfo, SellerRequest sellerRequest) {
-        String sellerId = RepositoryManager.getInstance().createSeller(sellerRequest);
+        String sellerId = repositoryManager.createSeller(sellerRequest);
         return Response.status(Response.Status.CREATED)
                 .header("Location", uriInfo.getAbsolutePath() + "/" + sellerId)
                 .build();
