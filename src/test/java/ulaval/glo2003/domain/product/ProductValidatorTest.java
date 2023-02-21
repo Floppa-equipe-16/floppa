@@ -114,7 +114,7 @@ public class ProductValidatorTest {
     }
 
     @Test
-    void testIsIdInvalid() {
+    void testIsSellerIdInvalid() {
         String invalidId = " \n \r \t";
 
         assertTrue(productValidator.isSellerIdInvalid(invalidId));
