@@ -1,6 +1,9 @@
 package ulaval.glo2003.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import ulaval.glo2003.api.offer.OfferRequest;
+import ulaval.glo2003.api.product.ProductCollectionResponse;
 import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.api.seller.SellerRequest;
@@ -14,8 +17,6 @@ import ulaval.glo2003.domain.product.Product;
 import ulaval.glo2003.domain.seller.ISellerRepository;
 import ulaval.glo2003.domain.seller.InMemorySellerRepository;
 import ulaval.glo2003.domain.seller.Seller;
-import java.util.ArrayList;
-import java.util.List;
 
 public class RepositoryManager {
     private final ISellerRepository sellerRepository;
@@ -59,7 +60,7 @@ public class RepositoryManager {
         return product.getId();
     }
 
-    public List<ProductResponse> getProducts() {
+    public ProductCollectionResponse getProducts() {
         List<Product> products = getProductsWithOffers();
         List<ProductResponse> productResponses = new ArrayList<>();
 
@@ -68,7 +69,8 @@ public class RepositoryManager {
                     product, sellerRepository.findById(product.getSellerId()));
             productResponses.add(productResponse);
         }
-        return productResponses;
+
+        return ProductMapper.productsToCollectionResponse(productResponses);
     }
 
     public ProductResponse getProduct(String productId) {
