@@ -5,6 +5,7 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+import java.util.List;
 import ulaval.glo2003.service.RepositoryManager;
 
 @Path("/products")
@@ -23,6 +24,13 @@ public class ProductResource {
         return Response.status(Response.Status.CREATED)
                 .header("Location", uriInfo.getAbsolutePath() + "/" + productId)
                 .build();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getProducts() {
+        List<ProductResponse> productResponses = repositoryManager.getProducts();
+        return Response.ok().entity(productResponses).build();
     }
 
     @GET
