@@ -1,7 +1,5 @@
 package ulaval.glo2003.service;
 
-import java.util.ArrayList;
-import java.util.List;
 import ulaval.glo2003.api.offer.OfferRequest;
 import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.api.product.ProductResponse;
@@ -59,18 +57,6 @@ public class RepositoryManager {
         return product.getId();
     }
 
-    public List<ProductResponse> getProducts() {
-        List<Product> products = getProductsWithOffers();
-        List<ProductResponse> productResponses = new ArrayList<>();
-
-        for (Product product : products) {
-            ProductResponse productResponse = ProductMapper.productToResponseWithSeller(
-                    product, sellerRepository.findById(product.getSellerId()));
-            productResponses.add(productResponse);
-        }
-        return productResponses;
-    }
-
     public ProductResponse getProduct(String productId) {
         Product product = getProductWithOffers(productId);
 
@@ -89,16 +75,6 @@ public class RepositoryManager {
         offerRepository.save(offer);
 
         return offer.getId();
-    }
-
-    private List<Product> getProductsWithOffers() {
-        List<Product> products = productRepository.findAllProduct();
-
-        for (Product product : products) {
-            offerRepository.findAllByProductId(product.getId()).forEach(product::addOffer);
-        }
-
-        return products;
     }
 
     private Product getProductWithOffers(String id) {
