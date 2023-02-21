@@ -1,12 +1,12 @@
 package ulaval.glo2003.domain.offer;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 public class OfferTest {
 
@@ -16,23 +16,24 @@ public class OfferTest {
     Offer offerMock = mock(Offer.class);
 
     @BeforeEach
-    void prepareOffer(){
+    void prepareOffer() {
         String productId = "valid ID";
         String userName = "Bob";
         Double amount = 19.5d;
-        String message100Char = "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789";
-        offer = new Offer(productId,userName,amount,message100Char);
+        String message100Char =
+                "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789";
+        offer = new Offer(productId, userName, amount, message100Char);
     }
 
     @Test
-    void TestCopyConstructor(){
+    void TestCopyConstructor() {
         Offer offerCopy = new Offer(offer);
 
         assertThat(offerCopy).isEqualTo(offer);
     }
 
     @Test
-    void testEqualFunction(){
+    void testEqualFunction() {
         doReturn(offer.getProductId()).when(offerMock).getProductId();
         doReturn(offer.getUsername()).when(offerMock).getUsername();
         doReturn(offer.getId()).when(offerMock).getId();
@@ -40,8 +41,6 @@ public class OfferTest {
         doReturn(offer.getCreatedAt()).when(offerMock).getCreatedAt();
         doReturn(offer.getMessage()).when(offerMock).getMessage();
 
-
         assertThat(offer).isEqualTo(offerMock);
     }
-
 }

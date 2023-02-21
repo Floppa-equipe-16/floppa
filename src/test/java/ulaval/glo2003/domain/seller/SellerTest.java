@@ -33,7 +33,7 @@ public class SellerTest {
     }
 
     @Test
-    void testCopyConstructor(){
+    void testCopyConstructor() {
         Seller sellerCopy = new Seller(seller);
 
         assertThat(seller).isEqualTo(sellerCopy);
@@ -57,7 +57,7 @@ public class SellerTest {
     }
 
     @Test
-    void testEqualsFunction(){
+    void testEqualsFunction() {
         doReturn(seller.getId()).when(sellerMock).getId();
         doReturn(seller.getName()).when(sellerMock).getName();
         doReturn(seller.getBirthdate()).when(sellerMock).getBirthdate();

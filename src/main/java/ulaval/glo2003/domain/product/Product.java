@@ -44,9 +44,7 @@ public class Product {
         createdAt = that.getCreatedAt();
         offers = new ArrayList<>();
         productValidator = new ProductValidator(this);
-
     }
-
 
     public String getSellerId() {
         return sellerId;

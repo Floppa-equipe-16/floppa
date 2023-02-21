@@ -26,7 +26,7 @@ class ProductValidator {
                     "user with username `" + offer.getUsername() + "` has already made an offer");
     }
 
-    protected  boolean isSellerIdInvalid(String s){
+    protected boolean isSellerIdInvalid(String s) {
         return s.isBlank();
     }
 

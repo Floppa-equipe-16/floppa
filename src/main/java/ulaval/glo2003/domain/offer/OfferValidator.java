@@ -6,7 +6,7 @@ class OfferValidator {
 
     private final Offer offer;
 
-    public OfferValidator(Offer offer){
+    public OfferValidator(Offer offer) {
         this.offer = offer;
     }
 

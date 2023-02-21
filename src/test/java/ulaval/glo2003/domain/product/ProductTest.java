@@ -27,11 +27,11 @@ public class ProductTest {
         String validDescription = "A relatively new Iphone working as good as a new one";
         Double validSuggestedPrice = 200d;
         String validCategory = "electronics";
-        product = new Product(validId,validTitle, validDescription, validSuggestedPrice, validCategory);
+        product = new Product(validId, validTitle, validDescription, validSuggestedPrice, validCategory);
     }
 
     @Test
-    void testCopyConstructor(){
+    void testCopyConstructor() {
         Product productCopy = new Product(product);
 
         assertThat(productCopy).isEqualTo(product);
@@ -49,7 +49,7 @@ public class ProductTest {
     }
 
     @Test
-    void testEqualsFunction(){
+    void testEqualsFunction() {
         doReturn(product.getId()).when(productMock).getId();
         doReturn(product.getSellerId()).when(productMock).getSellerId();
         doReturn(product.getTitle()).when(productMock).getTitle();

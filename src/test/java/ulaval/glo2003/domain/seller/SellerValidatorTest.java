@@ -31,7 +31,7 @@ public class SellerValidatorTest {
         setAllValidatorInSpyToValid();
     }
 
-    private void setAllValidatorInSpyToValid(){
+    private void setAllValidatorInSpyToValid() {
         doReturn(false).when(sellerValidatorSpy).isNameInvalid(Mockito.any());
         doReturn(false).when(sellerValidatorSpy).isBirthdateInvalid(Mockito.any());
         doReturn(false).when(sellerValidatorSpy).isPhoneNumberInvalid(Mockito.any());
@@ -43,8 +43,8 @@ public class SellerValidatorTest {
     void testInvalidNameInValidateSellerParamThrowIfInvalid() {
         doReturn(true).when(sellerValidatorSpy).isNameInvalid(Mockito.any());
 
-        InvalidParamException thrownInvalidName = assertThrows(
-                InvalidParamException.class, () -> sellerValidatorSpy.validateParamThrowIfInvalid());
+        InvalidParamException thrownInvalidName =
+                assertThrows(InvalidParamException.class, () -> sellerValidatorSpy.validateParamThrowIfInvalid());
         assertThat(thrownInvalidName.errorDescription.description).isEqualTo("Invalid parameter 'name'.");
     }
 
@@ -52,8 +52,8 @@ public class SellerValidatorTest {
     void testInvalidBirthdateInValidateSellerParamThrowIfInvalid() {
         doReturn(true).when(sellerValidatorSpy).isBirthdateInvalid(Mockito.any());
 
-        InvalidParamException thrownInvalidName = assertThrows(
-                InvalidParamException.class, () -> sellerValidatorSpy.validateParamThrowIfInvalid());
+        InvalidParamException thrownInvalidName =
+                assertThrows(InvalidParamException.class, () -> sellerValidatorSpy.validateParamThrowIfInvalid());
         assertThat(thrownInvalidName.errorDescription.description).isEqualTo("Invalid parameter 'birthdate'.");
     }
 
@@ -61,8 +61,8 @@ public class SellerValidatorTest {
     void testInvalidEmailInValidateSellerParamThrowIfInvalid() {
         doReturn(true).when(sellerValidatorSpy).isEmailInvalid(Mockito.any());
 
-        InvalidParamException thrownInvalidName = assertThrows(
-                InvalidParamException.class, () -> sellerValidatorSpy.validateParamThrowIfInvalid());
+        InvalidParamException thrownInvalidName =
+                assertThrows(InvalidParamException.class, () -> sellerValidatorSpy.validateParamThrowIfInvalid());
         assertThat(thrownInvalidName.errorDescription.description).isEqualTo("Invalid parameter 'email'.");
     }
 
@@ -70,8 +70,8 @@ public class SellerValidatorTest {
     void testInvalidPhoneNumberInValidateSellerParamThrowIfInvalid() {
         doReturn(true).when(sellerValidatorSpy).isPhoneNumberInvalid(Mockito.any());
 
-        InvalidParamException thrownInvalidName = assertThrows(
-                InvalidParamException.class, () -> sellerValidatorSpy.validateParamThrowIfInvalid());
+        InvalidParamException thrownInvalidName =
+                assertThrows(InvalidParamException.class, () -> sellerValidatorSpy.validateParamThrowIfInvalid());
         assertThat(thrownInvalidName.errorDescription.description).isEqualTo("Invalid parameter 'phone number'.");
     }
 
@@ -79,8 +79,8 @@ public class SellerValidatorTest {
     void testInvalidBioInValidateSellerParamThrowIfInvalid() {
         doReturn(true).when(sellerValidatorSpy).isBioInvalid(Mockito.any());
 
-        InvalidParamException thrownInvalidName = assertThrows(
-                InvalidParamException.class, () -> sellerValidatorSpy.validateParamThrowIfInvalid());
+        InvalidParamException thrownInvalidName =
+                assertThrows(InvalidParamException.class, () -> sellerValidatorSpy.validateParamThrowIfInvalid());
         assertThat(thrownInvalidName.errorDescription.description).isEqualTo("Invalid parameter 'bio'.");
     }
 

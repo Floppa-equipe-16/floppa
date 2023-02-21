@@ -36,7 +36,7 @@ public class ProductValidatorTest {
         setAllValidatorInSpyToValid();
     }
 
-    private void setAllValidatorInSpyToValid(){
+    private void setAllValidatorInSpyToValid() {
         doReturn(false).when(productValidatorSpy).isSellerIdInvalid(Mockito.any());
         doReturn(false).when(productValidatorSpy).isTitleInvalid(Mockito.any());
         doReturn(false).when(productValidatorSpy).isDescriptionInvalid(Mockito.any());
@@ -50,16 +50,17 @@ public class ProductValidatorTest {
     void testInvalidIdInValidateParamThrowIfInvalid() {
         doReturn(true).when(productValidatorSpy).isSellerIdInvalid(Mockito.any());
 
-        InvalidParamException thrownInvalidId = assertThrows(
-                InvalidParamException.class, () -> productValidatorSpy.validateParamThrowIfInvalid());
+        InvalidParamException thrownInvalidId =
+                assertThrows(InvalidParamException.class, () -> productValidatorSpy.validateParamThrowIfInvalid());
         assertThat(thrownInvalidId.errorDescription.description).isEqualTo("Invalid parameter 'id'.");
     }
+
     @Test
     void testInvalidTitleInValidateParamThrowIfInvalid() {
         doReturn(true).when(productValidatorSpy).isTitleInvalid(Mockito.any());
 
-        InvalidParamException thrownInvalidTitle = assertThrows(
-                InvalidParamException.class, () -> productValidatorSpy.validateParamThrowIfInvalid());
+        InvalidParamException thrownInvalidTitle =
+                assertThrows(InvalidParamException.class, () -> productValidatorSpy.validateParamThrowIfInvalid());
         assertThat(thrownInvalidTitle.errorDescription.description).isEqualTo("Invalid parameter 'title'.");
     }
 
@@ -67,8 +68,8 @@ public class ProductValidatorTest {
     void testInvalidDescriptionInValidateParamThrowIfInvalid() {
         doReturn(true).when(productValidatorSpy).isDescriptionInvalid(Mockito.any());
 
-        InvalidParamException thrownInvalidDescription = assertThrows(
-                InvalidParamException.class, () -> productValidatorSpy.validateParamThrowIfInvalid());
+        InvalidParamException thrownInvalidDescription =
+                assertThrows(InvalidParamException.class, () -> productValidatorSpy.validateParamThrowIfInvalid());
         assertThat(thrownInvalidDescription.errorDescription.description).isEqualTo("Invalid parameter 'description'.");
     }
 
@@ -76,8 +77,8 @@ public class ProductValidatorTest {
     void testInvalidCategoryInValidateParamThrowIfInvalid() {
         doReturn(true).when(productValidatorSpy).isCategoryInvalid(Mockito.any());
 
-        InvalidParamException thrownInvalidCategory = assertThrows(
-                InvalidParamException.class, () -> productValidatorSpy.validateParamThrowIfInvalid());
+        InvalidParamException thrownInvalidCategory =
+                assertThrows(InvalidParamException.class, () -> productValidatorSpy.validateParamThrowIfInvalid());
         assertThat(thrownInvalidCategory.errorDescription.description).isEqualTo("Invalid parameter 'category'.");
     }
 
@@ -85,8 +86,8 @@ public class ProductValidatorTest {
     void testInvalidSuggestedPriceInValidateParamThrowIfInvalid() {
         doReturn(true).when(productValidatorSpy).isSuggestedPriceInvalid(Mockito.any());
 
-        InvalidParamException thrownInvalidSuggestedPrice = assertThrows(
-                InvalidParamException.class, () -> productValidatorSpy.validateParamThrowIfInvalid());
+        InvalidParamException thrownInvalidSuggestedPrice =
+                assertThrows(InvalidParamException.class, () -> productValidatorSpy.validateParamThrowIfInvalid());
         assertThat(thrownInvalidSuggestedPrice.errorDescription.description)
                 .isEqualTo("Invalid parameter 'suggested price'.");
     }
@@ -96,8 +97,7 @@ public class ProductValidatorTest {
         doReturn(true).when(productValidatorSpy).isOfferAmountLessThenSuggestedPrice(Mockito.any());
 
         InvalidParamException thrownInvalidAmount = assertThrows(
-                InvalidParamException.class,
-                () -> productValidatorSpy.validateOfferEligibleThrowIfInvalid(offerMock));
+                InvalidParamException.class, () -> productValidatorSpy.validateOfferEligibleThrowIfInvalid(offerMock));
         assertThat(thrownInvalidAmount.errorDescription.description).isEqualTo("Invalid parameter 'amount'.");
     }
 
@@ -108,8 +108,7 @@ public class ProductValidatorTest {
         doReturn(true).when(productValidatorSpy).hasBuyerAlreadyMadeAnOffer(Mockito.any());
 
         NotPermittedException thrownInvalidUsername = assertThrows(
-                NotPermittedException.class,
-                () -> productValidatorSpy.validateOfferEligibleThrowIfInvalid(offerMock));
+                NotPermittedException.class, () -> productValidatorSpy.validateOfferEligibleThrowIfInvalid(offerMock));
         assertThat(thrownInvalidUsername.errorDescription.description)
                 .isEqualTo("Not permitted action 'user with username `" + username + "` has already made an offer'.");
     }
@@ -120,6 +119,7 @@ public class ProductValidatorTest {
 
         assertTrue(productValidator.isSellerIdInvalid(invalidId));
     }
+
     @Test
     void testIsTitleInvalid() {
         String invalidTitle = " \n \r \t";
