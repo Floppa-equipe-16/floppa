@@ -22,12 +22,13 @@ public class ProductTest {
 
     @BeforeEach
     void prepareProduct() {
-        String validId = "2a74sfs3d2g48";
+        String validSellerId = "2a74sfs3d2g48";
         String validTitle = "Iphone XR";
         String validDescription = "A relatively new Iphone working as good as a new one";
         Double validSuggestedPrice = 200d;
         String validCategory = "electronics";
-        product = new Product(validId, validTitle, validDescription, validSuggestedPrice, validCategory);
+
+        product = new Product(validSellerId, validTitle, validDescription, validSuggestedPrice, validCategory);
     }
 
     @Test

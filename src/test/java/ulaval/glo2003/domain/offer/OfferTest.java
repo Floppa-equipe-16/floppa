@@ -22,6 +22,7 @@ public class OfferTest {
         Double amount = 19.5d;
         String message100Char =
                 "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789";
+
         offer = new Offer(productId, userName, amount, message100Char);
     }
 
