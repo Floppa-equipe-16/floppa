@@ -2,7 +2,6 @@ package ulaval.glo2003.domain.offer;
 
 import java.time.Instant;
 import java.util.UUID;
-import ulaval.glo2003.domain.exceptions.InvalidParamException;
 
 public class Offer {
     private final String id;
@@ -18,7 +17,8 @@ public class Offer {
         this.amount = Math.round(amount * 100d) / 100d;
         this.message = message;
 
-        validateParameters();
+        OfferValidator offerValidator = new OfferValidator(this);
+        offerValidator.validateParamThrowIfInvalid();
 
         id = UUID.randomUUID().toString();
         createdAt = Instant.now().toString();
@@ -31,14 +31,6 @@ public class Offer {
         message = that.getMessage();
         id = that.getId();
         createdAt = that.getCreatedAt();
-    }
-
-    private void validateParameters() {
-        if (!isMessageLongEnough()) throw new InvalidParamException("message");
-    }
-
-    private boolean isMessageLongEnough() {
-        return message.length() >= 100;
     }
 
     public String getUsername() {
