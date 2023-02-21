@@ -21,6 +21,10 @@ public class InMemoryProductRepository implements IProductRepository {
 
         return new Product(product);
     }
+    @Override
+    public List<Product> findAllProduct() {
+        return products.values().stream().map(Product::new).collect(Collectors.toList());
+    }
 
     @Override
     public List<Product> findAllBySellerId(String id) {
