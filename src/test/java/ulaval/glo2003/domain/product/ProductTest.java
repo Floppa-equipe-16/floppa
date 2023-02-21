@@ -15,19 +15,30 @@ public class ProductTest {
     private Product product;
 
     @Mock
-    Offer offerMock = mock(Offer.class);
+    private Offer offerMock = mock(Offer.class);
+
+    @Mock
+    private Product productMock = mock(Product.class);
 
     @BeforeEach
-    public void prepareProduct() {
+    void prepareProduct() {
+        String validId = "2a74sfs3d2g48";
         String validTitle = "Iphone XR";
         String validDescription = "A relatively new Iphone working as good as a new one";
         Double validSuggestedPrice = 200d;
         String validCategory = "electronics";
-        product = new Product(validTitle, validDescription, validSuggestedPrice, validCategory);
+        product = new Product(validId,validTitle, validDescription, validSuggestedPrice, validCategory);
     }
 
     @Test
-    public void canAddValidOffer() {
+    void testCopyConstructor(){
+        Product productCopy = new Product(product);
+
+        assertThat(productCopy).isEqualTo(product);
+    }
+
+    @Test
+    void canAddValidOffer() {
         doReturn("usertest").when(offerMock).getUsername();
         doReturn(200d).when(offerMock).getAmount();
 
@@ -35,5 +46,18 @@ public class ProductTest {
 
         Optional<Offer> offer = Optional.ofNullable(product.getOffers().get(0));
         assertThat(offer.isPresent()).isTrue();
+    }
+
+    @Test
+    void testEqualsFunction(){
+        doReturn(product.getId()).when(productMock).getId();
+        doReturn(product.getSellerId()).when(productMock).getSellerId();
+        doReturn(product.getTitle()).when(productMock).getTitle();
+        doReturn(product.getDescription()).when(productMock).getDescription();
+        doReturn(product.getSuggestedPrice()).when(productMock).getSuggestedPrice();
+        doReturn(product.getCategory()).when(productMock).getCategory();
+        doReturn(product.getCreatedAt()).when(productMock).getCreatedAt();
+
+        assertThat(product).isEqualTo(productMock);
     }
 }

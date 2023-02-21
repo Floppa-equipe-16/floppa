@@ -16,8 +16,11 @@ public class SellerTest {
     @Mock
     Product productMock = mock(Product.class);
 
+    @Mock
+    Seller sellerMock = mock(Seller.class);
+
     @BeforeEach
-    public void initSeller() {
+    void initSeller() {
         String validName = "Bob";
         String validBirthdate = "2000-01-01";
         String validPhoneNumber = "14181234567";
@@ -30,7 +33,14 @@ public class SellerTest {
     }
 
     @Test
-    public void canAddProduct() {
+    void testCopyConstructor(){
+        Seller sellerCopy = new Seller(seller);
+
+        assertThat(seller).isEqualTo(sellerCopy);
+    }
+
+    @Test
+    void canAddProduct() {
         seller.addProduct(productMock);
         Optional<Product> product = Optional.ofNullable(seller.getProductById(productMock.getId()));
 
@@ -39,10 +49,23 @@ public class SellerTest {
     }
 
     @Test
-    public void doesNotAddSameProductTwice() {
+    void doesNotAddSameProductTwice() {
         seller.addProduct(productMock);
         seller.addProduct(productMock);
 
         assertThat(seller.getProducts().size()).isEqualTo(1);
+    }
+
+    @Test
+    void testEqualsFunction(){
+        doReturn(seller.getId()).when(sellerMock).getId();
+        doReturn(seller.getName()).when(sellerMock).getName();
+        doReturn(seller.getBirthdate()).when(sellerMock).getBirthdate();
+        doReturn(seller.getEmail()).when(sellerMock).getEmail();
+        doReturn(seller.getPhoneNumber()).when(sellerMock).getPhoneNumber();
+        doReturn(seller.getBio()).when(sellerMock).getBio();
+        doReturn(seller.getCreatedAt()).when(sellerMock).getCreatedAt();
+
+        assertThat(seller).isEqualTo(sellerMock);
     }
 }
