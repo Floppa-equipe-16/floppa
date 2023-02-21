@@ -22,8 +22,7 @@ public class Seller {
         this.bio = bio;
         this.productsMap = new HashMap<>();
 
-        SellerValidator sellerValidator = new SellerValidator(this);
-        sellerValidator.validateParamThrowIfInvalid();
+        new SellerValidator(this).validateParamThrowIfInvalid();
 
         id = UUID.randomUUID().toString();
         createdAt = Instant.now().toString();

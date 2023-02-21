@@ -17,8 +17,7 @@ public class Offer {
         this.amount = Math.round(amount * 100d) / 100d;
         this.message = message;
 
-        OfferValidator offerValidator = new OfferValidator(this);
-        offerValidator.validateParamThrowIfInvalid();
+        new OfferValidator(this).validateParamThrowIfInvalid();
 
         id = UUID.randomUUID().toString();
         createdAt = Instant.now().toString();
