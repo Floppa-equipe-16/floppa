@@ -22,8 +22,8 @@ public class Seller {
         this.bio = bio;
         this.productsMap = new HashMap<>();
 
-        SellerParamValidator sellerParamValidator = new SellerParamValidator(this);
-        sellerParamValidator.validateSellerParamThrowIfInvalid();
+        SellerValidator sellerValidator = new SellerValidator(this);
+        sellerValidator.validateParamThrowIfInvalid();
 
         id = UUID.randomUUID().toString();
         createdAt = Instant.now().toString();
@@ -79,5 +79,21 @@ public class Seller {
 
     public void addProduct(Product product) {
         productsMap.put(product.getId(), product);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Seller) {
+            Seller that = (Seller) obj;
+
+            return id.equalsIgnoreCase(that.getId())
+                    && name.equalsIgnoreCase(that.getName())
+                    && birthdate.equalsIgnoreCase(that.getBirthdate())
+                    && email.equalsIgnoreCase(that.getEmail())
+                    && phoneNumber.equalsIgnoreCase(that.getPhoneNumber())
+                    && bio.equalsIgnoreCase(that.getBio())
+                    && createdAt.equalsIgnoreCase(that.getCreatedAt());
+        }
+        return false;
     }
 }

@@ -4,14 +4,15 @@ import ulaval.glo2003.domain.exceptions.InvalidParamException;
 import ulaval.glo2003.domain.exceptions.NotPermittedException;
 import ulaval.glo2003.domain.offer.Offer;
 
-class ProductParamValidator {
+class ProductValidator {
     private final Product product;
 
-    public ProductParamValidator(Product product) {
+    public ProductValidator(Product product) {
         this.product = product;
     }
 
-    public void validateProductParamThrowIfInvalid() {
+    public void validateParamThrowIfInvalid() {
+        if (isSellerIdInvalid(product.getSellerId())) throw new InvalidParamException("id");
         if (isTitleInvalid(product.getTitle())) throw new InvalidParamException("title");
         if (isDescriptionInvalid(product.getDescription())) throw new InvalidParamException("description");
         if (isCategoryInvalid(product.getCategory())) throw new InvalidParamException("category");
@@ -23,6 +24,10 @@ class ProductParamValidator {
         if (hasBuyerAlreadyMadeAnOffer(offer.getUsername()))
             throw new NotPermittedException(
                     "user with username `" + offer.getUsername() + "` has already made an offer");
+    }
+
+    protected  boolean isSellerIdInvalid(String s){
+        return s.isBlank();
     }
 
     protected boolean isTitleInvalid(String s) {

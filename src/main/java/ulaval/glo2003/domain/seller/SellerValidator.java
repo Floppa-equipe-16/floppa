@@ -7,22 +7,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
 
-class SellerParamValidator {
+class SellerValidator {
     private final Seller seller;
 
-    public SellerParamValidator(Seller seller) {
+    public SellerValidator(Seller seller) {
         this.seller = seller;
     }
 
-    public void validateSellerParamThrowIfInvalid() {
+    public void validateParamThrowIfInvalid() {
         if (isNameInvalid(seller.getName())) throw new InvalidParamException("name");
-
         if (isBirthdateInvalid(seller.getBirthdate())) throw new InvalidParamException("birthdate");
-
         if (isEmailInvalid(seller.getEmail())) throw new InvalidParamException("email");
-
         if (isPhoneNumberInvalid(seller.getPhoneNumber())) throw new InvalidParamException("phone number");
-
         if (isBioInvalid(seller.getBio())) throw new InvalidParamException("bio");
     }
 

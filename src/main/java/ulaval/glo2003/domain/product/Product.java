@@ -4,9 +4,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import ulaval.glo2003.domain.exceptions.InvalidParamException;
-import ulaval.glo2003.domain.exceptions.MissingParamException;
-import ulaval.glo2003.domain.exceptions.NotPermittedException;
 import ulaval.glo2003.domain.offer.Offer;
 
 public class Product {
@@ -20,7 +17,7 @@ public class Product {
     private final String createdAt;
 
     private final ArrayList<Offer> offers;
-    private final ProductParamValidator productParamValidator;
+    private final ProductValidator productValidator;
 
     public Product(String sellerId, String title, String description, Double suggestedPrice, String category) {
         this.sellerId = sellerId;
@@ -30,8 +27,8 @@ public class Product {
         this.category = category;
         this.offers = new ArrayList<>();
 
-        productParamValidator = new ProductParamValidator(this);
-        productParamValidator.validateProductParamThrowIfInvalid();
+        productValidator = new ProductValidator(this);
+        productValidator.validateParamThrowIfInvalid();
 
         id = UUID.randomUUID().toString();
         createdAt = Instant.now().toString();
@@ -46,6 +43,8 @@ public class Product {
         id = that.getId();
         createdAt = that.getCreatedAt();
         offers = new ArrayList<>();
+        productValidator = new ProductValidator(this);
+
     }
 
 
@@ -82,7 +81,7 @@ public class Product {
     }
 
     public void addOffer(Offer offer) {
-        productParamValidator.validateOfferEligibleThrowIfInvalid(offer);
+        productValidator.validateOfferEligibleThrowIfInvalid(offer);
         offers.add(offer);
     }
 
