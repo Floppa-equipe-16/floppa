@@ -47,7 +47,7 @@ public class ProductValidatorTest {
     }
 
     @Test
-    void testInvalidIdInValidateParamThrowIfInvalid() {
+    void testInvalidSellerIdInValidateParamThrowIfInvalid() {
         doReturn(true).when(productValidatorSpy).isSellerIdInvalid(Mockito.any());
 
         InvalidParamException thrownInvalidId =
