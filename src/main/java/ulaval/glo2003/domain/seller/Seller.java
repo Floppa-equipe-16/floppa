@@ -22,7 +22,7 @@ public class Seller {
         this.bio = bio;
         this.productsMap = new HashMap<>();
 
-        new SellerValidator(this).validateParamThrowIfInvalid();
+        SellerValidator.validateParam(this);
 
         id = UUID.randomUUID().toString();
         createdAt = Instant.now().toString();

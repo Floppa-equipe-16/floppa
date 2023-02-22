@@ -5,13 +5,10 @@ import ulaval.glo2003.domain.exceptions.NotPermittedException;
 import ulaval.glo2003.domain.offer.Offer;
 
 class ProductValidator {
-    private final Product product;
 
-    public ProductValidator(Product product) {
-        this.product = product;
-    }
+    private static final Double MINIMUM_SUGGESTED_PRICE = 1d;
 
-    public void validateParamThrowIfInvalid() {
+    public static void validateParam(Product product) {
         if (isSellerIdInvalid(product.getSellerId())) throw new InvalidParamException("id");
         if (isTitleInvalid(product.getTitle())) throw new InvalidParamException("title");
         if (isDescriptionInvalid(product.getDescription())) throw new InvalidParamException("description");
@@ -19,30 +16,30 @@ class ProductValidator {
         if (isSuggestedPriceInvalid(product.getSuggestedPrice())) throw new InvalidParamException("suggested price");
     }
 
-    public void validateOfferEligibleThrowIfInvalid(Offer offer) {
-        if (isOfferAmountLessThenSuggestedPrice(offer.getAmount())) throw new InvalidParamException("amount");
-        if (hasBuyerAlreadyMadeAnOffer(offer.getUsername()))
+    public static void validateOfferEligible(Product product, Offer offer) {
+        if (isOfferAmountLessThenSuggestedPrice(product, offer.getAmount())) throw new InvalidParamException("amount");
+        if (hasBuyerAlreadyMadeAnOffer(product, offer.getUsername()))
             throw new NotPermittedException(
                     "user with username `" + offer.getUsername() + "` has already made an offer");
     }
 
-    protected boolean isSellerIdInvalid(String s) {
-        return s.isBlank();
+    protected static boolean isSellerIdInvalid(String sellerId) {
+        return sellerId.isBlank();
     }
 
-    protected boolean isTitleInvalid(String s) {
-        return s.isBlank();
+    protected static boolean isTitleInvalid(String title) {
+        return title.isBlank();
     }
 
-    protected boolean isDescriptionInvalid(String s) {
-        return s.isBlank();
+    protected static boolean isDescriptionInvalid(String description) {
+        return description.isBlank();
     }
 
-    protected boolean isSuggestedPriceInvalid(Double suggestedPrice) {
-        return suggestedPrice < 1d;
+    protected static boolean isSuggestedPriceInvalid(Double suggestedPrice) {
+        return suggestedPrice < MINIMUM_SUGGESTED_PRICE;
     }
 
-    protected boolean isCategoryInvalid(String category) {
+    protected static boolean isCategoryInvalid(String category) {
         try {
             ProductCategory.valueOf(category);
         } catch (Exception e) {
@@ -51,11 +48,11 @@ class ProductValidator {
         return false;
     }
 
-    protected boolean isOfferAmountLessThenSuggestedPrice(Double offerAmount) {
+    protected static boolean isOfferAmountLessThenSuggestedPrice(Product product, Double offerAmount) {
         return offerAmount < product.getSuggestedPrice();
     }
 
-    protected boolean hasBuyerAlreadyMadeAnOffer(String buyerUsername) {
+    protected static boolean hasBuyerAlreadyMadeAnOffer(Product product, String buyerUsername) {
         return product.getOffers().stream().anyMatch(offer -> buyerUsername.equals(offer.getUsername()));
     }
 }

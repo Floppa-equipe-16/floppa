@@ -8,13 +8,10 @@ import java.util.regex.Pattern;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
 
 class SellerValidator {
-    private final Seller seller;
+    private static final int PHONE_NUMBER_LENGTH = 11;
+    private static final int MINIMUM_AGE = 18;
 
-    public SellerValidator(Seller seller) {
-        this.seller = seller;
-    }
-
-    public void validateParamThrowIfInvalid() {
+    public static void validateParam(Seller seller) {
         if (isNameInvalid(seller.getName())) throw new InvalidParamException("name");
         if (isBirthdateInvalid(seller.getBirthdate())) throw new InvalidParamException("birthdate");
         if (isEmailInvalid(seller.getEmail())) throw new InvalidParamException("email");
@@ -22,30 +19,30 @@ class SellerValidator {
         if (isBioInvalid(seller.getBio())) throw new InvalidParamException("bio");
     }
 
-    protected boolean isNameInvalid(String s) {
+    protected static boolean isNameInvalid(String s) {
         return s.isBlank();
     }
 
-    protected boolean isBioInvalid(String s) {
+    protected static boolean isBioInvalid(String s) {
         return s.isBlank();
     }
 
-    protected boolean isPhoneNumberInvalid(String phoneNumber) {
-        return !(phoneNumber.chars().allMatch(Character::isDigit) && phoneNumber.length() == 11);
+    protected static boolean isPhoneNumberInvalid(String phoneNumber) {
+        return !(phoneNumber.chars().allMatch(Character::isDigit) && phoneNumber.length() == PHONE_NUMBER_LENGTH);
     }
 
-    protected boolean isEmailInvalid(String email) {
+    protected static boolean isEmailInvalid(String email) {
         Pattern p = Pattern.compile(
                 "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$");
         Matcher m = p.matcher(email);
         return !m.matches();
     }
 
-    protected boolean isBirthdateInvalid(String birthDate) {
-        return isBirthdateFormatInvalid(birthDate) || !isBirthdate18orMore(birthDate);
+    protected static boolean isBirthdateInvalid(String birthDate) {
+        return isBirthdateFormatInvalid(birthDate) || !isOldEnough(birthDate);
     }
 
-    protected boolean isBirthdateFormatInvalid(String birthdate) {
+    protected static boolean isBirthdateFormatInvalid(String birthdate) {
         try {
             LocalDate.parse(birthdate);
             return false;
@@ -54,19 +51,15 @@ class SellerValidator {
         }
     }
 
-    protected boolean isBirthdate18orMore(String birthdate) {
+    protected static boolean isOldEnough(String birthdate) {
         try {
             String birthdateOffset = birthdate + "T00:00Z";
             OffsetDateTime birthdayDate = OffsetDateTime.parse(birthdateOffset);
-            OffsetDateTime now = currentTime();
-            OffsetDateTime birthday18Plus = birthdayDate.plusYears(18);
-            return birthday18Plus.isBefore(now);
+            OffsetDateTime now = OffsetDateTime.now();
+            OffsetDateTime birthdayOldEnough = birthdayDate.plusYears(MINIMUM_AGE);
+            return birthdayOldEnough.isBefore(now);
         } catch (DateTimeParseException ignored) {
             return false;
         }
-    }
-
-    protected OffsetDateTime currentTime() {
-        return OffsetDateTime.now();
     }
 }

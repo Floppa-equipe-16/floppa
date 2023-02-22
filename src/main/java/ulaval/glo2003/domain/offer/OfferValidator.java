@@ -2,19 +2,17 @@ package ulaval.glo2003.domain.offer;
 
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
 
-class OfferValidator {
+public class OfferValidator {
 
-    private final Offer offer;
+    private static final int MINIMUM_MESSAGE_LENGTH = 100;
 
-    public OfferValidator(Offer offer) {
-        this.offer = offer;
-    }
+    private OfferValidator() {}
 
-    public void validateParamThrowIfInvalid() {
+    public static void validateParam(Offer offer) {
         if (isMessageTooShort(offer.getMessage())) throw new InvalidParamException("message");
     }
 
-    protected boolean isMessageTooShort(String message) {
-        return message.length() < 100;
+    public static boolean isMessageTooShort(String message) {
+        return message.length() < MINIMUM_MESSAGE_LENGTH;
     }
 }

@@ -17,7 +17,6 @@ public class Product {
     private final String createdAt;
 
     private final ArrayList<Offer> offers;
-    private final ProductValidator productValidator;
 
     public Product(String sellerId, String title, String description, Double suggestedPrice, String category) {
         this.sellerId = sellerId;
@@ -27,8 +26,7 @@ public class Product {
         this.category = category;
         this.offers = new ArrayList<>();
 
-        productValidator = new ProductValidator(this);
-        productValidator.validateParamThrowIfInvalid();
+        ProductValidator.validateParam(this);
 
         id = UUID.randomUUID().toString();
         createdAt = Instant.now().toString();
@@ -43,7 +41,6 @@ public class Product {
         id = that.getId();
         createdAt = that.getCreatedAt();
         offers = new ArrayList<>();
-        productValidator = new ProductValidator(this);
     }
 
     public String getSellerId() {
@@ -79,7 +76,7 @@ public class Product {
     }
 
     public void addOffer(Offer offer) {
-        productValidator.validateOfferEligibleThrowIfInvalid(offer);
+        ProductValidator.validateOfferEligible(this, offer);
         offers.add(offer);
     }
 
