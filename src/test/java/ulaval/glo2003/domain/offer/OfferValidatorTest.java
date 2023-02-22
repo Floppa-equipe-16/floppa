@@ -2,49 +2,40 @@ package ulaval.glo2003.domain.offer;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Spy;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
 
 public class OfferValidatorTest {
 
-    private OfferValidator offerValidator;
-
     @Mock
-    private Offer offer = mock(Offer.class);
+    private Offer offerMock = mock(Offer.class);
 
-    @Spy
-    private OfferValidator offerValidatorSpy;
+    @Test
+    void validateWithInvalidMessage() {
+        try (MockedStatic<OfferValidator> offerValidatorMockedStatic =
+                Mockito.mockStatic(OfferValidator.class, Mockito.CALLS_REAL_METHODS)) {
+            offerValidatorMockedStatic
+                    .when(() -> OfferValidator.isMessageTooShort(any()))
+                    .thenReturn(true);
 
-    @BeforeEach
-    void prepareOfferValidator() {
-        offerValidator = new OfferValidator(offer);
-        offerValidatorSpy = spy(offerValidator);
+            InvalidParamException thrownInvalidMessage =
+                    assertThrows(InvalidParamException.class, () -> OfferValidator.validateParam(offerMock));
 
-        setAllValidatorInSpyToValid();
-    }
-
-    private void setAllValidatorInSpyToValid() {
-        doReturn(false).when(offerValidatorSpy).isMessageTooShort(any());
+            assertThat(thrownInvalidMessage.errorDescription.description).isEqualTo("Invalid parameter 'message'.");
+        }
     }
 
     @Test
-    void testInvalidMessageInValidateParamThrowIfInvalid() {
-        doReturn(true).when(offerValidatorSpy).isMessageTooShort(any());
+    void IsMessageTooShort() {
+        String messageWith99Char =
+                "0123456789-0123456789-0123456789-0123456789-0123456789-0123456789-0123456789-0123456789-0123456789-";
 
-        InvalidParamException thrownInvalidMessage =
-                assertThrows(InvalidParamException.class, () -> offerValidatorSpy.validateParamThrowIfInvalid());
-        assertThat(thrownInvalidMessage.errorDescription.description).isEqualTo("Invalid parameter 'message'.");
-    }
-
-    @Test
-    void testIsMessageLongEnough() {
-        String messageWith100Char =
-                "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789";
-        assertFalse(offerValidator.isMessageTooShort(messageWith100Char));
+        assertThat(OfferValidator.isMessageTooShort(messageWith99Char)).isTrue();
     }
 }

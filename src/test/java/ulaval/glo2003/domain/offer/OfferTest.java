@@ -27,14 +27,14 @@ public class OfferTest {
     }
 
     @Test
-    void TestCopyConstructor() {
+    void copyConstructor() {
         Offer offerCopy = new Offer(offer);
 
         assertThat(offerCopy).isEqualTo(offer);
     }
 
     @Test
-    void testEqualFunction() {
+    void EqualsFunction() {
         doReturn(offer.getProductId()).when(offerMock).getProductId();
         doReturn(offer.getUsername()).when(offerMock).getUsername();
         doReturn(offer.getId()).when(offerMock).getId();

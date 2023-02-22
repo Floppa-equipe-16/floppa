@@ -32,7 +32,7 @@ public class ProductTest {
     }
 
     @Test
-    void testCopyConstructor() {
+    void copyConstructor() {
         Product productCopy = new Product(product);
 
         assertThat(productCopy).isEqualTo(product);
@@ -50,7 +50,7 @@ public class ProductTest {
     }
 
     @Test
-    void testEqualsFunction() {
+    void equalsFunction() {
         doReturn(product.getId()).when(productMock).getId();
         doReturn(product.getSellerId()).when(productMock).getSellerId();
         doReturn(product.getTitle()).when(productMock).getTitle();

@@ -6,186 +6,219 @@ import static org.mockito.Mockito.*;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import org.mockito.Spy;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
 
 public class SellerValidatorTest {
 
-    private SellerValidator sellerValidator;
-
     @Mock
     Seller sellerMock = mock(Seller.class);
 
-    @Spy
-    SellerValidator sellerValidatorSpy;
-
-    @BeforeEach
-    void SellerParamValidatorTest() {
-        sellerValidator = new SellerValidator(sellerMock);
-        sellerValidatorSpy = spy(sellerValidator);
-
-        setAllValidatorInSpyToValid();
-    }
-
-    private void setAllValidatorInSpyToValid() {
-        doReturn(false).when(sellerValidatorSpy).isNameInvalid(Mockito.any());
-        doReturn(false).when(sellerValidatorSpy).isBirthdateInvalid(Mockito.any());
-        doReturn(false).when(sellerValidatorSpy).isPhoneNumberInvalid(Mockito.any());
-        doReturn(false).when(sellerValidatorSpy).isEmailInvalid(Mockito.any());
-        doReturn(false).when(sellerValidatorSpy).isBioInvalid(Mockito.any());
-    }
-
-    @Test
-    void testInvalidNameInValidateSellerParamThrowIfInvalid() {
-        doReturn(true).when(sellerValidatorSpy).isNameInvalid(Mockito.any());
-
-        InvalidParamException thrownInvalidName =
-                assertThrows(InvalidParamException.class, () -> sellerValidatorSpy.validateParamThrowIfInvalid());
-        assertThat(thrownInvalidName.errorDescription.description).isEqualTo("Invalid parameter 'name'.");
+    private void setAllValidatorToValid(MockedStatic<SellerValidator> sellerValidatorMockedStatic) {
+        sellerValidatorMockedStatic
+                .when(() -> SellerValidator.isNameInvalid(any()))
+                .thenReturn(false);
+        sellerValidatorMockedStatic
+                .when(() -> SellerValidator.isBirthdateInvalid(any()))
+                .thenReturn(false);
+        sellerValidatorMockedStatic
+                .when(() -> SellerValidator.isPhoneNumberInvalid(any()))
+                .thenReturn(false);
+        sellerValidatorMockedStatic
+                .when(() -> SellerValidator.isEmailInvalid(any()))
+                .thenReturn(false);
+        sellerValidatorMockedStatic
+                .when(() -> SellerValidator.isBioInvalid(any()))
+                .thenReturn(false);
     }
 
     @Test
-    void testInvalidBirthdateInValidateSellerParamThrowIfInvalid() {
-        doReturn(true).when(sellerValidatorSpy).isBirthdateInvalid(Mockito.any());
+    void validateWithInvalidName() {
+        try (MockedStatic<SellerValidator> sellerValidatorMockedStatic =
+                Mockito.mockStatic(SellerValidator.class, Mockito.CALLS_REAL_METHODS)) {
+            setAllValidatorToValid(sellerValidatorMockedStatic);
+            sellerValidatorMockedStatic
+                    .when(() -> SellerValidator.isNameInvalid(any()))
+                    .thenReturn(true);
 
-        InvalidParamException thrownInvalidName =
-                assertThrows(InvalidParamException.class, () -> sellerValidatorSpy.validateParamThrowIfInvalid());
-        assertThat(thrownInvalidName.errorDescription.description).isEqualTo("Invalid parameter 'birthdate'.");
+            InvalidParamException thrownInvalidName =
+                    assertThrows(InvalidParamException.class, () -> SellerValidator.validateParam(sellerMock));
+
+            assertThat(thrownInvalidName.errorDescription.description).isEqualTo("Invalid parameter 'name'.");
+        }
     }
 
     @Test
-    void testInvalidEmailInValidateSellerParamThrowIfInvalid() {
-        doReturn(true).when(sellerValidatorSpy).isEmailInvalid(Mockito.any());
+    void validateWithInvalidBirthdate() {
+        try (MockedStatic<SellerValidator> sellerValidatorMockedStatic =
+                Mockito.mockStatic(SellerValidator.class, Mockito.CALLS_REAL_METHODS)) {
+            setAllValidatorToValid(sellerValidatorMockedStatic);
+            sellerValidatorMockedStatic
+                    .when(() -> SellerValidator.isBirthdateInvalid(any()))
+                    .thenReturn(true);
 
-        InvalidParamException thrownInvalidName =
-                assertThrows(InvalidParamException.class, () -> sellerValidatorSpy.validateParamThrowIfInvalid());
-        assertThat(thrownInvalidName.errorDescription.description).isEqualTo("Invalid parameter 'email'.");
+            InvalidParamException thrownInvalidName =
+                    assertThrows(InvalidParamException.class, () -> SellerValidator.validateParam(sellerMock));
+
+            assertThat(thrownInvalidName.errorDescription.description).isEqualTo("Invalid parameter 'birthdate'.");
+        }
     }
 
     @Test
-    void testInvalidPhoneNumberInValidateSellerParamThrowIfInvalid() {
-        doReturn(true).when(sellerValidatorSpy).isPhoneNumberInvalid(Mockito.any());
+    void validateWithInvalidEmail() {
+        try (MockedStatic<SellerValidator> sellerValidatorMockedStatic =
+                Mockito.mockStatic(SellerValidator.class, Mockito.CALLS_REAL_METHODS)) {
+            setAllValidatorToValid(sellerValidatorMockedStatic);
+            sellerValidatorMockedStatic
+                    .when(() -> SellerValidator.isEmailInvalid(any()))
+                    .thenReturn(true);
 
-        InvalidParamException thrownInvalidName =
-                assertThrows(InvalidParamException.class, () -> sellerValidatorSpy.validateParamThrowIfInvalid());
-        assertThat(thrownInvalidName.errorDescription.description).isEqualTo("Invalid parameter 'phone number'.");
+            InvalidParamException thrownInvalidName =
+                    assertThrows(InvalidParamException.class, () -> SellerValidator.validateParam(sellerMock));
+
+            assertThat(thrownInvalidName.errorDescription.description).isEqualTo("Invalid parameter 'email'.");
+        }
     }
 
     @Test
-    void testInvalidBioInValidateSellerParamThrowIfInvalid() {
-        doReturn(true).when(sellerValidatorSpy).isBioInvalid(Mockito.any());
+    void validateWithInvalidPhoneNumber() {
+        try (MockedStatic<SellerValidator> sellerValidatorMockedStatic =
+                Mockito.mockStatic(SellerValidator.class, Mockito.CALLS_REAL_METHODS)) {
+            setAllValidatorToValid(sellerValidatorMockedStatic);
+            sellerValidatorMockedStatic
+                    .when(() -> SellerValidator.isPhoneNumberInvalid(any()))
+                    .thenReturn(true);
 
-        InvalidParamException thrownInvalidName =
-                assertThrows(InvalidParamException.class, () -> sellerValidatorSpy.validateParamThrowIfInvalid());
-        assertThat(thrownInvalidName.errorDescription.description).isEqualTo("Invalid parameter 'bio'.");
+            InvalidParamException thrownInvalidName =
+                    assertThrows(InvalidParamException.class, () -> SellerValidator.validateParam(sellerMock));
+
+            assertThat(thrownInvalidName.errorDescription.description).isEqualTo("Invalid parameter 'phone number'.");
+        }
     }
 
     @Test
-    void testisNameInvalid() {
+    void validateWithInvalidBio() {
+        try (MockedStatic<SellerValidator> sellerValidatorMockedStatic =
+                Mockito.mockStatic(SellerValidator.class, Mockito.CALLS_REAL_METHODS)) {
+            setAllValidatorToValid(sellerValidatorMockedStatic);
+            sellerValidatorMockedStatic
+                    .when(() -> SellerValidator.isBioInvalid(any()))
+                    .thenReturn(true);
+
+            InvalidParamException thrownInvalidName =
+                    assertThrows(InvalidParamException.class, () -> SellerValidator.validateParam(sellerMock));
+
+            assertThat(thrownInvalidName.errorDescription.description).isEqualTo("Invalid parameter 'bio'.");
+        }
+    }
+
+    @Test
+    void isNameInvalid() {
         String emptyName = " \r \t \n";
 
-        assertTrue(sellerValidator.isNameInvalid(emptyName));
+        assertTrue(SellerValidator.isNameInvalid(emptyName));
     }
 
     @Test
-    void testisBioInvalid() {
+    void isBioInvalid() {
         String emptyBio = " \r \t \n";
 
-        assertTrue(sellerValidator.isBioInvalid(emptyBio));
+        assertTrue(SellerValidator.isBioInvalid(emptyBio));
     }
 
     @Test
-    void testIsPhoneNumberTooLong() {
+    void isPhoneNumberTooLong() {
         String phoneNumber = "1234567890123";
 
-        assertTrue(sellerValidator.isPhoneNumberInvalid(phoneNumber));
+        assertTrue(SellerValidator.isPhoneNumberInvalid(phoneNumber));
     }
 
     @Test
-    void testIsPhoneNumberTooShort() {
+    void isPhoneNumberTooShort() {
         String phoneNumber = "123456789";
 
-        assertTrue(sellerValidator.isPhoneNumberInvalid(phoneNumber));
+        assertTrue(SellerValidator.isPhoneNumberInvalid(phoneNumber));
     }
 
     @Test
-    void testIsPhoneNumberContainOtherChar() {
+    void isPhoneNumberContainOtherChar() {
         String phoneNumber = "+1234567890";
 
-        assertTrue(sellerValidator.isPhoneNumberInvalid(phoneNumber));
+        assertTrue(SellerValidator.isPhoneNumberInvalid(phoneNumber));
     }
 
     @Test
-    void testIsPhoneNumberValid() {
+    void isPhoneNumberValid() {
         String phoneNumber = "11234567890";
 
-        assertFalse(sellerValidator.isPhoneNumberInvalid(phoneNumber));
+        assertFalse(SellerValidator.isPhoneNumberInvalid(phoneNumber));
     }
 
     @Test
-    void testIsEmailValid() {
+    void isEmailValid() {
         String validEmail = "Bob@bob.bob";
 
-        assertFalse(sellerValidator.isEmailInvalid(validEmail));
+        assertFalse(SellerValidator.isEmailInvalid(validEmail));
     }
 
     @Test
-    void testIsEmailMissingAt() {
+    void isEmailMissingAt() {
         String Email = "Bobbob.bob";
 
-        assertTrue(sellerValidator.isEmailInvalid(Email));
+        assertTrue(SellerValidator.isEmailInvalid(Email));
     }
 
     @Test
-    void testIsEmailMissingDot() {
+    void isEmailMissingDot() {
         String Email = "Bob@bobbob";
 
-        assertTrue(sellerValidator.isEmailInvalid(Email));
+        assertTrue(SellerValidator.isEmailInvalid(Email));
     }
 
     @Test
-    void testIsEmailMissingIdentifier() {
+    void isEmailMissingIdentifier() {
         String Email = "@bob.bob";
 
-        assertTrue(sellerValidator.isEmailInvalid(Email));
+        assertTrue(SellerValidator.isEmailInvalid(Email));
     }
 
     @Test
-    void testIsEmailMissingExtension() {
+    void isEmailMissingExtension() {
         String Email = "bob@bob.";
 
-        assertTrue(sellerValidator.isEmailInvalid(Email));
+        assertTrue(SellerValidator.isEmailInvalid(Email));
     }
 
     @Test
-    void testIsEmailMissingService() {
+    void isEmailMissingService() {
         String Email = "Bob@.bob";
 
-        assertTrue(sellerValidator.isEmailInvalid(Email));
+        assertTrue(SellerValidator.isEmailInvalid(Email));
     }
 
     @Test
-    void testisBirthdateFormatInvalid() {
+    void isBirthdateFormatInvalid() {
         String invalidDate = "2001-13-20";
 
-        assertTrue(sellerValidator.isBirthdateFormatInvalid(invalidDate));
+        assertTrue(SellerValidator.isBirthdateFormatInvalid(invalidDate));
     }
 
     @Test
-    void testIs18orMoreCheckWithOffset() {
+    void isAgeOldEnoughWithOffsetCheck() {
         OffsetDateTime fixedDateTime = OffsetDateTime.of(2018, 1, 2, 2, 0, 0, 0, ZoneOffset.ofHours(3));
         String invalidBirthDate1 = "2000-01-03";
         String invalidBirthDate2 = "2000-01-02";
         String validDate1 = "2000-01-01";
 
-        doReturn(fixedDateTime).when(sellerValidatorSpy).currentTime();
-
-        assertFalse(sellerValidatorSpy.isBirthdate18orMore(invalidBirthDate1));
-        assertFalse(sellerValidatorSpy.isBirthdate18orMore(invalidBirthDate2));
-        assertTrue(sellerValidatorSpy.isBirthdate18orMore(validDate1));
+        try (MockedStatic<OffsetDateTime> offsetDateTimeMockedStatic =
+                Mockito.mockStatic(OffsetDateTime.class, Mockito.CALLS_REAL_METHODS)) {
+            offsetDateTimeMockedStatic.when(OffsetDateTime::now).thenReturn(fixedDateTime);
+            assertFalse(SellerValidator.isOldEnough(invalidBirthDate1));
+            assertFalse(SellerValidator.isOldEnough(invalidBirthDate2));
+            assertTrue(SellerValidator.isOldEnough(validDate1));
+        }
     }
 }

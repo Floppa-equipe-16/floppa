@@ -6,18 +6,15 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.doReturn;
 
 import java.util.ArrayList;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import org.mockito.Spy;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
 import ulaval.glo2003.domain.exceptions.NotPermittedException;
 import ulaval.glo2003.domain.offer.Offer;
 
 public class ProductValidatorTest {
-
-    private ProductValidator productValidator;
 
     @Mock
     private Product productMock = mock(Product.class);
@@ -25,139 +22,195 @@ public class ProductValidatorTest {
     @Mock
     private Offer offerMock = mock(Offer.class);
 
-    @Spy
-    private ProductValidator productValidatorSpy;
-
-    @BeforeEach
-    void ProductParamValidatorTest() {
-        productValidator = new ProductValidator(productMock);
-        productValidatorSpy = spy(productValidator);
-
-        setAllValidatorInSpyToValid();
-    }
-
-    private void setAllValidatorInSpyToValid() {
-        doReturn(false).when(productValidatorSpy).isSellerIdInvalid(Mockito.any());
-        doReturn(false).when(productValidatorSpy).isTitleInvalid(Mockito.any());
-        doReturn(false).when(productValidatorSpy).isDescriptionInvalid(Mockito.any());
-        doReturn(false).when(productValidatorSpy).isCategoryInvalid(Mockito.any());
-        doReturn(false).when(productValidatorSpy).isSuggestedPriceInvalid(Mockito.any());
-        doReturn(false).when(productValidatorSpy).isOfferAmountLessThenSuggestedPrice(Mockito.any());
-        doReturn(false).when(productValidatorSpy).hasBuyerAlreadyMadeAnOffer(Mockito.any());
-    }
-
-    @Test
-    void testInvalidSellerIdInValidateParamThrowIfInvalid() {
-        doReturn(true).when(productValidatorSpy).isSellerIdInvalid(Mockito.any());
-
-        InvalidParamException thrownInvalidId =
-                assertThrows(InvalidParamException.class, () -> productValidatorSpy.validateParamThrowIfInvalid());
-        assertThat(thrownInvalidId.errorDescription.description).isEqualTo("Invalid parameter 'id'.");
+    private MockedStatic<ProductValidator> setAllValidatorToValid(
+            MockedStatic<ProductValidator> productValidatorMockedStatic) {
+        productValidatorMockedStatic
+                .when(() -> ProductValidator.isSellerIdInvalid(any()))
+                .thenReturn(false);
+        productValidatorMockedStatic
+                .when(() -> ProductValidator.isTitleInvalid(any()))
+                .thenReturn(false);
+        productValidatorMockedStatic
+                .when(() -> ProductValidator.isDescriptionInvalid(any()))
+                .thenReturn(false);
+        productValidatorMockedStatic
+                .when(() -> ProductValidator.isCategoryInvalid(any()))
+                .thenReturn(false);
+        productValidatorMockedStatic
+                .when(() -> ProductValidator.isSuggestedPriceInvalid(any()))
+                .thenReturn(false);
+        productValidatorMockedStatic
+                .when(() -> ProductValidator.isOfferAmountLessThenSuggestedPrice(any(), any()))
+                .thenReturn(false);
+        productValidatorMockedStatic
+                .when(() -> ProductValidator.hasBuyerAlreadyMadeAnOffer(any(), any()))
+                .thenReturn(false);
+        return productValidatorMockedStatic;
     }
 
     @Test
-    void testInvalidTitleInValidateParamThrowIfInvalid() {
-        doReturn(true).when(productValidatorSpy).isTitleInvalid(Mockito.any());
+    void validateWithInvalidSellerId() {
+        try (MockedStatic<ProductValidator> productValidatorMockedStatic =
+                Mockito.mockStatic(ProductValidator.class, Mockito.CALLS_REAL_METHODS)) {
+            setAllValidatorToValid(productValidatorMockedStatic);
+            productValidatorMockedStatic
+                    .when(() -> ProductValidator.isSellerIdInvalid(any()))
+                    .thenReturn(true);
 
-        InvalidParamException thrownInvalidTitle =
-                assertThrows(InvalidParamException.class, () -> productValidatorSpy.validateParamThrowIfInvalid());
-        assertThat(thrownInvalidTitle.errorDescription.description).isEqualTo("Invalid parameter 'title'.");
+            InvalidParamException thrownInvalidId =
+                    assertThrows(InvalidParamException.class, () -> ProductValidator.validateParam(productMock));
+
+            assertThat(thrownInvalidId.errorDescription.description).isEqualTo("Invalid parameter 'id'.");
+        }
     }
 
     @Test
-    void testInvalidDescriptionInValidateParamThrowIfInvalid() {
-        doReturn(true).when(productValidatorSpy).isDescriptionInvalid(Mockito.any());
+    void validateWithInvalidTitle() {
+        try (MockedStatic<ProductValidator> productValidatorMockedStatic =
+                Mockito.mockStatic(ProductValidator.class, Mockito.CALLS_REAL_METHODS)) {
+            setAllValidatorToValid(productValidatorMockedStatic);
+            productValidatorMockedStatic
+                    .when(() -> ProductValidator.isTitleInvalid(any()))
+                    .thenReturn(true);
 
-        InvalidParamException thrownInvalidDescription =
-                assertThrows(InvalidParamException.class, () -> productValidatorSpy.validateParamThrowIfInvalid());
-        assertThat(thrownInvalidDescription.errorDescription.description).isEqualTo("Invalid parameter 'description'.");
+            InvalidParamException thrownInvalidTitle =
+                    assertThrows(InvalidParamException.class, () -> ProductValidator.validateParam(productMock));
+
+            assertThat(thrownInvalidTitle.errorDescription.description).isEqualTo("Invalid parameter 'title'.");
+        }
     }
 
     @Test
-    void testInvalidCategoryInValidateParamThrowIfInvalid() {
-        doReturn(true).when(productValidatorSpy).isCategoryInvalid(Mockito.any());
+    void validateWithInvalidDescription() {
+        try (MockedStatic<ProductValidator> productValidatorMockedStatic =
+                Mockito.mockStatic(ProductValidator.class, Mockito.CALLS_REAL_METHODS)) {
+            setAllValidatorToValid(productValidatorMockedStatic);
+            productValidatorMockedStatic
+                    .when(() -> ProductValidator.isDescriptionInvalid(any()))
+                    .thenReturn(true);
 
-        InvalidParamException thrownInvalidCategory =
-                assertThrows(InvalidParamException.class, () -> productValidatorSpy.validateParamThrowIfInvalid());
-        assertThat(thrownInvalidCategory.errorDescription.description).isEqualTo("Invalid parameter 'category'.");
+            InvalidParamException thrownInvalidDescription =
+                    assertThrows(InvalidParamException.class, () -> ProductValidator.validateParam(productMock));
+
+            assertThat(thrownInvalidDescription.errorDescription.description)
+                    .isEqualTo("Invalid parameter 'description'.");
+        }
     }
 
     @Test
-    void testInvalidSuggestedPriceInValidateParamThrowIfInvalid() {
-        doReturn(true).when(productValidatorSpy).isSuggestedPriceInvalid(Mockito.any());
+    void validateWithInvalidCategory() {
+        try (MockedStatic<ProductValidator> productValidatorMockedStatic =
+                Mockito.mockStatic(ProductValidator.class, Mockito.CALLS_REAL_METHODS)) {
+            setAllValidatorToValid(productValidatorMockedStatic);
+            productValidatorMockedStatic
+                    .when(() -> ProductValidator.isCategoryInvalid(any()))
+                    .thenReturn(true);
 
-        InvalidParamException thrownInvalidSuggestedPrice =
-                assertThrows(InvalidParamException.class, () -> productValidatorSpy.validateParamThrowIfInvalid());
-        assertThat(thrownInvalidSuggestedPrice.errorDescription.description)
-                .isEqualTo("Invalid parameter 'suggested price'.");
+            InvalidParamException thrownInvalidCategory =
+                    assertThrows(InvalidParamException.class, () -> ProductValidator.validateParam(productMock));
+
+            assertThat(thrownInvalidCategory.errorDescription.description).isEqualTo("Invalid parameter 'category'.");
+        }
     }
 
     @Test
-    void testInvalidAmountInvalidateOfferEligibleThrowIfInvalid() {
-        doReturn(true).when(productValidatorSpy).isOfferAmountLessThenSuggestedPrice(Mockito.any());
+    void validateWithInvalidSuggestedPrice() {
+        try (MockedStatic<ProductValidator> productValidatorMockedStatic =
+                Mockito.mockStatic(ProductValidator.class, Mockito.CALLS_REAL_METHODS)) {
+            setAllValidatorToValid(productValidatorMockedStatic);
+            productValidatorMockedStatic
+                    .when(() -> ProductValidator.isSuggestedPriceInvalid(any()))
+                    .thenReturn(true);
 
-        InvalidParamException thrownInvalidAmount = assertThrows(
-                InvalidParamException.class, () -> productValidatorSpy.validateOfferEligibleThrowIfInvalid(offerMock));
-        assertThat(thrownInvalidAmount.errorDescription.description).isEqualTo("Invalid parameter 'amount'.");
+            InvalidParamException thrownInvalidSuggestedPrice =
+                    assertThrows(InvalidParamException.class, () -> ProductValidator.validateParam(productMock));
+
+            assertThat(thrownInvalidSuggestedPrice.errorDescription.description)
+                    .isEqualTo("Invalid parameter 'suggested price'.");
+        }
     }
 
     @Test
-    void testInvalidUsernameInvalidateOfferEligibleThrowIfInvalid() {
+    void validateOfferEligibleWithInvalidAmount() {
+        try (MockedStatic<ProductValidator> productValidatorMockedStatic =
+                Mockito.mockStatic(ProductValidator.class, Mockito.CALLS_REAL_METHODS)) {
+            setAllValidatorToValid(productValidatorMockedStatic);
+            productValidatorMockedStatic
+                    .when(() -> ProductValidator.isOfferAmountLessThenSuggestedPrice(any(), any()))
+                    .thenReturn(true);
+
+            InvalidParamException thrownInvalidAmount = assertThrows(
+                    InvalidParamException.class, () -> ProductValidator.validateOfferEligible(productMock, offerMock));
+
+            assertThat(thrownInvalidAmount.errorDescription.description).isEqualTo("Invalid parameter 'amount'.");
+        }
+    }
+
+    @Test
+    void validateOfferEligibleWithInvalidUsername() {
         String username = "Username Test";
         doReturn(username).when(offerMock).getUsername();
-        doReturn(true).when(productValidatorSpy).hasBuyerAlreadyMadeAnOffer(Mockito.any());
+        try (MockedStatic<ProductValidator> productValidatorMockedStatic =
+                Mockito.mockStatic(ProductValidator.class, Mockito.CALLS_REAL_METHODS)) {
+            setAllValidatorToValid(productValidatorMockedStatic);
+            productValidatorMockedStatic
+                    .when(() -> ProductValidator.hasBuyerAlreadyMadeAnOffer(any(), any()))
+                    .thenReturn(true);
 
-        NotPermittedException thrownInvalidUsername = assertThrows(
-                NotPermittedException.class, () -> productValidatorSpy.validateOfferEligibleThrowIfInvalid(offerMock));
-        assertThat(thrownInvalidUsername.errorDescription.description)
-                .isEqualTo("Not permitted action 'user with username `" + username + "` has already made an offer'.");
+            NotPermittedException thrownInvalidUsername = assertThrows(
+                    NotPermittedException.class, () -> ProductValidator.validateOfferEligible(productMock, offerMock));
+
+            assertThat(thrownInvalidUsername.errorDescription.description)
+                    .isEqualTo(
+                            "Not permitted action 'user with username `" + username + "` has already made an offer'.");
+        }
     }
 
     @Test
-    void testIsSellerIdInvalid() {
+    void isSellerIdInvalid() {
         String invalidId = " \n \r \t";
 
-        assertTrue(productValidator.isSellerIdInvalid(invalidId));
+        assertTrue(ProductValidator.isSellerIdInvalid(invalidId));
     }
 
     @Test
-    void testIsTitleInvalid() {
+    void isTitleInvalid() {
         String invalidTitle = " \n \r \t";
 
-        assertTrue(productValidator.isTitleInvalid(invalidTitle));
+        assertTrue(ProductValidator.isTitleInvalid(invalidTitle));
     }
 
     @Test
-    void testIsDescriptionInvalid() {
+    void isDescriptionInvalid() {
         String invalidDescription = " \n \r \t";
 
-        assertTrue(productValidator.isDescriptionInvalid(invalidDescription));
+        assertTrue(ProductValidator.isDescriptionInvalid(invalidDescription));
     }
 
     @Test
-    void testIsCategoryInvalid() {
+    void isCategoryInvalid() {
         String invalidCategory = "InvalidCategory";
 
-        assertTrue(productValidator.isCategoryInvalid(invalidCategory));
+        assertTrue(ProductValidator.isCategoryInvalid(invalidCategory));
     }
 
     @Test
-    void testIsSuggestedPriceInvalid() {
+    void isSuggestedPriceInvalid() {
         Double suggestedPrice = 0.5;
 
-        assertTrue(productValidator.isSuggestedPriceInvalid(suggestedPrice));
+        assertTrue(ProductValidator.isSuggestedPriceInvalid(suggestedPrice));
     }
 
     @Test
-    void testIsOfferAmountLessThenSuggestedPrice() {
+    void isOfferAmountLessThenSuggestedPrice() {
         doReturn(20d).when(productMock).getSuggestedPrice();
         Double offerAmount = 19.9d;
 
-        assertTrue(productValidator.isOfferAmountLessThenSuggestedPrice(offerAmount));
+        assertTrue(ProductValidator.isOfferAmountLessThenSuggestedPrice(productMock, offerAmount));
     }
 
     @Test
-    void testHasBuyerAlreadyMadeAnOffer() {
+    void hasBuyerAlreadyMadeAnOffer() {
         ArrayList<Offer> offers = new ArrayList<>();
         offers.add(offerMock);
         String username = "Username Test";
@@ -166,7 +219,7 @@ public class ProductValidatorTest {
         doReturn(username).when(offerMock).getUsername();
         doReturn(offers).when(productMock).getOffers();
 
-        assertTrue(productValidator.hasBuyerAlreadyMadeAnOffer(username));
-        assertFalse(productValidator.hasBuyerAlreadyMadeAnOffer(notAddedUsername));
+        assertTrue(ProductValidator.hasBuyerAlreadyMadeAnOffer(productMock, username));
+        assertFalse(ProductValidator.hasBuyerAlreadyMadeAnOffer(productMock, notAddedUsername));
     }
 }
