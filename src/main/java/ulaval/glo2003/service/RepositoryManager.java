@@ -14,6 +14,7 @@ import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.product.IProductRepository;
 import ulaval.glo2003.domain.product.InMemoryProductRepository;
 import ulaval.glo2003.domain.product.Product;
+import ulaval.glo2003.domain.product.ProductFilter;
 import ulaval.glo2003.domain.seller.ISellerRepository;
 import ulaval.glo2003.domain.seller.InMemorySellerRepository;
 import ulaval.glo2003.domain.seller.Seller;
@@ -60,8 +61,8 @@ public class RepositoryManager {
         return product.getId();
     }
 
-    public ProductCollectionResponse getProducts() {
-        List<Product> products = getProductsWithOffers();
+    public ProductCollectionResponse getProducts(ProductFilter productFilter) {
+        List<Product> products = getProductsWithOffers(productFilter);
         List<ProductResponse> productResponses = new ArrayList<>();
 
         for (Product product : products) {
@@ -93,8 +94,8 @@ public class RepositoryManager {
         return offer.getId();
     }
 
-    private List<Product> getProductsWithOffers() {
-        List<Product> products = productRepository.findAllProduct();
+    private List<Product> getProductsWithOffers(ProductFilter productFilter) {
+        List<Product> products = productRepository.findAllProduct(productFilter);
 
         for (Product product : products) {
             offerRepository.findAllByProductId(product.getId()).forEach(product::addOffer);
