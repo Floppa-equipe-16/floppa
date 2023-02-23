@@ -4,9 +4,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import ulaval.glo2003.domain.exceptions.InvalidParamException;
-import ulaval.glo2003.domain.exceptions.MissingParamException;
-import ulaval.glo2003.domain.exceptions.NotPermittedException;
 import ulaval.glo2003.domain.offer.Offer;
 
 public class Product {
@@ -29,7 +26,7 @@ public class Product {
         this.category = category;
         this.offers = new ArrayList<>();
 
-        validateParameters();
+        ProductValidator.validateParam(this);
 
         id = UUID.randomUUID().toString();
         createdAt = Instant.now().toString();
@@ -44,14 +41,6 @@ public class Product {
         id = that.getId();
         createdAt = that.getCreatedAt();
         offers = new ArrayList<>();
-    }
-
-    private void validateParameters() {
-        if (sellerId.isBlank()) throw new MissingParamException("sellerId");
-        if (title.isBlank()) throw new InvalidParamException("title");
-        if (description.isBlank()) throw new InvalidParamException("description");
-        if (!doesCategoryExist()) throw new InvalidParamException("category");
-        if (isSuggestedPriceUnder1()) throw new InvalidParamException("suggestedPrice");
     }
 
     public String getSellerId() {
@@ -87,35 +76,8 @@ public class Product {
     }
 
     public void addOffer(Offer offer) {
-        validateOfferEligible(offer);
+        ProductValidator.validateOfferEligible(this, offer);
         offers.add(offer);
-    }
-
-    private boolean isSuggestedPriceUnder1() {
-        return suggestedPrice.intValue() < 1;
-    }
-
-    private boolean doesCategoryExist() {
-        try {
-            ProductCategory.valueOf(this.category);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
-
-    private void validateOfferEligible(Offer offer) {
-        if (!isOfferAmountAtLeastSuggestedPrice(offer.getAmount())) throw new InvalidParamException("amount");
-        if (hasBuyerAlreadyMadeAnOffer(offer.getUsername()))
-            throw new NotPermittedException("user with username " + offer.getUsername() + " has already made an offer");
-    }
-
-    private boolean hasBuyerAlreadyMadeAnOffer(String buyerUsername) {
-        return offers.stream().anyMatch(offer -> buyerUsername.equals(offer.getUsername()));
-    }
-
-    private boolean isOfferAmountAtLeastSuggestedPrice(Double offerAmount) {
-        return offerAmount >= suggestedPrice;
     }
 
     @Override

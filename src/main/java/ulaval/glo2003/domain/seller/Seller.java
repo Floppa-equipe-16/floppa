@@ -1,13 +1,7 @@
 package ulaval.glo2003.domain.seller;
 
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
-import java.time.format.DateTimeParseException;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import ulaval.glo2003.domain.exceptions.InvalidParamException;
 import ulaval.glo2003.domain.product.Product;
 
 public class Seller {
@@ -28,7 +22,7 @@ public class Seller {
         this.bio = bio;
         this.productsMap = new HashMap<>();
 
-        validateParameters();
+        SellerValidator.validateParam(this);
 
         id = UUID.randomUUID().toString();
         createdAt = Instant.now().toString();
@@ -84,55 +78,6 @@ public class Seller {
 
     public void addProduct(Product product) {
         productsMap.put(product.getId(), product);
-    }
-
-    private void validateParameters() {
-        if (name.isBlank()) throw new InvalidParamException("name");
-        if (isBirthdateInvalid()) throw new InvalidParamException("birthdate");
-        if (isEmailInvalid()) throw new InvalidParamException("email");
-        if (isPhoneInvalid()) throw new InvalidParamException("phone number");
-        if (bio.isBlank()) throw new InvalidParamException("bio");
-    }
-
-    private boolean isBirthdateInvalid() {
-        return !(isDateValid() && is18orMore(this.birthdate));
-    }
-
-    private boolean isEmailInvalid() {
-
-        Pattern p = Pattern.compile(
-                "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$");
-        Matcher m = p.matcher(this.email);
-        return !m.matches();
-    }
-
-    private boolean isPhoneInvalid() {
-        return !this.phoneNumber.chars().allMatch(Character::isDigit) || this.phoneNumber.length() != 11;
-    }
-
-    private boolean isDateValid() {
-        try {
-            LocalDate.parse(birthdate);
-            return true;
-        } catch (DateTimeParseException ignored) {
-            return false;
-        }
-    }
-
-    protected boolean is18orMore(String birthdate) {
-        try {
-            String birthdateOffset = birthdate + "T00:00Z";
-            OffsetDateTime birthdayDate = OffsetDateTime.parse(birthdateOffset);
-            OffsetDateTime now = currentTime();
-            OffsetDateTime birthday18Plus = birthdayDate.plusYears(18);
-            return birthday18Plus.isBefore(now);
-        } catch (DateTimeParseException ignored) {
-            return false;
-        }
-    }
-
-    protected OffsetDateTime currentTime() {
-        return OffsetDateTime.now();
     }
 
     @Override
