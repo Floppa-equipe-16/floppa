@@ -1,6 +1,9 @@
 package ulaval.glo2003.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import ulaval.glo2003.api.offer.OfferRequest;
+import ulaval.glo2003.api.product.ProductCollectionResponse;
 import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.api.seller.SellerRequest;
@@ -11,6 +14,7 @@ import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.product.IProductRepository;
 import ulaval.glo2003.domain.product.InMemoryProductRepository;
 import ulaval.glo2003.domain.product.Product;
+import ulaval.glo2003.domain.product.ProductFilter;
 import ulaval.glo2003.domain.seller.ISellerRepository;
 import ulaval.glo2003.domain.seller.InMemorySellerRepository;
 import ulaval.glo2003.domain.seller.Seller;
@@ -57,6 +61,19 @@ public class RepositoryManager {
         return product.getId();
     }
 
+    public ProductCollectionResponse getProducts(ProductFilter productFilter) {
+        List<Product> products = getProductsWithOffers(productFilter);
+        List<ProductResponse> productResponses = new ArrayList<>();
+
+        for (Product product : products) {
+            ProductResponse productResponse = ProductMapper.productToResponseWithSeller(
+                    product, sellerRepository.findById(product.getSellerId()));
+            productResponses.add(productResponse);
+        }
+
+        return ProductMapper.productsToCollectionResponse(productResponses);
+    }
+
     public ProductResponse getProduct(String productId) {
         Product product = getProductWithOffers(productId);
 
@@ -75,6 +92,16 @@ public class RepositoryManager {
         offerRepository.save(offer);
 
         return offer.getId();
+    }
+
+    private List<Product> getProductsWithOffers(ProductFilter productFilter) {
+        List<Product> products = productRepository.findAllProduct(productFilter);
+
+        for (Product product : products) {
+            offerRepository.findAllByProductId(product.getId()).forEach(product::addOffer);
+        }
+
+        return products;
     }
 
     private Product getProductWithOffers(String id) {

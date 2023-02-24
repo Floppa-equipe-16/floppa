@@ -23,6 +23,24 @@ public class InMemoryProductRepository implements IProductRepository {
     }
 
     @Override
+    public List<Product> findAllProduct(ProductFilter productFilter) {
+        return products.values().stream()
+                .filter(product -> product.getSellerId()
+                        .toLowerCase()
+                        .contains(productFilter.getSellerId().toLowerCase()))
+                .filter(product -> product.getTitle()
+                        .toLowerCase()
+                        .contains(productFilter.getTitle().toLowerCase()))
+                .filter(product -> product.getCategory()
+                        .toLowerCase()
+                        .contains(productFilter.getCategory().toLowerCase()))
+                .filter(product -> product.getSuggestedPrice() <= productFilter.getMaxPrice())
+                .filter(product -> product.getSuggestedPrice() >= productFilter.getMinPrice())
+                .map(Product::new)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<Product> findAllBySellerId(String id) {
         return products.values().stream()
                 .filter(product -> product.getSellerId().equals(id))
