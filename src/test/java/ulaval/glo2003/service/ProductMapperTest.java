@@ -55,14 +55,17 @@ class ProductMapperTest {
         assertThat(response.offers).isNotNull();
         assertThat(response.seller).isNull();
     }
+
     @Test
     void canMapProductsToCollectionResponse() {
-        ProductCollectionResponse response = ProductMapper.productsToCollectionResponse(List.of(ProductMapper.productToResponse(product)));
+        ProductCollectionResponse response =
+                ProductMapper.productsToCollectionResponse(List.of(ProductMapper.productToResponse(product)));
 
         assertFieldsAreEqual(response.products.get(0), product);
         assertThat(response.products.get(0).offers).isNotNull();
         assertThat(response.products.get(0).seller).isNull();
     }
+
     @Test
     void canMapProductToResponseWithSeller() {
         Seller seller = createSeller();

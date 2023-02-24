@@ -19,6 +19,7 @@ public class Product {
     private final ArrayList<Offer> offers;
 
     private static final double ONE_HUNDRED = 100d;
+
     public Product(String sellerId, String title, String description, Double suggestedPrice, String category) {
         this.sellerId = sellerId;
         this.title = title;

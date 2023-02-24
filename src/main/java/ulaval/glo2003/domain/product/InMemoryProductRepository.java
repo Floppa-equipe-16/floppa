@@ -25,8 +25,7 @@ public class InMemoryProductRepository implements IProductRepository {
     @Override
     public List<Product> findAllProducts(ProductFilter productFilter) {
         return products.values().stream()
-                .filter(product -> product.getSellerId()
-                        .contains(productFilter.getSellerId()))
+                .filter(product -> product.getSellerId().contains(productFilter.getSellerId()))
                 .filter(product -> product.getTitle()
                         .toLowerCase()
                         .contains(productFilter.getTitle().toLowerCase()))
