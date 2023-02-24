@@ -95,10 +95,10 @@ public class RepositoryManager {
     }
 
     private List<Product> getProductsWithOffers(ProductFilter productFilter) {
-        List<Product> products = productRepository.findAllProduct(productFilter);
+        List<Product> products = productRepository.findAllProducts(productFilter);
 
         for (Product product : products) {
-            offerRepository.findAllByProductId(product.getId()).forEach(product::addOffer);
+            addOffersToProduct(product);
         }
 
         return products;
@@ -106,8 +106,12 @@ public class RepositoryManager {
 
     private Product getProductWithOffers(String id) {
         Product product = productRepository.findById(id);
-        offerRepository.findAllByProductId(product.getId()).forEach(product::addOffer);
+        addOffersToProduct(product);
 
         return product;
+    }
+
+    private void addOffersToProduct(Product product) {
+        offerRepository.findAllByProductId(product.getId()).forEach(product::addOffer);
     }
 }

@@ -10,6 +10,7 @@ import ulaval.glo2003.domain.exceptions.InvalidParamException;
 class SellerValidator {
     private static final int PHONE_NUMBER_LENGTH = 11;
     private static final int MINIMUM_AGE = 18;
+    private static final String UTC_MIDNIGHT_OFFSET = "T00:00Z";
 
     public static void validateParam(Seller seller) {
         if (isNameInvalid(seller.getName())) throw new InvalidParamException("name");
@@ -53,7 +54,7 @@ class SellerValidator {
 
     protected static boolean isOldEnough(String birthdate) {
         try {
-            String birthdateOffset = birthdate + "T00:00Z";
+            String birthdateOffset = birthdate + UTC_MIDNIGHT_OFFSET;
             OffsetDateTime birthdayDate = OffsetDateTime.parse(birthdateOffset);
             OffsetDateTime now = OffsetDateTime.now();
             OffsetDateTime birthdayOldEnough = birthdayDate.plusYears(MINIMUM_AGE);

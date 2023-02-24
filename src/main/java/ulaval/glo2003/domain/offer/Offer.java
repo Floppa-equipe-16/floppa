@@ -10,11 +10,12 @@ public class Offer {
     private final Double amount;
     private final String message;
     private final String createdAt;
+    private static final double ONE_HUNDRED = 100d;
 
     public Offer(String productId, String username, Double amount, String message) {
         this.productId = productId;
         this.username = username;
-        this.amount = Math.round(amount * 100d) / 100d;
+        this.amount = Math.round(amount * ONE_HUNDRED) / ONE_HUNDRED;
         this.message = message;
 
         OfferValidator.validateParam(this);
