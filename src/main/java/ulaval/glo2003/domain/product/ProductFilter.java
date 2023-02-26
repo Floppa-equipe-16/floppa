@@ -14,7 +14,7 @@ public class ProductFilter {
         this.title = Objects.requireNonNullElse(title, "");
         this.category = Objects.requireNonNullElse(category, "");
         this.minPrice = Objects.requireNonNullElse(minPrice, 0.0);
-        this.maxPrice = Objects.requireNonNullElse(maxPrice, 30000000000.0);
+        this.maxPrice = Objects.requireNonNullElse(maxPrice, Double.MAX_VALUE);
     }
 
     public String getSellerId() {

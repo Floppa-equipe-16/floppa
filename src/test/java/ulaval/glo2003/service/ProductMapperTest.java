@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ulaval.glo2003.api.product.ProductCollectionResponse;
 import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.domain.product.Product;
@@ -53,6 +54,16 @@ class ProductMapperTest {
         assertFieldsAreEqual(response, product);
         assertThat(response.offers).isNotNull();
         assertThat(response.seller).isNull();
+    }
+
+    @Test
+    void canMapProductsToCollectionResponse() {
+        ProductCollectionResponse response =
+                ProductMapper.productsToCollectionResponse(List.of(ProductMapper.productToResponse(product)));
+
+        assertFieldsAreEqual(response.products.get(0), product);
+        assertThat(response.products.get(0).offers).isNotNull();
+        assertThat(response.products.get(0).seller).isNull();
     }
 
     @Test

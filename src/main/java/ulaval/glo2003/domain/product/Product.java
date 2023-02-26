@@ -18,11 +18,13 @@ public class Product {
 
     private final ArrayList<Offer> offers;
 
+    private static final double TWO_DECIMAL_ROUNDING_FACTOR = 100d;
+
     public Product(String sellerId, String title, String description, Double suggestedPrice, String category) {
         this.sellerId = sellerId;
         this.title = title;
         this.description = description;
-        this.suggestedPrice = Math.round(suggestedPrice * 100d) / 100d;
+        this.suggestedPrice = Math.round(suggestedPrice * TWO_DECIMAL_ROUNDING_FACTOR) / TWO_DECIMAL_ROUNDING_FACTOR;
         this.category = category;
         this.offers = new ArrayList<>();
 
