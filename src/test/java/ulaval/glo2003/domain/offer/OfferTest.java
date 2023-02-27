@@ -34,14 +34,26 @@ public class OfferTest {
     }
 
     @Test
-    void EqualsFunction() {
+    void canCompareIdenticalOffers() {
+        doReturn(offer.getId()).when(offerMock).getId();
         doReturn(offer.getProductId()).when(offerMock).getProductId();
         doReturn(offer.getUsername()).when(offerMock).getUsername();
-        doReturn(offer.getId()).when(offerMock).getId();
         doReturn(offer.getAmount()).when(offerMock).getAmount();
         doReturn(offer.getCreatedAt()).when(offerMock).getCreatedAt();
         doReturn(offer.getMessage()).when(offerMock).getMessage();
 
         assertThat(offer).isEqualTo(offerMock);
+    }
+
+    @Test
+    void canCompareDifferentOffers() {
+        doReturn(offer.getId()).when(offerMock).getId();
+        doReturn(offer.getProductId()).when(offerMock).getProductId();
+        doReturn("Different username").when(offerMock).getUsername();
+        doReturn(offer.getAmount()).when(offerMock).getAmount();
+        doReturn(offer.getCreatedAt()).when(offerMock).getCreatedAt();
+        doReturn(offer.getMessage()).when(offerMock).getMessage();
+
+        assertThat(offer).isNotEqualTo(offerMock);
     }
 }

@@ -42,7 +42,9 @@ public class Product {
         category = that.getCategory();
         id = that.getId();
         createdAt = that.getCreatedAt();
+
         offers = new ArrayList<>();
+        that.offers.forEach(offer -> offers.add(new Offer(offer)));
     }
 
     public String getSellerId() {
@@ -84,17 +86,17 @@ public class Product {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Product) {
-            Product that = (Product) obj;
+        if(this == obj) return true;
+        if(obj == null || getClass() != obj.getClass()) return false;
 
-            return id.equalsIgnoreCase(that.getId())
-                    && sellerId.equalsIgnoreCase(that.getSellerId())
-                    && title.equalsIgnoreCase(that.getTitle())
-                    && description.equalsIgnoreCase(that.getDescription())
-                    && suggestedPrice.equals(that.getSuggestedPrice())
-                    && category.equalsIgnoreCase(that.getCategory())
-                    && createdAt.equalsIgnoreCase(that.getCreatedAt());
-        }
-        return false;
+        Product that = (Product) obj;
+
+        return id.equals(that.getId())
+                && sellerId.equalsIgnoreCase(that.getSellerId())
+                && title.equalsIgnoreCase(that.getTitle())
+                && description.equalsIgnoreCase(that.getDescription())
+                && suggestedPrice.equals(that.getSuggestedPrice())
+                && category.equalsIgnoreCase(that.getCategory())
+                && createdAt.equalsIgnoreCase(that.getCreatedAt());
     }
 }

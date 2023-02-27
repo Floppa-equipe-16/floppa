@@ -20,14 +20,14 @@ public class SellerTest {
     Seller sellerMock = mock(Seller.class);
 
     @BeforeEach
-    void initSeller() {
+    void setUp() {
         seller = SellerTestUtils.createSeller();
 
         doReturn("id-test").when(productMock).getId();
     }
 
     @Test
-    void copyConstructor() {
+    void canCopy() {
         Seller sellerCopy = new Seller(seller);
 
         assertThat(seller).isEqualTo(sellerCopy);
@@ -43,7 +43,7 @@ public class SellerTest {
     }
 
     @Test
-    void doesNotAddSameProductTwice() {
+    void addProductOnlyAddsOnceWithDuplicate() {
         seller.addProduct(productMock);
         seller.addProduct(productMock);
 
@@ -51,7 +51,7 @@ public class SellerTest {
     }
 
     @Test
-    void equalsFunction() {
+    void canCompareIdenticalSellers() {
         doReturn(seller.getId()).when(sellerMock).getId();
         doReturn(seller.getName()).when(sellerMock).getName();
         doReturn(seller.getBirthdate()).when(sellerMock).getBirthdate();
@@ -61,5 +61,18 @@ public class SellerTest {
         doReturn(seller.getCreatedAt()).when(sellerMock).getCreatedAt();
 
         assertThat(seller).isEqualTo(sellerMock);
+    }
+
+    @Test
+    void canCompareDifferentSellers() {
+        doReturn(seller.getId()).when(sellerMock).getId();
+        doReturn("Different name").when(sellerMock).getName();
+        doReturn(seller.getBirthdate()).when(sellerMock).getBirthdate();
+        doReturn(seller.getEmail()).when(sellerMock).getEmail();
+        doReturn(seller.getPhoneNumber()).when(sellerMock).getPhoneNumber();
+        doReturn(seller.getBio()).when(sellerMock).getBio();
+        doReturn(seller.getCreatedAt()).when(sellerMock).getCreatedAt();
+
+        assertThat(seller).isNotEqualTo(sellerMock);
     }
 }

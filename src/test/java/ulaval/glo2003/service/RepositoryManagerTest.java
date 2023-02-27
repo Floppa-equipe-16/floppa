@@ -7,6 +7,7 @@ import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.domain.offer.IOfferRepository;
 import ulaval.glo2003.domain.product.IProductRepository;
 import ulaval.glo2003.domain.seller.ISellerRepository;
+import ulaval.glo2003.domain.seller.SellerTestUtils;
 
 import static org.mockito.Mockito.*;
 
@@ -25,7 +26,7 @@ class RepositoryManagerTest {
     public void setUp() {
         repositoryManager = new RepositoryManager(sellerRepositoryMock, productRepositoryMock, offerRepositoryMock);
 
-
+        request = SellerTestUtils.createSellerRequest();
     }
 
     //Create/get : Seller, Product, Offer
@@ -34,8 +35,9 @@ class RepositoryManagerTest {
     public void canCreateSeller() {
         //Create Seller request
 
-        //repoMan.createSeller()
 
+        //repoMan.createSeller()
+        //repositoryManager.createSeller(request);
 
         //assertThat(sellerRepo.gotCalledSave)
         //verify(sellerRepositoryMock).save(null);

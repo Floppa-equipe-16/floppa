@@ -50,7 +50,7 @@ public class ProductTest {
     }
 
     @Test
-    void equalsFunction() {
+    void canCompareIdenticalProducts() {
         doReturn(product.getId()).when(productMock).getId();
         doReturn(product.getSellerId()).when(productMock).getSellerId();
         doReturn(product.getTitle()).when(productMock).getTitle();
@@ -60,5 +60,18 @@ public class ProductTest {
         doReturn(product.getCreatedAt()).when(productMock).getCreatedAt();
 
         assertThat(product).isEqualTo(productMock);
+    }
+
+    @Test
+    void canCompareDifferentProducts() {
+        doReturn(product.getId()).when(productMock).getId();
+        doReturn(product.getSellerId()).when(productMock).getSellerId();
+        doReturn("Different title").when(productMock).getTitle();
+        doReturn(product.getDescription()).when(productMock).getDescription();
+        doReturn(product.getSuggestedPrice()).when(productMock).getSuggestedPrice();
+        doReturn(product.getCategory()).when(productMock).getCategory();
+        doReturn(product.getCreatedAt()).when(productMock).getCreatedAt();
+
+        assertThat(product).isNotEqualTo(productMock);
     }
 }

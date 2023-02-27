@@ -59,16 +59,16 @@ public class Offer {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Offer) {
-            Offer that = (Offer) obj;
+        if(this == obj) return true;
+        if(obj == null || getClass() != obj.getClass()) return false;
 
-            return id.equalsIgnoreCase(that.getId())
-                    && productId.equalsIgnoreCase(that.getProductId())
-                    && username.equalsIgnoreCase(that.getUsername())
-                    && message.equalsIgnoreCase(that.getMessage())
-                    && amount.equals(that.getAmount())
-                    && createdAt.equalsIgnoreCase(that.getCreatedAt());
-        }
-        return false;
+        Offer that = (Offer) obj;
+
+        return id.equals(that.getId())
+                && productId.equalsIgnoreCase(that.getProductId())
+                && username.equalsIgnoreCase(that.getUsername())
+                && message.equalsIgnoreCase(that.getMessage())
+                && amount.equals(that.getAmount())
+                && createdAt.equalsIgnoreCase(that.getCreatedAt());
     }
 }
