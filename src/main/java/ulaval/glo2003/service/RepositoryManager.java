@@ -41,65 +41,75 @@ public class RepositoryManager {
 
     public SellerResponse getSeller(String sellerId) {
         Seller seller = sellerRepository.findById(sellerId);
-        productRepository.findAllBySellerId(sellerId).forEach(product -> {
-            offerRepository.findAllByProductId(product.getId()).forEach(product::addOffer);
-            seller.addProduct(product);
-        });
+        addProductsToSeller(seller);
 
         return SellerMapper.sellerToResponse(seller);
+    }
+
+    private void addProductsToSeller(Seller seller) {
+        productRepository.findAllBySellerId(seller.getId()).forEach(product -> {
+            addOffersToProduct(product);
+            seller.addProduct(product);
+        });
     }
 
     public String createProduct(String sellerId, ProductRequest productRequest) {
         productRequest.validate();
 
         Product product = ProductMapper.requestToProduct(sellerId, productRequest);
+        if (canAddProductToSeller(sellerId, product)) {
+            productRepository.save(product);
+        }
+
+        return product.getId();
+    }
+
+    private boolean canAddProductToSeller(String sellerId, Product product) {
         Seller seller = sellerRepository.findById(sellerId);
         seller.addProduct(product);
 
-        productRepository.save(product);
+        return true;
+    }
 
-        return product.getId();
+    public ProductResponse getProduct(String productId) {
+        Product product = getProductWithOffers(productId);
+        Seller seller = sellerRepository.findById(product.getSellerId());
+
+        return ProductMapper.productToResponseWithSeller(product, seller);
     }
 
     public ProductCollectionResponse getProducts(ProductFilter productFilter) {
         List<Product> products = getProductsWithOffers(productFilter);
         List<ProductResponse> productResponses = new ArrayList<>();
 
-        for (Product product : products) {
-            ProductResponse productResponse = ProductMapper.productToResponseWithSeller(
-                    product, sellerRepository.findById(product.getSellerId()));
-            productResponses.add(productResponse);
-        }
+        products.forEach(product -> {
+            Seller seller = sellerRepository.findById(product.getSellerId());
+            productResponses.add(ProductMapper.productToResponseWithSeller(product, seller));
+        });
 
         return ProductMapper.productsToCollectionResponse(productResponses);
     }
 
-    public ProductResponse getProduct(String productId) {
-        Product product = getProductWithOffers(productId);
-
-        Seller seller = sellerRepository.findById(product.getSellerId());
-
-        return ProductMapper.productToResponseWithSeller(product, seller);
-    }
-
     public String createOffer(String buyerName, String productId, OfferRequest offerRequest) {
         offerRequest.validate();
-
         Offer offer = OfferMapper.requestToOffer(productId, buyerName, offerRequest);
 
+        if (canAddOfferToProduct(productId, offer)) {
+            offerRepository.save(offer);
+        }
+        return offer.getId();
+    }
+
+    private boolean canAddOfferToProduct(String productId, Offer offer) {
         Product product = getProductWithOffers(productId);
         product.addOffer(offer);
-        offerRepository.save(offer);
 
-        return offer.getId();
+        return true;
     }
 
     private List<Product> getProductsWithOffers(ProductFilter productFilter) {
         List<Product> products = productRepository.findAllProducts(productFilter);
-
-        for (Product product : products) {
-            addOffersToProduct(product);
-        }
+        products.forEach(this::addOffersToProduct);
 
         return products;
     }
