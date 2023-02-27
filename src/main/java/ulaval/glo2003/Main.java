@@ -12,11 +12,14 @@ import ulaval.glo2003.api.offer.OfferResource;
 import ulaval.glo2003.api.product.ProductResource;
 import ulaval.glo2003.api.seller.SellerResource;
 import ulaval.glo2003.service.RepositoryManager;
+import ulaval.glo2003.service.RepositoryManagerFactory;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        RepositoryManager repositoryManager = new RepositoryManager();
+        RepositoryManagerFactory factory = new RepositoryManagerFactory();
+        RepositoryManager repositoryManager = factory.create();
+
         HealthResource healthResource = new HealthResource();
         SellerResource sellerResource = new SellerResource(repositoryManager);
         ProductResource productResource = new ProductResource(repositoryManager);
@@ -24,6 +27,7 @@ public class Main {
 
         ParamExceptionMapper paramExceptionMapper = new ParamExceptionMapper();
         NotFoundExceptionMapper notFoundExceptionMapper = new NotFoundExceptionMapper();
+
         ResourceConfig resourceConfig = new ResourceConfig()
                 .register(healthResource)
                 .register(sellerResource)
