@@ -21,13 +21,7 @@ public class SellerTest {
 
     @BeforeEach
     void initSeller() {
-        String validName = "Bob";
-        String validBirthdate = "2000-01-01";
-        String validPhoneNumber = "14181234567";
-        String validEmail = "bob@gmail.com";
-        String validBio = "My name is Bob!";
-
-        seller = new Seller(validName, validBirthdate, validEmail, validPhoneNumber, validBio);
+        seller = SellerTestUtils.createSeller();
 
         doReturn("id-test").when(productMock).getId();
     }

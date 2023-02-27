@@ -6,23 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.domain.exceptions.MissingParamException;
+import ulaval.glo2003.domain.seller.SellerTestUtils;
 
 public class SellerRequestTest {
-    private static final String NAME = "Bob";
-    private static final String BIRTHDATE = "2000-01-01";
-    private static final String EMAIL = "Bob@bob.bob";
-    private static final String PHONE_NUMBER = "11234567890";
-    private static final String BIO = "My name is Bob.";
-
-    private final SellerRequest sellerRequest = new SellerRequest();
+    private SellerRequest sellerRequest;
 
     @BeforeEach
-    public void prepareSellerRequest() {
-        sellerRequest.name = NAME;
-        sellerRequest.birthdate = BIRTHDATE;
-        sellerRequest.email = EMAIL;
-        sellerRequest.phoneNumber = PHONE_NUMBER;
-        sellerRequest.bio = BIO;
+    public void setUp() {
+        sellerRequest = SellerTestUtils.createSellerRequest();
     }
 
     @Test

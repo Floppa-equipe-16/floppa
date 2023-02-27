@@ -6,7 +6,6 @@ import static com.google.common.truth.Truth.assertThat;
 
 class RepositoryManagerFactoryTest {
 
-
     @Test
     public void canCreate() {
         RepositoryManagerFactory factory = new RepositoryManagerFactory();
