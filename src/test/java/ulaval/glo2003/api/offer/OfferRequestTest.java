@@ -1,5 +1,6 @@
 package ulaval.glo2003.api.offer;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -13,20 +14,25 @@ public class OfferRequestTest {
     private final OfferRequest offerRequest = new OfferRequest();
 
     @BeforeEach
-    public void prepareProductRequest() {
+    public void setUp() {
         offerRequest.amount = AMOUNT;
         offerRequest.message = MESSAGE;
     }
 
     @Test
-    public void validateMethodThrowsWhenNullAmount() {
+    public void canValidateValidRequest() {
+        assertDoesNotThrow(offerRequest::validate);
+    }
+
+    @Test
+    public void validateThrowsWhenNullAmount() {
         offerRequest.amount = null;
 
         assertThrows(MissingParamException.class, offerRequest::validate);
     }
 
     @Test
-    public void validateMethodThrowsWhenNullMessage() {
+    public void validateThrowsWhenNullMessage() {
         offerRequest.message = null;
 
         assertThrows(MissingParamException.class, offerRequest::validate);

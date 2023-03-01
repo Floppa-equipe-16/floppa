@@ -36,7 +36,7 @@ public class SellerValidatorTest {
     }
 
     @Test
-    void validateWithInvalidName() {
+    public void validateThrowsWithInvalidName() {
         try (MockedStatic<SellerValidator> sellerValidatorMockedStatic =
                 Mockito.mockStatic(SellerValidator.class, Mockito.CALLS_REAL_METHODS)) {
             setAllValidatorToValid(sellerValidatorMockedStatic);
@@ -52,7 +52,7 @@ public class SellerValidatorTest {
     }
 
     @Test
-    void validateWithInvalidBirthdate() {
+    public void validateThrowsWithInvalidBirthdate() {
         try (MockedStatic<SellerValidator> sellerValidatorMockedStatic =
                 Mockito.mockStatic(SellerValidator.class, Mockito.CALLS_REAL_METHODS)) {
             setAllValidatorToValid(sellerValidatorMockedStatic);
@@ -68,7 +68,7 @@ public class SellerValidatorTest {
     }
 
     @Test
-    void validateWithInvalidEmail() {
+    public void validateThrowsWithInvalidEmail() {
         try (MockedStatic<SellerValidator> sellerValidatorMockedStatic =
                 Mockito.mockStatic(SellerValidator.class, Mockito.CALLS_REAL_METHODS)) {
             setAllValidatorToValid(sellerValidatorMockedStatic);
@@ -84,7 +84,7 @@ public class SellerValidatorTest {
     }
 
     @Test
-    void validateWithInvalidPhoneNumber() {
+    public void validateThrowsWithInvalidPhoneNumber() {
         try (MockedStatic<SellerValidator> sellerValidatorMockedStatic =
                 Mockito.mockStatic(SellerValidator.class, Mockito.CALLS_REAL_METHODS)) {
             setAllValidatorToValid(sellerValidatorMockedStatic);
@@ -100,7 +100,7 @@ public class SellerValidatorTest {
     }
 
     @Test
-    void validateWithInvalidBio() {
+    public void validateThrowsWithInvalidBio() {
         try (MockedStatic<SellerValidator> sellerValidatorMockedStatic =
                 Mockito.mockStatic(SellerValidator.class, Mockito.CALLS_REAL_METHODS)) {
             setAllValidatorToValid(sellerValidatorMockedStatic);
@@ -116,98 +116,98 @@ public class SellerValidatorTest {
     }
 
     @Test
-    void isNameInvalid() {
+    public void canCheckIsNameInvalid() {
         String emptyName = " \r \t \n";
 
         assertTrue(SellerValidator.isNameInvalid(emptyName));
     }
 
     @Test
-    void isBioInvalid() {
+    public void canCheckIsBioInvalid() {
         String emptyBio = " \r \t \n";
 
         assertTrue(SellerValidator.isBioInvalid(emptyBio));
     }
 
     @Test
-    void isPhoneNumberTooLong() {
+    public void canCheckIsPhoneNumberTooLong() {
         String phoneNumber = "1234567890123";
 
         assertTrue(SellerValidator.isPhoneNumberInvalid(phoneNumber));
     }
 
     @Test
-    void isPhoneNumberTooShort() {
+    public void canCheckIsPhoneNumberTooShort() {
         String phoneNumber = "123456789";
 
         assertTrue(SellerValidator.isPhoneNumberInvalid(phoneNumber));
     }
 
     @Test
-    void isPhoneNumberContainOtherChar() {
+    public void canCheckIsPhoneNumberContainsOtherChar() {
         String phoneNumber = "+1234567890";
 
         assertTrue(SellerValidator.isPhoneNumberInvalid(phoneNumber));
     }
 
     @Test
-    void isPhoneNumberValid() {
+    public void canCheckIsPhoneNumberValid() {
         String phoneNumber = "11234567890";
 
         assertFalse(SellerValidator.isPhoneNumberInvalid(phoneNumber));
     }
 
     @Test
-    void isEmailValid() {
+    public void canCheckIsEmailValid() {
         String validEmail = "Bob@bob.bob";
 
         assertFalse(SellerValidator.isEmailInvalid(validEmail));
     }
 
     @Test
-    void isEmailMissingAt() {
+    public void canCheckIsEmailMissingAt() {
         String Email = "Bobbob.bob";
 
         assertTrue(SellerValidator.isEmailInvalid(Email));
     }
 
     @Test
-    void isEmailMissingDot() {
+    public void canCheckIsEmailMissingDot() {
         String Email = "Bob@bobbob";
 
         assertTrue(SellerValidator.isEmailInvalid(Email));
     }
 
     @Test
-    void isEmailMissingIdentifier() {
+    public void canCheckIsEmailMissingIdentifier() {
         String Email = "@bob.bob";
 
         assertTrue(SellerValidator.isEmailInvalid(Email));
     }
 
     @Test
-    void isEmailMissingExtension() {
+    public void canCheckIsEmailMissingExtension() {
         String Email = "bob@bob.";
 
         assertTrue(SellerValidator.isEmailInvalid(Email));
     }
 
     @Test
-    void isEmailMissingService() {
+    public void canCheckIsEmailMissingService() {
         String Email = "Bob@.bob";
 
         assertTrue(SellerValidator.isEmailInvalid(Email));
     }
 
     @Test
-    void isBirthdateFormatInvalid() {
+    public void canCheckIsBirthdateFormatInvalid() {
         String invalidDate = "2001-13-20";
 
         assertTrue(SellerValidator.isBirthdateFormatInvalid(invalidDate));
     }
 
     @Test
-    void isAgeOldEnoughWithOffsetCheck() {
+    public void canCheckIsAgeOldEnoughWithOffsetCheck() {
         OffsetDateTime fixedDateTime = OffsetDateTime.of(2018, 1, 2, 2, 0, 0, 0, ZoneOffset.ofHours(3));
         String invalidBirthDate1 = "2000-01-03";
         String invalidBirthDate2 = "2000-01-02";

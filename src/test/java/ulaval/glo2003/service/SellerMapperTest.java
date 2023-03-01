@@ -28,7 +28,7 @@ class SellerMapperTest {
     }
 
     @Test
-    void canMapRequestToSeller() {
+    public void canMapRequestToSeller() {
         SellerRequest request = SellerTestUtils.createSellerRequest();
         doReturn(SellerTestUtils.createSeller()).when(factory).createSeller(request.name, request.birthdate, request.email, request.phoneNumber, request.bio);
 
@@ -42,7 +42,7 @@ class SellerMapperTest {
     }
 
     @Test
-    void canMapSellerToResponse() {
+    public void canMapSellerToResponse() {
         Seller seller = SellerTestUtils.createSeller();
 
         SellerResponse response = mapper.sellerToResponse(seller);

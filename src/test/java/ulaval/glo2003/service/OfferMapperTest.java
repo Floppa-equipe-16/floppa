@@ -31,7 +31,7 @@ class OfferMapperTest {
     private List<Offer> offers;
 
     @BeforeEach
-    protected void setUp() {
+    public  void setUp() {
         mapper = new OfferMapper(factory);
         offers = new ArrayList<>();
         offers.add(new Offer("1", PRODUCT_ID, BUYER_NAME, LOWEST_AMOUNT, DESCRIPTION, CREATION_DATE));
@@ -39,7 +39,7 @@ class OfferMapperTest {
     }
 
     @Test
-    void canMapRequestToOffer() {
+    public void canMapRequestToOffer() {
         doReturn(offers.get(0)).when(factory).createOffer(PRODUCT_ID, BUYER_NAME, LOWEST_AMOUNT, DESCRIPTION);
         OfferRequest request = createRequest();
 
@@ -60,7 +60,7 @@ class OfferMapperTest {
     }
 
     @Test
-    protected void canCreateSummaryResponseWithMultipleOffers() {
+    public  void canCreateSummaryResponseWithMultipleOffers() {
         OfferCollectionResponse response = mapper.offersToSummaryCollectionResponse(offers);
 
         assertThat(response.count).isEqualTo(2);
@@ -69,7 +69,7 @@ class OfferMapperTest {
     }
 
     @Test
-    protected void createSummaryResponseIsEmptyWithNoOffer() {
+    public  void createSummaryResponseIsEmptyWithNoOffer() {
         OfferCollectionResponse response = mapper.offersToSummaryCollectionResponse(new ArrayList<>());
 
         assertThat(response.count).isEqualTo(0);
@@ -84,7 +84,7 @@ class OfferMapperTest {
     }
 
     @Test
-    protected void canCreateCompleteResponseWithMultipleOffers() {
+    public  void canCreateCompleteResponseWithMultipleOffers() {
         OfferCollectionResponse response = mapper.offersToCompleteCollectionResponse(offers);
 
         assertThat(response.count).isEqualTo(2);
@@ -95,7 +95,7 @@ class OfferMapperTest {
     }
 
     @Test
-    protected void createCompleteResponseIsEmptyWithNoOffer() {
+    public  void createCompleteResponseIsEmptyWithNoOffer() {
         OfferCollectionResponse response = mapper.offersToCompleteCollectionResponse(new ArrayList<>());
 
         assertThat(response.count).isEqualTo(0);

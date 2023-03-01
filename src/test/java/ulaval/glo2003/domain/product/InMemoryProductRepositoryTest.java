@@ -23,13 +23,13 @@ class InMemoryProductRepositoryTest {
     private Product product;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         repository = new InMemoryProductRepository();
         product = createProduct(ID);
     }
 
     @Test
-    void canFindById() {
+    public void canFindById() {
         repository.save(product);
 
         Product foundProduct = repository.findById(product.getId());
@@ -38,12 +38,12 @@ class InMemoryProductRepositoryTest {
     }
 
     @Test
-    protected void findByIdThrowsWhenIdIsAbsent() {
+    public  void findByIdThrowsWhenIdIsAbsent() {
         assertThrows(NotFoundException.class, () -> repository.findById(product.getId()));
     }
 
     @Test
-    void canFindAllBySellerId() {
+    public void canFindAllBySellerId() {
         repository.save(product);
         repository.save(createProduct(SECOND_ID));
 
@@ -53,14 +53,14 @@ class InMemoryProductRepositoryTest {
     }
 
     @Test
-    void findAllBySellerIdReturnEmptyListWhenNoProducts() {
+    public void findAllBySellerIdReturnEmptyListWhenNoProducts() {
         List<Product> products = repository.findAllBySellerId(SELLER_ID);
 
         assertThat(products).isEmpty();
     }
 
     @Test
-    protected void canSaveWhenProductAlreadyExists() {
+    public  void canSaveWhenProductAlreadyExists() {
         repository.save(product);
 
         repository.save(product);

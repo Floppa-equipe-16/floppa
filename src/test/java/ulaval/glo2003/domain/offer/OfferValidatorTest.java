@@ -17,7 +17,7 @@ public class OfferValidatorTest {
     private Offer offerMock = mock(Offer.class);
 
     @Test
-    void validateWithInvalidMessage() {
+    public void validateThrowsWithInvalidMessage() {
         try (MockedStatic<OfferValidator> offerValidatorMockedStatic =
                 Mockito.mockStatic(OfferValidator.class, Mockito.CALLS_REAL_METHODS)) {
             offerValidatorMockedStatic
@@ -32,7 +32,7 @@ public class OfferValidatorTest {
     }
 
     @Test
-    void IsMessageTooShort() {
+    public void canCheckIsMessageTooShort() {
         String messageWith99Char =
                 "0123456789-0123456789-0123456789-0123456789-0123456789-0123456789-0123456789-0123456789-0123456789-";
 

@@ -19,13 +19,13 @@ class InMemoryOfferRepositoryTest {
     private Offer offer;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         repository = new InMemoryOfferRepository();
         offer = createOffer();
     }
 
     @Test
-    void canFindById() {
+    public void canFindById() {
         repository.save(offer);
 
         Offer foundOffer = repository.findById(offer.getId());
@@ -34,12 +34,12 @@ class InMemoryOfferRepositoryTest {
     }
 
     @Test
-    protected void findByIdThrowsWhenIdIsAbsent() {
+    public  void findByIdThrowsWhenIdIsAbsent() {
         assertThrows(NotFoundException.class, () -> repository.findById(offer.getId()));
     }
 
     @Test
-    void findAllByProductId() {
+    public void canFindAllByProductId() {
         repository.save(offer);
         repository.save(createOffer());
 
@@ -49,14 +49,14 @@ class InMemoryOfferRepositoryTest {
     }
 
     @Test
-    void findAllByProductIdReturnEmptyListWhenNoOffers() {
+    public void findAllByProductIdReturnEmptyListWhenNoOffers() {
         List<Offer> offers = repository.findAllByProductId(PRODUCT_ID);
 
         assertThat(offers).isEmpty();
     }
 
     @Test
-    protected void canSaveWhenOfferAlreadyExists() {
+    public  void canSaveWhenOfferAlreadyExists() {
         repository.save(offer);
 
         repository.save(offer);

@@ -20,21 +20,21 @@ public class SellerTest {
     Seller sellerMock = mock(Seller.class);
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         seller = SellerTestUtils.createSeller();
 
         doReturn("id-test").when(productMock).getId();
     }
 
     @Test
-    void canCopy() {
+    public void canCopy() {
         Seller sellerCopy = new Seller(seller);
 
         assertThat(seller).isEqualTo(sellerCopy);
     }
 
     @Test
-    void canAddProduct() {
+    public void canAddProduct() {
         seller.addProduct(productMock);
         Optional<Product> product = Optional.ofNullable(seller.getProductById(productMock.getId()));
 
@@ -43,7 +43,7 @@ public class SellerTest {
     }
 
     @Test
-    void addProductOnlyAddsOnceWithDuplicate() {
+    public void addProductOnlyAddsOnceWithDuplicate() {
         seller.addProduct(productMock);
         seller.addProduct(productMock);
 
@@ -51,7 +51,7 @@ public class SellerTest {
     }
 
     @Test
-    void canCompareIdenticalSellers() {
+    public void canCompareIdenticalSellers() {
         doReturn(seller.getId()).when(sellerMock).getId();
         doReturn(seller.getName()).when(sellerMock).getName();
         doReturn(seller.getBirthdate()).when(sellerMock).getBirthdate();
@@ -64,7 +64,7 @@ public class SellerTest {
     }
 
     @Test
-    void canCompareDifferentSellers() {
+    public void canCompareDifferentSellers() {
         doReturn(seller.getId()).when(sellerMock).getId();
         doReturn("Different name").when(sellerMock).getName();
         doReturn(seller.getBirthdate()).when(sellerMock).getBirthdate();

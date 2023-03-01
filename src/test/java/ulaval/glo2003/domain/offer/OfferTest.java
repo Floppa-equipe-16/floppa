@@ -16,26 +16,19 @@ public class OfferTest {
     Offer offerMock = mock(Offer.class);
 
     @BeforeEach
-    void setUp() {
-        String productId = "valid ID";
-        String userName = "Bob";
-        Double amount = 19.5d;
-        String message100Char =
-                "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789";
-
-        OfferFactory factory = new OfferFactory();
-        offer = factory.createOffer(productId, userName, amount, message100Char);
+    public void setUp() {
+        offer = OfferTestUtils.createOffer("1");
     }
 
     @Test
-    void canCopyOffer() {
+    public void canCopyOffer() {
         Offer offerCopy = new Offer(offer);
 
         assertThat(offerCopy).isEqualTo(offer);
     }
 
     @Test
-    void canCompareIdenticalOffers() {
+    public void canCompareIdenticalOffers() {
         doReturn(offer.getId()).when(offerMock).getId();
         doReturn(offer.getProductId()).when(offerMock).getProductId();
         doReturn(offer.getUsername()).when(offerMock).getUsername();
@@ -47,7 +40,7 @@ public class OfferTest {
     }
 
     @Test
-    void canCompareDifferentOffers() {
+    public void canCompareDifferentOffers() {
         doReturn(offer.getId()).when(offerMock).getId();
         doReturn(offer.getProductId()).when(offerMock).getProductId();
         doReturn("Different username").when(offerMock).getUsername();

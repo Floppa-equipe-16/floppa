@@ -41,14 +41,14 @@ class ProductMapperTest {
     private Product product;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         mapper = new ProductMapper(factory, offerMapper);
 
         product = new Product(ID, SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
     }
 
     @Test
-    void canMapRequestToProduct() {
+    public void canMapRequestToProduct() {
         doReturn(product).when(factory).createProduct(SELLER_ID, TITLE, DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
         ProductRequest request = createRequest();
 
@@ -70,7 +70,7 @@ class ProductMapperTest {
     }
 
     @Test
-    void canMapProductToResponse() {
+    public void canMapProductToResponse() {
         doReturn(new OfferCollectionResponse()).when(offerMapper).offersToCompleteCollectionResponse(any());
 
         ProductResponse response = mapper.productToResponse(product);
@@ -81,7 +81,7 @@ class ProductMapperTest {
     }
 
     @Test
-    void canMapProductsToCollectionResponse() {
+    public void canMapProductsToCollectionResponse() {
         doReturn(new OfferCollectionResponse()).when(offerMapper).offersToCompleteCollectionResponse(any());
 
         ProductCollectionResponse response =
@@ -93,7 +93,7 @@ class ProductMapperTest {
     }
 
     @Test
-    void canMapProductToResponseWithSeller() {
+    public void canMapProductToResponseWithSeller() {
         Seller seller = SellerTestUtils.createSeller();
 
         ProductResponse response = mapper.productToResponseWithSeller(product, seller);
@@ -112,7 +112,7 @@ class ProductMapperTest {
     }
 
     @Test
-    void canMapProductsMapToResponsesList() {
+    public void canMapProductsMapToResponsesList() {
         Map<String, Product> products = new HashMap<>();
         products.put("1", product);
         products.put("2", product);

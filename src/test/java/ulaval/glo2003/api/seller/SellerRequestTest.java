@@ -1,6 +1,7 @@
 package ulaval.glo2003.api.seller;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +15,11 @@ public class SellerRequestTest {
     @BeforeEach
     public void setUp() {
         sellerRequest = SellerTestUtils.createSellerRequest();
+    }
+
+    @Test
+    public void canValidateValidRequest() {
+        assertDoesNotThrow(sellerRequest::validate);
     }
 
     @Test

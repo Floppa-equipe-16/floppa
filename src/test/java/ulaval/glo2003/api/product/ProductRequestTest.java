@@ -1,5 +1,6 @@
 package ulaval.glo2003.api.product;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +15,7 @@ public class ProductRequestTest {
     private final ProductRequest productRequest = new ProductRequest();
 
     @BeforeEach
-    public void prepareProductRequest() {
+    public void setUp() {
         productRequest.title = TITLE;
         productRequest.description = DESCRIPTION;
         productRequest.suggestedPrice = SUGGESTED_PRICE;
@@ -22,28 +23,33 @@ public class ProductRequestTest {
     }
 
     @Test
-    public void validateMethodThrowsWhenNullTitle() {
+    public void canValidateValidRequest() {
+        assertDoesNotThrow(productRequest::validate);
+    }
+
+    @Test
+    public void validateThrowsWhenNullTitle() {
         productRequest.title = null;
 
         assertThrows(MissingParamException.class, productRequest::validate);
     }
 
     @Test
-    public void validateMethodThrowsWhenNullDescription() {
+    public void validateThrowsWhenNullDescription() {
         productRequest.description = null;
 
         assertThrows(MissingParamException.class, productRequest::validate);
     }
 
     @Test
-    public void validateMethodThrowsWhenNullSuggestedPrice() {
+    public void validateThrowsWhenNullSuggestedPrice() {
         productRequest.suggestedPrice = null;
 
         assertThrows(MissingParamException.class, productRequest::validate);
     }
 
     @Test
-    public void validateMethodThrowsWhenNullCategory() {
+    public void validateThrowsWhenNullCategory() {
         productRequest.category = null;
 
         assertThrows(MissingParamException.class, productRequest::validate);

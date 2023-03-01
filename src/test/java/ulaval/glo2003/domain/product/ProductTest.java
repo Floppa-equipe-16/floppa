@@ -28,19 +28,19 @@ public class ProductTest {
     private Product productMock = mock(Product.class);
 
     @BeforeEach
-    void prepareProduct() {
+    public void setUp() {
         product = new Product(ID, SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
     }
 
     @Test
-    void copyConstructor() {
+    public void canCopyProduct() {
         Product productCopy = new Product(product);
 
         assertThat(productCopy).isEqualTo(product);
     }
 
     @Test
-    void canAddValidOffer() {
+    public void canAddValidOffer() {
         doReturn("usertest").when(offerMock).getUsername();
         doReturn(200d).when(offerMock).getAmount();
 
@@ -51,7 +51,7 @@ public class ProductTest {
     }
 
     @Test
-    void canCompareIdenticalProducts() {
+    public void canCompareIdenticalProducts() {
         doReturn(product.getId()).when(productMock).getId();
         doReturn(product.getSellerId()).when(productMock).getSellerId();
         doReturn(product.getTitle()).when(productMock).getTitle();
@@ -64,7 +64,7 @@ public class ProductTest {
     }
 
     @Test
-    void canCompareDifferentProducts() {
+    public void canCompareDifferentProducts() {
         doReturn(product.getId()).when(productMock).getId();
         doReturn(product.getSellerId()).when(productMock).getSellerId();
         doReturn("Different title").when(productMock).getTitle();

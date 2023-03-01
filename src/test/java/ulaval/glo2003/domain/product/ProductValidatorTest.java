@@ -49,7 +49,7 @@ public class ProductValidatorTest {
     }
 
     @Test
-    void validateWithInvalidSellerId() {
+    public void validateThrowsWithInvalidSellerId() {
         try (MockedStatic<ProductValidator> productValidatorMockedStatic =
                 Mockito.mockStatic(ProductValidator.class, Mockito.CALLS_REAL_METHODS)) {
             setAllValidatorToValid(productValidatorMockedStatic);
@@ -65,7 +65,7 @@ public class ProductValidatorTest {
     }
 
     @Test
-    void validateWithInvalidTitle() {
+    public void validateThrowsWithInvalidTitle() {
         try (MockedStatic<ProductValidator> productValidatorMockedStatic =
                 Mockito.mockStatic(ProductValidator.class, Mockito.CALLS_REAL_METHODS)) {
             setAllValidatorToValid(productValidatorMockedStatic);
@@ -81,7 +81,7 @@ public class ProductValidatorTest {
     }
 
     @Test
-    void validateWithInvalidDescription() {
+    public void validateThrowsWithInvalidDescription() {
         try (MockedStatic<ProductValidator> productValidatorMockedStatic =
                 Mockito.mockStatic(ProductValidator.class, Mockito.CALLS_REAL_METHODS)) {
             setAllValidatorToValid(productValidatorMockedStatic);
@@ -98,7 +98,7 @@ public class ProductValidatorTest {
     }
 
     @Test
-    void validateWithInvalidCategory() {
+    public void validateThrowsWithInvalidCategory() {
         try (MockedStatic<ProductValidator> productValidatorMockedStatic =
                 Mockito.mockStatic(ProductValidator.class, Mockito.CALLS_REAL_METHODS)) {
             setAllValidatorToValid(productValidatorMockedStatic);
@@ -114,7 +114,7 @@ public class ProductValidatorTest {
     }
 
     @Test
-    void validateWithInvalidSuggestedPrice() {
+    public void validateThrowsWithInvalidSuggestedPrice() {
         try (MockedStatic<ProductValidator> productValidatorMockedStatic =
                 Mockito.mockStatic(ProductValidator.class, Mockito.CALLS_REAL_METHODS)) {
             setAllValidatorToValid(productValidatorMockedStatic);
@@ -131,7 +131,7 @@ public class ProductValidatorTest {
     }
 
     @Test
-    void validateOfferEligibleWithInvalidAmount() {
+    public void validateOfferEligibleThrowsWithInvalidAmount() {
         try (MockedStatic<ProductValidator> productValidatorMockedStatic =
                 Mockito.mockStatic(ProductValidator.class, Mockito.CALLS_REAL_METHODS)) {
             setAllValidatorToValid(productValidatorMockedStatic);
@@ -147,7 +147,7 @@ public class ProductValidatorTest {
     }
 
     @Test
-    void validateOfferEligibleWithInvalidUsername() {
+    public void validateOfferEligibleThrowsWithInvalidUsername() {
         String username = "Username Test";
         doReturn(username).when(offerMock).getUsername();
         try (MockedStatic<ProductValidator> productValidatorMockedStatic =
@@ -167,42 +167,42 @@ public class ProductValidatorTest {
     }
 
     @Test
-    void isSellerIdInvalid() {
+    public void canCheckIsSellerIdInvalid() {
         String invalidId = " \n \r \t";
 
         assertTrue(ProductValidator.isSellerIdInvalid(invalidId));
     }
 
     @Test
-    void isTitleInvalid() {
+    public void canCheckIsTitleInvalid() {
         String invalidTitle = " \n \r \t";
 
         assertTrue(ProductValidator.isTitleInvalid(invalidTitle));
     }
 
     @Test
-    void isDescriptionInvalid() {
+    public void canCheckIsDescriptionInvalid() {
         String invalidDescription = " \n \r \t";
 
         assertTrue(ProductValidator.isDescriptionInvalid(invalidDescription));
     }
 
     @Test
-    void isCategoryInvalid() {
+    public void canCheckIsCategoryInvalid() {
         String invalidCategory = "InvalidCategory";
 
         assertTrue(ProductValidator.isCategoryInvalid(invalidCategory));
     }
 
     @Test
-    void isSuggestedPriceInvalid() {
+    public void canCheckIsSuggestedPriceInvalid() {
         Double suggestedPrice = 0.5;
 
         assertTrue(ProductValidator.isSuggestedPriceInvalid(suggestedPrice));
     }
 
     @Test
-    void isOfferAmountLessThenSuggestedPrice() {
+    public void canCheckIsOfferAmountLessThenSuggestedPrice() {
         doReturn(20d).when(productMock).getSuggestedPrice();
         Double offerAmount = 19.9d;
 
@@ -210,7 +210,7 @@ public class ProductValidatorTest {
     }
 
     @Test
-    void hasBuyerAlreadyMadeAnOffer() {
+    public void canCheckHasBuyerAlreadyMadeAnOffer() {
         ArrayList<Offer> offers = new ArrayList<>();
         offers.add(offerMock);
         String username = "Username Test";
