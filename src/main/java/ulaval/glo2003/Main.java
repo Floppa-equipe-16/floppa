@@ -11,19 +11,19 @@ import ulaval.glo2003.api.exceptionMappers.ParamExceptionMapper;
 import ulaval.glo2003.api.offer.OfferResource;
 import ulaval.glo2003.api.product.ProductResource;
 import ulaval.glo2003.api.seller.SellerResource;
-import ulaval.glo2003.service.RepositoryManager;
-import ulaval.glo2003.service.RepositoryManagerFactory;
+import ulaval.glo2003.service.SellingService;
+import ulaval.glo2003.service.SellingServiceFactory;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        RepositoryManagerFactory factory = new RepositoryManagerFactory();
-        RepositoryManager repositoryManager = factory.create();
+        SellingServiceFactory factory = new SellingServiceFactory();
+        SellingService sellingService = factory.create();
 
         HealthResource healthResource = new HealthResource();
-        SellerResource sellerResource = new SellerResource(repositoryManager);
-        ProductResource productResource = new ProductResource(repositoryManager);
-        OfferResource offerResource = new OfferResource(repositoryManager);
+        SellerResource sellerResource = new SellerResource(sellingService);
+        ProductResource productResource = new ProductResource(sellingService);
+        OfferResource offerResource = new OfferResource(sellingService);
 
         ParamExceptionMapper paramExceptionMapper = new ParamExceptionMapper();
         NotFoundExceptionMapper notFoundExceptionMapper = new NotFoundExceptionMapper();

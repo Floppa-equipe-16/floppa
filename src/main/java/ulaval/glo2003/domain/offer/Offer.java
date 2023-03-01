@@ -10,18 +10,14 @@ public class Offer {
     private final Double amount;
     private final String message;
     private final String createdAt;
-    private static final double TWO_DECIMAL_ROUNDING_FACTOR = 100d;
 
-    public Offer(String productId, String username, Double amount, String message) {
+    public Offer(String id, String productId, String username, Double amount, String message, String createdAt) {
+        this.id = id;
         this.productId = productId;
         this.username = username;
-        this.amount = Math.round(amount * TWO_DECIMAL_ROUNDING_FACTOR) / TWO_DECIMAL_ROUNDING_FACTOR;
+        this.amount = amount;
         this.message = message;
-
-        OfferValidator.validateParam(this);
-
-        id = UUID.randomUUID().toString();
-        createdAt = Instant.now().toString();
+        this.createdAt = createdAt;
     }
 
     public Offer(Offer that) {

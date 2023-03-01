@@ -16,18 +16,19 @@ public class OfferTest {
     Offer offerMock = mock(Offer.class);
 
     @BeforeEach
-    void prepareOffer() {
+    void setUp() {
         String productId = "valid ID";
         String userName = "Bob";
         Double amount = 19.5d;
         String message100Char =
                 "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789";
 
-        offer = new Offer(productId, userName, amount, message100Char);
+        OfferFactory factory = new OfferFactory();
+        offer = factory.createOffer(productId, userName, amount, message100Char);
     }
 
     @Test
-    void copyConstructor() {
+    void canCopyOffer() {
         Offer offerCopy = new Offer(offer);
 
         assertThat(offerCopy).isEqualTo(offer);

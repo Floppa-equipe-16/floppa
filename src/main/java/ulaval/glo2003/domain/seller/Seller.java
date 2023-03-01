@@ -14,18 +14,15 @@ public class Seller {
     private final String createdAt;
     private final Map<String, Product> productsMap;
 
-    public Seller(String name, String birthdate, String email, String phoneNumber, String bio) {
+    public Seller(String id, String name, String createdAt, String birthdate, String email, String phoneNumber, String bio) {
+        this.id = id;
         this.name = name;
+        this.createdAt = createdAt;
         this.birthdate = birthdate;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.bio = bio;
         this.productsMap = new HashMap<>();
-
-        SellerValidator.validateParam(this);
-
-        id = UUID.randomUUID().toString();
-        createdAt = Instant.now().toString();
     }
 
     public Seller(Seller that) {

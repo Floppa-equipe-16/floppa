@@ -10,28 +10,21 @@ public class Product {
     private final String id;
     private final String sellerId;
     private final String title;
+    private final String createdAt;
     private final String description;
     private final Double suggestedPrice;
     private final String category;
-
-    private final String createdAt;
-
     private final ArrayList<Offer> offers;
 
-    private static final double TWO_DECIMAL_ROUNDING_FACTOR = 100d;
-
-    public Product(String sellerId, String title, String description, Double suggestedPrice, String category) {
+    public Product(String id, String sellerId, String title, String createdAt, String description, Double suggestedPrice, String category) {
+        this.id = id;
         this.sellerId = sellerId;
         this.title = title;
+        this.createdAt =  createdAt;
         this.description = description;
-        this.suggestedPrice = Math.round(suggestedPrice * TWO_DECIMAL_ROUNDING_FACTOR) / TWO_DECIMAL_ROUNDING_FACTOR;
+        this.suggestedPrice = suggestedPrice;
         this.category = category;
         this.offers = new ArrayList<>();
-
-        ProductValidator.validateParam(this);
-
-        id = UUID.randomUUID().toString();
-        createdAt = Instant.now().toString();
     }
 
     public Product(Product that) {
@@ -92,7 +85,7 @@ public class Product {
         Product that = (Product) obj;
 
         return id.equals(that.getId())
-                && sellerId.equalsIgnoreCase(that.getSellerId())
+                && sellerId.equals(that.getSellerId())
                 && title.equalsIgnoreCase(that.getTitle())
                 && description.equalsIgnoreCase(that.getDescription())
                 && suggestedPrice.equals(that.getSuggestedPrice())

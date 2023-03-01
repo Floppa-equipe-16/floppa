@@ -4,6 +4,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
+import java.time.Instant;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,12 @@ import org.mockito.Mock;
 import ulaval.glo2003.domain.offer.Offer;
 
 public class ProductTest {
+    private static final String ID = "1";
+    private static final String SELLER_ID = "2a74sfs3d2g48";
+    private static final String TITLE = "Iphone XR";
+    private static final String DESCRIPTION = "A relatively new Iphone working as good as a new one";
+    private static final double SUGGESTED_PRICE = 200d;
+    private static final String CATEGORY = "electronics";
 
     private Product product;
 
@@ -22,13 +29,7 @@ public class ProductTest {
 
     @BeforeEach
     void prepareProduct() {
-        String validSellerId = "2a74sfs3d2g48";
-        String validTitle = "Iphone XR";
-        String validDescription = "A relatively new Iphone working as good as a new one";
-        Double validSuggestedPrice = 200d;
-        String validCategory = "electronics";
-
-        product = new Product(validSellerId, validTitle, validDescription, validSuggestedPrice, validCategory);
+        product = new Product(ID, SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
     }
 
     @Test

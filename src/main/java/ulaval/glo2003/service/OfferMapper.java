@@ -7,14 +7,20 @@ import ulaval.glo2003.api.offer.OfferCollectionResponse;
 import ulaval.glo2003.api.offer.OfferRequest;
 import ulaval.glo2003.api.offer.OfferResponse;
 import ulaval.glo2003.domain.offer.Offer;
+import ulaval.glo2003.domain.offer.OfferFactory;
 
 public class OfferMapper {
+    private final OfferFactory factory;
 
-    public static Offer requestToOffer(String productId, String buyerName, OfferRequest offerRequest) {
-        return new Offer(productId, buyerName, offerRequest.amount, offerRequest.message);
+    public OfferMapper(OfferFactory factory) {
+        this.factory = factory;
     }
 
-    public static OfferCollectionResponse offersToSummaryCollectionResponse(List<Offer> offers) {
+    public Offer requestToOffer(String productId, String buyerName, OfferRequest offerRequest) {
+        return factory.createOffer(productId, buyerName, offerRequest.amount, offerRequest.message);
+    }
+
+    public OfferCollectionResponse offersToSummaryCollectionResponse(List<Offer> offers) {
         OfferCollectionResponse response = new OfferCollectionResponse();
 
         response.count = offers.size();
@@ -26,7 +32,7 @@ public class OfferMapper {
         return response;
     }
 
-    public static OfferCollectionResponse offersToCompleteCollectionResponse(List<Offer> offers) {
+    public OfferCollectionResponse offersToCompleteCollectionResponse(List<Offer> offers) {
         OfferCollectionResponse response = new OfferCollectionResponse();
 
         response.count = offers.size();

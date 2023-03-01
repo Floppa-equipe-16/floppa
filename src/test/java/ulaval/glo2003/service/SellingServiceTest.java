@@ -11,7 +11,7 @@ import ulaval.glo2003.domain.seller.SellerTestUtils;
 
 import static org.mockito.Mockito.*;
 
-class RepositoryManagerTest {
+class SellingServiceTest {
 
     @Mock
     private ISellerRepository sellerRepositoryMock = mock(ISellerRepository.class);
@@ -19,12 +19,12 @@ class RepositoryManagerTest {
     private IProductRepository productRepositoryMock = mock(IProductRepository.class);
     @Mock
     private IOfferRepository offerRepositoryMock = mock(IOfferRepository.class);
-    private RepositoryManager repositoryManager;
+    private SellingService sellingService;
     private SellerRequest request;
 
     @BeforeEach
     public void setUp() {
-        repositoryManager = new RepositoryManager(sellerRepositoryMock, productRepositoryMock, offerRepositoryMock);
+        //repositoryManager = new RepositoryManager(sellerRepositoryMock, productRepositoryMock, offerRepositoryMock);
 
         request = SellerTestUtils.createSellerRequest();
     }

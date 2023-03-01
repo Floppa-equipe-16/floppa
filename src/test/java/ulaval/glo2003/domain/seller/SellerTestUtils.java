@@ -2,7 +2,10 @@ package ulaval.glo2003.domain.seller;
 
 import ulaval.glo2003.api.seller.SellerRequest;
 
+import java.time.Instant;
+
 public class SellerTestUtils {
+    private static final String ID = "1";
     private static final String NAME = "Bob";
     private static final String BIRTHDATE = "2000-01-01";
     private static final String EMAIL = "Bob@bob.bob";
@@ -10,7 +13,7 @@ public class SellerTestUtils {
     private static final String BIO = "My name is Bob.";
 
     public static Seller createSeller() {
-        return new Seller(NAME, BIRTHDATE, EMAIL, PHONE_NUMBER, BIO);
+        return new Seller(ID, NAME, Instant.MAX.toString(), BIRTHDATE, EMAIL, PHONE_NUMBER, BIO);
     }
 
     public static SellerRequest createSellerRequest() {

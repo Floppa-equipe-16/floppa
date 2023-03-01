@@ -66,6 +66,7 @@ class InMemoryOfferRepositoryTest {
     }
 
     private Offer createOffer() {
-        return new Offer(PRODUCT_ID, USERNAME, AMOUNT, MESSAGE);
+        OfferFactory factory = new OfferFactory();
+        return factory.createOffer(PRODUCT_ID, USERNAME, AMOUNT, MESSAGE);
     }
 }

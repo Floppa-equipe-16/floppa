@@ -16,24 +16,33 @@ import ulaval.glo2003.domain.product.ProductFilter;
 import ulaval.glo2003.domain.seller.ISellerRepository;
 import ulaval.glo2003.domain.seller.Seller;
 
-public class RepositoryManager {
+public class SellingService {
     private final ISellerRepository sellerRepository;
     private final IProductRepository productRepository;
     private final IOfferRepository offerRepository;
+    private final SellerMapper sellerMapper;
+    private final ProductMapper productMapper;
+    private final OfferMapper offerMapper;
 
-    public RepositoryManager(
+    public SellingService(
             ISellerRepository sellerRepository,
             IProductRepository productRepository,
-            IOfferRepository offerRepository) {
+            IOfferRepository offerRepository,
+            SellerMapper sellerMapper,
+            ProductMapper productMapper,
+            OfferMapper offerMapper) {
         this.sellerRepository = sellerRepository;
         this.productRepository = productRepository;
         this.offerRepository = offerRepository;
+        this.sellerMapper = sellerMapper;
+        this.productMapper = productMapper;
+        this.offerMapper = offerMapper;
     }
 
     public String createSeller(SellerRequest sellerRequest) {
         sellerRequest.validate();
 
-        Seller seller = SellerMapper.requestToSeller(sellerRequest);
+        Seller seller = sellerMapper.requestToSeller(sellerRequest);
         sellerRepository.save(seller);
 
         return seller.getId();
@@ -43,7 +52,7 @@ public class RepositoryManager {
         Seller seller = sellerRepository.findById(sellerId);
         addProductsToSeller(seller);
 
-        return SellerMapper.sellerToResponse(seller);
+        return sellerMapper.sellerToResponse(seller);
     }
 
     private void addProductsToSeller(Seller seller) {
@@ -56,7 +65,7 @@ public class RepositoryManager {
     public String createProduct(String sellerId, ProductRequest productRequest) {
         productRequest.validate();
 
-        Product product = ProductMapper.requestToProduct(sellerId, productRequest);
+        Product product = productMapper.requestToProduct(sellerId, productRequest);
         if (canAddProductToSeller(sellerId, product)) {
             productRepository.save(product);
         }
@@ -75,7 +84,7 @@ public class RepositoryManager {
         Product product = getProductWithOffers(productId);
         Seller seller = sellerRepository.findById(product.getSellerId());
 
-        return ProductMapper.productToResponseWithSeller(product, seller);
+        return productMapper.productToResponseWithSeller(product, seller);
     }
 
     public ProductCollectionResponse getProducts(ProductFilter productFilter) {
@@ -84,15 +93,15 @@ public class RepositoryManager {
 
         products.forEach(product -> {
             Seller seller = sellerRepository.findById(product.getSellerId());
-            productResponses.add(ProductMapper.productToResponseWithSeller(product, seller));
+            productResponses.add(productMapper.productToResponseWithSeller(product, seller));
         });
 
-        return ProductMapper.productsToCollectionResponse(productResponses);
+        return productMapper.productsToCollectionResponse(productResponses);
     }
 
     public String createOffer(String buyerName, String productId, OfferRequest offerRequest) {
         offerRequest.validate();
-        Offer offer = OfferMapper.requestToOffer(productId, buyerName, offerRequest);
+        Offer offer = offerMapper.requestToOffer(productId, buyerName, offerRequest);
 
         if (canAddOfferToProduct(productId, offer)) {
             offerRepository.save(offer);

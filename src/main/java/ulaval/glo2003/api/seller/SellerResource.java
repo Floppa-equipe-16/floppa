@@ -5,28 +5,28 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
-import ulaval.glo2003.service.RepositoryManager;
+import ulaval.glo2003.service.SellingService;
 
 @Path("/sellers")
 public class SellerResource {
-    private final RepositoryManager repositoryManager;
+    private final SellingService sellingService;
 
-    public SellerResource(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
+    public SellerResource(SellingService sellingService) {
+        this.sellingService = sellingService;
     }
 
     @GET
     @Path("/{sellerId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSeller(@PathParam("sellerId") String sellerId) {
-        SellerResponse sellerResponse = repositoryManager.getSeller(sellerId);
+        SellerResponse sellerResponse = sellingService.getSeller(sellerId);
         return Response.ok().entity(sellerResponse).build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createSeller(@Context UriInfo uriInfo, SellerRequest sellerRequest) {
-        String sellerId = repositoryManager.createSeller(sellerRequest);
+        String sellerId = sellingService.createSeller(sellerRequest);
         return Response.status(Response.Status.CREATED)
                 .header("Location", uriInfo.getAbsolutePath() + "/" + sellerId)
                 .build();

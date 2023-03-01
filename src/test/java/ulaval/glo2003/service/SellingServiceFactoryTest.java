@@ -4,13 +4,13 @@ import org.junit.jupiter.api.Test;
 
 import static com.google.common.truth.Truth.assertThat;
 
-class RepositoryManagerFactoryTest {
+class SellingServiceFactoryTest {
 
     @Test
     public void canCreate() {
-        RepositoryManagerFactory factory = new RepositoryManagerFactory();
+        SellingServiceFactory factory = new SellingServiceFactory();
 
-        RepositoryManager manager = factory.create();
+        SellingService manager = factory.create();
 
         assertThat(manager).isNotNull();
     }

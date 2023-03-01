@@ -7,43 +7,46 @@ import ulaval.glo2003.api.product.ProductCollectionResponse;
 import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.domain.product.Product;
+import ulaval.glo2003.domain.product.ProductFactory;
 import ulaval.glo2003.domain.seller.Seller;
 
 public class ProductMapper {
+    private final ProductFactory factory;
+    private final OfferMapper offerMapper;
 
-    public static Product requestToProduct(String sellerId, ProductRequest productRequest) {
-        return new Product(
-                sellerId,
-                productRequest.title,
-                productRequest.description,
-                productRequest.suggestedPrice,
-                productRequest.category);
+    public ProductMapper(ProductFactory factory, OfferMapper offerMapper) {
+        this.factory = factory;
+        this.offerMapper = offerMapper;
     }
 
-    public static ProductResponse productToResponse(Product product) {
+    public Product requestToProduct(String sellerId, ProductRequest productRequest) {
+        return factory.createProduct(sellerId, productRequest.title, productRequest.description, productRequest.suggestedPrice, productRequest.category);
+    }
+
+    public ProductResponse productToResponse(Product product) {
         ProductResponse productResponse = initializeResponse(product);
-        productResponse.offers = OfferMapper.offersToCompleteCollectionResponse(product.getOffers());
+        productResponse.offers = offerMapper.offersToCompleteCollectionResponse(product.getOffers());
 
         return productResponse;
     }
 
-    public static ProductResponse productToResponseWithSeller(Product product, Seller seller) {
+    public ProductResponse productToResponseWithSeller(Product product, Seller seller) {
         ProductResponse response = initializeResponse(product);
 
         response.addSellerInfo(seller.getId(), seller.getName());
-        response.offers = OfferMapper.offersToSummaryCollectionResponse(product.getOffers());
+        response.offers = offerMapper.offersToSummaryCollectionResponse(product.getOffers());
 
         return response;
     }
 
-    public static ProductCollectionResponse productsToCollectionResponse(List<ProductResponse> productResponses) {
+    public ProductCollectionResponse productsToCollectionResponse(List<ProductResponse> productResponses) {
         ProductCollectionResponse response = new ProductCollectionResponse();
         response.products = productResponses;
 
         return response;
     }
 
-    private static ProductResponse initializeResponse(Product product) {
+    private ProductResponse initializeResponse(Product product) {
         ProductResponse response = new ProductResponse();
         response.title = product.getTitle();
         response.description = product.getDescription();
@@ -55,9 +58,9 @@ public class ProductMapper {
         return response;
     }
 
-    public static List<ProductResponse> productsMapToResponsesList(Map<String, Product> productsMap) {
+    public List<ProductResponse> productsMapToResponsesList(Map<String, Product> productsMap) {
         return productsMap.values().stream()
-                .map(ProductMapper::productToResponse)
+                .map(this::productToResponse)
                 .collect(Collectors.toList());
     }
 }

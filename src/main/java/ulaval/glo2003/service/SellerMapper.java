@@ -2,15 +2,24 @@ package ulaval.glo2003.service;
 
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
+import ulaval.glo2003.domain.product.ProductFactory;
 import ulaval.glo2003.domain.seller.Seller;
+import ulaval.glo2003.domain.seller.SellerFactory;
 
 public class SellerMapper {
+    private final SellerFactory factory;
+    private final ProductMapper productMapper;
 
-    public static Seller requestToSeller(SellerRequest request) {
-        return new Seller(request.name, request.birthdate, request.email, request.phoneNumber, request.bio);
+    public SellerMapper(SellerFactory factory, ProductMapper productMapper) {
+        this.factory = factory;
+        this.productMapper = productMapper;
     }
 
-    public static SellerResponse sellerToResponse(Seller seller) {
+    public Seller requestToSeller(SellerRequest request) {
+        return factory.createSeller(request.name, request.birthdate, request.email, request.phoneNumber, request.bio);
+    }
+
+    public SellerResponse sellerToResponse(Seller seller) {
         SellerResponse response = new SellerResponse();
 
         response.id = seller.getId();
@@ -20,7 +29,7 @@ public class SellerMapper {
         response.email = seller.getEmail();
         response.phoneNumber = seller.getPhoneNumber();
         response.bio = seller.getBio();
-        response.products = ProductMapper.productsMapToResponsesList(seller.getProducts());
+        response.products = productMapper.productsMapToResponsesList(seller.getProducts());
 
         return response;
     }
