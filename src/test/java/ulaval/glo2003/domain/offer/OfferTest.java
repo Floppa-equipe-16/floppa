@@ -6,18 +6,28 @@ import static org.mockito.Mockito.mock;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+
+import java.time.Instant;
 
 public class OfferTest {
+    private static final String ID = "1";
+    private static final String OTHER_ID = "2";
+    private static final String PRODUCT_ID = "10";
+    private static final String USERNAME = "Alice";
+    private static final double AMOUNT = 200d;
+    private static final String MESSAGE = "One item please";
+    private static final String CREATION_DATE = Instant.MAX.toString();
 
     private Offer offer;
-
-    @Mock
-    Offer offerMock = mock(Offer.class);
+    private Offer otherOffer;
 
     @BeforeEach
     public void setUp() {
-        offer = OfferTestUtils.createOffer("1");
+        offer = createOffer(ID);
+    }
+
+    private Offer createOffer(String id) {
+        return new Offer(id, PRODUCT_ID, USERNAME, AMOUNT, MESSAGE, CREATION_DATE);
     }
 
     @Test
@@ -29,25 +39,15 @@ public class OfferTest {
 
     @Test
     public void canCompareIdenticalOffers() {
-        doReturn(offer.getId()).when(offerMock).getId();
-        doReturn(offer.getProductId()).when(offerMock).getProductId();
-        doReturn(offer.getUsername()).when(offerMock).getUsername();
-        doReturn(offer.getAmount()).when(offerMock).getAmount();
-        doReturn(offer.getCreatedAt()).when(offerMock).getCreatedAt();
-        doReturn(offer.getMessage()).when(offerMock).getMessage();
+        otherOffer = createOffer(ID);
 
-        assertThat(offer).isEqualTo(offerMock);
+        assertThat(offer).isEqualTo(otherOffer);
     }
 
     @Test
     public void canCompareDifferentOffers() {
-        doReturn(offer.getId()).when(offerMock).getId();
-        doReturn(offer.getProductId()).when(offerMock).getProductId();
-        doReturn("Different username").when(offerMock).getUsername();
-        doReturn(offer.getAmount()).when(offerMock).getAmount();
-        doReturn(offer.getCreatedAt()).when(offerMock).getCreatedAt();
-        doReturn(offer.getMessage()).when(offerMock).getMessage();
+        otherOffer = createOffer(OTHER_ID);
 
-        assertThat(offer).isNotEqualTo(offerMock);
+        assertThat(offer).isNotEqualTo(otherOffer);
     }
 }

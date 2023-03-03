@@ -2,46 +2,52 @@ package ulaval.glo2003.domain.offer;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import jakarta.ws.rs.NotFoundException;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 class InMemoryOfferRepositoryTest {
+    public static final String ID = "1";
     private static final String PRODUCT_ID = "PRODUCT";
-    public static final String USERNAME = "Alice";
-    public static final double AMOUNT = 100d;
-    public static final String MESSAGE =
-            "one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen";
 
     private InMemoryOfferRepository repository;
-    private Offer offer;
+    @Mock
+    private Offer offerStub = mock(Offer.class);
 
     @BeforeEach
     public void setUp() {
         repository = new InMemoryOfferRepository();
-        offer = createOffer();
+
+        when(offerStub.getId()).thenReturn(ID);
+        when(offerStub.getProductId()).thenReturn(PRODUCT_ID);
     }
 
     @Test
     public void canFindById() {
-        repository.save(offer);
+        repository.save(offerStub);
 
-        Offer foundOffer = repository.findById(offer.getId());
+        Offer foundOffer = repository.findById(offerStub.getId());
 
-        assertThat(foundOffer).isEqualTo(offer);
+        assertThat(foundOffer.getId()).isEqualTo(offerStub.getId());
     }
 
     @Test
     public  void findByIdThrowsWhenIdIsAbsent() {
-        assertThrows(NotFoundException.class, () -> repository.findById(offer.getId()));
+        assertThrows(NotFoundException.class, () -> repository.findById(offerStub.getId()));
     }
 
     @Test
     public void canFindAllByProductId() {
-        repository.save(offer);
-        repository.save(createOffer());
+        Offer otherOfferStub = mock(Offer.class);
+        when(otherOfferStub.getId()).thenReturn("123");
+        when(otherOfferStub.getProductId()).thenReturn(PRODUCT_ID);
+        repository.save(offerStub);
+        repository.save(otherOfferStub);
 
         List<Offer> offers = repository.findAllByProductId(PRODUCT_ID);
 
@@ -57,16 +63,11 @@ class InMemoryOfferRepositoryTest {
 
     @Test
     public  void canSaveWhenOfferAlreadyExists() {
-        repository.save(offer);
+        repository.save(offerStub);
 
-        repository.save(offer);
+        repository.save(offerStub);
 
-        Offer foundOffer = repository.findById(offer.getId());
-        assertThat(foundOffer).isEqualTo(offer);
-    }
-
-    private Offer createOffer() {
-        OfferFactory factory = new OfferFactory();
-        return factory.createOffer(PRODUCT_ID, USERNAME, AMOUNT, MESSAGE);
+        Offer foundOffer = repository.findById(offerStub.getId());
+        assertThat(foundOffer.getId()).isEqualTo(offerStub.getId());
     }
 }
