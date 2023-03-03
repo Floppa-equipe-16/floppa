@@ -11,10 +11,11 @@ public class OfferRequestTest {
     public static final double AMOUNT = 200d;
     public static final String MESSAGE =
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi elementum vestibulum turpis sed egestas.";
-    private final OfferRequest offerRequest = new OfferRequest();
+    private OfferRequest offerRequest;
 
     @BeforeEach
     public void setUp() {
+        offerRequest = new OfferRequest();
         offerRequest.amount = AMOUNT;
         offerRequest.message = MESSAGE;
     }

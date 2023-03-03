@@ -12,10 +12,11 @@ public class ProductRequestTest {
     public static final String DESCRIPTION = "A relatively new Iphone working as good as a new one";
     public static final double SUGGESTED_PRICE = 200d;
     public static final String CATEGORY = "electronics";
-    private final ProductRequest productRequest = new ProductRequest();
+    private ProductRequest productRequest;
 
     @BeforeEach
     public void setUp() {
+        productRequest = new ProductRequest();
         productRequest.title = TITLE;
         productRequest.description = DESCRIPTION;
         productRequest.suggestedPrice = SUGGESTED_PRICE;
