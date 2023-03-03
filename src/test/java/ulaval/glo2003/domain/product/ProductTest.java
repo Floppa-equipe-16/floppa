@@ -24,9 +24,6 @@ public class ProductTest {
     @Mock
     private Offer offerMock = mock(Offer.class);
 
-    @Mock
-    private Product productMock = mock(Product.class);
-
     @BeforeEach
     public void setUp() {
         product = new Product(ID, SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
@@ -52,27 +49,15 @@ public class ProductTest {
 
     @Test
     public void canCompareIdenticalProducts() {
-        doReturn(product.getId()).when(productMock).getId();
-        doReturn(product.getSellerId()).when(productMock).getSellerId();
-        doReturn(product.getTitle()).when(productMock).getTitle();
-        doReturn(product.getDescription()).when(productMock).getDescription();
-        doReturn(product.getSuggestedPrice()).when(productMock).getSuggestedPrice();
-        doReturn(product.getCategory()).when(productMock).getCategory();
-        doReturn(product.getCreatedAt()).when(productMock).getCreatedAt();
+        Product identicalProduct = new Product(ID, SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
 
-        assertThat(product).isEqualTo(productMock);
+        assertThat(product).isEqualTo(identicalProduct);
     }
 
     @Test
     public void canCompareDifferentProducts() {
-        doReturn(product.getId()).when(productMock).getId();
-        doReturn(product.getSellerId()).when(productMock).getSellerId();
-        doReturn("Different title").when(productMock).getTitle();
-        doReturn(product.getDescription()).when(productMock).getDescription();
-        doReturn(product.getSuggestedPrice()).when(productMock).getSuggestedPrice();
-        doReturn(product.getCategory()).when(productMock).getCategory();
-        doReturn(product.getCreatedAt()).when(productMock).getCreatedAt();
+        Product differentProduct = new Product("ABC", SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
 
-        assertThat(product).isNotEqualTo(productMock);
+        assertThat(product).isNotEqualTo(differentProduct);
     }
 }

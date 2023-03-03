@@ -42,7 +42,7 @@ public class Product {
         createdAt = that.getCreatedAt();
 
         offers = new ArrayList<>();
-        that.offers.forEach(offer -> offers.add(new Offer(offer)));
+        that.getOffers().forEach(offer -> offers.add(new Offer(offer)));
     }
 
     public String getSellerId() {

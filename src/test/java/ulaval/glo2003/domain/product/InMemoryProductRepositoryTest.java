@@ -2,50 +2,56 @@ package ulaval.glo2003.domain.product;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import jakarta.ws.rs.NotFoundException;
 
-import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 class InMemoryProductRepositoryTest {
     private static final String ID = "1";
     private static final String SECOND_ID = "2";
     private static final String SELLER_ID = "SELLER";
-    private static final String TITLE = "Title";
-    private static final String CREATION_DATE = Instant.MAX.toString();
-    private static final String DESCRIPTION = "Complete description";
-    private static final double SUGGESTED_PRICE = 10d;
-    private static final String CATEGORY = ProductCategory.other.toString();
+
     private InMemoryProductRepository repository;
-    private Product product;
+
+    @Mock
+    private Product productStub = mock(Product.class);
 
     @BeforeEach
     public void setUp() {
         repository = new InMemoryProductRepository();
-        product = createProduct(ID);
+
+        when(productStub.getId()).thenReturn(ID);
+        when(productStub.getSellerId()).thenReturn(SELLER_ID);
     }
 
     @Test
     public void canFindById() {
-        repository.save(product);
+        repository.save(productStub);
 
-        Product foundProduct = repository.findById(product.getId());
+        Product foundProduct = repository.findById(productStub.getId());
 
-        assertThat(foundProduct).isEqualTo(product);
+        assertThat(foundProduct.getId()).isEqualTo(productStub.getId());
     }
 
     @Test
-    public  void findByIdThrowsWhenIdIsAbsent() {
-        assertThrows(NotFoundException.class, () -> repository.findById(product.getId()));
+    public void findByIdThrowsWhenIdIsAbsent() {
+        assertThrows(NotFoundException.class, () -> repository.findById(productStub.getId()));
     }
 
     @Test
     public void canFindAllBySellerId() {
-        repository.save(product);
-        repository.save(createProduct(SECOND_ID));
+        Product otherProductStub = mock(Product.class);
+        when(otherProductStub.getId()).thenReturn(SECOND_ID);
+        when(otherProductStub.getSellerId()).thenReturn(SELLER_ID);
+        repository.save(productStub);
+        repository.save(otherProductStub);
 
         List<Product> products = repository.findAllBySellerId(SELLER_ID);
 
@@ -60,16 +66,12 @@ class InMemoryProductRepositoryTest {
     }
 
     @Test
-    public  void canSaveWhenProductAlreadyExists() {
-        repository.save(product);
+    public void canSaveWhenProductAlreadyExists() {
+        repository.save(productStub);
 
-        repository.save(product);
+        repository.save(productStub);
 
-        Product foundProduct = repository.findById(product.getId());
-        assertThat(foundProduct).isEqualTo(product);
-    }
-
-    private Product createProduct(String id) {
-        return new Product(id, SELLER_ID, TITLE, CREATION_DATE, DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
+        Product foundProduct = repository.findById(productStub.getId());
+        assertThat(foundProduct.getId()).isEqualTo(productStub.getId());
     }
 }

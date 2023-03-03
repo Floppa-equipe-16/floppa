@@ -35,7 +35,7 @@ public class Seller {
         createdAt = that.getCreatedAt();
 
         productsMap = new HashMap<>();
-        that.productsMap.forEach((s, product) -> productsMap.put(s, new Product(product)));
+        that.getProducts().forEach((s, product) -> productsMap.put(s, new Product(product)));
     }
 
     public String getId() {
