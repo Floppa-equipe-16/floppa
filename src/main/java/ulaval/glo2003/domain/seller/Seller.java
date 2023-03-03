@@ -1,6 +1,5 @@
 package ulaval.glo2003.domain.seller;
 
-import java.time.Instant;
 import java.util.*;
 import ulaval.glo2003.domain.product.Product;
 
@@ -14,7 +13,8 @@ public class Seller {
     private final String createdAt;
     private final Map<String, Product> productsMap;
 
-    public Seller(String id, String name, String createdAt, String birthdate, String email, String phoneNumber, String bio) {
+    public Seller(
+            String id, String name, String createdAt, String birthdate, String email, String phoneNumber, String bio) {
         this.id = id;
         this.name = name;
         this.createdAt = createdAt;
@@ -80,8 +80,8 @@ public class Seller {
 
     @Override
     public boolean equals(Object obj) {
-        if(this == obj) return true;
-        if(obj == null || getClass() != obj.getClass()) return false;
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
         Seller that = (Seller) obj;
         return id.equals(that.getId())

@@ -6,7 +6,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
@@ -25,7 +24,9 @@ public class OfferValidatorTest {
             InvalidParamException thrownInvalidMessage =
                     assertThrows(InvalidParamException.class, () -> OfferValidator.validateParam(offerStub));
 
-            assertThat(thrownInvalidMessage.errorDescription.description).ignoringCase().contains("message");
+            assertThat(thrownInvalidMessage.errorDescription.description)
+                    .ignoringCase()
+                    .contains("message");
         }
     }
 

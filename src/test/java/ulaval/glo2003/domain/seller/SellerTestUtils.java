@@ -1,8 +1,7 @@
 package ulaval.glo2003.domain.seller;
 
-import ulaval.glo2003.api.seller.SellerRequest;
-
 import java.time.Instant;
+import ulaval.glo2003.api.seller.SellerRequest;
 
 public class SellerTestUtils {
     private static final String ID = "1";
@@ -26,5 +25,4 @@ public class SellerTestUtils {
 
         return request;
     }
-
 }

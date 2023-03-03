@@ -25,6 +25,7 @@ public class SellingServiceFactory {
         ProductMapper productMapper = new ProductMapper(productFactory, offerMapper);
         SellerMapper sellerMapper = new SellerMapper(sellerFactory, productMapper);
 
-        return new SellingService(sellerRepository, productRepository, offerRepository, sellerMapper, productMapper, offerMapper);
+        return new SellingService(
+                sellerRepository, productRepository, offerRepository, sellerMapper, productMapper, offerMapper);
     }
 }

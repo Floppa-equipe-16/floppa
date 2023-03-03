@@ -18,8 +18,10 @@ class SellerMapperTest {
 
     @Mock
     private ProductMapper productMapper = mock(ProductMapper.class);
+
     @Mock
     private SellerFactory factory = mock(SellerFactory.class);
+
     private SellerMapper mapper;
 
     @BeforeEach
@@ -30,7 +32,9 @@ class SellerMapperTest {
     @Test
     public void canMapRequestToSeller() {
         SellerRequest request = SellerTestUtils.createSellerRequest();
-        doReturn(SellerTestUtils.createSeller()).when(factory).createSeller(request.name, request.birthdate, request.email, request.phoneNumber, request.bio);
+        doReturn(SellerTestUtils.createSeller())
+                .when(factory)
+                .createSeller(request.name, request.birthdate, request.email, request.phoneNumber, request.bio);
 
         Seller seller = mapper.requestToSeller(request);
 

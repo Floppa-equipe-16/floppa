@@ -1,13 +1,10 @@
 package ulaval.glo2003.domain.offer;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class OfferTest {
     private static final String ID = "1";

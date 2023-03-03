@@ -16,6 +16,7 @@ class InMemoryOfferRepositoryTest {
     private static final String PRODUCT_ID = "PRODUCT";
 
     private InMemoryOfferRepository repository;
+
     @Mock
     private Offer offerStub = mock(Offer.class);
 
@@ -37,7 +38,7 @@ class InMemoryOfferRepositoryTest {
     }
 
     @Test
-    public  void findByIdThrowsWhenIdIsAbsent() {
+    public void findByIdThrowsWhenIdIsAbsent() {
         assertThrows(NotFoundException.class, () -> repository.findById(offerStub.getId()));
     }
 
@@ -62,7 +63,7 @@ class InMemoryOfferRepositoryTest {
     }
 
     @Test
-    public  void canSaveWhenOfferAlreadyExists() {
+    public void canSaveWhenOfferAlreadyExists() {
         repository.save(offerStub);
 
         repository.save(offerStub);

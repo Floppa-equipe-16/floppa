@@ -2,7 +2,6 @@ package ulaval.glo2003.service;
 
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
-import ulaval.glo2003.domain.product.ProductFactory;
 import ulaval.glo2003.domain.seller.Seller;
 import ulaval.glo2003.domain.seller.SellerFactory;
 

@@ -12,13 +12,13 @@ class InMemorySellerRepositoryTest {
     private Seller seller;
 
     @BeforeEach
-    public  void setUp() {
+    public void setUp() {
         repository = new InMemorySellerRepository();
         seller = SellerTestUtils.createSeller();
     }
 
     @Test
-    public  void canFindById() {
+    public void canFindById() {
         repository.save(seller);
 
         Seller foundSeller = repository.findById(seller.getId());
@@ -27,12 +27,12 @@ class InMemorySellerRepositoryTest {
     }
 
     @Test
-    public  void findByIdThrowsWhenIdIsAbsent() {
+    public void findByIdThrowsWhenIdIsAbsent() {
         assertThrows(NotFoundException.class, () -> repository.findById(seller.getId()));
     }
 
     @Test
-    public  void canSaveWhenSellerAlreadyExists() {
+    public void canSaveWhenSellerAlreadyExists() {
         repository.save(seller);
 
         repository.save(seller);

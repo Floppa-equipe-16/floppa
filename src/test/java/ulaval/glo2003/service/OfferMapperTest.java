@@ -6,8 +6,6 @@ import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -27,11 +25,12 @@ class OfferMapperTest {
 
     @Mock
     private OfferFactory factory = mock(OfferFactory.class);
+
     private OfferMapper mapper;
     private List<Offer> offers;
 
     @BeforeEach
-    public  void setUp() {
+    public void setUp() {
         mapper = new OfferMapper(factory);
         offers = new ArrayList<>();
         offers.add(new Offer("1", PRODUCT_ID, BUYER_NAME, LOWEST_AMOUNT, DESCRIPTION, CREATION_DATE));
@@ -60,7 +59,7 @@ class OfferMapperTest {
     }
 
     @Test
-    public  void canCreateSummaryResponseWithMultipleOffers() {
+    public void canCreateSummaryResponseWithMultipleOffers() {
         OfferCollectionResponse response = mapper.offersToSummaryCollectionResponse(offers);
 
         assertThat(response.count).isEqualTo(2);
@@ -69,7 +68,7 @@ class OfferMapperTest {
     }
 
     @Test
-    public  void createSummaryResponseIsEmptyWithNoOffer() {
+    public void createSummaryResponseIsEmptyWithNoOffer() {
         OfferCollectionResponse response = mapper.offersToSummaryCollectionResponse(new ArrayList<>());
 
         assertThat(response.count).isEqualTo(0);
@@ -84,7 +83,7 @@ class OfferMapperTest {
     }
 
     @Test
-    public  void canCreateCompleteResponseWithMultipleOffers() {
+    public void canCreateCompleteResponseWithMultipleOffers() {
         OfferCollectionResponse response = mapper.offersToCompleteCollectionResponse(offers);
 
         assertThat(response.count).isEqualTo(2);
@@ -95,7 +94,7 @@ class OfferMapperTest {
     }
 
     @Test
-    public  void createCompleteResponseIsEmptyWithNoOffer() {
+    public void createCompleteResponseIsEmptyWithNoOffer() {
         OfferCollectionResponse response = mapper.offersToCompleteCollectionResponse(new ArrayList<>());
 
         assertThat(response.count).isEqualTo(0);

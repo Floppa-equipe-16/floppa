@@ -20,7 +20,12 @@ public class ProductMapper {
     }
 
     public Product requestToProduct(String sellerId, ProductRequest productRequest) {
-        return factory.createProduct(sellerId, productRequest.title, productRequest.description, productRequest.suggestedPrice, productRequest.category);
+        return factory.createProduct(
+                sellerId,
+                productRequest.title,
+                productRequest.description,
+                productRequest.suggestedPrice,
+                productRequest.category);
     }
 
     public ProductResponse productToResponse(Product product) {
@@ -59,8 +64,6 @@ public class ProductMapper {
     }
 
     public List<ProductResponse> productsMapToResponsesList(Map<String, Product> productsMap) {
-        return productsMap.values().stream()
-                .map(this::productToResponse)
-                .collect(Collectors.toList());
+        return productsMap.values().stream().map(this::productToResponse).collect(Collectors.toList());
     }
 }

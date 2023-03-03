@@ -7,7 +7,6 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,11 +31,12 @@ class ProductMapperTest {
     private static final double SUGGESTED_PRICE = 20d;
     private static final String CATEGORY = ProductCategory.other.toString();
 
-
     @Mock
     private OfferMapper offerMapper = mock(OfferMapper.class);
+
     @Mock
     private ProductFactory factory = mock(ProductFactory.class);
+
     private ProductMapper mapper;
     private Product product;
 

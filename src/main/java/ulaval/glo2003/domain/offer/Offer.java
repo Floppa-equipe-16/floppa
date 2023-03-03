@@ -1,8 +1,5 @@
 package ulaval.glo2003.domain.offer;
 
-import java.time.Instant;
-import java.util.UUID;
-
 public class Offer {
     private final String id;
     private final String productId;
@@ -55,8 +52,8 @@ public class Offer {
 
     @Override
     public boolean equals(Object obj) {
-        if(this == obj) return true;
-        if(obj == null || getClass() != obj.getClass()) return false;
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
         Offer that = (Offer) obj;
 
