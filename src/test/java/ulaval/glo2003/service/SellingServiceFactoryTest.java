@@ -10,8 +10,8 @@ class SellingServiceFactoryTest {
     public void canCreate() {
         SellingServiceFactory factory = new SellingServiceFactory();
 
-        SellingService manager = factory.create();
+        SellingService service = factory.create();
 
-        assertThat(manager).isNotNull();
+        assertThat(service).isNotNull();
     }
 }

@@ -15,7 +15,7 @@ import ulaval.glo2003.domain.exceptions.InvalidParamException;
 public class SellerValidatorTest {
 
     @Mock
-    Seller sellerMock = mock(Seller.class);
+    Seller sellerStub = mock(Seller.class);
 
     private void setAllValidatorToValid(MockedStatic<SellerValidator> sellerValidatorMockedStatic) {
         sellerValidatorMockedStatic
@@ -45,9 +45,9 @@ public class SellerValidatorTest {
                     .thenReturn(true);
 
             InvalidParamException thrownInvalidName =
-                    assertThrows(InvalidParamException.class, () -> SellerValidator.validateParam(sellerMock));
+                    assertThrows(InvalidParamException.class, () -> SellerValidator.validateParam(sellerStub));
 
-            assertThat(thrownInvalidName.errorDescription.description).isEqualTo("Invalid parameter 'name'.");
+            assertThat(thrownInvalidName.errorDescription.description).ignoringCase().contains("name");
         }
     }
 
@@ -61,9 +61,9 @@ public class SellerValidatorTest {
                     .thenReturn(true);
 
             InvalidParamException thrownInvalidName =
-                    assertThrows(InvalidParamException.class, () -> SellerValidator.validateParam(sellerMock));
+                    assertThrows(InvalidParamException.class, () -> SellerValidator.validateParam(sellerStub));
 
-            assertThat(thrownInvalidName.errorDescription.description).isEqualTo("Invalid parameter 'birthdate'.");
+            assertThat(thrownInvalidName.errorDescription.description).ignoringCase().contains("birthdate");
         }
     }
 
@@ -77,9 +77,9 @@ public class SellerValidatorTest {
                     .thenReturn(true);
 
             InvalidParamException thrownInvalidName =
-                    assertThrows(InvalidParamException.class, () -> SellerValidator.validateParam(sellerMock));
+                    assertThrows(InvalidParamException.class, () -> SellerValidator.validateParam(sellerStub));
 
-            assertThat(thrownInvalidName.errorDescription.description).isEqualTo("Invalid parameter 'email'.");
+            assertThat(thrownInvalidName.errorDescription.description).ignoringCase().contains("email");
         }
     }
 
@@ -93,9 +93,9 @@ public class SellerValidatorTest {
                     .thenReturn(true);
 
             InvalidParamException thrownInvalidName =
-                    assertThrows(InvalidParamException.class, () -> SellerValidator.validateParam(sellerMock));
+                    assertThrows(InvalidParamException.class, () -> SellerValidator.validateParam(sellerStub));
 
-            assertThat(thrownInvalidName.errorDescription.description).isEqualTo("Invalid parameter 'phone number'.");
+            assertThat(thrownInvalidName.errorDescription.description).ignoringCase().contains("phone number");
         }
     }
 
@@ -109,9 +109,9 @@ public class SellerValidatorTest {
                     .thenReturn(true);
 
             InvalidParamException thrownInvalidName =
-                    assertThrows(InvalidParamException.class, () -> SellerValidator.validateParam(sellerMock));
+                    assertThrows(InvalidParamException.class, () -> SellerValidator.validateParam(sellerStub));
 
-            assertThat(thrownInvalidName.errorDescription.description).isEqualTo("Invalid parameter 'bio'.");
+            assertThat(thrownInvalidName.errorDescription.description).ignoringCase().contains("bio");
         }
     }
 

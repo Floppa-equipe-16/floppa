@@ -3,6 +3,7 @@ package ulaval.glo2003.domain.seller;
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.*;
 
+import java.time.Instant;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,16 +15,13 @@ public class SellerTest {
     private Seller seller;
 
     @Mock
-    Product productMock = mock(Product.class);
-
-    @Mock
-    Seller sellerMock = mock(Seller.class);
+    Product productStub = mock(Product.class);
 
     @BeforeEach
     public void setUp() {
         seller = SellerTestUtils.createSeller();
 
-        doReturn("id-test").when(productMock).getId();
+        doReturn("id-test").when(productStub).getId();
     }
 
     @Test
@@ -35,8 +33,8 @@ public class SellerTest {
 
     @Test
     public void canAddProduct() {
-        seller.addProduct(productMock);
-        Optional<Product> product = Optional.ofNullable(seller.getProductById(productMock.getId()));
+        seller.addProduct(productStub);
+        Optional<Product> product = Optional.ofNullable(seller.getProductById(productStub.getId()));
 
         assertThat(seller.getProducts().size()).isEqualTo(1);
         assertThat(product.isPresent()).isTrue();
@@ -44,35 +42,23 @@ public class SellerTest {
 
     @Test
     public void addProductOnlyAddsOnceWithDuplicate() {
-        seller.addProduct(productMock);
-        seller.addProduct(productMock);
+        seller.addProduct(productStub);
+        seller.addProduct(productStub);
 
         assertThat(seller.getProducts().size()).isEqualTo(1);
     }
 
     @Test
     public void canCompareIdenticalSellers() {
-        doReturn(seller.getId()).when(sellerMock).getId();
-        doReturn(seller.getName()).when(sellerMock).getName();
-        doReturn(seller.getBirthdate()).when(sellerMock).getBirthdate();
-        doReturn(seller.getEmail()).when(sellerMock).getEmail();
-        doReturn(seller.getPhoneNumber()).when(sellerMock).getPhoneNumber();
-        doReturn(seller.getBio()).when(sellerMock).getBio();
-        doReturn(seller.getCreatedAt()).when(sellerMock).getCreatedAt();
+        Seller identicalSeller = SellerTestUtils.createSeller();
 
-        assertThat(seller).isEqualTo(sellerMock);
+        assertThat(seller).isEqualTo(identicalSeller);
     }
 
     @Test
     public void canCompareDifferentSellers() {
-        doReturn(seller.getId()).when(sellerMock).getId();
-        doReturn("Different name").when(sellerMock).getName();
-        doReturn(seller.getBirthdate()).when(sellerMock).getBirthdate();
-        doReturn(seller.getEmail()).when(sellerMock).getEmail();
-        doReturn(seller.getPhoneNumber()).when(sellerMock).getPhoneNumber();
-        doReturn(seller.getBio()).when(sellerMock).getBio();
-        doReturn(seller.getCreatedAt()).when(sellerMock).getCreatedAt();
+        Seller differentSeller = new Seller("ID", "Gertrude", Instant.MIN.toString(), "1010-10-10", "Gertrude@email.com", "11231231234", "Not");
 
-        assertThat(seller).isNotEqualTo(sellerMock);
+        assertThat(seller).isNotEqualTo(differentSeller);
     }
 }
