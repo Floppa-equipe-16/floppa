@@ -47,7 +47,9 @@ public class SellerValidatorTest {
             InvalidParamException thrownInvalidName =
                     assertThrows(InvalidParamException.class, () -> SellerValidator.validateParam(sellerStub));
 
-            assertThat(thrownInvalidName.errorDescription.description).ignoringCase().contains("name");
+            assertThat(thrownInvalidName.errorDescription.description)
+                    .ignoringCase()
+                    .contains("name");
         }
     }
 
@@ -63,7 +65,9 @@ public class SellerValidatorTest {
             InvalidParamException thrownInvalidName =
                     assertThrows(InvalidParamException.class, () -> SellerValidator.validateParam(sellerStub));
 
-            assertThat(thrownInvalidName.errorDescription.description).ignoringCase().contains("birthdate");
+            assertThat(thrownInvalidName.errorDescription.description)
+                    .ignoringCase()
+                    .contains("birthdate");
         }
     }
 
@@ -79,7 +83,9 @@ public class SellerValidatorTest {
             InvalidParamException thrownInvalidName =
                     assertThrows(InvalidParamException.class, () -> SellerValidator.validateParam(sellerStub));
 
-            assertThat(thrownInvalidName.errorDescription.description).ignoringCase().contains("email");
+            assertThat(thrownInvalidName.errorDescription.description)
+                    .ignoringCase()
+                    .contains("email");
         }
     }
 
@@ -95,7 +101,9 @@ public class SellerValidatorTest {
             InvalidParamException thrownInvalidName =
                     assertThrows(InvalidParamException.class, () -> SellerValidator.validateParam(sellerStub));
 
-            assertThat(thrownInvalidName.errorDescription.description).ignoringCase().contains("phone number");
+            assertThat(thrownInvalidName.errorDescription.description)
+                    .ignoringCase()
+                    .contains("phone number");
         }
     }
 
@@ -111,7 +119,9 @@ public class SellerValidatorTest {
             InvalidParamException thrownInvalidName =
                     assertThrows(InvalidParamException.class, () -> SellerValidator.validateParam(sellerStub));
 
-            assertThat(thrownInvalidName.errorDescription.description).ignoringCase().contains("bio");
+            assertThat(thrownInvalidName.errorDescription.description)
+                    .ignoringCase()
+                    .contains("bio");
         }
     }
 
@@ -228,10 +238,9 @@ public class SellerValidatorTest {
         String invalidDate = "August 25, 2032";
 
         try (MockedStatic<OffsetDateTime> offsetDateTimeMockedStatic =
-                     Mockito.mockStatic(OffsetDateTime.class, Mockito.CALLS_REAL_METHODS)) {
+                Mockito.mockStatic(OffsetDateTime.class, Mockito.CALLS_REAL_METHODS)) {
             offsetDateTimeMockedStatic.when(OffsetDateTime::now).thenReturn(fixedDateTime);
             assertFalse(SellerValidator.isOldEnough(invalidDate));
         }
-
     }
 }

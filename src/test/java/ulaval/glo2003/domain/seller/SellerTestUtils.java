@@ -1,10 +1,10 @@
 package ulaval.glo2003.domain.seller;
 
-import java.time.Instant;
-import ulaval.glo2003.api.seller.SellerRequest;
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import java.time.Instant;
+import ulaval.glo2003.api.seller.SellerRequest;
 
 public class SellerTestUtils {
     private static final String ID = "1";

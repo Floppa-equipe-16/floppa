@@ -1,17 +1,17 @@
 package ulaval.glo2003.domain.seller;
 
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
-
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class SellerFactoryTest {
 
     private SellerFactory factory;
 
-    //TODO: Besoin de dependency injection pour la validation?
+    // TODO: Besoin de dependency injection pour la validation?
     @BeforeEach
     public void setUp() {
         factory = new SellerFactory();
@@ -34,5 +34,4 @@ class SellerFactoryTest {
     public void createSellerThrowsWhenArgsAreEmpty() {
         assertThrows(InvalidParamException.class, () -> factory.createSeller("", "", "", "", ""));
     }
-
 }

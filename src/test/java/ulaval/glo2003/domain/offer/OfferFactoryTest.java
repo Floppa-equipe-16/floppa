@@ -1,16 +1,17 @@
 package ulaval.glo2003.domain.offer;
 
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
 
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-
 class OfferFactoryTest {
     private static final String PRODUCT_ID = "Pid";
     private static final String USERNAME = "Bob";
-    private static final String MESSAGE = "123456789-123456789-123456798-123456789-123456789-123456789-123456789-123456789-123456789-123456789-";
+    private static final String MESSAGE =
+            "123456789-123456789-123456798-123456789-123456789-123456789-123456789-123456789-123456789-123456789-";
 
     private OfferFactory factory;
 

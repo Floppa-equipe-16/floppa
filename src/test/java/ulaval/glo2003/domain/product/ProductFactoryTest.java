@@ -1,18 +1,17 @@
 package ulaval.glo2003.domain.product;
 
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
-
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ProductFactoryTest {
     private static final String SELLER_ID = "Sid";
     private static final String TITLE = "Product";
     private static final String DESCRIPTION = "description of the product";
     private static final String CATEGORY = ProductCategory.other.toString();
-
 
     private ProductFactory factory;
 

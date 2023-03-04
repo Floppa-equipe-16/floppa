@@ -30,8 +30,10 @@ class ProductMapperTest {
 
     @Mock
     private OfferMapper offerMapper = mock(OfferMapper.class);
+
     @Mock
     private ProductFactory factory = mock(ProductFactory.class);
+
     @Mock
     private Product productStub = mock(Product.class);
 

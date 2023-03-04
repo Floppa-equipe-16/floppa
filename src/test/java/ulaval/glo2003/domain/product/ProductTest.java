@@ -49,14 +49,16 @@ public class ProductTest {
 
     @Test
     public void canCompareIdenticalProducts() {
-        Product identicalProduct = new Product(ID, SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
+        Product identicalProduct =
+                new Product(ID, SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
 
         assertThat(product).isEqualTo(identicalProduct);
     }
 
     @Test
     public void canCompareDifferentProducts() {
-        Product differentProduct = new Product("ABC", SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
+        Product differentProduct =
+                new Product("ABC", SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
 
         assertThat(product).isNotEqualTo(differentProduct);
     }
