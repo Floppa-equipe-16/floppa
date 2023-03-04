@@ -221,4 +221,17 @@ public class SellerValidatorTest {
             assertTrue(SellerValidator.isOldEnough(validDate1));
         }
     }
+
+    @Test
+    public void isOldEnoughReturnsFalseWhenFormatIsInvalid() {
+        OffsetDateTime fixedDateTime = OffsetDateTime.of(2018, 1, 2, 2, 0, 0, 0, ZoneOffset.ofHours(3));
+        String invalidDate = "August 25, 2032";
+
+        try (MockedStatic<OffsetDateTime> offsetDateTimeMockedStatic =
+                     Mockito.mockStatic(OffsetDateTime.class, Mockito.CALLS_REAL_METHODS)) {
+            offsetDateTimeMockedStatic.when(OffsetDateTime::now).thenReturn(fixedDateTime);
+            assertFalse(SellerValidator.isOldEnough(invalidDate));
+        }
+
+    }
 }

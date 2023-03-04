@@ -117,7 +117,7 @@ public class SellingService {
     }
 
     private List<Product> getProductsWithOffers(ProductFilter productFilter) {
-        List<Product> products = productRepository.findAllProducts(productFilter);
+        List<Product> products = productRepository.findAll(productFilter);
         products.forEach(this::addOffersToProduct);
 
         return products;

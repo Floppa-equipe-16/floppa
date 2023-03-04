@@ -7,8 +7,9 @@ import static org.mockito.Mockito.when;
 
 import jakarta.ws.rs.NotFoundException;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -21,14 +22,13 @@ class InMemoryProductRepositoryTest {
     private InMemoryProductRepository repository;
 
     @Mock
-    private Product productStub = mock(Product.class);
+    private Product productStub;
 
     @BeforeEach
     public void setUp() {
         repository = new InMemoryProductRepository();
 
-        when(productStub.getId()).thenReturn(ID);
-        when(productStub.getSellerId()).thenReturn(SELLER_ID);
+        productStub = createProductStub(ID, SELLER_ID);
     }
 
     @Test
@@ -46,10 +46,66 @@ class InMemoryProductRepositoryTest {
     }
 
     @Test
+    public void canFindAllWhenFilterIsEmpty() {
+        Product otherProductStub = createProductStub(SECOND_ID, SELLER_ID);
+        repository.save(productStub);
+        repository.save(otherProductStub);
+
+        List<Product> products = repository.findAll(createEmptyProductFilterStub());
+
+        assertThat(products.size()).isEqualTo(2);
+    }
+
+    @Test
+    public void findAllReturnsEmptyWhenNoProduct() {
+        List<Product> products = repository.findAll(createEmptyProductFilterStub());
+
+        assertThat(products).isEmpty();
+    }
+
+    @Test
+    public void findAllReturnsOnlyMatchingSellerIDProduct() {
+        Product otherProductStub = createProductStub(SECOND_ID, "WRONG");
+        repository.save(productStub);
+        repository.save(otherProductStub);
+
+        ProductFilter filter = createEmptyProductFilterStub();
+        when(filter.getSellerId()).thenReturn(SELLER_ID);
+
+        List<Product> products = repository.findAll(filter);
+
+        assertThat(products.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void findAllReturnsOnlyPriceInRangeProduct() {
+        Product otherProductStub = createProductStub(SECOND_ID, SELLER_ID);
+        when(otherProductStub.getSuggestedPrice()).thenReturn(10000d);
+        repository.save(productStub);
+        repository.save(otherProductStub);
+
+        ProductFilter filter = createEmptyProductFilterStub();
+        when(filter.getMinPrice()).thenReturn(1d);
+        when(filter.getMaxPrice()).thenReturn(100d);
+
+        List<Product> products = repository.findAll(filter);
+
+        assertThat(products.size()).isEqualTo(1);
+    }
+
+    private ProductFilter createEmptyProductFilterStub() {
+        ProductFilter productFilter = mock(ProductFilter.class);
+        when(productFilter.getSellerId()).thenReturn("");
+        when(productFilter.getTitle()).thenReturn("");
+        when(productFilter.getCategory()).thenReturn("");
+        when(productFilter.getMinPrice()).thenReturn(0d);
+        when(productFilter.getMaxPrice()).thenReturn(Double.MAX_VALUE);
+        return productFilter;
+    }
+
+    @Test
     public void canFindAllBySellerId() {
-        Product otherProductStub = mock(Product.class);
-        when(otherProductStub.getId()).thenReturn(SECOND_ID);
-        when(otherProductStub.getSellerId()).thenReturn(SELLER_ID);
+        Product otherProductStub = createProductStub(SECOND_ID, SELLER_ID);
         repository.save(productStub);
         repository.save(otherProductStub);
 
@@ -59,7 +115,7 @@ class InMemoryProductRepositoryTest {
     }
 
     @Test
-    public void findAllBySellerIdReturnEmptyListWhenNoProducts() {
+    public void findAllBySellerIdReturnsEmptyListWhenNoProduct() {
         List<Product> products = repository.findAllBySellerId(SELLER_ID);
 
         assertThat(products).isEmpty();
@@ -73,5 +129,15 @@ class InMemoryProductRepositoryTest {
 
         Product foundProduct = repository.findById(productStub.getId());
         assertThat(foundProduct.getId()).isEqualTo(productStub.getId());
+    }
+
+    private Product createProductStub(String id, String sellerId) {
+        Product stub = mock(Product.class);
+        when(stub.getId()).thenReturn(id);
+        when(stub.getSellerId()).thenReturn(sellerId);
+        when(stub.getTitle()).thenReturn("title");
+        when(stub.getSuggestedPrice()).thenReturn(10d);
+        when(stub.getCategory()).thenReturn(ProductCategory.other.toString());
+        return stub;
     }
 }
