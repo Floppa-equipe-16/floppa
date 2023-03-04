@@ -1,8 +1,7 @@
 package ulaval.glo2003.service;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,27 +18,37 @@ class OfferMapperTest {
     private static final String BUYER_NAME = "Bob";
     private static final Double HIGHEST_AMOUNT = 64.50d;
     private static final Double LOWEST_AMOUNT = 35.50d;
-    private static final String DESCRIPTION =
+    private static final String MESSAGE =
             "This is a description of at least a hundred characters. Let me count them: one, two, three, four, five.";
-    private static final String CREATION_DATE = "";
 
     @Mock
     private OfferFactory factory = mock(OfferFactory.class);
 
     private OfferMapper mapper;
-    private List<Offer> offers;
+    private List<Offer> offerStubs;
 
     @BeforeEach
     public void setUp() {
         mapper = new OfferMapper(factory);
-        offers = new ArrayList<>();
-        offers.add(new Offer("1", PRODUCT_ID, BUYER_NAME, LOWEST_AMOUNT, DESCRIPTION, CREATION_DATE));
-        offers.add(new Offer("2", PRODUCT_ID, "Alice", HIGHEST_AMOUNT, DESCRIPTION, CREATION_DATE));
+        offerStubs = new ArrayList<>();
+        offerStubs.add(createOfferMock("1", LOWEST_AMOUNT));
+        offerStubs.add(createOfferMock("2", HIGHEST_AMOUNT));
+    }
+
+    private Offer createOfferMock(String id, double amount) {
+        Offer offer = mock(Offer.class);
+        when(offer.getId()).thenReturn(id);
+        when(offer.getProductId()).thenReturn(PRODUCT_ID);
+        when(offer.getUsername()).thenReturn(BUYER_NAME);
+        when(offer.getAmount()).thenReturn(amount);
+        when(offer.getMessage()).thenReturn(MESSAGE);
+
+        return offer;
     }
 
     @Test
     public void canMapRequestToOffer() {
-        doReturn(offers.get(0)).when(factory).createOffer(PRODUCT_ID, BUYER_NAME, LOWEST_AMOUNT, DESCRIPTION);
+        doReturn(offerStubs.get(0)).when(factory).createOffer(PRODUCT_ID, BUYER_NAME, LOWEST_AMOUNT, MESSAGE);
         OfferRequest request = createRequest();
 
         Offer offer = mapper.requestToOffer(PRODUCT_ID, BUYER_NAME, request);
@@ -53,14 +62,14 @@ class OfferMapperTest {
     private OfferRequest createRequest() {
         OfferRequest request = new OfferRequest();
         request.amount = LOWEST_AMOUNT;
-        request.message = DESCRIPTION;
+        request.message = MESSAGE;
 
         return request;
     }
 
     @Test
     public void canCreateSummaryResponseWithMultipleOffers() {
-        OfferCollectionResponse response = mapper.offersToSummaryCollectionResponse(offers);
+        OfferCollectionResponse response = mapper.offersToSummaryCollectionResponse(offerStubs);
 
         assertThat(response.count).isEqualTo(2);
         assertThat(response.avgAmount).isEqualTo(50d);
@@ -84,7 +93,7 @@ class OfferMapperTest {
 
     @Test
     public void canCreateCompleteResponseWithMultipleOffers() {
-        OfferCollectionResponse response = mapper.offersToCompleteCollectionResponse(offers);
+        OfferCollectionResponse response = mapper.offersToCompleteCollectionResponse(offerStubs);
 
         assertThat(response.count).isEqualTo(2);
         assertThat(response.avgAmount).isEqualTo(50d);

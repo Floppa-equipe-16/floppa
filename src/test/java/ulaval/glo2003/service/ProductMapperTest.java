@@ -1,12 +1,9 @@
 package ulaval.glo2003.service;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
-import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,23 +30,28 @@ class ProductMapperTest {
 
     @Mock
     private OfferMapper offerMapper = mock(OfferMapper.class);
-
     @Mock
     private ProductFactory factory = mock(ProductFactory.class);
+    @Mock
+    private Product productStub = mock(Product.class);
 
     private ProductMapper mapper;
-    private Product product;
 
     @BeforeEach
     public void setUp() {
         mapper = new ProductMapper(factory, offerMapper);
 
-        product = new Product(ID, SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
+        when(productStub.getId()).thenReturn(ID);
+        when(productStub.getSellerId()).thenReturn(SELLER_ID);
+        when(productStub.getTitle()).thenReturn(TITLE);
+        when(productStub.getDescription()).thenReturn(DESCRIPTION);
+        when(productStub.getSuggestedPrice()).thenReturn(SUGGESTED_PRICE);
+        when(productStub.getCategory()).thenReturn(CATEGORY);
     }
 
     @Test
     public void canMapRequestToProduct() {
-        doReturn(product).when(factory).createProduct(SELLER_ID, TITLE, DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
+        doReturn(productStub).when(factory).createProduct(SELLER_ID, TITLE, DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
         ProductRequest request = createRequest();
 
         Product product = mapper.requestToProduct(SELLER_ID, request);
@@ -73,9 +75,9 @@ class ProductMapperTest {
     public void canMapProductToResponse() {
         doReturn(new OfferCollectionResponse()).when(offerMapper).offersToCompleteCollectionResponse(any());
 
-        ProductResponse response = mapper.productToResponse(product);
+        ProductResponse response = mapper.productToResponse(productStub);
 
-        assertFieldsAreEqual(response, product);
+        assertFieldsAreEqual(response, productStub);
         assertThat(response.offers).isNotNull();
         assertThat(response.seller).isNull();
     }
@@ -85,20 +87,20 @@ class ProductMapperTest {
         doReturn(new OfferCollectionResponse()).when(offerMapper).offersToCompleteCollectionResponse(any());
 
         ProductCollectionResponse response =
-                mapper.productsToCollectionResponse(List.of(mapper.productToResponse(product)));
+                mapper.productsToCollectionResponse(List.of(mapper.productToResponse(productStub)));
 
-        assertFieldsAreEqual(response.products.get(0), product);
+        assertFieldsAreEqual(response.products.get(0), productStub);
         assertThat(response.products.get(0).offers).isNotNull();
         assertThat(response.products.get(0).seller).isNull();
     }
 
     @Test
     public void canMapProductToResponseWithSeller() {
-        Seller seller = SellerTestUtils.createSeller();
+        Seller seller = SellerTestUtils.createSellerStub();
 
-        ProductResponse response = mapper.productToResponseWithSeller(product, seller);
+        ProductResponse response = mapper.productToResponseWithSeller(productStub, seller);
 
-        assertFieldsAreEqual(response, product);
+        assertFieldsAreEqual(response, productStub);
         assertThat(response.seller).isNotNull();
     }
 
@@ -114,8 +116,8 @@ class ProductMapperTest {
     @Test
     public void canMapProductsMapToResponsesList() {
         Map<String, Product> products = new HashMap<>();
-        products.put("1", product);
-        products.put("2", product);
+        products.put("1", productStub);
+        products.put("2", productStub);
 
         List<ProductResponse> responses = mapper.productsMapToResponsesList(products);
 
