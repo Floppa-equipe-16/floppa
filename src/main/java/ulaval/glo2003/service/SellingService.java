@@ -99,6 +99,13 @@ public class SellingService {
         return productMapper.productsToCollectionResponse(productResponses);
     }
 
+    private List<Product> getProductsWithOffers(ProductFilter productFilter) {
+        List<Product> products = productRepository.findAll(productFilter);
+        products.forEach(this::addOffersToProduct);
+
+        return products;
+    }
+
     public String createOffer(String buyerName, String productId, OfferRequest offerRequest) {
         offerRequest.validate();
         Offer offer = offerMapper.requestToOffer(productId, buyerName, offerRequest);
@@ -114,13 +121,6 @@ public class SellingService {
         product.addOffer(offer);
 
         return true;
-    }
-
-    private List<Product> getProductsWithOffers(ProductFilter productFilter) {
-        List<Product> products = productRepository.findAll(productFilter);
-        products.forEach(this::addOffersToProduct);
-
-        return products;
     }
 
     private Product getProductWithOffers(String id) {
