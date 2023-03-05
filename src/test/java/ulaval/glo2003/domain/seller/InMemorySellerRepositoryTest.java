@@ -2,48 +2,50 @@ package ulaval.glo2003.domain.seller;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import jakarta.ws.rs.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 class InMemorySellerRepositoryTest {
-    public static final String NAME = "Alice";
-    public static final String BIRTHDATE = "2000-01-01";
-    public static final String EMAIL = "Alice@floppa.com";
-    public static final String PHONE_NUMBER = "14181234567";
-    public static final String BIO = "My name is Alice!";
+    private static final String ID = "1";
 
     private InMemorySellerRepository repository;
-    private Seller seller;
+
+    @Mock
+    private Seller sellerStub = mock(Seller.class);
 
     @BeforeEach
-    protected void setUp() {
+    public void setUp() {
         repository = new InMemorySellerRepository();
-        seller = new Seller(NAME, BIRTHDATE, EMAIL, PHONE_NUMBER, BIO);
+
+        when(sellerStub.getId()).thenReturn(ID);
     }
 
     @Test
-    protected void canFindById() {
-        repository.save(seller);
+    public void canFindById() {
+        repository.save(sellerStub);
 
-        Seller foundSeller = repository.findById(seller.getId());
+        Seller foundSeller = repository.findById(sellerStub.getId());
 
-        assertThat(foundSeller).isEqualTo(seller);
+        assertThat(foundSeller.getId()).isEqualTo(sellerStub.getId());
     }
 
     @Test
-    protected void findByIdThrowsWhenIdIsAbsent() {
-        assertThrows(NotFoundException.class, () -> repository.findById(seller.getId()));
+    public void findByIdThrowsWhenIdIsAbsent() {
+        assertThrows(NotFoundException.class, () -> repository.findById(sellerStub.getId()));
     }
 
     @Test
-    protected void canSaveWhenSellerAlreadyExists() {
-        repository.save(seller);
+    public void canSaveWhenSellerAlreadyExists() {
+        repository.save(sellerStub);
 
-        repository.save(seller);
+        repository.save(sellerStub);
 
-        Seller foundSeller = repository.findById(seller.getId());
-        assertThat(foundSeller).isEqualTo(seller);
+        Seller foundSeller = repository.findById(sellerStub.getId());
+        assertThat(foundSeller.getId()).isEqualTo(sellerStub.getId());
     }
 }

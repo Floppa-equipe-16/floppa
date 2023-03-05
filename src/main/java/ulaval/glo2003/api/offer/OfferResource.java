@@ -3,14 +3,14 @@ package ulaval.glo2003.api.offer;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import ulaval.glo2003.service.RepositoryManager;
+import ulaval.glo2003.service.SellingService;
 
 @Path("/products/{productId}/offers")
 public class OfferResource {
-    private final RepositoryManager repositoryManager;
+    private final SellingService sellingService;
 
-    public OfferResource(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
+    public OfferResource(SellingService sellingService) {
+        this.sellingService = sellingService;
     }
 
     @POST
@@ -20,7 +20,7 @@ public class OfferResource {
             @PathParam("productId") String productId,
             OfferRequest offerRequest) {
 
-        repositoryManager.createOffer(xBuyerUsername, productId, offerRequest);
+        sellingService.createOffer(xBuyerUsername, productId, offerRequest);
         return Response.status(Response.Status.CREATED).build();
     }
 }

@@ -1,37 +1,35 @@
 package ulaval.glo2003.domain.product;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import ulaval.glo2003.domain.offer.Offer;
 
 public class Product {
     private final String id;
     private final String sellerId;
     private final String title;
+    private final String createdAt;
     private final String description;
     private final Double suggestedPrice;
     private final String category;
-
-    private final String createdAt;
-
     private final ArrayList<Offer> offers;
 
-    private static final double TWO_DECIMAL_ROUNDING_FACTOR = 100d;
-
-    public Product(String sellerId, String title, String description, Double suggestedPrice, String category) {
+    public Product(
+            String id,
+            String sellerId,
+            String title,
+            String createdAt,
+            String description,
+            Double suggestedPrice,
+            String category) {
+        this.id = id;
         this.sellerId = sellerId;
         this.title = title;
+        this.createdAt = createdAt;
         this.description = description;
-        this.suggestedPrice = Math.round(suggestedPrice * TWO_DECIMAL_ROUNDING_FACTOR) / TWO_DECIMAL_ROUNDING_FACTOR;
+        this.suggestedPrice = suggestedPrice;
         this.category = category;
         this.offers = new ArrayList<>();
-
-        ProductValidator.validateParam(this);
-
-        id = UUID.randomUUID().toString();
-        createdAt = Instant.now().toString();
     }
 
     public Product(Product that) {
@@ -42,7 +40,9 @@ public class Product {
         category = that.getCategory();
         id = that.getId();
         createdAt = that.getCreatedAt();
+
         offers = new ArrayList<>();
+        that.getOffers().forEach(offer -> offers.add(new Offer(offer)));
     }
 
     public String getSellerId() {
@@ -84,17 +84,17 @@ public class Product {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Product) {
-            Product that = (Product) obj;
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-            return id.equalsIgnoreCase(that.getId())
-                    && sellerId.equalsIgnoreCase(that.getSellerId())
-                    && title.equalsIgnoreCase(that.getTitle())
-                    && description.equalsIgnoreCase(that.getDescription())
-                    && suggestedPrice.equals(that.getSuggestedPrice())
-                    && category.equalsIgnoreCase(that.getCategory())
-                    && createdAt.equalsIgnoreCase(that.getCreatedAt());
-        }
-        return false;
+        Product that = (Product) obj;
+
+        return id.equals(that.getId())
+                && sellerId.equals(that.getSellerId())
+                && title.equalsIgnoreCase(that.getTitle())
+                && description.equalsIgnoreCase(that.getDescription())
+                && suggestedPrice.equals(that.getSuggestedPrice())
+                && category.equalsIgnoreCase(that.getCategory())
+                && createdAt.equalsIgnoreCase(that.getCreatedAt());
     }
 }

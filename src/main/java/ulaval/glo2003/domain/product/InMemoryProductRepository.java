@@ -23,7 +23,7 @@ public class InMemoryProductRepository implements IProductRepository {
     }
 
     @Override
-    public List<Product> findAllProducts(ProductFilter productFilter) {
+    public List<Product> findAll(ProductFilter productFilter) {
         return products.values().stream()
                 .filter(product -> product.getSellerId().contains(productFilter.getSellerId()))
                 .filter(product -> product.getTitle()

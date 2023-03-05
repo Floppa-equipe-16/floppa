@@ -1,6 +1,5 @@
 package ulaval.glo2003.domain.seller;
 
-import java.time.Instant;
 import java.util.*;
 import ulaval.glo2003.domain.product.Product;
 
@@ -14,18 +13,16 @@ public class Seller {
     private final String createdAt;
     private final Map<String, Product> productsMap;
 
-    public Seller(String name, String birthdate, String email, String phoneNumber, String bio) {
+    public Seller(
+            String id, String name, String createdAt, String birthdate, String email, String phoneNumber, String bio) {
+        this.id = id;
         this.name = name;
+        this.createdAt = createdAt;
         this.birthdate = birthdate;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.bio = bio;
         this.productsMap = new HashMap<>();
-
-        SellerValidator.validateParam(this);
-
-        id = UUID.randomUUID().toString();
-        createdAt = Instant.now().toString();
     }
 
     public Seller(Seller that) {
@@ -38,6 +35,7 @@ public class Seller {
         createdAt = that.getCreatedAt();
 
         productsMap = new HashMap<>();
+        that.getProducts().forEach((s, product) -> productsMap.put(s, new Product(product)));
     }
 
     public String getId() {
@@ -82,17 +80,16 @@ public class Seller {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Seller) {
-            Seller that = (Seller) obj;
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-            return id.equalsIgnoreCase(that.getId())
-                    && name.equalsIgnoreCase(that.getName())
-                    && birthdate.equalsIgnoreCase(that.getBirthdate())
-                    && email.equalsIgnoreCase(that.getEmail())
-                    && phoneNumber.equalsIgnoreCase(that.getPhoneNumber())
-                    && bio.equalsIgnoreCase(that.getBio())
-                    && createdAt.equalsIgnoreCase(that.getCreatedAt());
-        }
-        return false;
+        Seller that = (Seller) obj;
+        return id.equals(that.getId())
+                && name.equalsIgnoreCase(that.getName())
+                && birthdate.equalsIgnoreCase(that.getBirthdate())
+                && email.equalsIgnoreCase(that.getEmail())
+                && phoneNumber.equalsIgnoreCase(that.getPhoneNumber())
+                && bio.equalsIgnoreCase(that.getBio())
+                && createdAt.equalsIgnoreCase(that.getCreatedAt());
     }
 }

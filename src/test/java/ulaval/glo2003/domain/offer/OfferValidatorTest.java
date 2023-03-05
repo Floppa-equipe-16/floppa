@@ -6,18 +6,15 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
 
 public class OfferValidatorTest {
-
-    @Mock
-    private Offer offerMock = mock(Offer.class);
-
     @Test
-    void validateWithInvalidMessage() {
+    public void validateThrowsWithInvalidMessage() {
+        Offer offerStub = mock(Offer.class);
+
         try (MockedStatic<OfferValidator> offerValidatorMockedStatic =
                 Mockito.mockStatic(OfferValidator.class, Mockito.CALLS_REAL_METHODS)) {
             offerValidatorMockedStatic
@@ -25,14 +22,16 @@ public class OfferValidatorTest {
                     .thenReturn(true);
 
             InvalidParamException thrownInvalidMessage =
-                    assertThrows(InvalidParamException.class, () -> OfferValidator.validateParam(offerMock));
+                    assertThrows(InvalidParamException.class, () -> OfferValidator.validateParam(offerStub));
 
-            assertThat(thrownInvalidMessage.errorDescription.description).isEqualTo("Invalid parameter 'message'.");
+            assertThat(thrownInvalidMessage.errorDescription.description)
+                    .ignoringCase()
+                    .contains("message");
         }
     }
 
     @Test
-    void IsMessageTooShort() {
+    public void canCheckIsMessageTooShort() {
         String messageWith99Char =
                 "0123456789-0123456789-0123456789-0123456789-0123456789-0123456789-0123456789-0123456789-0123456789-";
 

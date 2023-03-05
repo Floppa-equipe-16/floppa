@@ -6,21 +6,21 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import ulaval.glo2003.domain.product.ProductFilter;
-import ulaval.glo2003.service.RepositoryManager;
+import ulaval.glo2003.service.SellingService;
 
 @Path("/products")
 public class ProductResource {
-    private final RepositoryManager repositoryManager;
+    private final SellingService sellingService;
 
-    public ProductResource(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
+    public ProductResource(SellingService sellingService) {
+        this.sellingService = sellingService;
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createProducts(
             @Context UriInfo uriInfo, @HeaderParam("X-Seller-Id") String xSellerId, ProductRequest productRequest) {
-        String productId = repositoryManager.createProduct(xSellerId, productRequest);
+        String productId = sellingService.createProduct(xSellerId, productRequest);
         return Response.status(Response.Status.CREATED)
                 .header("Location", uriInfo.getAbsolutePath() + "/" + productId)
                 .build();
@@ -36,7 +36,7 @@ public class ProductResource {
             @QueryParam("maxPrice") Double maxPrice) {
         ProductFilter productFilter = new ProductFilter(sellerId, title, category, minPrice, maxPrice);
 
-        ProductCollectionResponse productResponses = repositoryManager.getProducts(productFilter);
+        ProductCollectionResponse productResponses = sellingService.getProducts(productFilter);
         return Response.ok().entity(productResponses).build();
     }
 
@@ -44,7 +44,7 @@ public class ProductResource {
     @Path("/{productId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProduct(@PathParam("productId") String productId) {
-        ProductResponse productResponse = repositoryManager.getProduct(productId);
+        ProductResponse productResponse = sellingService.getProduct(productId);
         return Response.ok().entity(productResponse).build();
     }
 }

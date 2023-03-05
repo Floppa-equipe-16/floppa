@@ -4,6 +4,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
+import java.time.Instant;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,35 +12,32 @@ import org.mockito.Mock;
 import ulaval.glo2003.domain.offer.Offer;
 
 public class ProductTest {
+    private static final String ID = "1";
+    private static final String SELLER_ID = "2a74sfs3d2g48";
+    private static final String TITLE = "Iphone XR";
+    private static final String DESCRIPTION = "A relatively new Iphone working as good as a new one";
+    private static final double SUGGESTED_PRICE = 200d;
+    private static final String CATEGORY = "electronics";
 
     private Product product;
 
     @Mock
     private Offer offerMock = mock(Offer.class);
 
-    @Mock
-    private Product productMock = mock(Product.class);
-
     @BeforeEach
-    void prepareProduct() {
-        String validSellerId = "2a74sfs3d2g48";
-        String validTitle = "Iphone XR";
-        String validDescription = "A relatively new Iphone working as good as a new one";
-        Double validSuggestedPrice = 200d;
-        String validCategory = "electronics";
-
-        product = new Product(validSellerId, validTitle, validDescription, validSuggestedPrice, validCategory);
+    public void setUp() {
+        product = new Product(ID, SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
     }
 
     @Test
-    void copyConstructor() {
+    public void canCopyProduct() {
         Product productCopy = new Product(product);
 
         assertThat(productCopy).isEqualTo(product);
     }
 
     @Test
-    void canAddValidOffer() {
+    public void canAddValidOffer() {
         doReturn("usertest").when(offerMock).getUsername();
         doReturn(200d).when(offerMock).getAmount();
 
@@ -50,15 +48,18 @@ public class ProductTest {
     }
 
     @Test
-    void equalsFunction() {
-        doReturn(product.getId()).when(productMock).getId();
-        doReturn(product.getSellerId()).when(productMock).getSellerId();
-        doReturn(product.getTitle()).when(productMock).getTitle();
-        doReturn(product.getDescription()).when(productMock).getDescription();
-        doReturn(product.getSuggestedPrice()).when(productMock).getSuggestedPrice();
-        doReturn(product.getCategory()).when(productMock).getCategory();
-        doReturn(product.getCreatedAt()).when(productMock).getCreatedAt();
+    public void canCompareIdenticalProducts() {
+        Product identicalProduct =
+                new Product(ID, SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
 
-        assertThat(product).isEqualTo(productMock);
+        assertThat(product).isEqualTo(identicalProduct);
+    }
+
+    @Test
+    public void canCompareDifferentProducts() {
+        Product differentProduct =
+                new Product("ABC", SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
+
+        assertThat(product).isNotEqualTo(differentProduct);
     }
 }

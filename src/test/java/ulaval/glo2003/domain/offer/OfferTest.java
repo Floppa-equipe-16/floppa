@@ -1,47 +1,50 @@
 package ulaval.glo2003.domain.offer;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 
+import java.time.Instant;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 
 public class OfferTest {
+    private static final String ID = "1";
+    private static final String OTHER_ID = "2";
+    private static final String PRODUCT_ID = "10";
+    private static final String USERNAME = "Alice";
+    private static final double AMOUNT = 200d;
+    private static final String MESSAGE = "One item please";
+    private static final String CREATION_DATE = Instant.MAX.toString();
 
     private Offer offer;
-
-    @Mock
-    Offer offerMock = mock(Offer.class);
+    private Offer otherOffer;
 
     @BeforeEach
-    void prepareOffer() {
-        String productId = "valid ID";
-        String userName = "Bob";
-        Double amount = 19.5d;
-        String message100Char =
-                "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789";
+    public void setUp() {
+        offer = createOffer(ID);
+    }
 
-        offer = new Offer(productId, userName, amount, message100Char);
+    private Offer createOffer(String id) {
+        return new Offer(id, PRODUCT_ID, USERNAME, AMOUNT, MESSAGE, CREATION_DATE);
     }
 
     @Test
-    void copyConstructor() {
+    public void canCopyOffer() {
         Offer offerCopy = new Offer(offer);
 
         assertThat(offerCopy).isEqualTo(offer);
     }
 
     @Test
-    void EqualsFunction() {
-        doReturn(offer.getProductId()).when(offerMock).getProductId();
-        doReturn(offer.getUsername()).when(offerMock).getUsername();
-        doReturn(offer.getId()).when(offerMock).getId();
-        doReturn(offer.getAmount()).when(offerMock).getAmount();
-        doReturn(offer.getCreatedAt()).when(offerMock).getCreatedAt();
-        doReturn(offer.getMessage()).when(offerMock).getMessage();
+    public void canCompareIdenticalOffers() {
+        otherOffer = createOffer(ID);
 
-        assertThat(offer).isEqualTo(offerMock);
+        assertThat(offer).isEqualTo(otherOffer);
+    }
+
+    @Test
+    public void canCompareDifferentOffers() {
+        otherOffer = createOffer(OTHER_ID);
+
+        assertThat(offer).isNotEqualTo(otherOffer);
     }
 }

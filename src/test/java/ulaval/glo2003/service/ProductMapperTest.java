@@ -1,36 +1,62 @@
 package ulaval.glo2003.service;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import ulaval.glo2003.api.offer.OfferCollectionResponse;
 import ulaval.glo2003.api.product.ProductCollectionResponse;
 import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.domain.product.Product;
 import ulaval.glo2003.domain.product.ProductCategory;
+import ulaval.glo2003.domain.product.ProductFactory;
 import ulaval.glo2003.domain.seller.Seller;
+import ulaval.glo2003.domain.seller.SellerTestUtils;
 
 class ProductMapperTest {
+    private static final String ID = "1";
     private static final String SELLER_ID = "SELLER";
-    private static final String SELLER_NAME = "Bob";
+    private static final String TITLE = "Title";
+    private static final String DESCRIPTION = "Good description";
+    private static final double SUGGESTED_PRICE = 20d;
+    private static final String CATEGORY = ProductCategory.other.toString();
 
-    private Product product;
+    @Mock
+    private OfferMapper offerMapper = mock(OfferMapper.class);
+
+    @Mock
+    private ProductFactory factory = mock(ProductFactory.class);
+
+    @Mock
+    private Product productStub = mock(Product.class);
+
+    private ProductMapper mapper;
 
     @BeforeEach
-    void setUp() {
-        product = new Product(SELLER_ID, "Title", "Good description", 10d, ProductCategory.other.toString());
+    public void setUp() {
+        mapper = new ProductMapper(factory, offerMapper);
+
+        when(productStub.getId()).thenReturn(ID);
+        when(productStub.getSellerId()).thenReturn(SELLER_ID);
+        when(productStub.getTitle()).thenReturn(TITLE);
+        when(productStub.getDescription()).thenReturn(DESCRIPTION);
+        when(productStub.getSuggestedPrice()).thenReturn(SUGGESTED_PRICE);
+        when(productStub.getCategory()).thenReturn(CATEGORY);
     }
 
     @Test
-    void canMapRequestToProduct() {
+    public void canMapRequestToProduct() {
+        doReturn(productStub).when(factory).createProduct(SELLER_ID, TITLE, DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
         ProductRequest request = createRequest();
 
-        Product product = ProductMapper.requestToProduct(SELLER_ID, request);
+        Product product = mapper.requestToProduct(SELLER_ID, request);
 
         assertThat(product.getTitle()).isEqualTo(request.title);
         assertThat(product.getDescription()).isEqualTo(request.description);
@@ -40,44 +66,44 @@ class ProductMapperTest {
 
     private ProductRequest createRequest() {
         ProductRequest request = new ProductRequest();
-        request.title = "Title";
-        request.description = "Good description";
-        request.category = ProductCategory.other.toString();
-        request.suggestedPrice = 99d;
+        request.title = TITLE;
+        request.description = DESCRIPTION;
+        request.category = CATEGORY;
+        request.suggestedPrice = SUGGESTED_PRICE;
         return request;
     }
 
     @Test
-    void canMapProductToResponse() {
-        ProductResponse response = ProductMapper.productToResponse(product);
+    public void canMapProductToResponse() {
+        doReturn(new OfferCollectionResponse()).when(offerMapper).offersToCompleteCollectionResponse(any());
 
-        assertFieldsAreEqual(response, product);
+        ProductResponse response = mapper.productToResponse(productStub);
+
+        assertFieldsAreEqual(response, productStub);
         assertThat(response.offers).isNotNull();
         assertThat(response.seller).isNull();
     }
 
     @Test
-    void canMapProductsToCollectionResponse() {
-        ProductCollectionResponse response =
-                ProductMapper.productsToCollectionResponse(List.of(ProductMapper.productToResponse(product)));
+    public void canMapProductsToCollectionResponse() {
+        doReturn(new OfferCollectionResponse()).when(offerMapper).offersToCompleteCollectionResponse(any());
 
-        assertFieldsAreEqual(response.products.get(0), product);
+        ProductCollectionResponse response =
+                mapper.productsToCollectionResponse(List.of(mapper.productToResponse(productStub)));
+
+        assertFieldsAreEqual(response.products.get(0), productStub);
         assertThat(response.products.get(0).offers).isNotNull();
         assertThat(response.products.get(0).seller).isNull();
     }
 
     @Test
-    void canMapProductToResponseWithSeller() {
-        Seller seller = createSeller();
+    public void canMapProductToResponseWithSeller() {
+        Seller seller = SellerTestUtils.createSellerStub();
 
-        ProductResponse response = ProductMapper.productToResponseWithSeller(product, seller);
+        ProductResponse response = mapper.productToResponseWithSeller(productStub, seller);
 
-        assertFieldsAreEqual(response, product);
+        assertFieldsAreEqual(response, productStub);
         assertThat(response.seller).isNotNull();
-    }
-
-    private Seller createSeller() {
-        return new Seller("Alice", "2000-01-01", "Alice@floppa.com", "14181234567", "My name is Alice!");
     }
 
     private void assertFieldsAreEqual(ProductResponse response, Product product) {
@@ -90,12 +116,12 @@ class ProductMapperTest {
     }
 
     @Test
-    void canMapProductsMapToResponsesList() {
+    public void canMapProductsMapToResponsesList() {
         Map<String, Product> products = new HashMap<>();
-        products.put("1", product);
-        products.put("2", product);
+        products.put("1", productStub);
+        products.put("2", productStub);
 
-        List<ProductResponse> responses = ProductMapper.productsMapToResponsesList(products);
+        List<ProductResponse> responses = mapper.productsMapToResponsesList(products);
 
         assertThat(responses.size()).isEqualTo(2);
     }

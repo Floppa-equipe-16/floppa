@@ -2,24 +2,41 @@ package ulaval.glo2003.service;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
 import ulaval.glo2003.domain.seller.Seller;
+import ulaval.glo2003.domain.seller.SellerFactory;
+import ulaval.glo2003.domain.seller.SellerTestUtils;
 
 class SellerMapperTest {
-    private static final String NAME = "Alice";
-    private static final String BIRTHDATE = "2000-01-01";
-    private static final String EMAIL = "Alice@floppa.com";
-    private static final String PHONE_NUMBER = "14181234567";
-    private static final String BIO = "My name is Alice!";
+
+    @Mock
+    private ProductMapper productMapper = mock(ProductMapper.class);
+
+    @Mock
+    private SellerFactory factory = mock(SellerFactory.class);
+
+    private SellerMapper mapper;
+
+    @BeforeEach
+    public void setUp() {
+        mapper = new SellerMapper(factory, productMapper);
+    }
 
     @Test
-    void canMapRequestToSeller() {
-        SellerRequest request = createRequest();
+    public void canMapRequestToSeller() {
+        SellerRequest request = SellerTestUtils.createSellerRequest();
+        doReturn(SellerTestUtils.createSellerStub())
+                .when(factory)
+                .createSeller(request.name, request.birthdate, request.email, request.phoneNumber, request.bio);
 
-        Seller seller = SellerMapper.requestToSeller(request);
+        Seller seller = mapper.requestToSeller(request);
 
         assertThat(seller.getName()).isEqualTo(request.name);
         assertThat(seller.getBirthdate()).isEqualTo(request.birthdate);
@@ -28,22 +45,11 @@ class SellerMapperTest {
         assertThat(seller.getBio()).isEqualTo(request.bio);
     }
 
-    private SellerRequest createRequest() {
-        SellerRequest request = new SellerRequest();
-        request.name = NAME;
-        request.birthdate = BIRTHDATE;
-        request.email = EMAIL;
-        request.phoneNumber = PHONE_NUMBER;
-        request.bio = BIO;
-
-        return request;
-    }
-
     @Test
-    void canMapSellerToResponse() {
-        Seller seller = new Seller(NAME, BIRTHDATE, EMAIL, PHONE_NUMBER, BIO);
+    public void canMapSellerToResponse() {
+        Seller seller = SellerTestUtils.createSellerStub();
 
-        SellerResponse response = SellerMapper.sellerToResponse(seller);
+        SellerResponse response = mapper.sellerToResponse(seller);
 
         assertThat(response.id).isEqualTo(seller.getId());
         assertThat(response.name).isEqualTo(seller.getName());
