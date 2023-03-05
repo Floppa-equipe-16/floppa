@@ -25,6 +25,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>5.8.2</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -45,6 +52,23 @@
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-json-jackson</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.truth</groupId>
+            <artifactId>truth</artifactId>
+            <version>1.1.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.1.1</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -54,12 +78,9 @@
                 <artifactId>spotless-maven-plugin</artifactId>
                 <version>2.31.0</version>
                 <configuration>
-                    <!-- optional: limit format enforcement to just the files changed by this feature branch -->
                     <ratchetFrom>origin/main</ratchetFrom>
                     <formats>
-                        <!-- you can define as many formats as you want, each is independent -->
                         <format>
-                            <!-- define the files to apply to -->
                             <includes>
                                 <include>*.md</include>
                                 <include>.gitignore</include>
@@ -73,11 +94,8 @@
                         </format>
                     </formats>
                     <java>
-                        <googleJavaFormat>
-                            <version>1.15.0</version>
-                            <style>AOSP</style>
-                            <reflowLongStrings>true</reflowLongStrings>
-                        </googleJavaFormat>
+                        <palantirJavaFormat>
+                        </palantirJavaFormat>
                     </java>
                 </configuration>
             </plugin>
@@ -105,6 +123,11 @@
                 <configuration>
                     <mainClass>ulaval.glo2003.Main</mainClass>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.0</version>
             </plugin>
         </plugins>
     </build>
