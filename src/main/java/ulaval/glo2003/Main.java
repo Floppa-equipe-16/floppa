@@ -35,6 +35,7 @@ public class Main {
                 .register(offerResource)
                 .register(paramExceptionMapper)
                 .register(notFoundExceptionMapper);
+
         URI uri = URI.create("http://localhost:8080/");
 
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, resourceConfig);
