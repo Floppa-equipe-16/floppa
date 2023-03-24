@@ -45,9 +45,9 @@ public class OfferMapper {
             response.maxAmount =
                     offers.stream().mapToDouble(Offer::getAmount).max().orElse(Double.NaN);
 
-            response.offers = offers.stream().map(OfferResponse::new).collect(Collectors.toList());
+            response.items = offers.stream().map(OfferResponse::new).collect(Collectors.toList());
         } else {
-            response.offers = new ArrayList<>();
+            response.items = new ArrayList<>();
         }
 
         return response;

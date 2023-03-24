@@ -6,6 +6,7 @@ import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import ulaval.glo2003.api.HealthResource;
+import ulaval.glo2003.api.LostResource;
 import ulaval.glo2003.api.exceptionMappers.NotFoundExceptionMapper;
 import ulaval.glo2003.api.exceptionMappers.ParamExceptionMapper;
 import ulaval.glo2003.api.offer.OfferResource;
@@ -21,6 +22,7 @@ public class Main {
         SellingService sellingService = factory.create();
 
         HealthResource healthResource = new HealthResource();
+        LostResource lostResource = new LostResource();
         SellerResource sellerResource = new SellerResource(sellingService);
         ProductResource productResource = new ProductResource(sellingService);
         OfferResource offerResource = new OfferResource(sellingService);
@@ -30,6 +32,7 @@ public class Main {
 
         ResourceConfig resourceConfig = new ResourceConfig()
                 .register(healthResource)
+                .register(lostResource)
                 .register(sellerResource)
                 .register(productResource)
                 .register(offerResource)

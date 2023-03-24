@@ -86,7 +86,7 @@ class OfferMapperTest {
     }
 
     private void assertDescriptiveFieldsAreNull(OfferCollectionResponse response) {
-        assertThat(response.offers).isNull();
+        assertThat(response.items).isNull();
         assertThat(response.minAmount).isNull();
         assertThat(response.maxAmount).isNull();
     }
@@ -99,7 +99,7 @@ class OfferMapperTest {
         assertThat(response.avgAmount).isEqualTo(50d);
         assertThat(response.maxAmount).isEqualTo(HIGHEST_AMOUNT);
         assertThat(response.minAmount).isEqualTo(LOWEST_AMOUNT);
-        assertThat(response.offers).isNotEmpty();
+        assertThat(response.items).isNotEmpty();
     }
 
     @Test
@@ -110,6 +110,6 @@ class OfferMapperTest {
         assertThat(response.avgAmount).isNull();
         assertThat(response.maxAmount).isNull();
         assertThat(response.minAmount).isNull();
-        assertThat(response.offers).isEmpty();
+        assertThat(response.items).isEmpty();
     }
 }
