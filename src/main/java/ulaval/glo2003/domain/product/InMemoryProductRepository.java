@@ -50,4 +50,9 @@ public class InMemoryProductRepository implements IProductRepository {
     public void save(Product product) {
         products.put(product.getId(), product);
     }
+
+    @Override
+    public void reset() {
+        products.clear();
+    }
 }
