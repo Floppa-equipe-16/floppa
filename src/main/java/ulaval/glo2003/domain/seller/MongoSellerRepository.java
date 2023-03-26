@@ -27,11 +27,11 @@ public class MongoSellerRepository implements ISellerRepository {
             return new Seller(
                     mongoSeller.id,
                     mongoSeller.name,
+                    mongoSeller.createdAt,
                     mongoSeller.birthdate,
                     mongoSeller.email,
                     mongoSeller.phoneNumber,
-                    mongoSeller.bio,
-                    mongoSeller.createdAt);
+                    mongoSeller.bio);
         } else {
             throw new NotFoundException(String.format("Seller with id '%s' not found", id));
         }
