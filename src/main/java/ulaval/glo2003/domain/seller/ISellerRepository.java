@@ -4,4 +4,6 @@ public interface ISellerRepository {
     Seller findById(String id);
 
     void save(Seller seller);
+
+    void reset();
 }

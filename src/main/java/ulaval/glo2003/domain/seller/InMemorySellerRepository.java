@@ -24,4 +24,9 @@ public class InMemorySellerRepository implements ISellerRepository {
     public void save(Seller seller) {
         sellers.put(seller.getId(), seller);
     }
+
+    @Override
+    public void reset() {
+        sellers.clear();
+    }
 }
