@@ -34,4 +34,9 @@ public class InMemoryOfferRepository implements IOfferRepository {
     public void save(Offer offer) {
         offers.put(offer.getId(), offer);
     }
+
+    @Override
+    public void reset() {
+        offers.clear();
+    }
 }
