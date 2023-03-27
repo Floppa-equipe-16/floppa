@@ -72,7 +72,7 @@ class OfferMapperTest {
     public void canCreateSummaryResponseWithMultipleOffersCheckOffers() {
         OfferCollectionResponse response = mapper.offersToSummaryCollectionResponse(offerStubs);
 
-        assertThat(response.offers).isNull();
+        assertThat(response.items).isNull();
     }
 
     @Test
@@ -89,12 +89,6 @@ class OfferMapperTest {
         assertThat(response.avgAmount).isNull();
     }
 
-    private void assertDescriptiveFieldsAreNull(OfferCollectionResponse response) {
-        assertThat(response.offers).isNull();
-        assertThat(response.minAmount).isNull();
-        assertThat(response.maxAmount).isNull();
-    }
-
     @Test
     public void createSummaryResponseIsEmptyWithNoOfferCheckMinAmount() {
         OfferCollectionResponse response = mapper.offersToSummaryCollectionResponse(new ArrayList<>());
@@ -106,7 +100,7 @@ class OfferMapperTest {
     public void createSummaryResponseIsEmptyWithNoOfferCheckOffers() {
         OfferCollectionResponse response = mapper.offersToSummaryCollectionResponse(new ArrayList<>());
 
-        assertThat(response.offers).isNull();
+        assertThat(response.items).isNull();
     }
 
     @Test
@@ -142,7 +136,7 @@ class OfferMapperTest {
     public void canCreateCompleteResponseWithMultipleOffersCheckOffers() {
         OfferCollectionResponse response = mapper.offersToCompleteCollectionResponse(offerStubs);
 
-        assertThat(response.offers).isNotEmpty();
+        assertThat(response.items).isNotEmpty();
     }
 
     @Test
@@ -177,6 +171,6 @@ class OfferMapperTest {
     public void createCompleteWithNoOfferCheckOffers() {
         OfferCollectionResponse response = mapper.offersToCompleteCollectionResponse(new ArrayList<>());
 
-        assertThat(response.offers).isEmpty();
+        assertThat(response.items).isEmpty();
     }
 }
