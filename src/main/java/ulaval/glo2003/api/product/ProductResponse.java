@@ -1,7 +1,6 @@
 package ulaval.glo2003.api.product;
 
 import ulaval.glo2003.api.offer.OfferCollectionResponse;
-import ulaval.glo2003.domain.product.Product;
 
 public class ProductResponse {
 
@@ -35,15 +34,6 @@ public class ProductResponse {
                 && createdAt.equals(response.createdAt);
     }
 
-    private boolean isProductEquals(Product product) {
-        return title.equals(product.getTitle())
-                && description.equals(product.getDescription())
-                && suggestedPrice.equals(product.getSuggestedPrice())
-                && category.equals(product.getCategory())
-                && id.equals(product.getId())
-                && createdAt.equals(product.getCreatedAt());
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == this) {
@@ -53,9 +43,6 @@ public class ProductResponse {
         if (o instanceof ProductResponse) {
             ProductResponse productResponse = ((ProductResponse) o);
             return isProductResponseEquals(productResponse);
-        } else if (o instanceof Product) {
-            Product product = ((Product) o);
-            return isProductEquals(product);
         } else return false;
     }
 }

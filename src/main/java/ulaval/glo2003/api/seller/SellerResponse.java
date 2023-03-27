@@ -2,7 +2,6 @@ package ulaval.glo2003.api.seller;
 
 import java.util.List;
 import ulaval.glo2003.api.product.ProductResponse;
-import ulaval.glo2003.domain.seller.Seller;
 
 public class SellerResponse {
     public String id;
@@ -24,16 +23,6 @@ public class SellerResponse {
                 && createdAt.equals(sellerResponse.createdAt);
     }
 
-    private boolean isSellerEquals(Seller seller) {
-        return name.equals(seller.getName())
-                && birthdate.equals(seller.getBirthdate())
-                && email.equals(seller.getEmail())
-                && phoneNumber.equals(seller.getPhoneNumber())
-                && bio.equals(seller.getBio())
-                && id.equals(seller.getId())
-                && createdAt.equals(seller.getCreatedAt());
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == this) {
@@ -43,9 +32,6 @@ public class SellerResponse {
         if (o instanceof SellerResponse) {
             SellerResponse sellerResponse = ((SellerResponse) o);
             return isSellerResponseEquals(sellerResponse);
-        } else if (o instanceof Seller) {
-            Seller seller = ((Seller) o);
-            return isSellerEquals(seller);
         } else return false;
     }
 }

@@ -1,7 +1,6 @@
 package ulaval.glo2003.api.seller;
 
 import ulaval.glo2003.domain.exceptions.MissingParamException;
-import ulaval.glo2003.domain.seller.Seller;
 
 public class SellerRequest {
     public String name;
@@ -26,14 +25,6 @@ public class SellerRequest {
                 && bio.equals(sellerRequest.bio);
     }
 
-    private boolean isSellerEquals(Seller seller) {
-        return name.equals(seller.getName())
-                && birthdate.equals(seller.getBirthdate())
-                && email.equals(seller.getEmail())
-                && phoneNumber.equals(seller.getPhoneNumber())
-                && bio.equals(seller.getBio());
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == this) {
@@ -43,9 +34,6 @@ public class SellerRequest {
         if (o instanceof SellerRequest) {
             SellerRequest sellerRequest = ((SellerRequest) o);
             return isSellerRequestEquals(sellerRequest);
-        } else if (o instanceof Seller) {
-            Seller seller = ((Seller) o);
-            return isSellerEquals(seller);
         } else return false;
     }
 }
