@@ -30,6 +30,7 @@ public class ProductTestUtils {
         when(product.getCategory()).thenReturn(CATEGORY);
         when(product.getDescription()).thenReturn(DESCRIPTION);
         when(product.getSuggestedPrice()).thenReturn(SUGGESTED_PRICE);
+        when(product.getSaleStatus()).thenReturn(SaleStatus.ongoing);
         return product;
     }
 
