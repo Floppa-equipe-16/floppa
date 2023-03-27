@@ -58,7 +58,8 @@ class ProductMapperTest {
 
         ProductResponse response = mapper.productToResponse(productStub);
 
-        assertThat(ProductEquals.productResponseEqualsProduct(response, productStub)).isTrue();
+        assertThat(ProductEquals.productResponseEqualsProduct(response, productStub))
+                .isTrue();
         assertThat(response.offers).isNotNull();
         assertThat(response.seller).isNull();
     }
@@ -70,7 +71,8 @@ class ProductMapperTest {
         ProductCollectionResponse response =
                 mapper.productsToCollectionResponse(List.of(mapper.productToResponse(productStub)));
 
-        assertThat(ProductEquals.productResponseEqualsProduct(response.products.get(0), productStub)).isTrue();
+        assertThat(ProductEquals.productResponseEqualsProduct(response.products.get(0), productStub))
+                .isTrue();
         assertThat(response.products.get(0).offers).isNotNull();
         assertThat(response.products.get(0).seller).isNull();
     }
@@ -81,7 +83,8 @@ class ProductMapperTest {
 
         ProductResponse response = mapper.productToResponseWithSeller(productStub, seller);
 
-        assertThat(ProductEquals.productResponseEqualsProduct(response, productStub)).isTrue();
+        assertThat(ProductEquals.productResponseEqualsProduct(response, productStub))
+                .isTrue();
         assertThat(response.seller).isNotNull();
     }
 

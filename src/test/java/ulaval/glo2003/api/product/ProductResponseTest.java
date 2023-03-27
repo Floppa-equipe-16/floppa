@@ -74,5 +74,4 @@ public class ProductResponseTest {
 
         assertThat(productResponse).isNotEqualTo(newProductResponse);
     }
-
 }

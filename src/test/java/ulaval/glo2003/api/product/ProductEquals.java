@@ -19,5 +19,3 @@ public class ProductEquals {
                 && response.createdAt.equals(product.getCreatedAt());
     }
 }
-
-

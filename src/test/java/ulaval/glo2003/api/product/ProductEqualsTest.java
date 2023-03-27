@@ -1,18 +1,18 @@
 package ulaval.glo2003.api.product;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.domain.product.Product;
 import ulaval.glo2003.domain.product.ProductTestUtils;
-
-import static com.google.common.truth.Truth.assertThat;
 
 public class ProductEqualsTest {
 
     private Product product;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         product = ProductTestUtils.createProduct();
     }
 
@@ -59,7 +59,8 @@ public class ProductEqualsTest {
     public void productResponseEqualsToProduct() {
         ProductResponse response = ProductTestUtils.createProductResponse();
 
-        assertThat(ProductEquals.productResponseEqualsProduct(response, product)).isTrue();
+        assertThat(ProductEquals.productResponseEqualsProduct(response, product))
+                .isTrue();
     }
 
     @Test
@@ -67,7 +68,8 @@ public class ProductEqualsTest {
         ProductResponse response = ProductTestUtils.createProductResponse();
         response.id = "new id";
 
-        assertThat(ProductEquals.productResponseEqualsProduct(response, product)).isFalse();
+        assertThat(ProductEquals.productResponseEqualsProduct(response, product))
+                .isFalse();
     }
 
     @Test
@@ -75,7 +77,8 @@ public class ProductEqualsTest {
         ProductResponse response = ProductTestUtils.createProductResponse();
         response.createdAt = "???";
 
-        assertThat(ProductEquals.productResponseEqualsProduct(response, product)).isFalse();
+        assertThat(ProductEquals.productResponseEqualsProduct(response, product))
+                .isFalse();
     }
 
     @Test
@@ -83,7 +86,8 @@ public class ProductEqualsTest {
         ProductResponse response = ProductTestUtils.createProductResponse();
         response.title = "???";
 
-        assertThat(ProductEquals.productResponseEqualsProduct(response, product)).isFalse();
+        assertThat(ProductEquals.productResponseEqualsProduct(response, product))
+                .isFalse();
     }
 
     @Test
@@ -91,7 +95,8 @@ public class ProductEqualsTest {
         ProductResponse response = ProductTestUtils.createProductResponse();
         response.description = "???";
 
-        assertThat(ProductEquals.productResponseEqualsProduct(response, product)).isFalse();
+        assertThat(ProductEquals.productResponseEqualsProduct(response, product))
+                .isFalse();
     }
 
     @Test
@@ -99,7 +104,8 @@ public class ProductEqualsTest {
         ProductResponse response = ProductTestUtils.createProductResponse();
         response.category = "???";
 
-        assertThat(ProductEquals.productResponseEqualsProduct(response, product)).isFalse();
+        assertThat(ProductEquals.productResponseEqualsProduct(response, product))
+                .isFalse();
     }
 
     @Test
@@ -107,6 +113,7 @@ public class ProductEqualsTest {
         ProductResponse response = ProductTestUtils.createProductResponse();
         response.suggestedPrice = 1d;
 
-        assertThat(ProductEquals.productResponseEqualsProduct(response, product)).isFalse();
+        assertThat(ProductEquals.productResponseEqualsProduct(response, product))
+                .isFalse();
     }
 }

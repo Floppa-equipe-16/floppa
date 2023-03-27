@@ -116,5 +116,4 @@ public class SellerRequestTest {
 
         assertThat(sellerRequest).isNotEqualTo(SellerTestUtils.createSellerRequest());
     }
-
 }

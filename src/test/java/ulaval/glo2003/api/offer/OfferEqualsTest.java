@@ -1,18 +1,18 @@
 package ulaval.glo2003.api.offer;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.offer.OfferTestUtils;
-
-import static com.google.common.truth.Truth.assertThat;
 
 public class OfferEqualsTest {
 
     private Offer offer;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         offer = OfferTestUtils.createOffer();
     }
 
@@ -20,7 +20,7 @@ public class OfferEqualsTest {
     public void offerRequestEqualsToOffer() {
         OfferRequest request = OfferTestUtils.createOfferRequest();
 
-        assertThat(OfferEquals.OfferRequestEqualsOffer(request,offer)).isTrue();
+        assertThat(OfferEquals.OfferRequestEqualsOffer(request, offer)).isTrue();
     }
 
     @Test
@@ -28,7 +28,7 @@ public class OfferEqualsTest {
         OfferRequest request = OfferTestUtils.createOfferRequest();
         request.message = "new message";
 
-        assertThat(OfferEquals.OfferRequestEqualsOffer(request,offer)).isFalse();
+        assertThat(OfferEquals.OfferRequestEqualsOffer(request, offer)).isFalse();
     }
 
     @Test
@@ -36,14 +36,14 @@ public class OfferEqualsTest {
         OfferRequest request = OfferTestUtils.createOfferRequest();
         request.amount = 1d;
 
-        assertThat(OfferEquals.OfferRequestEqualsOffer(request,offer)).isFalse();
+        assertThat(OfferEquals.OfferRequestEqualsOffer(request, offer)).isFalse();
     }
 
     @Test
     public void offerResponseEqualsToOffer() {
         OfferResponse response = OfferTestUtils.createOfferResponse();
 
-        assertThat(OfferEquals.OfferResponseEqualsOffer(response,offer)).isTrue();
+        assertThat(OfferEquals.OfferResponseEqualsOffer(response, offer)).isTrue();
     }
 
     @Test
@@ -51,7 +51,7 @@ public class OfferEqualsTest {
         OfferResponse response = OfferTestUtils.createOfferResponse();
         response.message = "new message";
 
-        assertThat(OfferEquals.OfferResponseEqualsOffer(response,offer)).isFalse();
+        assertThat(OfferEquals.OfferResponseEqualsOffer(response, offer)).isFalse();
     }
 
     @Test
@@ -59,7 +59,7 @@ public class OfferEqualsTest {
         OfferResponse response = OfferTestUtils.createOfferResponse();
         response.amount = 1d;
 
-        assertThat(OfferEquals.OfferResponseEqualsOffer(response,offer)).isFalse();
+        assertThat(OfferEquals.OfferResponseEqualsOffer(response, offer)).isFalse();
     }
 
     @Test
@@ -67,7 +67,7 @@ public class OfferEqualsTest {
         OfferResponse response = OfferTestUtils.createOfferResponse();
         response.username = "new username";
 
-        assertThat(OfferEquals.OfferResponseEqualsOffer(response,offer)).isFalse();
+        assertThat(OfferEquals.OfferResponseEqualsOffer(response, offer)).isFalse();
     }
 
     @Test
@@ -75,6 +75,6 @@ public class OfferEqualsTest {
         OfferResponse response = OfferTestUtils.createOfferResponse();
         response.createdAt = "???";
 
-        assertThat(OfferEquals.OfferResponseEqualsOffer(response,offer)).isFalse();
+        assertThat(OfferEquals.OfferResponseEqualsOffer(response, offer)).isFalse();
     }
 }

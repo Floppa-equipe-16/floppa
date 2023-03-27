@@ -82,7 +82,4 @@ public class SellerResponseTest {
 
         assertThat(sellerResponse).isNotEqualTo(newSellerResponse);
     }
-
-
-
 }

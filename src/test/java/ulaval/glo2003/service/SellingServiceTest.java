@@ -239,5 +239,4 @@ class SellingServiceTest {
 
         assertThrows(NotFoundException.class, () -> sellingService.createOffer(buyerName, PRODUCT_ID, request));
     }
-
 }

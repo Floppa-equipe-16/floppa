@@ -58,6 +58,4 @@ public class OfferResponseTest {
 
         assertThat(offerResponse).isNotEqualTo(newOfferResponse);
     }
-
-
 }

@@ -64,5 +64,4 @@ public class OfferRequestTest {
 
         assertThat(offerRequest).isNotEqualTo(newofferRequest);
     }
-
 }

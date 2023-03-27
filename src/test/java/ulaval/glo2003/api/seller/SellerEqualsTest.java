@@ -1,17 +1,17 @@
 package ulaval.glo2003.api.seller;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.domain.seller.Seller;
 import ulaval.glo2003.domain.seller.SellerTestUtils;
 
-import static com.google.common.truth.Truth.assertThat;
-
 public class SellerEqualsTest {
     private Seller seller;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         seller = SellerTestUtils.createSeller();
     }
 
