@@ -51,6 +51,9 @@ jobs:
   test:
     needs : build
     runs-on: ubuntu-latest
+    env:
+      FLOPPA_MONGO_CLUSTER_URL: ${{ secrets.FLOPPA_MONGO_CLUSTER_URL }} 
+      FLOPPA_MONGO_DATABASE : ${{ secrets.FLOPPA_MONGO_DATABASE }}
 
     steps:
       - uses: actions/checkout@v3
