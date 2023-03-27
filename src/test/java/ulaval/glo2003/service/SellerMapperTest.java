@@ -1,7 +1,6 @@
 package ulaval.glo2003.service;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
@@ -38,11 +37,7 @@ class SellerMapperTest {
 
         Seller seller = mapper.requestToSeller(request);
 
-        assertThat(seller.getName()).isEqualTo(request.name);
-        assertThat(seller.getBirthdate()).isEqualTo(request.birthdate);
-        assertThat(seller.getEmail()).isEqualTo(request.email);
-        assertThat(seller.getPhoneNumber()).isEqualTo(request.phoneNumber);
-        assertThat(seller.getBio()).isEqualTo(request.bio);
+        assertThat(request).isEqualTo(seller);
     }
 
     @Test
@@ -51,11 +46,6 @@ class SellerMapperTest {
 
         SellerResponse response = mapper.sellerToResponse(seller);
 
-        assertThat(response.id).isEqualTo(seller.getId());
-        assertThat(response.name).isEqualTo(seller.getName());
-        assertThat(response.birthdate).isEqualTo(seller.getBirthdate());
-        assertThat(response.email).isEqualTo(seller.getEmail());
-        assertThat(response.phoneNumber).isEqualTo(seller.getPhoneNumber());
-        assertThat(response.bio).isEqualTo(seller.getBio());
+        assertThat(response).isEqualTo(seller);
     }
 }
