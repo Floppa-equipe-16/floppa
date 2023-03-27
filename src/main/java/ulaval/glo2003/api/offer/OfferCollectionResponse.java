@@ -9,5 +9,5 @@ public class OfferCollectionResponse {
     public Double minAmount;
     public Double maxAmount;
 
-    public List<OfferResponse> offers;
+    public List<OfferResponse> items;
 }

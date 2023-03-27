@@ -89,10 +89,9 @@ class OfferMapperTest {
         assertThat(response.avgAmount).isNull();
     }
 
-    @Test
-    public void createSummaryResponseIsEmptyWithNoOfferCheckMaxAmount() {
-        OfferCollectionResponse response = mapper.offersToSummaryCollectionResponse(new ArrayList<>());
-
+    private void assertDescriptiveFieldsAreNull(OfferCollectionResponse response) {
+        assertThat(response.offers).isNull();
+        assertThat(response.minAmount).isNull();
         assertThat(response.maxAmount).isNull();
     }
 
