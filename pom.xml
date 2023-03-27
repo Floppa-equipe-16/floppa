@@ -132,6 +132,10 @@
                 </executions>
                 <configuration>
                     <mainClass>ulaval.glo2003.Main</mainClass>
+                    <environmentVariables>
+                        <FLOPPA_MONGO_CLUSTER_URL>${env.FLOPPA_MONGO_CLUSTER_URL}</FLOPPA_MONGO_CLUSTER_URL>
+                        <FLOPPA_MONGO_DATABASE>${env.FLOPPA_MONGO_DATABASE}}</FLOPPA_MONGO_DATABASE>
+                    </environmentVariables>
                 </configuration>
             </plugin>
             <plugin>

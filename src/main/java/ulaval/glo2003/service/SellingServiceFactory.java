@@ -19,18 +19,14 @@ import ulaval.glo2003.domain.seller.SellerFactory;
 
 public class SellingServiceFactory {
 
-    private final String FLOPPA_MONGO_CLUSTER_URL =
-            "mongodb+srv://root:ulaval@floppa-staging.sasi1f4.mongodb.net/?retryWrites=true&w=majority";
-    private final String FLOPPA_MONGO_DATABASE = "floppa-staging";
-
     public SellingService create() {
         MongoClient client = MongoClients.create(MongoClientSettings.builder()
                 .applyToClusterSettings(builder -> builder.serverSelectionTimeout(5000, TimeUnit.MILLISECONDS))
                 .applyToConnectionPoolSettings(builder -> builder.maxConnectionIdleTime(5000, TimeUnit.MILLISECONDS))
-                .applyConnectionString(new ConnectionString(FLOPPA_MONGO_CLUSTER_URL))
+                .applyConnectionString(new ConnectionString(System.getenv("FLOPPA_MONGO_CLUSTER_URL")))
                 .build());
         healthChek(client);
-        Datastore datastore = Morphia.createDatastore(client, FLOPPA_MONGO_DATABASE);
+        Datastore datastore = Morphia.createDatastore(client, System.getenv("FLOPPA_MONGO_DATABASE"));
         datastore.getMapper().mapPackage("ulaval.glo2003");
         datastore.ensureIndexes();
 
