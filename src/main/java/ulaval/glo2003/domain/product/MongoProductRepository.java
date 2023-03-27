@@ -24,14 +24,7 @@ public class MongoProductRepository implements IProductRepository {
 
         if (products.size() == 1) {
             MongoProduct mongoProduct = products.get(0);
-            return new Product(
-                    mongoProduct.id,
-                    mongoProduct.sellerId,
-                    mongoProduct.title,
-                    mongoProduct.createdAt,
-                    mongoProduct.description,
-                    mongoProduct.suggestedPrice,
-                    mongoProduct.category);
+            return mongoToDomain(mongoProduct);
         } else {
             throw new NotFoundException(String.format("Product with id '%s' not found", id));
         }
@@ -52,14 +45,7 @@ public class MongoProductRepository implements IProductRepository {
                         .contains(productFilter.getCategory().toLowerCase()))
                 .filter(mongoProduct -> mongoProduct.suggestedPrice <= productFilter.getMaxPrice())
                 .filter(mongoProduct -> mongoProduct.suggestedPrice >= productFilter.getMinPrice())
-                .map(mongoProduct -> new Product(
-                        mongoProduct.id,
-                        mongoProduct.sellerId,
-                        mongoProduct.title,
-                        mongoProduct.createdAt,
-                        mongoProduct.description,
-                        mongoProduct.suggestedPrice,
-                        mongoProduct.category))
+                .map(this::mongoToDomain)
                 .collect(Collectors.toList());
     }
 
@@ -67,19 +53,21 @@ public class MongoProductRepository implements IProductRepository {
     public List<Product> findAllBySellerId(String id) {
         Query<MongoProduct> productsQuery = datastore.find(MongoProduct.class).filter(Filters.eq("sellerId", id));
         return StreamSupport.stream(productsQuery.spliterator(), true)
-                .map(mongoProduct -> new Product(
-                        mongoProduct.id,
-                        mongoProduct.sellerId,
-                        mongoProduct.title,
-                        mongoProduct.createdAt,
-                        mongoProduct.description,
-                        mongoProduct.suggestedPrice,
-                        mongoProduct.category))
+                .map(this::mongoToDomain)
                 .collect(Collectors.toList());
     }
 
     @Override
     public void save(Product product) {
+        datastore.save(domainToMongo(product));
+    }
+
+    @Override
+    public void reset() {
+        datastore.getDatabase().drop();
+    }
+
+    private MongoProduct domainToMongo(Product product) {
         MongoProduct mongoProduct = new MongoProduct();
         mongoProduct.id = product.getId();
         mongoProduct.sellerId = product.getSellerId();
@@ -88,12 +76,17 @@ public class MongoProductRepository implements IProductRepository {
         mongoProduct.description = product.getDescription();
         mongoProduct.suggestedPrice = product.getSuggestedPrice();
         mongoProduct.category = product.getCategory();
-
-        datastore.save(mongoProduct);
+        return mongoProduct;
     }
 
-    @Override
-    public void reset() {
-        datastore.getDatabase().drop();
+    private Product mongoToDomain(MongoProduct mongoProduct) {
+        return new Product(
+                mongoProduct.id,
+                mongoProduct.sellerId,
+                mongoProduct.title,
+                mongoProduct.createdAt,
+                mongoProduct.description,
+                mongoProduct.suggestedPrice,
+                mongoProduct.category);
     }
 }

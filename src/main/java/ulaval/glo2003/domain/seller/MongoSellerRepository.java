@@ -24,14 +24,7 @@ public class MongoSellerRepository implements ISellerRepository {
 
         if (sellers.size() == 1) {
             MongoSeller mongoSeller = sellers.get(0);
-            return new Seller(
-                    mongoSeller.id,
-                    mongoSeller.name,
-                    mongoSeller.createdAt,
-                    mongoSeller.birthdate,
-                    mongoSeller.email,
-                    mongoSeller.phoneNumber,
-                    mongoSeller.bio);
+            return mongoToDomain(mongoSeller);
         } else {
             throw new NotFoundException(String.format("Seller with id '%s' not found", id));
         }
@@ -39,6 +32,15 @@ public class MongoSellerRepository implements ISellerRepository {
 
     @Override
     public void save(Seller seller) {
+        datastore.save(domainToMongo(seller));
+    }
+
+    @Override
+    public void reset() {
+        datastore.getDatabase().drop();
+    }
+
+    private MongoSeller domainToMongo(Seller seller) {
         MongoSeller mongoSeller = new MongoSeller();
         mongoSeller.id = seller.getId();
         mongoSeller.name = seller.getName();
@@ -47,12 +49,17 @@ public class MongoSellerRepository implements ISellerRepository {
         mongoSeller.phoneNumber = seller.getPhoneNumber();
         mongoSeller.bio = seller.getBio();
         mongoSeller.createdAt = seller.getCreatedAt();
-
-        datastore.save(mongoSeller);
+        return mongoSeller;
     }
 
-    @Override
-    public void reset() {
-        datastore.getDatabase().drop();
+    private Seller mongoToDomain(MongoSeller mongoSeller) {
+        return new Seller(
+                mongoSeller.id,
+                mongoSeller.name,
+                mongoSeller.createdAt,
+                mongoSeller.birthdate,
+                mongoSeller.email,
+                mongoSeller.phoneNumber,
+                mongoSeller.bio);
     }
 }

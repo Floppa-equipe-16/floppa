@@ -24,13 +24,7 @@ public class MongoOfferRepository implements IOfferRepository {
 
         if (offers.size() == 1) {
             MongoOffer mongoOffer = offers.get(0);
-            return new Offer(
-                    mongoOffer.id,
-                    mongoOffer.productId,
-                    mongoOffer.username,
-                    mongoOffer.amount,
-                    mongoOffer.message,
-                    mongoOffer.createdAt);
+            return mongoToDomain(mongoOffer);
         } else {
             throw new NotFoundException(String.format("Offer with id '%s' not found", id));
         }
@@ -40,18 +34,21 @@ public class MongoOfferRepository implements IOfferRepository {
     public List<Offer> findAllByProductId(String id) {
         Query<MongoOffer> offersQuery = datastore.find(MongoOffer.class).filter(Filters.eq("productId", id));
         return StreamSupport.stream(offersQuery.spliterator(), true)
-                .map(mongoOffer -> new Offer(
-                        mongoOffer.id,
-                        mongoOffer.productId,
-                        mongoOffer.username,
-                        mongoOffer.amount,
-                        mongoOffer.message,
-                        mongoOffer.createdAt))
+                .map(this::mongoToDomain)
                 .collect(Collectors.toList());
     }
 
     @Override
     public void save(Offer offer) {
+        datastore.save(domainToMongo(offer));
+    }
+
+    @Override
+    public void reset() {
+        datastore.getDatabase().drop();
+    }
+
+    private MongoOffer domainToMongo(Offer offer) {
         MongoOffer mongoOffer = new MongoOffer();
         mongoOffer.id = offer.getId();
         mongoOffer.productId = offer.getProductId();
@@ -59,12 +56,16 @@ public class MongoOfferRepository implements IOfferRepository {
         mongoOffer.amount = offer.getAmount();
         mongoOffer.message = offer.getMessage();
         mongoOffer.createdAt = offer.getCreatedAt();
-
-        datastore.save(mongoOffer);
+        return mongoOffer;
     }
 
-    @Override
-    public void reset() {
-        datastore.getDatabase().drop();
+    private Offer mongoToDomain(MongoOffer mongoOffer) {
+        return new Offer(
+                mongoOffer.id,
+                mongoOffer.productId,
+                mongoOffer.username,
+                mongoOffer.amount,
+                mongoOffer.message,
+                mongoOffer.createdAt);
     }
 }
