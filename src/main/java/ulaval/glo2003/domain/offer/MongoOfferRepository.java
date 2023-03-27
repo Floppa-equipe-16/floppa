@@ -24,7 +24,7 @@ public class MongoOfferRepository implements IOfferRepository {
 
         if (offers.size() == 1) {
             MongoOffer mongoOffer = offers.get(0);
-            return mongoToDomain(mongoOffer);
+            return deserialize(mongoOffer);
         } else {
             throw new NotFoundException(String.format("Offer with id '%s' not found", id));
         }
@@ -34,13 +34,13 @@ public class MongoOfferRepository implements IOfferRepository {
     public List<Offer> findAllByProductId(String id) {
         Query<MongoOffer> offersQuery = datastore.find(MongoOffer.class).filter(Filters.eq("productId", id));
         return StreamSupport.stream(offersQuery.spliterator(), true)
-                .map(this::mongoToDomain)
+                .map(this::deserialize)
                 .collect(Collectors.toList());
     }
 
     @Override
     public void save(Offer offer) {
-        datastore.save(domainToMongo(offer));
+        datastore.save(serialize(offer));
     }
 
     @Override
@@ -48,7 +48,7 @@ public class MongoOfferRepository implements IOfferRepository {
         datastore.getDatabase().drop();
     }
 
-    private MongoOffer domainToMongo(Offer offer) {
+    private MongoOffer serialize(Offer offer) {
         MongoOffer mongoOffer = new MongoOffer();
         mongoOffer.id = offer.getId();
         mongoOffer.productId = offer.getProductId();
@@ -59,7 +59,7 @@ public class MongoOfferRepository implements IOfferRepository {
         return mongoOffer;
     }
 
-    private Offer mongoToDomain(MongoOffer mongoOffer) {
+    private Offer deserialize(MongoOffer mongoOffer) {
         return new Offer(
                 mongoOffer.id,
                 mongoOffer.productId,

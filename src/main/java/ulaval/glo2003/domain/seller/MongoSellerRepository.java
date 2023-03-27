@@ -24,7 +24,7 @@ public class MongoSellerRepository implements ISellerRepository {
 
         if (sellers.size() == 1) {
             MongoSeller mongoSeller = sellers.get(0);
-            return mongoToDomain(mongoSeller);
+            return deserialize(mongoSeller);
         } else {
             throw new NotFoundException(String.format("Seller with id '%s' not found", id));
         }
@@ -32,7 +32,7 @@ public class MongoSellerRepository implements ISellerRepository {
 
     @Override
     public void save(Seller seller) {
-        datastore.save(domainToMongo(seller));
+        datastore.save(serialize(seller));
     }
 
     @Override
@@ -40,7 +40,7 @@ public class MongoSellerRepository implements ISellerRepository {
         datastore.getDatabase().drop();
     }
 
-    private MongoSeller domainToMongo(Seller seller) {
+    private MongoSeller serialize(Seller seller) {
         MongoSeller mongoSeller = new MongoSeller();
         mongoSeller.id = seller.getId();
         mongoSeller.name = seller.getName();
@@ -52,7 +52,7 @@ public class MongoSellerRepository implements ISellerRepository {
         return mongoSeller;
     }
 
-    private Seller mongoToDomain(MongoSeller mongoSeller) {
+    private Seller deserialize(MongoSeller mongoSeller) {
         return new Seller(
                 mongoSeller.id,
                 mongoSeller.name,

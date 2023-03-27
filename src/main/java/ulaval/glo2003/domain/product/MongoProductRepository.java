@@ -24,7 +24,7 @@ public class MongoProductRepository implements IProductRepository {
 
         if (products.size() == 1) {
             MongoProduct mongoProduct = products.get(0);
-            return mongoToDomain(mongoProduct);
+            return deserialize(mongoProduct);
         } else {
             throw new NotFoundException(String.format("Product with id '%s' not found", id));
         }
@@ -45,7 +45,7 @@ public class MongoProductRepository implements IProductRepository {
                         .contains(productFilter.getCategory().toLowerCase()))
                 .filter(mongoProduct -> mongoProduct.suggestedPrice <= productFilter.getMaxPrice())
                 .filter(mongoProduct -> mongoProduct.suggestedPrice >= productFilter.getMinPrice())
-                .map(this::mongoToDomain)
+                .map(this::deserialize)
                 .collect(Collectors.toList());
     }
 
@@ -53,13 +53,13 @@ public class MongoProductRepository implements IProductRepository {
     public List<Product> findAllBySellerId(String id) {
         Query<MongoProduct> productsQuery = datastore.find(MongoProduct.class).filter(Filters.eq("sellerId", id));
         return StreamSupport.stream(productsQuery.spliterator(), true)
-                .map(this::mongoToDomain)
+                .map(this::deserialize)
                 .collect(Collectors.toList());
     }
 
     @Override
     public void save(Product product) {
-        datastore.save(domainToMongo(product));
+        datastore.save(serialize(product));
     }
 
     @Override
@@ -67,7 +67,7 @@ public class MongoProductRepository implements IProductRepository {
         datastore.getDatabase().drop();
     }
 
-    private MongoProduct domainToMongo(Product product) {
+    private MongoProduct serialize(Product product) {
         MongoProduct mongoProduct = new MongoProduct();
         mongoProduct.id = product.getId();
         mongoProduct.sellerId = product.getSellerId();
@@ -79,7 +79,7 @@ public class MongoProductRepository implements IProductRepository {
         return mongoProduct;
     }
 
-    private Product mongoToDomain(MongoProduct mongoProduct) {
+    private Product deserialize(MongoProduct mongoProduct) {
         return new Product(
                 mongoProduct.id,
                 mongoProduct.sellerId,
