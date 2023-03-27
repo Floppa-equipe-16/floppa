@@ -23,17 +23,17 @@ public class ProductResponseTest {
 
     @Test
     public void productResponseEqualsToProductResponse() {
-        ProductResponse newProductionResponse = ProductTestUtils.createProductResponse();
+        ProductResponse newProductResponse = ProductTestUtils.createProductResponse();
 
-        assertThat(productResponse).isEqualTo(newProductionResponse);
+        assertThat(productResponse).isEqualTo(newProductResponse);
     }
 
     @Test
     public void productResponseNotEqualsToProductResponse() {
-        ProductResponse newProductionResponse = ProductTestUtils.createProductResponse();
+        ProductResponse newProductResponse = ProductTestUtils.createProductResponse();
         productResponse.id = "new id";
 
-        assertThat(productResponse).isNotEqualTo(newProductionResponse);
+        assertThat(productResponse).isNotEqualTo(newProductResponse);
     }
 
     @Test
