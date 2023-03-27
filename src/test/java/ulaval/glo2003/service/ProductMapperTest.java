@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import ulaval.glo2003.api.offer.OfferCollectionResponse;
 import ulaval.glo2003.api.product.ProductCollectionResponse;
+import ulaval.glo2003.api.product.ProductEquals;
 import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.domain.product.Product;
@@ -48,7 +49,7 @@ class ProductMapperTest {
 
         Product product = mapper.requestToProduct(ProductTestUtils.SELLER_ID, request);
 
-        assertThat(request).isEqualTo(product);
+        assertThat(ProductEquals.productRequestEqualsProduct(request, product)).isTrue();
     }
 
     @Test
@@ -57,7 +58,7 @@ class ProductMapperTest {
 
         ProductResponse response = mapper.productToResponse(productStub);
 
-        assertThat(response).isEqualTo(productStub);
+        assertThat(ProductEquals.productResponseEqualsProduct(response, productStub)).isTrue();
         assertThat(response.offers).isNotNull();
         assertThat(response.seller).isNull();
     }
@@ -69,7 +70,7 @@ class ProductMapperTest {
         ProductCollectionResponse response =
                 mapper.productsToCollectionResponse(List.of(mapper.productToResponse(productStub)));
 
-        assertThat(response.products.get(0)).isEqualTo(productStub);
+        assertThat(ProductEquals.productResponseEqualsProduct(response.products.get(0), productStub)).isTrue();
         assertThat(response.products.get(0).offers).isNotNull();
         assertThat(response.products.get(0).seller).isNull();
     }
@@ -80,7 +81,7 @@ class ProductMapperTest {
 
         ProductResponse response = mapper.productToResponseWithSeller(productStub, seller);
 
-        assertThat(response).isEqualTo(productStub);
+        assertThat(ProductEquals.productResponseEqualsProduct(response, productStub)).isTrue();
         assertThat(response.seller).isNotNull();
     }
 

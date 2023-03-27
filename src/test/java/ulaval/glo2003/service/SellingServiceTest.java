@@ -16,9 +16,11 @@ import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.domain.offer.IOfferRepository;
 import ulaval.glo2003.domain.offer.Offer;
+import ulaval.glo2003.domain.offer.OfferTestUtils;
 import ulaval.glo2003.domain.product.IProductRepository;
 import ulaval.glo2003.domain.product.Product;
 import ulaval.glo2003.domain.product.ProductFilter;
+import ulaval.glo2003.domain.product.ProductTestUtils;
 import ulaval.glo2003.domain.seller.ISellerRepository;
 import ulaval.glo2003.domain.seller.Seller;
 import ulaval.glo2003.domain.seller.SellerTestUtils;
@@ -129,7 +131,7 @@ class SellingServiceTest {
 
     @Test
     public void canCreateProductWhenSellerExists() {
-        ProductRequest request = createProductRequest();
+        ProductRequest request = ProductTestUtils.createProductRequest();
         when(productMapperMock.requestToProduct(SELLER_ID, request)).thenReturn(productStub);
         when(sellerRepositoryMock.findById(SELLER_ID)).thenReturn(sellerStub);
 
@@ -142,20 +144,11 @@ class SellingServiceTest {
 
     @Test
     public void createProductThrowsWhenSellerDoesNotExist() {
-        ProductRequest request = createProductRequest();
+        ProductRequest request = ProductTestUtils.createProductRequest();
         when(productMapperMock.requestToProduct(SELLER_ID, request)).thenReturn(productStub);
         when(sellerRepositoryMock.findById(SELLER_ID)).thenThrow(NotFoundException.class);
 
         assertThrows(NotFoundException.class, () -> sellingService.createProduct(SELLER_ID, request));
-    }
-
-    private ProductRequest createProductRequest() {
-        ProductRequest request = new ProductRequest();
-        request.title = "TITLE";
-        request.description = "DESCRIPTION";
-        request.category = "CATEGORY";
-        request.suggestedPrice = 10d;
-        return request;
     }
 
     @Test
@@ -225,7 +218,7 @@ class SellingServiceTest {
 
     @Test
     public void canCreateOfferWhenProductExists() {
-        OfferRequest request = createOfferRequest();
+        OfferRequest request = OfferTestUtils.createOfferRequest();
         String buyerName = "Alice";
         when(offerMapperMock.requestToOffer(PRODUCT_ID, buyerName, request)).thenReturn(offerStub);
         when(productRepositoryMock.findById(PRODUCT_ID)).thenReturn(productStub);
@@ -239,7 +232,7 @@ class SellingServiceTest {
 
     @Test
     public void createOfferThrowsWhenProductDoesNotExist() {
-        OfferRequest request = createOfferRequest();
+        OfferRequest request = OfferTestUtils.createOfferRequest();
         String buyerName = "Alice";
         when(offerMapperMock.requestToOffer(PRODUCT_ID, buyerName, request)).thenReturn(offerStub);
         when(productRepositoryMock.findById(PRODUCT_ID)).thenThrow(NotFoundException.class);
@@ -247,10 +240,4 @@ class SellingServiceTest {
         assertThrows(NotFoundException.class, () -> sellingService.createOffer(buyerName, PRODUCT_ID, request));
     }
 
-    private OfferRequest createOfferRequest() {
-        OfferRequest request = new OfferRequest();
-        request.message = "MESSAGE";
-        request.amount = 10d;
-        return request;
-    }
 }

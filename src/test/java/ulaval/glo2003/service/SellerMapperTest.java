@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import ulaval.glo2003.api.seller.SellerEquals;
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
 import ulaval.glo2003.domain.seller.Seller;
@@ -37,7 +38,7 @@ class SellerMapperTest {
 
         Seller seller = mapper.requestToSeller(request);
 
-        assertThat(request).isEqualTo(seller);
+        assertThat(SellerEquals.sellerRequestEqualsSeller(request, seller)).isTrue();
     }
 
     @Test
@@ -46,6 +47,6 @@ class SellerMapperTest {
 
         SellerResponse response = mapper.sellerToResponse(seller);
 
-        assertThat(response).isEqualTo(seller);
+        assertThat(SellerEquals.sellerResponseEqualsSeller(response, seller)).isTrue();
     }
 }

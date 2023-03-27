@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 
 public class OfferTest {
 
-    private static final String OTHER_ID = "2";
-
     private Offer offer;
     private Offer otherOffer;
 
@@ -34,7 +32,7 @@ public class OfferTest {
     @Test
     public void canCompareDifferentOffers() {
         otherOffer = new Offer(
-                OTHER_ID,
+                OfferTestUtils.ID_2,
                 OfferTestUtils.PRODUCT_ID,
                 OfferTestUtils.USERNAME,
                 OfferTestUtils.LOWEST_AMOUNT,

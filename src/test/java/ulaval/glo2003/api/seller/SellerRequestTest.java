@@ -83,20 +83,38 @@ public class SellerRequestTest {
     }
 
     @Test
-    public void sellerRequestNotEqualsToSellerRequest() {
-        sellerRequest.name = "Nothing";
+    public void sellerRequestNotEqualsToSellerRequestWhenNameDiff() {
+        sellerRequest.name = "???";
 
         assertThat(sellerRequest).isNotEqualTo(SellerTestUtils.createSellerRequest());
     }
 
     @Test
-    public void sellerRequestEqualsToSeller() {
-        assertThat(sellerRequest).isEqualTo(SellerTestUtils.createSeller());
+    public void sellerRequestNotEqualsToSellerRequestWhenBirthdateDiff() {
+        sellerRequest.birthdate = "???";
+
+        assertThat(sellerRequest).isNotEqualTo(SellerTestUtils.createSellerRequest());
     }
 
     @Test
-    public void sellerRequestNotEqualsToSeller() {
-        sellerRequest.name = "Nothing";
-        assertThat(sellerRequest).isNotEqualTo(SellerTestUtils.createSeller());
+    public void sellerRequestNotEqualsToSellerRequestWhenEmailDiff() {
+        sellerRequest.email = "???";
+
+        assertThat(sellerRequest).isNotEqualTo(SellerTestUtils.createSellerRequest());
     }
+
+    @Test
+    public void sellerRequestNotEqualsToSellerRequestWhenPhoneNumberDiff() {
+        sellerRequest.phoneNumber = "???";
+
+        assertThat(sellerRequest).isNotEqualTo(SellerTestUtils.createSellerRequest());
+    }
+
+    @Test
+    public void sellerRequestNotEqualsToSellerRequestWhenBioDiff() {
+        sellerRequest.bio = "???";
+
+        assertThat(sellerRequest).isNotEqualTo(SellerTestUtils.createSellerRequest());
+    }
+
 }

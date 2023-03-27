@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.domain.exceptions.MissingParamException;
-import ulaval.glo2003.domain.product.Product;
 import ulaval.glo2003.domain.product.ProductTestUtils;
 
 public class ProductRequestTest {
@@ -64,7 +63,7 @@ public class ProductRequestTest {
     }
 
     @Test
-    public void productRequestNotEqualsToProductRequest() {
+    public void productRequestNotEqualsToProductRequestWhenTitleDiff() {
         ProductRequest newProductRequest = ProductTestUtils.createProductRequest();
         newProductRequest.title = "new title";
 
@@ -72,17 +71,26 @@ public class ProductRequestTest {
     }
 
     @Test
-    public void productRequestEqualsToProduct() {
-        Product product = ProductTestUtils.createProduct();
+    public void productRequestNotEqualsToProductRequestWhenSuggestedPriceDiff() {
+        ProductRequest newProductRequest = ProductTestUtils.createProductRequest();
+        newProductRequest.suggestedPrice = 1d;
 
-        assertThat(productRequest).isEqualTo(product);
+        assertThat(productRequest).isNotEqualTo(newProductRequest);
     }
 
     @Test
-    public void productRequestNotEqualsToProduct() {
-        Product product = ProductTestUtils.createProduct();
-        productRequest.title = "new title";
+    public void productRequestNotEqualsToProductRequestWhenCategoryDiff() {
+        ProductRequest newProductRequest = ProductTestUtils.createProductRequest();
+        newProductRequest.category = "new category";
 
-        assertThat(productRequest).isNotEqualTo(product);
+        assertThat(productRequest).isNotEqualTo(newProductRequest);
+    }
+
+    @Test
+    public void productRequestNotEqualsToProductRequestWhenDescriptionDiff() {
+        ProductRequest newProductRequest = ProductTestUtils.createProductRequest();
+        newProductRequest.description = "new description";
+
+        assertThat(productRequest).isNotEqualTo(newProductRequest);
     }
 }

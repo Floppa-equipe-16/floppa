@@ -9,7 +9,7 @@ import ulaval.glo2003.api.offer.OfferResponse;
 
 public class OfferTestUtils {
     public static final String ID = "1";
-    public static final String ID_2 = "1";
+    public static final String ID_2 = "2";
     public static final String PRODUCT_ID = "PRODUCT";
     public static final String USERNAME = "2000-01-01";
     public static final Double LOWEST_AMOUNT = 25d;

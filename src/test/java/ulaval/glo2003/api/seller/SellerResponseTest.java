@@ -4,7 +4,6 @@ import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ulaval.glo2003.domain.seller.Seller;
 import ulaval.glo2003.domain.seller.SellerTestUtils;
 
 public class SellerResponseTest {
@@ -29,25 +28,61 @@ public class SellerResponseTest {
     }
 
     @Test
-    public void sellerResponseNotEqualsToSellerResponse() {
+    public void sellerResponseNotEqualsToSellerResponseWhenNameDiff() {
         SellerResponse newSellerResponse = SellerTestUtils.createSellerResponse();
-        sellerResponse.name = "new name";
+        sellerResponse.name = "???";
 
         assertThat(sellerResponse).isNotEqualTo(newSellerResponse);
     }
 
     @Test
-    public void sellerResponseEqualsToSeller() {
-        Seller seller = SellerTestUtils.createSeller();
+    public void sellerResponseNotEqualsToSellerResponseWhenIdDiff() {
+        SellerResponse newSellerResponse = SellerTestUtils.createSellerResponse();
+        sellerResponse.id = "???";
 
-        assertThat(sellerResponse).isEqualTo(seller);
+        assertThat(sellerResponse).isNotEqualTo(newSellerResponse);
     }
 
     @Test
-    public void sellerResponseNotEqualsToSeller() {
-        Seller seller = SellerTestUtils.createSeller();
-        sellerResponse.name = "new name";
+    public void sellerResponseNotEqualsToSellerResponseWhenPhoneNumberDiff() {
+        SellerResponse newSellerResponse = SellerTestUtils.createSellerResponse();
+        sellerResponse.phoneNumber = "???";
 
-        assertThat(sellerResponse).isNotEqualTo(seller);
+        assertThat(sellerResponse).isNotEqualTo(newSellerResponse);
     }
+
+    @Test
+    public void sellerResponseNotEqualsToSellerResponseWhenBioDiff() {
+        SellerResponse newSellerResponse = SellerTestUtils.createSellerResponse();
+        sellerResponse.bio = "???";
+
+        assertThat(sellerResponse).isNotEqualTo(newSellerResponse);
+    }
+
+    @Test
+    public void sellerResponseNotEqualsToSellerResponseWhenEamilDiff() {
+        SellerResponse newSellerResponse = SellerTestUtils.createSellerResponse();
+        sellerResponse.email = "???";
+
+        assertThat(sellerResponse).isNotEqualTo(newSellerResponse);
+    }
+
+    @Test
+    public void sellerResponseNotEqualsToSellerResponseWhenBirthdateDiff() {
+        SellerResponse newSellerResponse = SellerTestUtils.createSellerResponse();
+        sellerResponse.birthdate = "???";
+
+        assertThat(sellerResponse).isNotEqualTo(newSellerResponse);
+    }
+
+    @Test
+    public void sellerResponseNotEqualsToSellerResponseWhenCreateAtDiff() {
+        SellerResponse newSellerResponse = SellerTestUtils.createSellerResponse();
+        sellerResponse.createdAt = "???";
+
+        assertThat(sellerResponse).isNotEqualTo(newSellerResponse);
+    }
+
+
+
 }

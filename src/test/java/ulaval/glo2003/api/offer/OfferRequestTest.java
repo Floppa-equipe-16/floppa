@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.domain.exceptions.MissingParamException;
-import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.offer.OfferTestUtils;
 
 public class OfferRequestTest {
@@ -44,14 +43,14 @@ public class OfferRequestTest {
     }
 
     @Test
-    public void offerRequestEqualsToofferRequest() {
+    public void offerRequestEqualsToOfferRequest() {
         OfferRequest newofferRequest = OfferTestUtils.createOfferRequest();
 
         assertThat(offerRequest).isEqualTo(newofferRequest);
     }
 
     @Test
-    public void offerRequestNotEqualsToofferRequest() {
+    public void offerRequestNotEqualsToOfferRequestWhenMessageDiff() {
         OfferRequest newofferRequest = OfferTestUtils.createOfferRequest();
         newofferRequest.message = "new message";
 
@@ -59,17 +58,11 @@ public class OfferRequestTest {
     }
 
     @Test
-    public void offerRequestEqualsTooffer() {
-        Offer offer = OfferTestUtils.createOffer();
+    public void offerRequestNotEqualsToOfferRequestWhenAmountDiff() {
+        OfferRequest newofferRequest = OfferTestUtils.createOfferRequest();
+        newofferRequest.amount = 1d;
 
-        assertThat(offerRequest).isEqualTo(offer);
+        assertThat(offerRequest).isNotEqualTo(newofferRequest);
     }
 
-    @Test
-    public void offerRequestNotEqualsTooffer() {
-        Offer offer = OfferTestUtils.createOffer();
-        offerRequest.message = "new message";
-
-        assertThat(offerRequest).isNotEqualTo(offer);
-    }
 }

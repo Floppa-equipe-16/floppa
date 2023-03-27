@@ -4,7 +4,6 @@ import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.offer.OfferTestUtils;
 
 public class OfferResponseTest {
@@ -29,7 +28,7 @@ public class OfferResponseTest {
     }
 
     @Test
-    public void offerResponseNotEqualsToOfferResponse() {
+    public void offerResponseNotEqualsToOfferResponseWhenMessageDiff() {
         OfferResponse newOfferResponse = OfferTestUtils.createOfferResponse();
         offerResponse.message = "new message";
 
@@ -37,17 +36,28 @@ public class OfferResponseTest {
     }
 
     @Test
-    public void offerResponseEqualsToOffer() {
-        Offer offer = OfferTestUtils.createOffer();
+    public void offerResponseNotEqualsToOfferResponseWhenAmountDiff() {
+        OfferResponse newOfferResponse = OfferTestUtils.createOfferResponse();
+        offerResponse.amount = 1d;
 
-        assertThat(offerResponse).isEqualTo(offer);
+        assertThat(offerResponse).isNotEqualTo(newOfferResponse);
     }
 
     @Test
-    public void productResponseNotEqualsToProduct() {
-        Offer offer = OfferTestUtils.createOffer();
-        offerResponse.message = "new message";
+    public void offerResponseNotEqualsToOfferResponseWhenUsernameDiff() {
+        OfferResponse newOfferResponse = OfferTestUtils.createOfferResponse();
+        offerResponse.username = "new username";
 
-        assertThat(offerResponse).isNotEqualTo(offer);
+        assertThat(offerResponse).isNotEqualTo(newOfferResponse);
     }
+
+    @Test
+    public void offerResponseNotEqualsToOfferResponseWhenCreateAtDiff() {
+        OfferResponse newOfferResponse = OfferTestUtils.createOfferResponse();
+        offerResponse.createdAt = "????";
+
+        assertThat(offerResponse).isNotEqualTo(newOfferResponse);
+    }
+
+
 }

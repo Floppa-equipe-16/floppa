@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import ulaval.glo2003.api.offer.OfferCollectionResponse;
+import ulaval.glo2003.api.offer.OfferEquals;
 import ulaval.glo2003.api.offer.OfferRequest;
 import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.offer.OfferFactory;
@@ -37,7 +38,7 @@ class OfferMapperTest {
 
         Offer offer = mapper.requestToOffer(OfferTestUtils.PRODUCT_ID, OfferTestUtils.USERNAME, request);
 
-        assertThat(request).isEqualTo(offer);
+        assertThat(OfferEquals.OfferRequestEqualsOffer(request, offer)).isTrue();
     }
 
     @Test
