@@ -12,6 +12,7 @@ public class Product {
     private final String description;
     private final Double suggestedPrice;
     private final String category;
+    private final SaleStatus saleStatus;
     private final ArrayList<Offer> offers;
 
     public Product(
@@ -29,6 +30,7 @@ public class Product {
         this.description = description;
         this.suggestedPrice = suggestedPrice;
         this.category = category;
+        this.saleStatus = SaleStatus.ongoing;
         this.offers = new ArrayList<>();
     }
 
@@ -40,6 +42,7 @@ public class Product {
         category = that.getCategory();
         id = that.getId();
         createdAt = that.getCreatedAt();
+        saleStatus = that.getSaleStatus();
 
         offers = new ArrayList<>();
         that.getOffers().forEach(offer -> offers.add(new Offer(offer)));
@@ -63,6 +66,10 @@ public class Product {
 
     public String getCategory() {
         return category;
+    }
+
+    public SaleStatus getSaleStatus() {
+        return saleStatus;
     }
 
     public String getId() {

@@ -59,6 +59,7 @@ public class ProductMapper {
         response.category = product.getCategory();
         response.id = product.getId();
         response.createdAt = product.getCreatedAt();
+        response.saleStatus = product.getSaleStatus().toString();
 
         return response;
     }
