@@ -25,7 +25,7 @@ public class SellingServiceFactory {
                 .applyToConnectionPoolSettings(builder -> builder.maxConnectionIdleTime(5000, TimeUnit.MILLISECONDS))
                 .applyConnectionString(new ConnectionString(System.getenv("FLOPPA_MONGO_CLUSTER_URL")))
                 .build());
-        healthChek(client);
+        healthCheck(client);
         Datastore datastore = Morphia.createDatastore(client, System.getenv("FLOPPA_MONGO_DATABASE"));
         datastore.getMapper().mapPackage("ulaval.glo2003");
         datastore.ensureIndexes();
@@ -46,7 +46,7 @@ public class SellingServiceFactory {
                 sellerRepository, productRepository, offerRepository, sellerMapper, productMapper, offerMapper);
     }
 
-    private void healthChek(MongoClient client) {
+    private void healthCheck(MongoClient client) {
         client.listDatabaseNames().first();
     }
 }
