@@ -22,8 +22,7 @@ public class ProductValidatorTest {
     @Mock
     private Offer offerStub = mock(Offer.class);
 
-    private void setAllValidatorToValid(
-            MockedStatic<ProductValidator> productValidatorMockedStatic) {
+    private void setAllValidatorToValid(MockedStatic<ProductValidator> productValidatorMockedStatic) {
         productValidatorMockedStatic
                 .when(() -> ProductValidator.isSellerIdInvalid(any()))
                 .thenReturn(false);

@@ -73,29 +73,29 @@ public class SellerRequestTest {
     }
 
     @Test
-    public void sellerRequestEqualsToHimSelf(){
+    public void sellerRequestEqualsToHimSelf() {
         assertThat(sellerRequest).isEqualTo(sellerRequest);
     }
 
     @Test
-    public void sellerRequestEqualsToSellerRequest(){
+    public void sellerRequestEqualsToSellerRequest() {
         assertThat(sellerRequest).isEqualTo(SellerTestUtils.createSellerRequest());
     }
 
     @Test
-    public void sellerRequestNotEqualsToSellerRequest(){
+    public void sellerRequestNotEqualsToSellerRequest() {
         sellerRequest.name = "Nothing";
 
         assertThat(sellerRequest).isNotEqualTo(SellerTestUtils.createSellerRequest());
     }
 
     @Test
-    public void sellerRequestEqualsToSeller(){
+    public void sellerRequestEqualsToSeller() {
         assertThat(sellerRequest).isEqualTo(SellerTestUtils.createSeller());
     }
 
     @Test
-    public void sellerRequestNotEqualsToSeller(){
+    public void sellerRequestNotEqualsToSeller() {
         sellerRequest.name = "Nothing";
         assertThat(sellerRequest).isNotEqualTo(SellerTestUtils.createSeller());
     }

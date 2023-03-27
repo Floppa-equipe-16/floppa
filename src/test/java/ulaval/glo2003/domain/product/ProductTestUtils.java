@@ -1,14 +1,11 @@
 package ulaval.glo2003.domain.product;
 
-import ulaval.glo2003.api.product.ProductRequest;
-import ulaval.glo2003.api.product.ProductResponse;
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.time.Instant;
-
-
+import ulaval.glo2003.api.product.ProductRequest;
+import ulaval.glo2003.api.product.ProductResponse;
 
 public class ProductTestUtils {
     public static final String ID = "1";
@@ -21,7 +18,7 @@ public class ProductTestUtils {
     public static final String CATEGORY = ProductCategory.other.toString();
 
     public static Product createProduct() {
-        return new Product(ID, SELLER_ID,TITLE, CREATE_AT, DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
+        return new Product(ID, SELLER_ID, TITLE, CREATE_AT, DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
     }
 
     public static Product createProductStub() {
@@ -35,6 +32,7 @@ public class ProductTestUtils {
         when(product.getSuggestedPrice()).thenReturn(SUGGESTED_PRICE);
         return product;
     }
+
     public static ProductRequest createProductRequest() {
 
         ProductRequest request = new ProductRequest();
@@ -46,7 +44,7 @@ public class ProductTestUtils {
         return request;
     }
 
-    public static ProductResponse createProductResponse(){
+    public static ProductResponse createProductResponse() {
 
         ProductResponse response = new ProductResponse();
         response.title = TITLE;

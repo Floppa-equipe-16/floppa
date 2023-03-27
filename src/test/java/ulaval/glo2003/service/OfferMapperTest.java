@@ -30,7 +30,6 @@ class OfferMapperTest {
         offerStubs.add(OfferTestUtils.createOfferStub2());
     }
 
-
     @Test
     public void canMapRequestToOffer() {
         doReturn(offerStubs.get(0)).when(factory).createOffer(anyString(), anyString(), anyDouble(), anyString());
@@ -40,7 +39,6 @@ class OfferMapperTest {
 
         assertThat(request).isEqualTo(offer);
     }
-
 
     @Test
     public void canCreateSummaryResponseWithMultipleOffersCheckCount() {
@@ -77,7 +75,6 @@ class OfferMapperTest {
         assertThat(response.offers).isNull();
     }
 
-
     @Test
     public void createSummaryResponseIsEmptyWithNoOfferCheckCount() {
         OfferCollectionResponse response = mapper.offersToSummaryCollectionResponse(new ArrayList<>());
@@ -112,7 +109,6 @@ class OfferMapperTest {
 
         assertThat(response.offers).isNull();
     }
-
 
     @Test
     public void canCreateCompleteResponseWithMultipleOffersCheckCount() {

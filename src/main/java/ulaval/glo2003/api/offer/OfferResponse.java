@@ -2,7 +2,6 @@ package ulaval.glo2003.api.offer;
 
 import ulaval.glo2003.domain.offer.Offer;
 
-
 public class OfferResponse {
     public String username;
     public Double amount;
@@ -16,18 +15,18 @@ public class OfferResponse {
         createdAt = offer.getCreatedAt();
     }
 
-    private boolean isOfferResponseEquals(OfferResponse response){
-        return username.equals(response.username) &&
-                amount.equals(response.amount) &&
-                message.equals(response.message) &&
-                createdAt.equals(response.createdAt);
+    private boolean isOfferResponseEquals(OfferResponse response) {
+        return username.equals(response.username)
+                && amount.equals(response.amount)
+                && message.equals(response.message)
+                && createdAt.equals(response.createdAt);
     }
 
-    private boolean isOfferEquals(Offer offer){
-        return username.equals(offer.getUsername()) &&
-                amount.equals(offer.getAmount()) &&
-                message.equals(offer.getMessage()) &&
-                createdAt.equals(offer.getCreatedAt());
+    private boolean isOfferEquals(Offer offer) {
+        return username.equals(offer.getUsername())
+                && amount.equals(offer.getAmount())
+                && message.equals(offer.getMessage())
+                && createdAt.equals(offer.getCreatedAt());
     }
 
     @Override
@@ -36,13 +35,12 @@ public class OfferResponse {
             return true;
         }
 
-        if (o instanceof OfferResponse){
+        if (o instanceof OfferResponse) {
             OfferResponse offerResponse = ((OfferResponse) o);
             return isOfferResponseEquals(offerResponse);
-        }
-        else if (o instanceof Offer){
+        } else if (o instanceof Offer) {
             Offer offer = ((Offer) o);
             return isOfferEquals(offer);
-        }else return false;
+        } else return false;
     }
 }

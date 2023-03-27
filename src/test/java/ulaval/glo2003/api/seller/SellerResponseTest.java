@@ -1,6 +1,5 @@
 package ulaval.glo2003.api.seller;
 
-
 import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -18,19 +17,19 @@ public class SellerResponseTest {
     }
 
     @Test
-    public void sellerResponseEqualsToHimSelf(){
+    public void sellerResponseEqualsToHimSelf() {
         assertThat(sellerResponse).isEqualTo(sellerResponse);
     }
 
     @Test
-    public void sellerResponseEqualsToSellerResponse(){
+    public void sellerResponseEqualsToSellerResponse() {
         SellerResponse newSellerResponse = SellerTestUtils.createSellerResponse();
 
         assertThat(sellerResponse).isEqualTo(newSellerResponse);
     }
 
     @Test
-    public void sellerResponseNotEqualsToSellerResponse(){
+    public void sellerResponseNotEqualsToSellerResponse() {
         SellerResponse newSellerResponse = SellerTestUtils.createSellerResponse();
         sellerResponse.name = "new name";
 
@@ -38,14 +37,14 @@ public class SellerResponseTest {
     }
 
     @Test
-    public void sellerResponseEqualsToSeller(){
+    public void sellerResponseEqualsToSeller() {
         Seller seller = SellerTestUtils.createSeller();
 
         assertThat(sellerResponse).isEqualTo(seller);
     }
 
     @Test
-    public void sellerResponseNotEqualsToSeller(){
+    public void sellerResponseNotEqualsToSeller() {
         Seller seller = SellerTestUtils.createSeller();
         sellerResponse.name = "new name";
 

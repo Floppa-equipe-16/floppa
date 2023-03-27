@@ -40,7 +40,9 @@ class ProductMapperTest {
 
     @Test
     public void canMapRequestToProduct() {
-        doReturn(productStub).when(factory).createProduct(anyString(),anyString(),anyString(),anyDouble(),anyString());
+        doReturn(productStub)
+                .when(factory)
+                .createProduct(anyString(), anyString(), anyString(), anyDouble(), anyString());
 
         ProductRequest request = ProductTestUtils.createProductRequest();
 
@@ -48,8 +50,6 @@ class ProductMapperTest {
 
         assertThat(request).isEqualTo(product);
     }
-
-
 
     @Test
     public void canMapProductToResponse() {
@@ -68,7 +68,6 @@ class ProductMapperTest {
 
         ProductCollectionResponse response =
                 mapper.productsToCollectionResponse(List.of(mapper.productToResponse(productStub)));
-
 
         assertThat(response.products.get(0)).isEqualTo(productStub);
         assertThat(response.products.get(0).offers).isNotNull();

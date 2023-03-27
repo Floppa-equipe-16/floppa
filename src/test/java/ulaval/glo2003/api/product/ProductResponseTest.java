@@ -1,11 +1,11 @@
 package ulaval.glo2003.api.product;
 
 import static com.google.common.truth.Truth.assertThat;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.domain.product.Product;
 import ulaval.glo2003.domain.product.ProductTestUtils;
-
 
 public class ProductResponseTest {
 
@@ -17,19 +17,19 @@ public class ProductResponseTest {
     }
 
     @Test
-    public void productResponseEqualsToHimSelf(){
+    public void productResponseEqualsToHimSelf() {
         assertThat(productResponse).isEqualTo(productResponse);
     }
 
     @Test
-    public void productResponseEqualsToProductResponse(){
+    public void productResponseEqualsToProductResponse() {
         ProductResponse newProductionResponse = ProductTestUtils.createProductResponse();
 
         assertThat(productResponse).isEqualTo(newProductionResponse);
     }
 
     @Test
-    public void productResponseNotEqualsToProductResponse(){
+    public void productResponseNotEqualsToProductResponse() {
         ProductResponse newProductionResponse = ProductTestUtils.createProductResponse();
         productResponse.id = "new id";
 
@@ -37,18 +37,17 @@ public class ProductResponseTest {
     }
 
     @Test
-    public void productResponseEqualsToProduct(){
+    public void productResponseEqualsToProduct() {
         Product product = ProductTestUtils.createProduct();
 
         assertThat(productResponse).isEqualTo(product);
     }
 
     @Test
-    public void productResponseNotEqualsToProduct(){
+    public void productResponseNotEqualsToProduct() {
         Product product = ProductTestUtils.createProduct();
         productResponse.id = "new id";
 
         assertThat(productResponse).isNotEqualTo(product);
     }
-
 }

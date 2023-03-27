@@ -17,7 +17,6 @@ public class OfferRequestTest {
     @BeforeEach
     public void setUp() {
         offerRequest = OfferTestUtils.createOfferRequest();
-
     }
 
     @Test
@@ -40,19 +39,19 @@ public class OfferRequestTest {
     }
 
     @Test
-    public void offerRequestEqualsToHimSelf(){
+    public void offerRequestEqualsToHimSelf() {
         assertThat(offerRequest).isEqualTo(offerRequest);
     }
 
     @Test
-    public void offerRequestEqualsToofferRequest(){
+    public void offerRequestEqualsToofferRequest() {
         OfferRequest newofferRequest = OfferTestUtils.createOfferRequest();
 
         assertThat(offerRequest).isEqualTo(newofferRequest);
     }
 
     @Test
-    public void offerRequestNotEqualsToofferRequest(){
+    public void offerRequestNotEqualsToofferRequest() {
         OfferRequest newofferRequest = OfferTestUtils.createOfferRequest();
         newofferRequest.message = "new message";
 
@@ -60,14 +59,14 @@ public class OfferRequestTest {
     }
 
     @Test
-    public void offerRequestEqualsTooffer(){
+    public void offerRequestEqualsTooffer() {
         Offer offer = OfferTestUtils.createOffer();
 
         assertThat(offerRequest).isEqualTo(offer);
     }
 
     @Test
-    public void offerRequestNotEqualsTooffer(){
+    public void offerRequestNotEqualsTooffer() {
         Offer offer = OfferTestUtils.createOffer();
         offerRequest.message = "new message";
 

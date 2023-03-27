@@ -12,7 +12,7 @@ class OfferFactoryTest {
     private static final String USERNAME = "Bob";
     private static final String MESSAGE =
             "123456789-123456789-123456798-123456789-123456789-123456789-123456789-123456789-123456789-123456789-";
-    private static  final Double AMOUNT = 10d;
+    private static final Double AMOUNT = 10d;
     private OfferFactory factory;
 
     @BeforeEach

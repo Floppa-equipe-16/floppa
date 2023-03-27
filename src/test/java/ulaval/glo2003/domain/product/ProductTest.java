@@ -49,15 +49,14 @@ public class ProductTest {
 
     @Test
     public void canCompareDifferentProducts() {
-        Product differentProduct =
-                new Product(
-                        "ABC",
-                        ProductTestUtils.SELLER_ID,
-                        ProductTestUtils.TITLE,
-                        ProductTestUtils.CREATE_AT,
-                        ProductTestUtils.DESCRIPTION,
-                        ProductTestUtils.SUGGESTED_PRICE,
-                        ProductTestUtils.CATEGORY);
+        Product differentProduct = new Product(
+                "ABC",
+                ProductTestUtils.SELLER_ID,
+                ProductTestUtils.TITLE,
+                ProductTestUtils.CREATE_AT,
+                ProductTestUtils.DESCRIPTION,
+                ProductTestUtils.SUGGESTED_PRICE,
+                ProductTestUtils.CATEGORY);
 
         assertThat(product).isNotEqualTo(differentProduct);
     }

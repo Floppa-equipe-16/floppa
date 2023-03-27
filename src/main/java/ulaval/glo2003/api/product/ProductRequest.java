@@ -16,19 +16,18 @@ public class ProductRequest {
         if (category == null) throw new MissingParamException("category");
     }
 
-    private boolean isProductRequestEquals(ProductRequest request){
-        return title.equals(request.title) &&
-                description.equals(request.description) &&
-                suggestedPrice.equals(request.suggestedPrice) &&
-                category.equals(request.category);
-
+    private boolean isProductRequestEquals(ProductRequest request) {
+        return title.equals(request.title)
+                && description.equals(request.description)
+                && suggestedPrice.equals(request.suggestedPrice)
+                && category.equals(request.category);
     }
 
-    private boolean isProductEquals(Product product){
-        return title.equals(product.getTitle()) &&
-                description.equals(product.getDescription()) &&
-                suggestedPrice.equals(product.getSuggestedPrice()) &&
-                category.equals(product.getCategory());
+    private boolean isProductEquals(Product product) {
+        return title.equals(product.getTitle())
+                && description.equals(product.getDescription())
+                && suggestedPrice.equals(product.getSuggestedPrice())
+                && category.equals(product.getCategory());
     }
 
     @Override
@@ -37,13 +36,12 @@ public class ProductRequest {
             return true;
         }
 
-        if (o instanceof ProductRequest){
+        if (o instanceof ProductRequest) {
             ProductRequest productRequest = ((ProductRequest) o);
             return isProductRequestEquals(productRequest);
-        }
-        else if (o instanceof Product){
+        } else if (o instanceof Product) {
             Product product = ((Product) o);
             return isProductEquals(product);
-        }else return false;
+        } else return false;
     }
 }

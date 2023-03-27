@@ -52,19 +52,19 @@ public class ProductRequestTest {
     }
 
     @Test
-    public void productRequestEqualsToHimSelf(){
+    public void productRequestEqualsToHimSelf() {
         assertThat(productRequest).isEqualTo(productRequest);
     }
 
     @Test
-    public void productRequestEqualsToProductRequest(){
+    public void productRequestEqualsToProductRequest() {
         ProductRequest newProductRequest = ProductTestUtils.createProductRequest();
 
         assertThat(productRequest).isEqualTo(newProductRequest);
     }
 
     @Test
-    public void productRequestNotEqualsToProductRequest(){
+    public void productRequestNotEqualsToProductRequest() {
         ProductRequest newProductRequest = ProductTestUtils.createProductRequest();
         newProductRequest.title = "new title";
 
@@ -72,14 +72,14 @@ public class ProductRequestTest {
     }
 
     @Test
-    public void productRequestEqualsToProduct(){
+    public void productRequestEqualsToProduct() {
         Product product = ProductTestUtils.createProduct();
 
         assertThat(productRequest).isEqualTo(product);
     }
 
     @Test
-    public void productRequestNotEqualsToProduct(){
+    public void productRequestNotEqualsToProduct() {
         Product product = ProductTestUtils.createProduct();
         productRequest.title = "new title";
 

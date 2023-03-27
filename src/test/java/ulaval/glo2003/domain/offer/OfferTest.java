@@ -17,7 +17,6 @@ public class OfferTest {
         offer = OfferTestUtils.createOffer();
     }
 
-
     @Test
     public void canCopyOffer() {
         Offer offerCopy = new Offer(offer);
@@ -40,9 +39,7 @@ public class OfferTest {
                 OfferTestUtils.USERNAME,
                 OfferTestUtils.LOWEST_AMOUNT,
                 OfferTestUtils.MESSAGE,
-                OfferTestUtils.CREATE_AT
-        );
-
+                OfferTestUtils.CREATE_AT);
 
         assertThat(offer).isNotEqualTo(otherOffer);
     }

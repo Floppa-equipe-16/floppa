@@ -1,11 +1,11 @@
 package ulaval.glo2003.api.offer;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.offer.OfferTestUtils;
-
-import static com.google.common.truth.Truth.assertThat;
 
 public class OfferResponseTest {
 
@@ -17,19 +17,19 @@ public class OfferResponseTest {
     }
 
     @Test
-    public void offerResponseEqualsToHimSelf(){
+    public void offerResponseEqualsToHimSelf() {
         assertThat(offerResponse).isEqualTo(offerResponse);
     }
 
     @Test
-    public void offerResponseEqualsToOfferResponse(){
+    public void offerResponseEqualsToOfferResponse() {
         OfferResponse newOfferResponse = OfferTestUtils.createOfferResponse();
 
         assertThat(offerResponse).isEqualTo(newOfferResponse);
     }
 
     @Test
-    public void offerResponseNotEqualsToOfferResponse(){
+    public void offerResponseNotEqualsToOfferResponse() {
         OfferResponse newOfferResponse = OfferTestUtils.createOfferResponse();
         offerResponse.message = "new message";
 
@@ -37,14 +37,14 @@ public class OfferResponseTest {
     }
 
     @Test
-    public void offerResponseEqualsToOffer(){
+    public void offerResponseEqualsToOffer() {
         Offer offer = OfferTestUtils.createOffer();
 
         assertThat(offerResponse).isEqualTo(offer);
     }
 
     @Test
-    public void productResponseNotEqualsToProduct(){
+    public void productResponseNotEqualsToProduct() {
         Offer offer = OfferTestUtils.createOffer();
         offerResponse.message = "new message";
 

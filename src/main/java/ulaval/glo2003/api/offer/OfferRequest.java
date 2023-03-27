@@ -12,14 +12,12 @@ public class OfferRequest {
         if (message == null) throw new MissingParamException("message");
     }
 
-    private boolean isOfferRequestEquals(OfferRequest request){
-        return amount.equals(request.amount) &&
-                message.equals(request.message);
+    private boolean isOfferRequestEquals(OfferRequest request) {
+        return amount.equals(request.amount) && message.equals(request.message);
     }
 
-    private boolean isOfferEquals(Offer offer){
-        return amount.equals(offer.getAmount()) &&
-                message.equals(offer.getMessage());
+    private boolean isOfferEquals(Offer offer) {
+        return amount.equals(offer.getAmount()) && message.equals(offer.getMessage());
     }
 
     @Override
@@ -28,13 +26,12 @@ public class OfferRequest {
             return true;
         }
 
-        if (o instanceof OfferRequest){
+        if (o instanceof OfferRequest) {
             OfferRequest offerRequest = ((OfferRequest) o);
             return isOfferRequestEquals(offerRequest);
-        }
-        else if (o instanceof Offer){
+        } else if (o instanceof Offer) {
             Offer offer = ((Offer) o);
             return isOfferEquals(offer);
-        }else return false;
+        } else return false;
     }
 }

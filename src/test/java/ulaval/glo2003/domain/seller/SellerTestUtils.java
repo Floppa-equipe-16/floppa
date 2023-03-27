@@ -43,7 +43,7 @@ public class SellerTestUtils {
         return request;
     }
 
-    public static SellerResponse createSellerResponse(){
+    public static SellerResponse createSellerResponse() {
         SellerResponse response = new SellerResponse();
         response.name = NAME;
         response.birthdate = BIRTHDATE;
