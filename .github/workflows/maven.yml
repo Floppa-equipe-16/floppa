@@ -17,6 +17,9 @@ on:
 jobs:
   formatting:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        mongodb-version: [4.9]
 
     steps:
       - uses: actions/checkout@v3
@@ -46,6 +49,10 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn -B compile --file pom.xml
+      - name: Start MongoDB v${{ matrix.mongodb-version }}
+        uses: supercharge/mongodb-github-action@1.2.0
+        with:
+           mongodb-version: ${{ matrix.mongodb-version }}
 
 
   test:
@@ -60,9 +67,5 @@ jobs:
           java-version: '11'
           distribution: 'corretto'
           cache: maven
-      - name: Use MongoDB in Github Actions
-        uses: MongoCamp/mongodb-github-action@1.2.0
-        with:
-          mongodb-version: default
       - name: Test with Maven
         run: mvn -B test --file pom.xml
