@@ -16,8 +16,8 @@ import ulaval.glo2003.api.product.ProductEquals;
 import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.domain.product.Product;
+import ulaval.glo2003.domain.product.ProductCategory;
 import ulaval.glo2003.domain.product.ProductFactory;
-import ulaval.glo2003.domain.product.ProductTestUtils;
 import ulaval.glo2003.domain.seller.Seller;
 import ulaval.glo2003.domain.seller.SellerTestUtils;
 
@@ -37,6 +37,14 @@ class ProductMapperTest {
     @BeforeEach
     public void setUp() {
         mapper = new ProductMapper(factory, offerMapper);
+
+        when(productStub.getId()).thenReturn(ID);
+        when(productStub.getSellerId()).thenReturn(SELLER_ID);
+        when(productStub.getTitle()).thenReturn(TITLE);
+        when(productStub.getDescription()).thenReturn(DESCRIPTION);
+        when(productStub.getSuggestedPrice()).thenReturn(SUGGESTED_PRICE);
+        when(productStub.getCategory()).thenReturn(CATEGORY);
+        when(productStub.getSaleStatus()).thenReturn(SaleStatus.ongoing);
     }
 
     @Test
