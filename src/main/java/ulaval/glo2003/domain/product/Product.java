@@ -22,6 +22,7 @@ public class Product {
             String createdAt,
             String description,
             Double suggestedPrice,
+            SaleStatus saleStatus,
             String category) {
         this.id = id;
         this.sellerId = sellerId;
@@ -30,7 +31,7 @@ public class Product {
         this.description = description;
         this.suggestedPrice = suggestedPrice;
         this.category = category;
-        this.saleStatus = SaleStatus.ongoing;
+        this.saleStatus = saleStatus;
         this.offers = new ArrayList<>();
     }
 

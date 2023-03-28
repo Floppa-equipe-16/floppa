@@ -56,6 +56,7 @@ public class ProductTest {
                 ProductTestUtils.CREATED_AT,
                 ProductTestUtils.DESCRIPTION,
                 ProductTestUtils.SUGGESTED_PRICE,
+                ProductTestUtils.SALE_STATUS,
                 ProductTestUtils.CATEGORY);
 
         assertThat(product).isNotEqualTo(differentProduct);

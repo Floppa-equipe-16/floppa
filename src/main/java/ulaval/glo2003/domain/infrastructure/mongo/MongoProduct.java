@@ -14,5 +14,6 @@ public class MongoProduct {
     public String createdAt;
     public String description;
     public Double suggestedPrice;
+    public String saleStatus;
     public String category;
 }

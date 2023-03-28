@@ -16,6 +16,7 @@ public class ProductEquals {
                 && response.suggestedPrice.equals(product.getSuggestedPrice())
                 && response.category.equals(product.getCategory())
                 && response.id.equals(product.getId())
-                && response.createdAt.equals(product.getCreatedAt());
+                && response.createdAt.equals(product.getCreatedAt())
+                && response.saleStatus.equals(product.getSaleStatus().toString());
     }
 }
