@@ -28,7 +28,8 @@ public class ProductTest {
 
     @BeforeEach
     public void setUp() {
-        product = new Product(ID, SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, SALE_STATUS, CATEGORY);
+        product = new Product(
+                ID, SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, SALE_STATUS, CATEGORY);
     }
 
     @Test
@@ -51,16 +52,16 @@ public class ProductTest {
 
     @Test
     public void canCompareIdenticalProducts() {
-        Product identicalProduct =
-                new Product(ID, SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, SALE_STATUS, CATEGORY);
+        Product identicalProduct = new Product(
+                ID, SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, SALE_STATUS, CATEGORY);
 
         assertThat(product).isEqualTo(identicalProduct);
     }
 
     @Test
     public void canCompareDifferentProducts() {
-        Product differentProduct =
-                new Product("ABC", SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, SALE_STATUS, CATEGORY);
+        Product differentProduct = new Product(
+                "ABC", SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, SALE_STATUS, CATEGORY);
 
         assertThat(product).isNotEqualTo(differentProduct);
     }
