@@ -4,13 +4,13 @@ import dev.morphia.Datastore;
 import dev.morphia.query.Query;
 import dev.morphia.query.filters.Filters;
 import jakarta.ws.rs.NotFoundException;
+import java.util.List;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import ulaval.glo2003.domain.product.IProductRepository;
 import ulaval.glo2003.domain.product.Product;
 import ulaval.glo2003.domain.product.ProductFilter;
-
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 public class MongoProductRepository implements IProductRepository {
 
@@ -36,19 +36,15 @@ public class MongoProductRepository implements IProductRepository {
 
     @Override
     public List<Product> findAll(ProductFilter productFilter) {
-        Query<MongoProduct> productsQuery = datastore.find(MongoProduct.class);
+        Query<MongoProduct> productsQuery = datastore
+                .find(MongoProduct.class)
+                .filter(
+                        Filters.eq("sellerId", Pattern.compile(productFilter.getSellerId())),
+                        Filters.eq("title", Pattern.compile(productFilter.getTitle(), Pattern.CASE_INSENSITIVE)),
+                        Filters.eq("category", Pattern.compile(productFilter.getCategory(), Pattern.CASE_INSENSITIVE)),
+                        Filters.lte("suggestedPrice", productFilter.getMaxPrice()),
+                        Filters.gte("suggestedPrice", productFilter.getMinPrice()));
         return StreamSupport.stream(productsQuery.spliterator(), true)
-                .filter(mongoProduct -> mongoProduct.sellerId.contains(productFilter.getSellerId()))
-                .filter(mongoProduct -> mongoProduct
-                        .title
-                        .toLowerCase()
-                        .contains(productFilter.getTitle().toLowerCase()))
-                .filter(mongoProduct -> mongoProduct
-                        .category
-                        .toLowerCase()
-                        .contains(productFilter.getCategory().toLowerCase()))
-                .filter(mongoProduct -> mongoProduct.suggestedPrice <= productFilter.getMaxPrice())
-                .filter(mongoProduct -> mongoProduct.suggestedPrice >= productFilter.getMinPrice())
                 .map(this::deserialize)
                 .collect(Collectors.toList());
     }

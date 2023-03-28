@@ -5,7 +5,6 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
-
 import java.util.concurrent.TimeUnit;
 
 public class MongoTestUtils {

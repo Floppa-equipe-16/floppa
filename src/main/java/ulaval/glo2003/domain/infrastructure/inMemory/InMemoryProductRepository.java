@@ -1,15 +1,14 @@
 package ulaval.glo2003.domain.infrastructure.inMemory;
 
 import jakarta.ws.rs.NotFoundException;
-import ulaval.glo2003.domain.product.IProductRepository;
-import ulaval.glo2003.domain.product.Product;
-import ulaval.glo2003.domain.product.ProductFilter;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import ulaval.glo2003.domain.product.IProductRepository;
+import ulaval.glo2003.domain.product.Product;
+import ulaval.glo2003.domain.product.ProductFilter;
 
 public class InMemoryProductRepository implements IProductRepository {
     private final Map<String, Product> products;

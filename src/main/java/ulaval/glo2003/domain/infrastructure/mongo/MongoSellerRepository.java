@@ -4,12 +4,11 @@ import dev.morphia.Datastore;
 import dev.morphia.query.Query;
 import dev.morphia.query.filters.Filters;
 import jakarta.ws.rs.NotFoundException;
-import ulaval.glo2003.domain.seller.ISellerRepository;
-import ulaval.glo2003.domain.seller.Seller;
-
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+import ulaval.glo2003.domain.seller.ISellerRepository;
+import ulaval.glo2003.domain.seller.Seller;
 
 public class MongoSellerRepository implements ISellerRepository {
 
