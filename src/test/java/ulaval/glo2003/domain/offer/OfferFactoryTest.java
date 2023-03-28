@@ -12,7 +12,7 @@ class OfferFactoryTest {
     private static final String USERNAME = "Bob";
     private static final String MESSAGE =
             "123456789-123456789-123456798-123456789-123456789-123456789-123456789-123456789-123456789-123456789-";
-
+    private static final Double AMOUNT = 10d;
     private OfferFactory factory;
 
     @BeforeEach
@@ -21,14 +21,44 @@ class OfferFactoryTest {
     }
 
     @Test
-    public void canCreateOffer() {
-        Offer offer = factory.createOffer(PRODUCT_ID, USERNAME, 10d, MESSAGE);
+    public void canCreateOfferCheckOfferId() {
+        Offer offer = factory.createOffer(PRODUCT_ID, USERNAME, AMOUNT, MESSAGE);
 
         assertThat(offer.getId()).isNotEmpty();
+    }
+
+    @Test
+    public void canCreateOfferCheckProductId() {
+        Offer offer = factory.createOffer(PRODUCT_ID, USERNAME, AMOUNT, MESSAGE);
+
         assertThat(offer.getProductId()).isEqualTo(PRODUCT_ID);
+    }
+
+    @Test
+    public void canCreateOfferCheckCreateAt() {
+        Offer offer = factory.createOffer(PRODUCT_ID, USERNAME, AMOUNT, MESSAGE);
+
         assertThat(offer.getCreatedAt()).isNotEmpty();
+    }
+
+    @Test
+    public void canCreateOfferCheckUsername() {
+        Offer offer = factory.createOffer(PRODUCT_ID, USERNAME, AMOUNT, MESSAGE);
+
         assertThat(offer.getUsername()).isEqualTo(USERNAME);
-        assertThat(offer.getAmount()).isEqualTo(10d);
+    }
+
+    @Test
+    public void canCreateOfferCheckAmount() {
+        Offer offer = factory.createOffer(PRODUCT_ID, USERNAME, AMOUNT, MESSAGE);
+
+        assertThat(offer.getAmount()).isEqualTo(AMOUNT);
+    }
+
+    @Test
+    public void canCreateOfferCheckMessage() {
+        Offer offer = factory.createOffer(PRODUCT_ID, USERNAME, AMOUNT, MESSAGE);
+
         assertThat(offer.getMessage()).isEqualTo(MESSAGE);
     }
 

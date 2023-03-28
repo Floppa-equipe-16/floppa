@@ -16,4 +16,24 @@ public class SellerRequest {
         if (phoneNumber == null) throw new MissingParamException("phone number");
         if (bio == null) throw new MissingParamException("bio");
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (o instanceof SellerRequest) {
+            SellerRequest sellerRequest = ((SellerRequest) o);
+            return isEqualsTo(sellerRequest);
+        } else return false;
+    }
+
+    private boolean isEqualsTo(SellerRequest sellerRequest) {
+        return name.equals(sellerRequest.name)
+                && birthdate.equals(sellerRequest.birthdate)
+                && email.equals(sellerRequest.email)
+                && phoneNumber.equals(sellerRequest.phoneNumber)
+                && bio.equals(sellerRequest.bio);
+    }
 }
