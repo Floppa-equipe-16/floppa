@@ -1,7 +1,7 @@
 package ulaval.glo2003.domain.product;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -11,19 +11,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-class InMemoryProductRepositoryTest {
+public abstract class IProductRepositoryTest {
+
     private static final String ID = "1";
     private static final String SECOND_ID = "2";
     private static final String SELLER_ID = "SELLER";
 
-    private InMemoryProductRepository repository;
+    private final IProductRepository repository = createRepository();
 
     @Mock
     private Product productStub;
 
     @BeforeEach
     public void setUp() {
-        repository = new InMemoryProductRepository();
+        repository.reset();
 
         productStub = createProductStub(ID, SELLER_ID);
     }
@@ -137,4 +138,6 @@ class InMemoryProductRepositoryTest {
         when(stub.getCategory()).thenReturn(ProductCategory.other.toString());
         return stub;
     }
+
+    protected abstract IProductRepository createRepository();
 }

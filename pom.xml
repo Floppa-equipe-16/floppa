@@ -69,6 +69,16 @@
             <version>5.1.1</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-sync</artifactId>
+            <version>4.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.morphia.morphia</groupId>
+            <artifactId>morphia-core</artifactId>
+            <version>2.3.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -122,6 +132,10 @@
                 </executions>
                 <configuration>
                     <mainClass>ulaval.glo2003.Main</mainClass>
+                    <environmentVariables>
+                        <FLOPPA_MONGO_CLUSTER_URL>${env.FLOPPA_MONGO_CLUSTER_URL}</FLOPPA_MONGO_CLUSTER_URL>
+                        <FLOPPA_MONGO_DATABASE>${env.FLOPPA_MONGO_DATABASE}}</FLOPPA_MONGO_DATABASE>
+                    </environmentVariables>
                 </configuration>
             </plugin>
             <plugin>

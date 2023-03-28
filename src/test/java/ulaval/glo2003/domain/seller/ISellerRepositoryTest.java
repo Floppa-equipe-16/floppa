@@ -10,17 +10,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-class InMemorySellerRepositoryTest {
+public abstract class ISellerRepositoryTest {
     private static final String ID = "1";
 
-    private InMemorySellerRepository repository;
+    private final ISellerRepository repository = createRepository();
 
     @Mock
     private Seller sellerStub = mock(Seller.class);
 
     @BeforeEach
     public void setUp() {
-        repository = new InMemorySellerRepository();
+        repository.reset();
 
         when(sellerStub.getId()).thenReturn(ID);
     }
@@ -48,4 +48,6 @@ class InMemorySellerRepositoryTest {
         Seller foundSeller = repository.findById(sellerStub.getId());
         assertThat(foundSeller.getId()).isEqualTo(sellerStub.getId());
     }
+
+    protected abstract ISellerRepository createRepository();
 }

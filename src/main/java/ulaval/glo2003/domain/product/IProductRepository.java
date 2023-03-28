@@ -10,4 +10,6 @@ public interface IProductRepository {
     List<Product> findAllBySellerId(String id);
 
     void save(Product product);
+
+    void reset();
 }

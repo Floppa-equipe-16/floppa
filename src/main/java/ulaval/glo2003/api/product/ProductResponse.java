@@ -15,6 +15,7 @@ public class ProductResponse {
     public String category;
     public String id;
     public String createdAt;
+    public String saleStatus;
 
     public SellerInfo seller;
     public OfferCollectionResponse offers;

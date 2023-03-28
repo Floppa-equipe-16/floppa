@@ -1,7 +1,7 @@
 package ulaval.glo2003.domain.offer;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -11,18 +11,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-class InMemoryOfferRepositoryTest {
+public abstract class IOfferRepositoryTest {
+
     public static final String ID = "1";
     private static final String PRODUCT_ID = "PRODUCT";
 
-    private InMemoryOfferRepository repository;
+    private final IOfferRepository repository = createRepository();
 
     @Mock
     private Offer offerStub = mock(Offer.class);
 
     @BeforeEach
     public void setUp() {
-        repository = new InMemoryOfferRepository();
+        repository.reset();
 
         when(offerStub.getId()).thenReturn(ID);
         when(offerStub.getProductId()).thenReturn(PRODUCT_ID);
@@ -71,4 +72,6 @@ class InMemoryOfferRepositoryTest {
         Offer foundOffer = repository.findById(offerStub.getId());
         assertThat(foundOffer.getId()).isEqualTo(offerStub.getId());
     }
+
+    protected abstract IOfferRepository createRepository();
 }

@@ -1,13 +1,17 @@
 package ulaval.glo2003.service;
 
+import dev.morphia.Datastore;
+import ulaval.glo2003.domain.infrastructure.inMemory.InMemoryOfferRepository;
+import ulaval.glo2003.domain.infrastructure.inMemory.InMemoryProductRepository;
+import ulaval.glo2003.domain.infrastructure.inMemory.InMemorySellerRepository;
+import ulaval.glo2003.domain.infrastructure.mongo.MongoOfferRepository;
+import ulaval.glo2003.domain.infrastructure.mongo.MongoProductRepository;
+import ulaval.glo2003.domain.infrastructure.mongo.MongoSellerRepository;
 import ulaval.glo2003.domain.offer.IOfferRepository;
-import ulaval.glo2003.domain.offer.InMemoryOfferRepository;
 import ulaval.glo2003.domain.offer.OfferFactory;
 import ulaval.glo2003.domain.product.IProductRepository;
-import ulaval.glo2003.domain.product.InMemoryProductRepository;
 import ulaval.glo2003.domain.product.ProductFactory;
 import ulaval.glo2003.domain.seller.ISellerRepository;
-import ulaval.glo2003.domain.seller.InMemorySellerRepository;
 import ulaval.glo2003.domain.seller.SellerFactory;
 
 public class SellingServiceFactory {
@@ -17,6 +21,21 @@ public class SellingServiceFactory {
         IProductRepository productRepository = new InMemoryProductRepository();
         IOfferRepository offerRepository = new InMemoryOfferRepository();
 
+        return create(sellerRepository, productRepository, offerRepository);
+    }
+
+    public SellingService create(Datastore datastore) {
+        ISellerRepository sellerRepository = new MongoSellerRepository(datastore);
+        IProductRepository productRepository = new MongoProductRepository(datastore);
+        IOfferRepository offerRepository = new MongoOfferRepository(datastore);
+
+        return create(sellerRepository, productRepository, offerRepository);
+    }
+
+    private SellingService create(
+            ISellerRepository sellerRepository,
+            IProductRepository productRepository,
+            IOfferRepository offerRepository) {
         SellerFactory sellerFactory = new SellerFactory();
         ProductFactory productFactory = new ProductFactory();
         OfferFactory offerFactory = new OfferFactory();
