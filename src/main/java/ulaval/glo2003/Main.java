@@ -24,10 +24,12 @@ import ulaval.glo2003.service.SellingServiceFactory;
 
 public class Main {
 
+    private static final int TIMEOUT = 5000;
+
     public static void main(String[] args) throws IOException {
         MongoClient client = MongoClients.create(MongoClientSettings.builder()
-                .applyToClusterSettings(builder -> builder.serverSelectionTimeout(5000, TimeUnit.MILLISECONDS))
-                .applyToConnectionPoolSettings(builder -> builder.maxConnectionIdleTime(5000, TimeUnit.MILLISECONDS))
+                .applyToClusterSettings(builder -> builder.serverSelectionTimeout(TIMEOUT, TimeUnit.MILLISECONDS))
+                .applyToConnectionPoolSettings(builder -> builder.maxConnectionIdleTime(TIMEOUT, TimeUnit.MILLISECONDS))
                 .applyConnectionString(new ConnectionString(System.getenv("FLOPPA_MONGO_CLUSTER_URL")))
                 .build());
         databaseHealthCheck(client);

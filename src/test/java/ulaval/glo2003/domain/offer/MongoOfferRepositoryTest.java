@@ -9,11 +9,13 @@ import java.util.concurrent.TimeUnit;
 
 public class MongoOfferRepositoryTest extends IOfferRepositoryTest {
 
+    private final int TIMEOUT = 5000;
+
     @Override
     protected IOfferRepository createRepository() {
         MongoClient client = MongoClients.create(MongoClientSettings.builder()
-                .applyToClusterSettings(builder -> builder.serverSelectionTimeout(5000, TimeUnit.MILLISECONDS))
-                .applyToConnectionPoolSettings(builder -> builder.maxConnectionIdleTime(5000, TimeUnit.MILLISECONDS))
+                .applyToClusterSettings(builder -> builder.serverSelectionTimeout(TIMEOUT, TimeUnit.MILLISECONDS))
+                .applyToConnectionPoolSettings(builder -> builder.maxConnectionIdleTime(TIMEOUT, TimeUnit.MILLISECONDS))
                 .build());
         Datastore datastore = Morphia.createDatastore(client, "floppa-dev");
         datastore.getMapper().mapPackage("ulaval.glo2003");
