@@ -17,6 +17,8 @@ public class ProductTest {
     private static final String TITLE = "Iphone XR";
     private static final String DESCRIPTION = "A relatively new Iphone working as good as a new one";
     private static final double SUGGESTED_PRICE = 200d;
+
+    private static final SaleStatus SALE_STATUS = SaleStatus.ongoing;
     private static final String CATEGORY = "electronics";
 
     private Product product;
@@ -26,7 +28,7 @@ public class ProductTest {
 
     @BeforeEach
     public void setUp() {
-        product = new Product(ID, SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
+        product = new Product(ID, SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, SALE_STATUS, CATEGORY);
     }
 
     @Test
@@ -50,7 +52,7 @@ public class ProductTest {
     @Test
     public void canCompareIdenticalProducts() {
         Product identicalProduct =
-                new Product(ID, SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
+                new Product(ID, SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, SALE_STATUS, CATEGORY);
 
         assertThat(product).isEqualTo(identicalProduct);
     }
@@ -58,7 +60,7 @@ public class ProductTest {
     @Test
     public void canCompareDifferentProducts() {
         Product differentProduct =
-                new Product("ABC", SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
+                new Product("ABC", SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, SALE_STATUS, CATEGORY);
 
         assertThat(product).isNotEqualTo(differentProduct);
     }

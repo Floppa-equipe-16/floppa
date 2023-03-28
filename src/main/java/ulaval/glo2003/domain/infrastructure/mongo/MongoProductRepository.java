@@ -11,6 +11,7 @@ import java.util.stream.StreamSupport;
 import ulaval.glo2003.domain.product.IProductRepository;
 import ulaval.glo2003.domain.product.Product;
 import ulaval.glo2003.domain.product.ProductFilter;
+import ulaval.glo2003.domain.product.SaleStatus;
 
 public class MongoProductRepository implements IProductRepository {
 
@@ -75,6 +76,7 @@ public class MongoProductRepository implements IProductRepository {
         mongoProduct.createdAt = product.getCreatedAt();
         mongoProduct.description = product.getDescription();
         mongoProduct.suggestedPrice = product.getSuggestedPrice();
+        mongoProduct.saleStatus = product.getSaleStatus().toString();
         mongoProduct.category = product.getCategory();
         return mongoProduct;
     }
@@ -87,6 +89,7 @@ public class MongoProductRepository implements IProductRepository {
                 mongoProduct.createdAt,
                 mongoProduct.description,
                 mongoProduct.suggestedPrice,
+                SaleStatus.valueOf(mongoProduct.saleStatus),
                 mongoProduct.category);
     }
 }
