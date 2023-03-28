@@ -14,11 +14,11 @@ public class ProductTestUtils {
     public static final String DESCRIPTION = "description";
     public static final String CREATED_AT = Instant.MAX.toString();
     public static final Double SUGGESTED_PRICE = 200d;
-
+    public static final SaleStatus SALE_STATUS = SaleStatus.ongoing;
     public static final String CATEGORY = ProductCategory.other.toString();
 
     public static Product createProduct() {
-        return new Product(ID, SELLER_ID, TITLE, CREATED_AT, DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
+        return new Product(ID, SELLER_ID, TITLE, CREATED_AT, DESCRIPTION, SUGGESTED_PRICE, SALE_STATUS, CATEGORY);
     }
 
     public static Product createProductStub() {
@@ -30,7 +30,7 @@ public class ProductTestUtils {
         when(product.getCategory()).thenReturn(CATEGORY);
         when(product.getDescription()).thenReturn(DESCRIPTION);
         when(product.getSuggestedPrice()).thenReturn(SUGGESTED_PRICE);
-        when(product.getSaleStatus()).thenReturn(SaleStatus.ongoing);
+        when(product.getSaleStatus()).thenReturn(SALE_STATUS);
         return product;
     }
 
@@ -54,6 +54,7 @@ public class ProductTestUtils {
         response.suggestedPrice = SUGGESTED_PRICE;
         response.id = ID;
         response.createdAt = CREATED_AT;
+        response.saleStatus = SaleStatus.ongoing.toString();
 
         return response;
     }
