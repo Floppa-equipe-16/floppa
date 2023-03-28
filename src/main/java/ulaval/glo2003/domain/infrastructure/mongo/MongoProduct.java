@@ -1,4 +1,4 @@
-package ulaval.glo2003.domain.product;
+package ulaval.glo2003.domain.infrastructure.mongo;
 
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;

@@ -1,10 +1,13 @@
-package ulaval.glo2003.domain.seller;
+package ulaval.glo2003.domain.infrastructure.mongo;
 
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
+import ulaval.glo2003.domain.seller.ISellerRepository;
+import ulaval.glo2003.domain.seller.ISellerRepositoryTest;
+
 import java.util.concurrent.TimeUnit;
 
 public class MongoSellerRepositoryTest extends ISellerRepositoryTest {

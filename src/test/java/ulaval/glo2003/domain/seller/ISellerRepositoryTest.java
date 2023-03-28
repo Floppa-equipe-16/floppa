@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-abstract class ISellerRepositoryTest {
+public abstract class ISellerRepositoryTest {
     private static final String ID = "1";
 
     private final ISellerRepository repository = createRepository();

@@ -1,6 +1,9 @@
-package ulaval.glo2003.domain.seller;
+package ulaval.glo2003.domain.infrastructure.inMemory;
 
 import jakarta.ws.rs.NotFoundException;
+import ulaval.glo2003.domain.seller.ISellerRepository;
+import ulaval.glo2003.domain.seller.Seller;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;

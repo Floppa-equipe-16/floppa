@@ -1,9 +1,13 @@
-package ulaval.glo2003.domain.product;
+package ulaval.glo2003.domain.infrastructure.mongo;
 
 import dev.morphia.Datastore;
 import dev.morphia.query.Query;
 import dev.morphia.query.filters.Filters;
 import jakarta.ws.rs.NotFoundException;
+import ulaval.glo2003.domain.product.IProductRepository;
+import ulaval.glo2003.domain.product.Product;
+import ulaval.glo2003.domain.product.ProductFilter;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
