@@ -33,5 +33,4 @@ public class OfferResponse {
                 && message.equals(response.message)
                 && createdAt.equals(response.createdAt);
     }
-
 }
