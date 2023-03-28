@@ -18,7 +18,7 @@ public class HealthResource {
     public Response health() {
         HealthResponse healthResponse = new HealthResponse();
         healthResponse.api = true;
-        healthResponse.db = healthCheck(client);
+        healthResponse.db = databaseHealthCheck(client);
 
         if (isHealthy(healthResponse)) {
             return Response.ok().entity(healthResponse).build();
@@ -31,7 +31,7 @@ public class HealthResource {
         return healthResponse.api && healthResponse.db;
     }
 
-    private boolean healthCheck(MongoClient client) {
+    private boolean databaseHealthCheck(MongoClient client) {
         try {
             client.listDatabaseNames().first();
             return true;

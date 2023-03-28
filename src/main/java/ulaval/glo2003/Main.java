@@ -30,7 +30,7 @@ public class Main {
                 .applyToConnectionPoolSettings(builder -> builder.maxConnectionIdleTime(5000, TimeUnit.MILLISECONDS))
                 .applyConnectionString(new ConnectionString(System.getenv("FLOPPA_MONGO_CLUSTER_URL")))
                 .build());
-        healthCheck(client);
+        databaseHealthCheck(client);
         Datastore datastore = Morphia.createDatastore(client, System.getenv("FLOPPA_MONGO_DATABASE"));
         datastore.getMapper().mapPackage("ulaval.glo2003");
         datastore.ensureIndexes();
@@ -62,7 +62,7 @@ public class Main {
         server.start();
     }
 
-    private static void healthCheck(MongoClient client) {
+    private static void databaseHealthCheck(MongoClient client) {
         client.listDatabaseNames().first();
     }
 }
