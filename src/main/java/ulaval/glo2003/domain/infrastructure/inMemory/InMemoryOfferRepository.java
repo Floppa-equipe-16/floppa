@@ -1,4 +1,4 @@
-package ulaval.glo2003.domain.offer;
+package ulaval.glo2003.domain.infrastructure.inMemory;
 
 import jakarta.ws.rs.NotFoundException;
 import java.util.HashMap;
@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import ulaval.glo2003.domain.offer.IOfferRepository;
+import ulaval.glo2003.domain.offer.Offer;
 
 public class InMemoryOfferRepository implements IOfferRepository {
     private final Map<String, Offer> offers;
@@ -33,5 +35,10 @@ public class InMemoryOfferRepository implements IOfferRepository {
     @Override
     public void save(Offer offer) {
         offers.put(offer.getId(), offer);
+    }
+
+    @Override
+    public void reset() {
+        offers.clear();
     }
 }

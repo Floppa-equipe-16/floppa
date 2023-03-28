@@ -1,7 +1,14 @@
 package ulaval.glo2003;
 
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import dev.morphia.Datastore;
+import dev.morphia.Morphia;
 import java.io.IOException;
 import java.net.URI;
+import java.util.concurrent.TimeUnit;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -17,11 +24,23 @@ import ulaval.glo2003.service.SellingServiceFactory;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
-        SellingServiceFactory factory = new SellingServiceFactory();
-        SellingService sellingService = factory.create();
+    private static final int TIMEOUT = 5000;
 
-        HealthResource healthResource = new HealthResource();
+    public static void main(String[] args) throws IOException {
+        MongoClient client = MongoClients.create(MongoClientSettings.builder()
+                .applyToClusterSettings(builder -> builder.serverSelectionTimeout(TIMEOUT, TimeUnit.MILLISECONDS))
+                .applyToConnectionPoolSettings(builder -> builder.maxConnectionIdleTime(TIMEOUT, TimeUnit.MILLISECONDS))
+                .applyConnectionString(new ConnectionString(System.getenv("FLOPPA_MONGO_CLUSTER_URL")))
+                .build());
+        databaseHealthCheck(client);
+        Datastore datastore = Morphia.createDatastore(client, System.getenv("FLOPPA_MONGO_DATABASE"));
+        datastore.getMapper().mapPackage("ulaval.glo2003");
+        datastore.ensureIndexes();
+
+        SellingServiceFactory factory = new SellingServiceFactory();
+        SellingService sellingService = factory.create(datastore);
+
+        HealthResource healthResource = new HealthResource(client);
         LostResource lostResource = new LostResource();
         SellerResource sellerResource = new SellerResource(sellingService);
         ProductResource productResource = new ProductResource(sellingService);
@@ -43,5 +62,9 @@ public class Main {
 
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, resourceConfig);
         server.start();
+    }
+
+    private static void databaseHealthCheck(MongoClient client) {
+        client.listDatabaseNames().first();
     }
 }
