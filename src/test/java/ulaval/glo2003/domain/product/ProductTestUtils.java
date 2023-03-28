@@ -12,20 +12,20 @@ public class ProductTestUtils {
     public static final String SELLER_ID = "2a74sfs3d2g48";
     public static final String TITLE = "Bob";
     public static final String DESCRIPTION = "description";
-    public static final String CREATE_AT = Instant.MAX.toString();
+    public static final String CREATED_AT = Instant.MAX.toString();
     public static final Double SUGGESTED_PRICE = 200d;
 
     public static final String CATEGORY = ProductCategory.other.toString();
 
     public static Product createProduct() {
-        return new Product(ID, SELLER_ID, TITLE, CREATE_AT, DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
+        return new Product(ID, SELLER_ID, TITLE, CREATED_AT, DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
     }
 
     public static Product createProductStub() {
         Product product = mock(Product.class);
         when(product.getId()).thenReturn(ID);
         when(product.getSellerId()).thenReturn(SELLER_ID);
-        when(product.getCreatedAt()).thenReturn(CREATE_AT);
+        when(product.getCreatedAt()).thenReturn(CREATED_AT);
         when(product.getTitle()).thenReturn(TITLE);
         when(product.getCategory()).thenReturn(CATEGORY);
         when(product.getDescription()).thenReturn(DESCRIPTION);
@@ -53,7 +53,7 @@ public class ProductTestUtils {
         response.category = CATEGORY;
         response.suggestedPrice = SUGGESTED_PRICE;
         response.id = ID;
-        response.createdAt = CREATE_AT;
+        response.createdAt = CREATED_AT;
 
         return response;
     }

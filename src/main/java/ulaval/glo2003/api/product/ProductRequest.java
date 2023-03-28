@@ -15,13 +15,6 @@ public class ProductRequest {
         if (category == null) throw new MissingParamException("category");
     }
 
-    private boolean isProductRequestEquals(ProductRequest request) {
-        return title.equals(request.title)
-                && description.equals(request.description)
-                && suggestedPrice.equals(request.suggestedPrice)
-                && category.equals(request.category);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == this) {
@@ -30,7 +23,14 @@ public class ProductRequest {
 
         if (o instanceof ProductRequest) {
             ProductRequest productRequest = ((ProductRequest) o);
-            return isProductRequestEquals(productRequest);
+            return isEqualsTo(productRequest);
         } else return false;
+    }
+
+    private boolean isEqualsTo(ProductRequest request) {
+        return title.equals(request.title)
+                && description.equals(request.description)
+                && suggestedPrice.equals(request.suggestedPrice)
+                && category.equals(request.category);
     }
 }

@@ -11,10 +11,6 @@ public class OfferRequest {
         if (message == null) throw new MissingParamException("message");
     }
 
-    private boolean isOfferRequestEquals(OfferRequest request) {
-        return amount.equals(request.amount) && message.equals(request.message);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == this) {
@@ -23,7 +19,11 @@ public class OfferRequest {
 
         if (o instanceof OfferRequest) {
             OfferRequest offerRequest = ((OfferRequest) o);
-            return isOfferRequestEquals(offerRequest);
+            return isEqualsTo(offerRequest);
         } else return false;
+    }
+
+    private boolean isEqualsTo(OfferRequest request) {
+        return amount.equals(request.amount) && message.equals(request.message);
     }
 }

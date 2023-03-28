@@ -26,15 +26,6 @@ public class ProductResponse {
         seller.name = name;
     }
 
-    private boolean isProductResponseEquals(ProductResponse response) {
-        return title.equals(response.title)
-                && description.equals(response.description)
-                && suggestedPrice.equals(response.suggestedPrice)
-                && category.equals(response.category)
-                && id.equals(response.id)
-                && createdAt.equals(response.createdAt);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == this) {
@@ -43,7 +34,16 @@ public class ProductResponse {
 
         if (o instanceof ProductResponse) {
             ProductResponse productResponse = ((ProductResponse) o);
-            return isProductResponseEquals(productResponse);
+            return isEqualsTo(productResponse);
         } else return false;
+    }
+
+    private boolean isEqualsTo(ProductResponse response) {
+        return title.equals(response.title)
+                && description.equals(response.description)
+                && suggestedPrice.equals(response.suggestedPrice)
+                && category.equals(response.category)
+                && id.equals(response.id)
+                && createdAt.equals(response.createdAt);
     }
 }

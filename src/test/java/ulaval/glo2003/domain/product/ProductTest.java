@@ -53,7 +53,7 @@ public class ProductTest {
                 "ABC",
                 ProductTestUtils.SELLER_ID,
                 ProductTestUtils.TITLE,
-                ProductTestUtils.CREATE_AT,
+                ProductTestUtils.CREATED_AT,
                 ProductTestUtils.DESCRIPTION,
                 ProductTestUtils.SUGGESTED_PRICE,
                 ProductTestUtils.CATEGORY);

@@ -15,13 +15,6 @@ public class OfferResponse {
         createdAt = offer.getCreatedAt();
     }
 
-    private boolean isOfferResponseEquals(OfferResponse response) {
-        return username.equals(response.username)
-                && amount.equals(response.amount)
-                && message.equals(response.message)
-                && createdAt.equals(response.createdAt);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == this) {
@@ -30,7 +23,15 @@ public class OfferResponse {
 
         if (o instanceof OfferResponse) {
             OfferResponse offerResponse = ((OfferResponse) o);
-            return isOfferResponseEquals(offerResponse);
+            return isEqualsTo(offerResponse);
         } else return false;
     }
+
+    private boolean isEqualsTo(OfferResponse response) {
+        return username.equals(response.username)
+                && amount.equals(response.amount)
+                && message.equals(response.message)
+                && createdAt.equals(response.createdAt);
+    }
+
 }

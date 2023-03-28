@@ -13,16 +13,6 @@ public class SellerResponse {
     public String bio;
     public List<ProductResponse> products;
 
-    private boolean isSellerResponseEquals(SellerResponse sellerResponse) {
-        return name.equals(sellerResponse.name)
-                && birthdate.equals(sellerResponse.birthdate)
-                && email.equals(sellerResponse.email)
-                && phoneNumber.equals(sellerResponse.phoneNumber)
-                && bio.equals(sellerResponse.bio)
-                && id.equals(sellerResponse.id)
-                && createdAt.equals(sellerResponse.createdAt);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == this) {
@@ -31,7 +21,17 @@ public class SellerResponse {
 
         if (o instanceof SellerResponse) {
             SellerResponse sellerResponse = ((SellerResponse) o);
-            return isSellerResponseEquals(sellerResponse);
+            return isEqualsTo(sellerResponse);
         } else return false;
+    }
+
+    private boolean isEqualsTo(SellerResponse sellerResponse) {
+        return name.equals(sellerResponse.name)
+                && birthdate.equals(sellerResponse.birthdate)
+                && email.equals(sellerResponse.email)
+                && phoneNumber.equals(sellerResponse.phoneNumber)
+                && bio.equals(sellerResponse.bio)
+                && id.equals(sellerResponse.id)
+                && createdAt.equals(sellerResponse.createdAt);
     }
 }

@@ -16,16 +16,16 @@ public class OfferTestUtils {
     public static final Double HIGHEST_AMOUNT = 75d;
     public static final String MESSAGE =
             "This is a description of at least a hundred characters. Let me count them: one, two, three, four, five.";
-    public static final String CREATE_AT = Instant.MAX.toString();
+    public static final String CREATED_AT = Instant.MAX.toString();
 
     public static Offer createOffer() {
-        return new Offer(ID, PRODUCT_ID, USERNAME, LOWEST_AMOUNT, MESSAGE, CREATE_AT);
+        return new Offer(ID, PRODUCT_ID, USERNAME, LOWEST_AMOUNT, MESSAGE, CREATED_AT);
     }
 
     public static Offer createOfferStub() {
         Offer offer = mock(Offer.class);
         when(offer.getId()).thenReturn(ID);
-        when(offer.getCreatedAt()).thenReturn(CREATE_AT);
+        when(offer.getCreatedAt()).thenReturn(CREATED_AT);
         when(offer.getProductId()).thenReturn(PRODUCT_ID);
         when(offer.getUsername()).thenReturn(USERNAME);
         when(offer.getAmount()).thenReturn(LOWEST_AMOUNT);
@@ -36,7 +36,7 @@ public class OfferTestUtils {
     public static Offer createOfferStub2() {
         Offer offer = mock(Offer.class);
         when(offer.getId()).thenReturn(ID_2);
-        when(offer.getCreatedAt()).thenReturn(CREATE_AT);
+        when(offer.getCreatedAt()).thenReturn(CREATED_AT);
         when(offer.getProductId()).thenReturn(PRODUCT_ID);
         when(offer.getUsername()).thenReturn(USERNAME);
         when(offer.getAmount()).thenReturn(HIGHEST_AMOUNT);

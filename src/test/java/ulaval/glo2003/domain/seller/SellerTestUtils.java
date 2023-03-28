@@ -14,17 +14,17 @@ public class SellerTestUtils {
     private static final String EMAIL = "Bob@bob.bob";
     private static final String PHONE_NUMBER = "11234567890";
     private static final String BIO = "My name is Bob.";
-    private static final String CREATE_AT = Instant.MAX.toString();
+    private static final String CREATED_AT = Instant.MAX.toString();
 
     public static Seller createSeller() {
-        return new Seller(ID, NAME, CREATE_AT, BIRTHDATE, EMAIL, PHONE_NUMBER, BIO);
+        return new Seller(ID, NAME, CREATED_AT, BIRTHDATE, EMAIL, PHONE_NUMBER, BIO);
     }
 
     public static Seller createSellerStub() {
         Seller seller = mock(Seller.class);
         when(seller.getId()).thenReturn(ID);
         when(seller.getName()).thenReturn(NAME);
-        when(seller.getCreatedAt()).thenReturn(CREATE_AT);
+        when(seller.getCreatedAt()).thenReturn(CREATED_AT);
         when(seller.getBirthdate()).thenReturn(BIRTHDATE);
         when(seller.getEmail()).thenReturn(EMAIL);
         when(seller.getPhoneNumber()).thenReturn(PHONE_NUMBER);
@@ -51,7 +51,7 @@ public class SellerTestUtils {
         response.phoneNumber = PHONE_NUMBER;
         response.bio = BIO;
         response.id = ID;
-        response.createdAt = CREATE_AT;
+        response.createdAt = CREATED_AT;
 
         return response;
     }

@@ -17,14 +17,6 @@ public class SellerRequest {
         if (bio == null) throw new MissingParamException("bio");
     }
 
-    private boolean isSellerRequestEquals(SellerRequest sellerRequest) {
-        return name.equals(sellerRequest.name)
-                && birthdate.equals(sellerRequest.birthdate)
-                && email.equals(sellerRequest.email)
-                && phoneNumber.equals(sellerRequest.phoneNumber)
-                && bio.equals(sellerRequest.bio);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == this) {
@@ -33,7 +25,15 @@ public class SellerRequest {
 
         if (o instanceof SellerRequest) {
             SellerRequest sellerRequest = ((SellerRequest) o);
-            return isSellerRequestEquals(sellerRequest);
+            return isEqualsTo(sellerRequest);
         } else return false;
+    }
+
+    private boolean isEqualsTo(SellerRequest sellerRequest) {
+        return name.equals(sellerRequest.name)
+                && birthdate.equals(sellerRequest.birthdate)
+                && email.equals(sellerRequest.email)
+                && phoneNumber.equals(sellerRequest.phoneNumber)
+                && bio.equals(sellerRequest.bio);
     }
 }
