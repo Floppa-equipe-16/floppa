@@ -25,4 +25,25 @@ public class ProductResponse {
         seller.id = id;
         seller.name = name;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (o instanceof ProductResponse) {
+            ProductResponse productResponse = ((ProductResponse) o);
+            return isEqualsTo(productResponse);
+        } else return false;
+    }
+
+    private boolean isEqualsTo(ProductResponse response) {
+        return title.equals(response.title)
+                && description.equals(response.description)
+                && suggestedPrice.equals(response.suggestedPrice)
+                && category.equals(response.category)
+                && id.equals(response.id)
+                && createdAt.equals(response.createdAt);
+    }
 }

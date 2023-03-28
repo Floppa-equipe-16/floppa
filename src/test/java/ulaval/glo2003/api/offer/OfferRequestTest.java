@@ -1,23 +1,21 @@
 package ulaval.glo2003.api.offer;
 
+import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.domain.exceptions.MissingParamException;
+import ulaval.glo2003.domain.offer.OfferTestUtils;
 
 public class OfferRequestTest {
-    public static final double AMOUNT = 200d;
-    public static final String MESSAGE =
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi elementum vestibulum turpis sed egestas.";
+
     private OfferRequest offerRequest;
 
     @BeforeEach
     public void setUp() {
-        offerRequest = new OfferRequest();
-        offerRequest.amount = AMOUNT;
-        offerRequest.message = MESSAGE;
+        offerRequest = OfferTestUtils.createOfferRequest();
     }
 
     @Test
@@ -37,5 +35,33 @@ public class OfferRequestTest {
         offerRequest.message = null;
 
         assertThrows(MissingParamException.class, offerRequest::validate);
+    }
+
+    @Test
+    public void offerRequestEqualsToHimSelf() {
+        assertThat(offerRequest).isEqualTo(offerRequest);
+    }
+
+    @Test
+    public void offerRequestEqualsToOfferRequest() {
+        OfferRequest newofferRequest = OfferTestUtils.createOfferRequest();
+
+        assertThat(offerRequest).isEqualTo(newofferRequest);
+    }
+
+    @Test
+    public void offerRequestNotEqualsToOfferRequestWhenMessageDiff() {
+        OfferRequest newofferRequest = OfferTestUtils.createOfferRequest();
+        newofferRequest.message = "new message";
+
+        assertThat(offerRequest).isNotEqualTo(newofferRequest);
+    }
+
+    @Test
+    public void offerRequestNotEqualsToOfferRequestWhenAmountDiff() {
+        OfferRequest newofferRequest = OfferTestUtils.createOfferRequest();
+        newofferRequest.amount = 1d;
+
+        assertThat(offerRequest).isNotEqualTo(newofferRequest);
     }
 }

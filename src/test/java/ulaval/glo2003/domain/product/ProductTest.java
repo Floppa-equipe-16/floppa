@@ -4,7 +4,6 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
-import java.time.Instant;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,12 +11,6 @@ import org.mockito.Mock;
 import ulaval.glo2003.domain.offer.Offer;
 
 public class ProductTest {
-    private static final String ID = "1";
-    private static final String SELLER_ID = "2a74sfs3d2g48";
-    private static final String TITLE = "Iphone XR";
-    private static final String DESCRIPTION = "A relatively new Iphone working as good as a new one";
-    private static final double SUGGESTED_PRICE = 200d;
-    private static final String CATEGORY = "electronics";
 
     private Product product;
 
@@ -26,7 +19,7 @@ public class ProductTest {
 
     @BeforeEach
     public void setUp() {
-        product = new Product(ID, SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
+        product = ProductTestUtils.createProduct();
     }
 
     @Test
@@ -49,16 +42,21 @@ public class ProductTest {
 
     @Test
     public void canCompareIdenticalProducts() {
-        Product identicalProduct =
-                new Product(ID, SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
+        Product identicalProduct = ProductTestUtils.createProduct();
 
         assertThat(product).isEqualTo(identicalProduct);
     }
 
     @Test
     public void canCompareDifferentProducts() {
-        Product differentProduct =
-                new Product("ABC", SELLER_ID, TITLE, Instant.MAX.toString(), DESCRIPTION, SUGGESTED_PRICE, CATEGORY);
+        Product differentProduct = new Product(
+                "ABC",
+                ProductTestUtils.SELLER_ID,
+                ProductTestUtils.TITLE,
+                ProductTestUtils.CREATED_AT,
+                ProductTestUtils.DESCRIPTION,
+                ProductTestUtils.SUGGESTED_PRICE,
+                ProductTestUtils.CATEGORY);
 
         assertThat(product).isNotEqualTo(differentProduct);
     }

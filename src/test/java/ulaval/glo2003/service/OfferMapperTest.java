@@ -9,17 +9,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import ulaval.glo2003.api.offer.OfferCollectionResponse;
+import ulaval.glo2003.api.offer.OfferEquals;
 import ulaval.glo2003.api.offer.OfferRequest;
 import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.offer.OfferFactory;
+import ulaval.glo2003.domain.offer.OfferTestUtils;
 
 class OfferMapperTest {
-    private static final String PRODUCT_ID = "PRODUCT";
-    private static final String BUYER_NAME = "Bob";
-    private static final Double HIGHEST_AMOUNT = 64.50d;
-    private static final Double LOWEST_AMOUNT = 35.50d;
-    private static final String MESSAGE =
-            "This is a description of at least a hundred characters. Let me count them: one, two, three, four, five.";
 
     @Mock
     private OfferFactory factory = mock(OfferFactory.class);
@@ -31,85 +27,151 @@ class OfferMapperTest {
     public void setUp() {
         mapper = new OfferMapper(factory);
         offerStubs = new ArrayList<>();
-        offerStubs.add(createOfferMock("1", LOWEST_AMOUNT));
-        offerStubs.add(createOfferMock("2", HIGHEST_AMOUNT));
-    }
-
-    private Offer createOfferMock(String id, double amount) {
-        Offer offer = mock(Offer.class);
-        when(offer.getId()).thenReturn(id);
-        when(offer.getProductId()).thenReturn(PRODUCT_ID);
-        when(offer.getUsername()).thenReturn(BUYER_NAME);
-        when(offer.getAmount()).thenReturn(amount);
-        when(offer.getMessage()).thenReturn(MESSAGE);
-
-        return offer;
+        offerStubs.add(OfferTestUtils.createOfferStub());
+        offerStubs.add(OfferTestUtils.createOfferStub2());
     }
 
     @Test
     public void canMapRequestToOffer() {
-        doReturn(offerStubs.get(0)).when(factory).createOffer(PRODUCT_ID, BUYER_NAME, LOWEST_AMOUNT, MESSAGE);
-        OfferRequest request = createRequest();
+        doReturn(offerStubs.get(0)).when(factory).createOffer(anyString(), anyString(), anyDouble(), anyString());
+        OfferRequest request = OfferTestUtils.createOfferRequest();
 
-        Offer offer = mapper.requestToOffer(PRODUCT_ID, BUYER_NAME, request);
+        Offer offer = mapper.requestToOffer(OfferTestUtils.PRODUCT_ID, OfferTestUtils.USERNAME, request);
 
-        assertThat(offer.getProductId()).isEqualTo(PRODUCT_ID);
-        assertThat(offer.getUsername()).isEqualTo(BUYER_NAME);
-        assertThat(offer.getAmount()).isEqualTo(request.amount);
-        assertThat(offer.getMessage()).isEqualTo(request.message);
-    }
-
-    private OfferRequest createRequest() {
-        OfferRequest request = new OfferRequest();
-        request.amount = LOWEST_AMOUNT;
-        request.message = MESSAGE;
-
-        return request;
+        assertThat(OfferEquals.OfferRequestEqualsOffer(request, offer)).isTrue();
     }
 
     @Test
-    public void canCreateSummaryResponseWithMultipleOffers() {
+    public void canCreateSummaryResponseWithMultipleOffersCheckCount() {
         OfferCollectionResponse response = mapper.offersToSummaryCollectionResponse(offerStubs);
 
         assertThat(response.count).isEqualTo(2);
-        assertThat(response.avgAmount).isEqualTo(50d);
-        assertDescriptiveFieldsAreNull(response);
     }
 
     @Test
-    public void createSummaryResponseIsEmptyWithNoOffer() {
-        OfferCollectionResponse response = mapper.offersToSummaryCollectionResponse(new ArrayList<>());
+    public void canCreateSummaryResponseWithMultipleOffersCheckAvgAmount() {
+        OfferCollectionResponse response = mapper.offersToSummaryCollectionResponse(offerStubs);
 
-        assertThat(response.count).isEqualTo(0);
-        assertThat(response.avgAmount).isNull();
-        assertDescriptiveFieldsAreNull(response);
+        assertThat(response.avgAmount).isEqualTo(50d);
     }
 
-    private void assertDescriptiveFieldsAreNull(OfferCollectionResponse response) {
-        assertThat(response.items).isNull();
-        assertThat(response.minAmount).isNull();
+    @Test
+    public void canCreateSummaryResponseWithMultipleOffersCheckMaxAmount() {
+        OfferCollectionResponse response = mapper.offersToSummaryCollectionResponse(offerStubs);
+
         assertThat(response.maxAmount).isNull();
     }
 
     @Test
-    public void canCreateCompleteResponseWithMultipleOffers() {
+    public void canCreateSummaryResponseWithMultipleOffersCheckMinAmount() {
+        OfferCollectionResponse response = mapper.offersToSummaryCollectionResponse(offerStubs);
+
+        assertThat(response.minAmount).isNull();
+    }
+
+    @Test
+    public void canCreateSummaryResponseWithMultipleOffersCheckOffers() {
+        OfferCollectionResponse response = mapper.offersToSummaryCollectionResponse(offerStubs);
+
+        assertThat(response.items).isNull();
+    }
+
+    @Test
+    public void createSummaryResponseIsEmptyWithNoOfferCheckCount() {
+        OfferCollectionResponse response = mapper.offersToSummaryCollectionResponse(new ArrayList<>());
+
+        assertThat(response.count).isEqualTo(0);
+    }
+
+    @Test
+    public void createSummaryResponseIsEmptyWithNoOfferCheckAvgAmount() {
+        OfferCollectionResponse response = mapper.offersToSummaryCollectionResponse(new ArrayList<>());
+
+        assertThat(response.avgAmount).isNull();
+    }
+
+    @Test
+    public void createSummaryResponseIsEmptyWithNoOfferCheckMinAmount() {
+        OfferCollectionResponse response = mapper.offersToSummaryCollectionResponse(new ArrayList<>());
+
+        assertThat(response.minAmount).isNull();
+    }
+
+    @Test
+    public void createSummaryResponseIsEmptyWithNoOfferCheckOffers() {
+        OfferCollectionResponse response = mapper.offersToSummaryCollectionResponse(new ArrayList<>());
+
+        assertThat(response.items).isNull();
+    }
+
+    @Test
+    public void canCreateCompleteResponseWithMultipleOffersCheckCount() {
         OfferCollectionResponse response = mapper.offersToCompleteCollectionResponse(offerStubs);
 
         assertThat(response.count).isEqualTo(2);
-        assertThat(response.avgAmount).isEqualTo(50d);
-        assertThat(response.maxAmount).isEqualTo(HIGHEST_AMOUNT);
-        assertThat(response.minAmount).isEqualTo(LOWEST_AMOUNT);
+    }
+
+    @Test
+    public void canCreateCompleteResponseWithMultipleOffersCheckAvgAmount() {
+        OfferCollectionResponse response = mapper.offersToCompleteCollectionResponse(offerStubs);
+        Double result = (OfferTestUtils.HIGHEST_AMOUNT + OfferTestUtils.LOWEST_AMOUNT) / 2;
+
+        assertThat(response.avgAmount).isEqualTo(result);
+    }
+
+    @Test
+    public void canCreateCompleteResponseWithMultipleOffersCheckMaxAmount() {
+        OfferCollectionResponse response = mapper.offersToCompleteCollectionResponse(offerStubs);
+
+        assertThat(response.maxAmount).isEqualTo(OfferTestUtils.HIGHEST_AMOUNT);
+    }
+
+    @Test
+    public void canCreateCompleteResponseWithMultipleOffersCheckMinAmount() {
+        OfferCollectionResponse response = mapper.offersToCompleteCollectionResponse(offerStubs);
+
+        assertThat(response.minAmount).isEqualTo(OfferTestUtils.LOWEST_AMOUNT);
+    }
+
+    @Test
+    public void canCreateCompleteResponseWithMultipleOffersCheckOffers() {
+        OfferCollectionResponse response = mapper.offersToCompleteCollectionResponse(offerStubs);
+
         assertThat(response.items).isNotEmpty();
     }
 
     @Test
-    public void createCompleteResponseIsEmptyWithNoOffer() {
+    public void createCompleteWithNoOfferCheckCount() {
         OfferCollectionResponse response = mapper.offersToCompleteCollectionResponse(new ArrayList<>());
 
         assertThat(response.count).isEqualTo(0);
+    }
+
+    @Test
+    public void createCompleteWithNoOfferCheckAvgAmount() {
+        OfferCollectionResponse response = mapper.offersToCompleteCollectionResponse(new ArrayList<>());
+
         assertThat(response.avgAmount).isNull();
+    }
+
+    @Test
+    public void createCompleteWithNoOfferCheckMAxAmount() {
+        OfferCollectionResponse response = mapper.offersToCompleteCollectionResponse(new ArrayList<>());
+
         assertThat(response.maxAmount).isNull();
+    }
+
+    @Test
+    public void createCompleteWithNoOfferCheckMinAmount() {
+        OfferCollectionResponse response = mapper.offersToCompleteCollectionResponse(new ArrayList<>());
+
         assertThat(response.minAmount).isNull();
+    }
+
+    @Test
+    public void createCompleteWithNoOfferCheckOffers() {
+        OfferCollectionResponse response = mapper.offersToCompleteCollectionResponse(new ArrayList<>());
+
         assertThat(response.items).isEmpty();
     }
 }
