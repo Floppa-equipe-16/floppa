@@ -7,8 +7,8 @@ import static org.mockito.Mockito.when;
 
 import jakarta.ws.rs.NotFoundException;
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 
 public abstract class IOfferRepositoryTest {
@@ -27,6 +27,11 @@ public abstract class IOfferRepositoryTest {
 
         when(offerStub.getId()).thenReturn(ID);
         when(offerStub.getProductId()).thenReturn(PRODUCT_ID);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        repository.reset();
     }
 
     @Test

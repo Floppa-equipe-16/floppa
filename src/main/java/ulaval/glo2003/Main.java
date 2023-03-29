@@ -28,8 +28,6 @@ public class Main {
     private static final int TIMEOUT = 5000;
 
     public static void main(String[] args) throws IOException {
-        System.out.println(System.getenv("FLOPPA_MONGO_CLUSTER_URL"));
-        System.out.println(System.getenv("FLOPPA_MONGO_DATABASE"));
         MongoClient client = MongoClients.create(MongoClientSettings.builder()
                 .applyToClusterSettings(builder -> builder.serverSelectionTimeout(TIMEOUT, TimeUnit.MILLISECONDS))
                 .applyToConnectionPoolSettings(builder -> builder.maxConnectionIdleTime(TIMEOUT, TimeUnit.MILLISECONDS))
@@ -62,7 +60,7 @@ public class Main {
                 .register(notFoundExceptionMapper)
                 .register(JacksonFeature.class);
 
-        URI uri = URI.create("http://localhost:8080/");
+        URI uri = URI.create("http://0.0.0.0:8080/");
 
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, resourceConfig);
         server.start();

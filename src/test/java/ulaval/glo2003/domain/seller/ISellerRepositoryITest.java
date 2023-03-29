@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import jakarta.ws.rs.NotFoundException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -23,6 +24,11 @@ public abstract class ISellerRepositoryTest {
         repository.reset();
 
         when(sellerStub.getId()).thenReturn(ID);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        repository.reset();
     }
 
     @Test
