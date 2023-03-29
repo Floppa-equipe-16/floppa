@@ -1,9 +1,9 @@
 package ulaval.glo2003.domain.infrastructure.inMemory;
 
 import ulaval.glo2003.domain.seller.ISellerRepository;
-import ulaval.glo2003.domain.seller.ISellerRepositoryTest;
+import ulaval.glo2003.domain.seller.ISellerRepositoryITest;
 
-public class InMemorySellerRepositoryTest extends ISellerRepositoryTest {
+public class InMemorySellerRepositoryITest extends ISellerRepositoryITest {
 
     @Override
     protected ISellerRepository createRepository() {

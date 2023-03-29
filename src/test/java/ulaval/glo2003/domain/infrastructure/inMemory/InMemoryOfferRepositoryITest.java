@@ -1,9 +1,9 @@
 package ulaval.glo2003.domain.infrastructure.inMemory;
 
 import ulaval.glo2003.domain.offer.IOfferRepository;
-import ulaval.glo2003.domain.offer.IOfferRepositoryTest;
+import ulaval.glo2003.domain.offer.IOfferRepositoryITest;
 
-class InMemoryOfferRepositoryTest extends IOfferRepositoryTest {
+class InMemoryOfferRepositoryITest extends IOfferRepositoryITest {
 
     @Override
     protected IOfferRepository createRepository() {

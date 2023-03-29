@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-public abstract class IProductRepositoryTest {
+public abstract class IProductRepositoryITest {
 
     private static final String ID = "1";
     private static final String SECOND_ID = "2";

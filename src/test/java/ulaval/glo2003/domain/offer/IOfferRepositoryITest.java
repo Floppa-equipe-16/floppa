@@ -11,7 +11,7 @@ import java.util.List;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 
-public abstract class IOfferRepositoryTest {
+public abstract class IOfferRepositoryITest {
 
     public static final String ID = "1";
     private static final String PRODUCT_ID = "PRODUCT";

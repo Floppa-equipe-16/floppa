@@ -1,9 +1,9 @@
 package ulaval.glo2003.domain.infrastructure.mongo;
 
 import ulaval.glo2003.domain.offer.IOfferRepository;
-import ulaval.glo2003.domain.offer.IOfferRepositoryTest;
+import ulaval.glo2003.domain.offer.IOfferRepositoryITest;
 
-public class MongoOfferRepositoryTest extends IOfferRepositoryTest {
+public class MongoOfferRepositoryITest extends IOfferRepositoryITest {
 
     @Override
     protected IOfferRepository createRepository() {

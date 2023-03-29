@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-public abstract class ISellerRepositoryTest {
+public abstract class ISellerRepositoryITest {
     private static final String ID = "1";
 
     private final ISellerRepository repository = createRepository();
