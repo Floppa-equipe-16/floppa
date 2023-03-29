@@ -7,7 +7,6 @@ import static org.mockito.Mockito.when;
 
 import jakarta.ws.rs.NotFoundException;
 import java.util.List;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
