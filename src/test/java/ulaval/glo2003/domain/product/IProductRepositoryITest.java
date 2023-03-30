@@ -25,8 +25,6 @@ public abstract class IProductRepositoryITest {
 
     @BeforeEach
     public void setUp() {
-        repository.reset();
-
         productStub = createProductStub(ID, SELLER_ID);
     }
 

@@ -22,7 +22,9 @@ jobs:
           java-version: '11'
           distribution: 'corretto'
           cache: maven
-      - name: Create mongoDB Docker container
-        run: docker run -d -p 27017:27017 mongo:latest
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.8.0
+        with:
+          mongodb-version: '6.0'
       - name: Tests
         run: mvn -B test --file pom.xml

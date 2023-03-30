@@ -22,8 +22,6 @@ public abstract class IOfferRepositoryITest {
 
     @BeforeEach
     public void setUp() {
-        repository.reset();
-
         when(offerStub.getId()).thenReturn(ID);
         when(offerStub.getProductId()).thenReturn(PRODUCT_ID);
     }

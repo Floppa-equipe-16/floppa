@@ -21,8 +21,6 @@ public abstract class ISellerRepositoryITest {
 
     @BeforeEach
     public void setUp() {
-        repository.reset();
-
         when(sellerStub.getId()).thenReturn(ID);
     }
 
