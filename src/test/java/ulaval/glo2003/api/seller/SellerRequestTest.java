@@ -71,4 +71,49 @@ public class SellerRequestTest {
         MissingParamException thrownMissingBio = assertThrows(MissingParamException.class, sellerRequest::validate);
         assertThat(thrownMissingBio.errorDescription.description).ignoringCase().contains("bio");
     }
+
+    @Test
+    public void sellerRequestEqualsToHimSelf() {
+        assertThat(sellerRequest).isEqualTo(sellerRequest);
+    }
+
+    @Test
+    public void sellerRequestEqualsToSellerRequest() {
+        assertThat(sellerRequest).isEqualTo(SellerTestUtils.createSellerRequest());
+    }
+
+    @Test
+    public void sellerRequestNotEqualsToSellerRequestWhenNameDiff() {
+        sellerRequest.name = "???";
+
+        assertThat(sellerRequest).isNotEqualTo(SellerTestUtils.createSellerRequest());
+    }
+
+    @Test
+    public void sellerRequestNotEqualsToSellerRequestWhenBirthdateDiff() {
+        sellerRequest.birthdate = "???";
+
+        assertThat(sellerRequest).isNotEqualTo(SellerTestUtils.createSellerRequest());
+    }
+
+    @Test
+    public void sellerRequestNotEqualsToSellerRequestWhenEmailDiff() {
+        sellerRequest.email = "???";
+
+        assertThat(sellerRequest).isNotEqualTo(SellerTestUtils.createSellerRequest());
+    }
+
+    @Test
+    public void sellerRequestNotEqualsToSellerRequestWhenPhoneNumberDiff() {
+        sellerRequest.phoneNumber = "???";
+
+        assertThat(sellerRequest).isNotEqualTo(SellerTestUtils.createSellerRequest());
+    }
+
+    @Test
+    public void sellerRequestNotEqualsToSellerRequestWhenBioDiff() {
+        sellerRequest.bio = "???";
+
+        assertThat(sellerRequest).isNotEqualTo(SellerTestUtils.createSellerRequest());
+    }
 }

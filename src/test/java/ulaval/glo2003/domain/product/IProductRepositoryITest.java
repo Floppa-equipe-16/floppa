@@ -139,6 +139,7 @@ public abstract class IProductRepositoryITest {
         when(stub.getSellerId()).thenReturn(sellerId);
         when(stub.getTitle()).thenReturn("title");
         when(stub.getSuggestedPrice()).thenReturn(10d);
+        when(stub.getSaleStatus()).thenReturn(SaleStatus.ongoing);
         when(stub.getCategory()).thenReturn(ProductCategory.other.toString());
         return stub;
     }
