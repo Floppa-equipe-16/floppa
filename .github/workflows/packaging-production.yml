@@ -20,5 +20,6 @@ jobs:
     uses: ./.github/workflows/docker-build.yml
     with:
       item-ref: ${{ inputs.item-ref }}
+    secrets:
       cluster-url: ${{ secrets.FLOPPA_MONGO_CLUSTER_URL }}
       database-name: ${{ secrets.FLOPPA_MONGO_PRODUCTION_DATABASE }}
