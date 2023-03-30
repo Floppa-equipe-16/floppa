@@ -1,0 +1,27 @@
+name: Packaging for the staging environment
+
+on:
+  push:
+    push:
+      branches: [ "main", "develop" ]
+  workflow_dispatch:
+    inputs:
+      item-ref:
+        description: 'commit, tag ou branch à package'
+        required: true
+        default: ''
+        type: string
+
+jobs:
+  run-tests:
+    uses: ./.github/workflows/maven-test.yml
+    with:
+      item-ref: ${{ inputs.item-ref }}
+
+  docker-build:
+    needs: run-tests
+    uses: ./.github/workflows/docker-build.yml
+    with:
+      item-ref: ${{ inputs.item-ref }}
+      cluster-url: ${{ secrets.FLOPPA_MONGO_CLUSTER_URL }}
+      database-name: $${{ secrets.FLOPPA_MONGO_STAGING_DATABASE }}

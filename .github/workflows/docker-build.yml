@@ -1,0 +1,26 @@
+name: Build Docker image
+
+on:
+  workflow_call:
+    inputs:
+      item-ref:
+        required: false
+        default: ''
+        type: string
+      cluster-url:
+        required: true
+        type: string
+      database-name:
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.item-ref }}
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag floppa:$(date +%s) --build-arg CLUSTER_URL="${{ inputs.cluster-url }}" --build-arg DATABASE="${{ inputs.database-name }}"
