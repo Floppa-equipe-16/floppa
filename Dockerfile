@@ -8,11 +8,11 @@ RUN mvn package
 
 FROM amazoncorretto:11
 
-ARG cluster_url=mongodb+srv://root:ulaval@floppa-staging.sasi1f4.mongodb.net/?retryWrites=true&w=majority
-ARG database=floppa-staging
+ARG CLUSTER_URL
+ENV FLOPPA_MONGO_CLUSTER_URL=$CLUSTER_URL
 
-ENV FLOPPA_MONGO_CLUSTER_URL=$cluster_url
-ENV FLOPPA_MONGO_DATABASE=$database
+ARG DATABASE
+ENV FLOPPA_MONGO_DATABASE=$DATABASE
 
 COPY --from=build /app/target/floppa-0.0.1-jar-with-dependencies.jar floppa-0.0.1.jar
 
