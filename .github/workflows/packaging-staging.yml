@@ -2,8 +2,7 @@ name: Packaging for the staging environment
 
 on:
   push:
-    push:
-      branches: [ "main", "develop" ]
+    branches: [ "main", "develop" ]
   workflow_dispatch:
     inputs:
       item-ref:
