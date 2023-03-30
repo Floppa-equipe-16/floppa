@@ -21,4 +21,4 @@ jobs:
     with:
       item-ref: ${{ inputs.item-ref }}
       cluster-url: ${{ secrets.FLOPPA_MONGO_CLUSTER_URL }}
-      database-name: $${{ secrets.FLOPPA_MONGO_PRODUCTION_DATABASE }}
+      database-name: ${{ secrets.FLOPPA_MONGO_PRODUCTION_DATABASE }}
