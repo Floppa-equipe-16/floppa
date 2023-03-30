@@ -22,4 +22,4 @@ jobs:
         with:
           ref: ${{ inputs.item-ref }}
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag floppa:$(date +%s) --build-arg CLUSTER_URL="${{ inputs.cluster-url }}" --build-arg DATABASE="${{ inputs.database-name }}"
+        run: docker build . --file Dockerfile --tag floppa:$(date +%s) --build-arg CLUSTER_URL="${{ secrets.cluster-url }}" --build-arg DATABASE="${{ secrets.database-name }}"

@@ -22,5 +22,7 @@ jobs:
           java-version: '11'
           distribution: 'corretto'
           cache: maven
+      - name: Create mongoDB Docker container
+        run: docker run -d -p 27017:27017 mongo:latest
       - name: Tests
         run: mvn -B test --file pom.xml

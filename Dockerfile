@@ -4,7 +4,8 @@ WORKDIR /app
 
 COPY . .
 
-RUN mvn package
+# We can skip tests since they are ran before building the dockerfile (in Github actions)
+RUN mvn clean package -Dmaven.test.skip
 
 FROM amazoncorretto:11
 
