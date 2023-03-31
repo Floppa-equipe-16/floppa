@@ -3,6 +3,8 @@ package ulaval.glo2003.api;
 import com.mongodb.client.MongoClient;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 @Path("/health")
@@ -15,6 +17,7 @@ public class HealthResource {
     }
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     public Response health() {
         HealthResponse healthResponse = new HealthResponse();
         healthResponse.api = true;

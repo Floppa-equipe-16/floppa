@@ -7,11 +7,12 @@ import static org.mockito.Mockito.when;
 
 import jakarta.ws.rs.NotFoundException;
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-public abstract class IProductRepositoryTest {
+public abstract class IProductRepositoryITest {
 
     private static final String ID = "1";
     private static final String SECOND_ID = "2";
@@ -24,9 +25,12 @@ public abstract class IProductRepositoryTest {
 
     @BeforeEach
     public void setUp() {
-        repository.reset();
-
         productStub = createProductStub(ID, SELLER_ID);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        repository.reset();
     }
 
     @Test

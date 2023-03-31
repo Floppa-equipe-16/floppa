@@ -11,6 +11,7 @@ import java.net.URI;
 import java.util.concurrent.TimeUnit;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import ulaval.glo2003.api.HealthResource;
 import ulaval.glo2003.api.LostResource;
@@ -56,9 +57,10 @@ public class Main {
                 .register(productResource)
                 .register(offerResource)
                 .register(paramExceptionMapper)
-                .register(notFoundExceptionMapper);
+                .register(notFoundExceptionMapper)
+                .register(JacksonFeature.class);
 
-        URI uri = URI.create("http://localhost:8080/");
+        URI uri = URI.create("http://0.0.0.0:8080/");
 
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, resourceConfig);
         server.start();

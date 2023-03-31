@@ -1,9 +1,9 @@
 package ulaval.glo2003.domain.infrastructure.mongo;
 
 import ulaval.glo2003.domain.seller.ISellerRepository;
-import ulaval.glo2003.domain.seller.ISellerRepositoryTest;
+import ulaval.glo2003.domain.seller.ISellerRepositoryITest;
 
-public class MongoSellerRepositoryTest extends ISellerRepositoryTest {
+public class MongoSellerRepositoryITest extends ISellerRepositoryITest {
 
     @Override
     protected ISellerRepository createRepository() {
