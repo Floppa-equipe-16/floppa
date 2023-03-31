@@ -16,7 +16,7 @@ public class MongoTestUtils {
                 .applyToClusterSettings(builder -> builder.serverSelectionTimeout(TIMEOUT, TimeUnit.MILLISECONDS))
                 .applyToConnectionPoolSettings(builder -> builder.maxConnectionIdleTime(TIMEOUT, TimeUnit.MILLISECONDS))
                 .build());
-        Datastore datastore = Morphia.createDatastore(client, "floppa-test");
+        Datastore datastore = Morphia.createDatastore(client, "floppa-dev");
         datastore.getMapper().mapPackage("ulaval.glo2003");
         datastore.ensureIndexes();
 
