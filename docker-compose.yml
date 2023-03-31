@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  api:
+    build: .
+    ports:
+      - 8080:8080
+    environment:
+      FLOPPA_MONGO_CLUSTER_URL: "mongodb://db:27017/"
+      FLOPPA_MONGO_DATABASE: "floppa-dev"
+
+  db:
+    image: mongo:5.0
+    volumes:
+      - mongo:/data/db
+
+volumes:
+  mongo:

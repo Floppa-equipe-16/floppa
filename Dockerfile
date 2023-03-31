@@ -2,10 +2,14 @@ FROM maven:3-amazoncorretto-11 AS build
 
 WORKDIR /app
 
+COPY pom.xml .
+
+RUN mvn compile; exit 0;
+
 COPY . .
 
 # We can skip tests since they are ran before building the dockerfile (in Github actions)
-RUN mvn clean package -Dmaven.test.skip
+RUN mvn package -Dmaven.test.skip
 
 FROM amazoncorretto:11
 
