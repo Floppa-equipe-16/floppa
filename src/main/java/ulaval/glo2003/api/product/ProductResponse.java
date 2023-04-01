@@ -1,7 +1,9 @@
 package ulaval.glo2003.api.product;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import ulaval.glo2003.api.offer.OfferCollectionResponse;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProductResponse {
 
     protected static class SellerInfo {
