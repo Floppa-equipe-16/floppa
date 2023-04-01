@@ -24,7 +24,7 @@ public class HealthResource {
         healthResponse.db = databaseHealthCheck(client);
 
         if (isHealthy(healthResponse)) {
-            return Response.ok().entity(healthResponse).build();
+            return Response.ok().entity(healthResponse).type(MediaType.APPLICATION_JSON).build();
         } else {
             return Response.serverError().entity(healthResponse).build();
         }
