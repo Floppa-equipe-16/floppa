@@ -1,17 +1,17 @@
 package ulaval.glo2003.api;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.e2e.ApiTestUtils;
 
-import static com.google.common.truth.Truth.assertThat;
-
-public class HealthResourceTest  extends ApiTestUtils {
+public class HealthResourceTest extends ApiTestUtils {
 
     @Test
-    public void areAllServicesUp(){
+    public void areAllServicesUp() {
         Response response = target("/health").request().get();
         HealthResponse healthResponse = response.readEntity(HealthResponse.class);
 

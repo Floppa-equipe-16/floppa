@@ -15,12 +15,12 @@ public abstract class ApiTestUtils extends JerseyTest {
 
     @AfterEach
     @Override
-    public void tearDown() throws Exception{
+    public void tearDown() throws Exception {
         super.tearDown();
     }
 
     @Override
-    protected Application configure(){
+    protected Application configure() {
         return new ResourceConfigProvider().provide(true);
     }
 }
