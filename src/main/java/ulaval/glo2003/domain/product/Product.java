@@ -12,7 +12,7 @@ public class Product {
     private final String description;
     private final Double suggestedPrice;
     private final String category;
-    private final SaleStatus saleStatus;
+    private SaleStatus saleStatus;
     private final ArrayList<Offer> offers;
 
     public Product(
@@ -79,6 +79,10 @@ public class Product {
 
     public String getCreatedAt() {
         return createdAt;
+    }
+
+    public void setSaleStatus(SaleStatus saleStatus) {
+        this.saleStatus = saleStatus;
     }
 
     public List<Offer> getOffers() {

@@ -9,11 +9,13 @@ import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
 import ulaval.glo2003.domain.exceptions.MissingParamException;
+import ulaval.glo2003.domain.exceptions.NotPermittedException;
 import ulaval.glo2003.domain.offer.IOfferRepository;
 import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.product.IProductRepository;
 import ulaval.glo2003.domain.product.Product;
 import ulaval.glo2003.domain.product.ProductFilter;
+import ulaval.glo2003.domain.product.SaleStatus;
 import ulaval.glo2003.domain.seller.ISellerRepository;
 import ulaval.glo2003.domain.seller.Seller;
 
@@ -123,6 +125,30 @@ public class SellingService {
             offerRepository.save(offer);
         }
         return offer.getId();
+    }
+
+    public void sellProduct(String sellerId, String productId, String username) {
+        if (sellerId == null) throw new MissingParamException("seller id");
+        if (productId == null) throw new MissingParamException("product id");
+        if (username == null) throw new MissingParamException("username");
+        sellerRepository.findById(sellerId);
+        Product product = getProductWithOffers(productId);
+
+        if (product.getSaleStatus() == SaleStatus.sold) {
+            throw new NotPermittedException("sell");
+        }
+
+        var offerList = product.getOffers();
+        Offer matchingOffer = offerList.stream()
+                .filter(offer -> username.equals(offer.getUsername()))
+                .findFirst()
+                .orElse(null);
+        if (matchingOffer == null) {
+            offerRepository.findById("No matching offer with the username: " + username);
+        }
+        product.setSaleStatus(SaleStatus.sold);
+
+        productRepository.save(product);
     }
 
     private boolean canAddOfferToProduct(String productId, Offer offer) {

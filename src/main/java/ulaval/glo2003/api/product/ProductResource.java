@@ -5,6 +5,7 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+import java.util.Map;
 import ulaval.glo2003.domain.product.ProductFilter;
 import ulaval.glo2003.service.SellingService;
 
@@ -18,6 +19,7 @@ public class ProductResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response createProducts(
             @Context UriInfo uriInfo, @HeaderParam("X-Seller-Id") String xSellerId, ProductRequest productRequest) {
         String productId = sellingService.createProduct(xSellerId, productRequest);
@@ -46,5 +48,19 @@ public class ProductResource {
     public Response getProduct(@PathParam("productId") String productId) {
         ProductResponse productResponse = sellingService.getProduct(productId);
         return Response.ok().entity(productResponse).build();
+    }
+
+    @POST
+    @Path("/{productId}/sell")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response sellProduct(
+            @HeaderParam("X-Seller-Id") String xSellerId,
+            @PathParam("productId") String productId,
+            Map<String, String> body) {
+        var username = body.get("username");
+        sellingService.sellProduct(xSellerId, productId, username);
+
+        return Response.ok().build();
     }
 }
