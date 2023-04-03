@@ -24,15 +24,16 @@ import ulaval.glo2003.domain.seller.SellerFactory;
 import ulaval.glo2003.domain.seller.SellerTestUtils;
 
 public abstract class ISellingServiceITest {
+    private static final String SELLER_ID = "SELLER";
+    private static final String BUYER_USERNAME = "BUYER";
     private ISellerRepository sellerRepository;
     private IProductRepository productRepository;
     private IOfferRepository offerRepository;
-    private SellerMapper sellerMapper;
     private ProductMapper productMapper;
     private OfferMapper offerMapper;
-    private SellerFactory sellerFactory = new SellerFactory();
-    private ProductFactory productFactory = new ProductFactory();
-    private OfferFactory offerFactory = new OfferFactory();
+    private final SellerFactory sellerFactory = new SellerFactory();
+    private final ProductFactory productFactory = new ProductFactory();
+    private final OfferFactory offerFactory = new OfferFactory();
     private Seller sellerStub;
     private Product productStub;
     private Offer offerStub;
@@ -42,7 +43,7 @@ public abstract class ISellingServiceITest {
     public void setUp() {
         offerMapper = new OfferMapper(offerFactory);
         productMapper = new ProductMapper(productFactory, offerMapper);
-        sellerMapper = new SellerMapper(sellerFactory, productMapper);
+        SellerMapper sellerMapper = new SellerMapper(sellerFactory, productMapper);
         sellerRepository = createSellerRepository();
         productRepository = createProductRepository();
         offerRepository = createOfferRepository();
@@ -82,9 +83,7 @@ public abstract class ISellingServiceITest {
     @Test
     public void canGetSellerWithProduct() {
         saveSellerToRepository();
-
-        productStub = productMapper.requestToProduct(sellerStub.getId(), ProductTestUtils.createProductRequest());
-        productRepository.save(productStub);
+        saveProductToRepository();
 
         SellerResponse sellerResponse = sellingService.getSeller(sellerStub.getId());
 
@@ -95,7 +94,6 @@ public abstract class ISellingServiceITest {
     @Test
     public void canCreateProductWhenSellerExists() {
         saveSellerToRepository();
-
         ProductRequest productRequest = ProductTestUtils.createProductRequest();
 
         String id = sellingService.createProduct(sellerStub.getId(), productRequest);
@@ -108,15 +106,13 @@ public abstract class ISellingServiceITest {
     public void createProductThrowsWhenSellerDoesNotExist() {
         ProductRequest productRequest = ProductTestUtils.createProductRequest();
 
-        assertThrows(NotFoundException.class, () -> sellingService.createProduct("invalidId", productRequest));
+        assertThrows(NotFoundException.class, () -> sellingService.createProduct(SELLER_ID, productRequest));
     }
 
     @Test
     public void canGetProductWithNoOffer() {
         saveSellerToRepository();
-
-        productStub = productMapper.requestToProduct(sellerStub.getId(), ProductTestUtils.createProductRequest());
-        productRepository.save(productStub);
+        saveProductToRepository();
 
         ProductResponse productResponse = sellingService.getProduct(productStub.getId());
 
@@ -126,11 +122,8 @@ public abstract class ISellingServiceITest {
     @Test
     public void canGetProductWithOffer() {
         saveSellerToRepository();
-
-        productStub = productMapper.requestToProduct(sellerStub.getId(), ProductTestUtils.createProductRequest());
-        offerStub = offerMapper.requestToOffer(productStub.getId(), "BuyerName", OfferTestUtils.createOfferRequest());
-        productRepository.save(productStub);
-        offerRepository.save(offerStub);
+        saveProductToRepository();
+        saveOfferToRepository();
 
         ProductResponse productResponse = sellingService.getProduct(productStub.getId());
 
@@ -140,11 +133,9 @@ public abstract class ISellingServiceITest {
 
     @Test
     public void canGetProducts() {
-        ProductFilter productFilter = createEmptyFilter();
         saveSellerToRepository();
-
-        productStub = productMapper.requestToProduct(sellerStub.getId(), ProductTestUtils.createProductRequest());
-        productRepository.save(productStub);
+        saveProductToRepository();
+        ProductFilter productFilter = createEmptyFilter();
 
         ProductCollectionResponse productResponses = sellingService.getProducts(productFilter);
 
@@ -163,12 +154,10 @@ public abstract class ISellingServiceITest {
     @Test
     public void canCreateOfferWhenProductExists() {
         saveSellerToRepository();
-
-        productStub = productMapper.requestToProduct(sellerStub.getId(), ProductTestUtils.createProductRequest());
-        productRepository.save(productStub);
-
+        saveProductToRepository();
         OfferRequest offerRequest = OfferTestUtils.createOfferRequest();
-        String id = sellingService.createOffer("BUYERNAME", productStub.getId(), offerRequest);
+
+        String id = sellingService.createOffer(BUYER_USERNAME, productStub.getId(), offerRequest);
 
         Offer offer = offerRepository.findById(id);
         assertThat(offer).isNotNull();
@@ -178,15 +167,28 @@ public abstract class ISellingServiceITest {
     public void createOfferThrowsWhenProductDoesNotExist() {
         OfferRequest offerRequest = OfferTestUtils.createOfferRequest();
 
-        assertThrows(NotFoundException.class, () -> sellingService.createOffer("BUYERNAME", "invalidId", offerRequest));
+        assertThrows(
+                NotFoundException.class, () -> sellingService.createOffer(BUYER_USERNAME, SELLER_ID, offerRequest));
     }
 
     private ProductFilter createEmptyFilter() {
         return new ProductFilter(null, null, null, null, null);
     }
-    private void saveSellerToRepository(){
+
+    private void saveSellerToRepository() {
         sellerStub = SellerTestUtils.createSeller();
         sellerRepository.save(sellerStub);
+    }
+
+    private void saveProductToRepository() {
+        productStub = productMapper.requestToProduct(sellerStub.getId(), ProductTestUtils.createProductRequest());
+        productRepository.save(productStub);
+    }
+
+    private void saveOfferToRepository() {
+        offerStub =
+                offerMapper.requestToOffer(productStub.getId(), BUYER_USERNAME, OfferTestUtils.createOfferRequest());
+        offerRepository.save(offerStub);
     }
 
     protected abstract ISellerRepository createSellerRepository();
