@@ -1,4 +1,4 @@
-package ulaval.glo2003.service;
+package ulaval.glo2003.service.integrated;
 
 import ulaval.glo2003.domain.infrastructure.inMemory.InMemoryOfferRepository;
 import ulaval.glo2003.domain.infrastructure.inMemory.InMemoryProductRepository;

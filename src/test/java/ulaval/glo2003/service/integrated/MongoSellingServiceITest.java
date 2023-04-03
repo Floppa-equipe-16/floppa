@@ -1,4 +1,4 @@
-package ulaval.glo2003.service;
+package ulaval.glo2003.service.integrated;
 
 import dev.morphia.Datastore;
 import ulaval.glo2003.domain.infrastructure.mongo.MongoOfferRepository;
@@ -8,6 +8,7 @@ import ulaval.glo2003.domain.infrastructure.mongo.MongoTestUtils;
 import ulaval.glo2003.domain.offer.IOfferRepository;
 import ulaval.glo2003.domain.product.IProductRepository;
 import ulaval.glo2003.domain.seller.ISellerRepository;
+import ulaval.glo2003.service.integrated.ISellingServiceITest;
 
 public class MongoSellingServiceITest extends ISellingServiceITest {
 

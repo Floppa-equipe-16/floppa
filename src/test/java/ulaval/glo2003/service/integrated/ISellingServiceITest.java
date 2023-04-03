@@ -1,10 +1,11 @@
-package ulaval.glo2003.service;
+package ulaval.glo2003.service.integrated;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import jakarta.ws.rs.NotFoundException;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.api.offer.OfferRequest;
@@ -22,6 +23,10 @@ import ulaval.glo2003.domain.seller.ISellerRepository;
 import ulaval.glo2003.domain.seller.Seller;
 import ulaval.glo2003.domain.seller.SellerFactory;
 import ulaval.glo2003.domain.seller.SellerTestUtils;
+import ulaval.glo2003.service.OfferMapper;
+import ulaval.glo2003.service.ProductMapper;
+import ulaval.glo2003.service.SellerMapper;
+import ulaval.glo2003.service.SellingService;
 
 public abstract class ISellingServiceITest {
     private static final String SELLER_ID = "SELLER";
@@ -29,21 +34,26 @@ public abstract class ISellingServiceITest {
     private ISellerRepository sellerRepository;
     private IProductRepository productRepository;
     private IOfferRepository offerRepository;
-    private ProductMapper productMapper;
-    private OfferMapper offerMapper;
-    private final SellerFactory sellerFactory = new SellerFactory();
-    private final ProductFactory productFactory = new ProductFactory();
-    private final OfferFactory offerFactory = new OfferFactory();
+    private static SellerMapper sellerMapper;
+    private static ProductMapper productMapper;
+    private static OfferMapper offerMapper;
+    private static final SellerFactory sellerFactory = new SellerFactory();
+    private static final ProductFactory productFactory = new ProductFactory();
+    private static final OfferFactory offerFactory = new OfferFactory();
     private Seller sellerStub;
     private Product productStub;
     private Offer offerStub;
     private SellingService sellingService;
 
-    @BeforeEach
-    public void setUp() {
+    @BeforeAll
+    public static void setUpAll() {
         offerMapper = new OfferMapper(offerFactory);
         productMapper = new ProductMapper(productFactory, offerMapper);
-        SellerMapper sellerMapper = new SellerMapper(sellerFactory, productMapper);
+        sellerMapper = new SellerMapper(sellerFactory, productMapper);
+    }
+
+    @BeforeEach
+    public void setUp() {
         sellerRepository = createSellerRepository();
         productRepository = createProductRepository();
         offerRepository = createOfferRepository();

@@ -1,4 +1,4 @@
-package ulaval.glo2003.service;
+package ulaval.glo2003.service.unit;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.*;
@@ -14,6 +14,7 @@ import ulaval.glo2003.api.offer.OfferRequest;
 import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.offer.OfferFactory;
 import ulaval.glo2003.domain.offer.OfferTestUtils;
+import ulaval.glo2003.service.OfferMapper;
 
 class OfferMapperTest {
 
