@@ -52,7 +52,7 @@ class OfferMapperTest {
     public void canCreateSummaryResponseWithMultipleOffersCheckAvgAmount() {
         OfferCollectionResponse response = mapper.offersToSummaryCollectionResponse(offerStubs);
 
-        assertThat(response.avgAmount).isEqualTo(50d);
+        assertThat(response.avgAmount).isEqualTo(225d);
     }
 
     @Test

@@ -12,8 +12,8 @@ public class OfferTestUtils {
     public static final String ID_2 = "2";
     public static final String PRODUCT_ID = "PRODUCT";
     public static final String USERNAME = "2000-01-01";
-    public static final Double LOWEST_AMOUNT = 25d;
-    public static final Double HIGHEST_AMOUNT = 75d;
+    public static final Double LOWEST_AMOUNT = 200d;
+    public static final Double HIGHEST_AMOUNT = 250d;
     public static final String MESSAGE =
             "This is a description of at least a hundred characters. Let me count them: one, two, three, four, five.";
     public static final String CREATED_AT = Instant.MAX.toString();
