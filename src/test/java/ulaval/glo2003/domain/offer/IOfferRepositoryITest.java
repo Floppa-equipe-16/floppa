@@ -63,7 +63,7 @@ public abstract class IOfferRepositoryITest {
         repository.save(offerStub);
 
         Offer foundOffer = repository.findById(offerStub.getId());
-        
+
         assertThat(foundOffer.getId()).isEqualTo(offerStub.getId());
     }
 
