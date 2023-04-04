@@ -1,5 +1,6 @@
 package ulaval.glo2003.api.seller;
 
+import java.util.Objects;
 import ulaval.glo2003.domain.exceptions.MissingParamException;
 
 public class SellerRequest {
@@ -30,10 +31,10 @@ public class SellerRequest {
     }
 
     private boolean isEqualsTo(SellerRequest sellerRequest) {
-        return name.equals(sellerRequest.name)
-                && birthdate.equals(sellerRequest.birthdate)
-                && email.equals(sellerRequest.email)
-                && phoneNumber.equals(sellerRequest.phoneNumber)
-                && bio.equals(sellerRequest.bio);
+        return Objects.equals(name, sellerRequest.name)
+                && Objects.equals(birthdate, sellerRequest.birthdate)
+                && Objects.equals(email, sellerRequest.email)
+                && Objects.equals(phoneNumber, sellerRequest.phoneNumber)
+                && Objects.equals(bio, sellerRequest.bio);
     }
 }

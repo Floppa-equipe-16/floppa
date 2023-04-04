@@ -1,5 +1,6 @@
 package ulaval.glo2003.api.offer;
 
+import java.util.Objects;
 import ulaval.glo2003.domain.exceptions.MissingParamException;
 
 public class OfferRequest {
@@ -24,6 +25,6 @@ public class OfferRequest {
     }
 
     private boolean isEqualsTo(OfferRequest request) {
-        return amount.equals(request.amount) && message.equals(request.message);
+        return Objects.equals(amount, request.amount) && Objects.equals(message, request.message);
     }
 }

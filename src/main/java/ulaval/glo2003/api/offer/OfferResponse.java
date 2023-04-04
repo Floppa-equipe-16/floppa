@@ -1,5 +1,6 @@
 package ulaval.glo2003.api.offer;
 
+import java.util.Objects;
 import ulaval.glo2003.domain.offer.Offer;
 
 public class OfferResponse {
@@ -7,6 +8,8 @@ public class OfferResponse {
     public Double amount;
     public String message;
     public String createdAt;
+
+    public OfferResponse() {}
 
     public OfferResponse(Offer offer) {
         username = offer.getUsername();
@@ -28,9 +31,9 @@ public class OfferResponse {
     }
 
     private boolean isEqualsTo(OfferResponse response) {
-        return username.equals(response.username)
-                && amount.equals(response.amount)
-                && message.equals(response.message)
-                && createdAt.equals(response.createdAt);
+        return Objects.equals(username, response.username)
+                && Objects.equals(amount, response.amount)
+                && Objects.equals(message, response.message)
+                && Objects.equals(createdAt, response.createdAt);
     }
 }

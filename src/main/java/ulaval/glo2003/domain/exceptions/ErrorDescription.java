@@ -1,8 +1,12 @@
 package ulaval.glo2003.domain.exceptions;
 
 public class ErrorDescription {
-    public final String code;
-    public final String description;
+
+    public String code;
+
+    public String description;
+
+    public ErrorDescription() {}
 
     public ErrorDescription(String code, String description) {
         this.code = code;
