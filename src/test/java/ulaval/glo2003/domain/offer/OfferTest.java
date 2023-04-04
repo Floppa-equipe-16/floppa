@@ -32,13 +32,7 @@ public class OfferTest {
 
     @Test
     public void canCompareDifferentOffers() {
-        otherOffer = new Offer(
-                OfferUtils.ID_2,
-                OfferUtils.PRODUCT_ID,
-                OfferUtils.USERNAME,
-                OfferUtils.LOWEST_AMOUNT,
-                OfferUtils.MESSAGE,
-                OfferUtils.CREATED_AT);
+        otherOffer = OfferUtils.createOffer2();
 
         assertThat(offer).isNotEqualTo(otherOffer);
     }
