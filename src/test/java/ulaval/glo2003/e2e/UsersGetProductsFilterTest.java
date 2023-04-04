@@ -23,9 +23,7 @@ public class UsersGetProductsFilterTest extends ApiTest {
 
     @Test
     public void getProductsWithoutFilter() {
-        Response response = target("/products")
-                .request()
-                .get();
+        Response response = target("/products").request().get();
         ProductFilter filter = ProductTestUtils.createEmptyFilter();
 
         assertThat(response.getStatus()).isEqualTo(200);
@@ -36,10 +34,7 @@ public class UsersGetProductsFilterTest extends ApiTest {
     @Test
     public void getProductsWithSellerIdFilter() {
         Response response =
-                target("/products")
-                        .queryParam("sellerId", "test")
-                        .request()
-                        .get();
+                target("/products").queryParam("sellerId", "test").request().get();
         ProductFilter filter = new ProductFilter("test", null, null, null, null);
 
         assertThat(response.getStatus()).isEqualTo(200);

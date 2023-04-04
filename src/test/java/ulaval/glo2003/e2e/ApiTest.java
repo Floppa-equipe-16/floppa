@@ -9,8 +9,6 @@ import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.test.JerseyTest;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -52,7 +50,8 @@ public abstract class ApiTest {
         new MongoSellerRepository(datastore).reset();
         new MongoProductRepository(datastore).reset();
     }
-    protected WebTarget target(String path){
+
+    protected WebTarget target(String path) {
         return jerseyTest.target(path);
     }
 
