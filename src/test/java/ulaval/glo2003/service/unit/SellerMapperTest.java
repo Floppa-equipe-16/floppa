@@ -1,4 +1,4 @@
-package ulaval.glo2003.service;
+package ulaval.glo2003.service.unit;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.doReturn;
@@ -13,6 +13,8 @@ import ulaval.glo2003.api.seller.SellerResponse;
 import ulaval.glo2003.domain.seller.Seller;
 import ulaval.glo2003.domain.seller.SellerFactory;
 import ulaval.glo2003.domain.seller.SellerTestUtils;
+import ulaval.glo2003.service.ProductMapper;
+import ulaval.glo2003.service.SellerMapper;
 
 class SellerMapperTest {
 

@@ -1,4 +1,4 @@
-package ulaval.glo2003.service;
+package ulaval.glo2003.service.unit;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -9,6 +9,8 @@ import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Test;
+import ulaval.glo2003.service.SellingService;
+import ulaval.glo2003.service.SellingServiceFactory;
 
 class SellingServiceFactoryTest {
 
