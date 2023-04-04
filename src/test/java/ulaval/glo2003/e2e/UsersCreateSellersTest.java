@@ -17,8 +17,11 @@ public class UsersCreateSellersTest extends ApiTestUtils {
         SellerRequest request = SellerUtils.createSellerRequest();
 
         Response response = createSeller(request);
+        String location = response.getHeaderString("Location");
 
         assertThat(response.getStatus()).isEqualTo(201);
+        assertThat(location).isNotNull();
+        assertThat(location).isNotEmpty();
     }
 
     @Test

@@ -31,8 +31,11 @@ public class UsersCreateProductsTest extends ApiTestUtils {
                 .request()
                 .header("X-Seller-Id", sellerId)
                 .post(Entity.entity(productRequest, MediaType.APPLICATION_JSON));
+        String location = response.getHeaderString("Location");
 
         assertThat(response.getStatus()).isEqualTo(201);
+        assertThat(location).isNotNull();
+        assertThat(location).isNotEmpty();
     }
 
     @Test
@@ -41,7 +44,9 @@ public class UsersCreateProductsTest extends ApiTestUtils {
         ProductRequest productRequest = ProductUtils.createProductRequest();
 
         Response response =
-                target("/products").request().post(Entity.entity(productRequest, MediaType.APPLICATION_JSON));
+                target("/products")
+                        .request()
+                        .post(Entity.entity(productRequest, MediaType.APPLICATION_JSON));
 
         assertThat(response.getStatus()).isEqualTo(400);
         assertMediaTypeIsJson(response);
