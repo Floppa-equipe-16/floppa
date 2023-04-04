@@ -23,9 +23,9 @@ import ulaval.glo2003.utils.MongoTestUtils;
 
 public abstract class ApiTest {
 
-    protected static Datastore datastore = MongoTestUtils.createLocalDatastore();
-    protected static SellingService sellingService = new SellingServiceFactory().create(datastore);
+    private static final Datastore datastore = MongoTestUtils.createLocalDatastore();
     private static JerseyTest jerseyTest;
+    protected static SellingService sellingService = new SellingServiceFactory().create(datastore);
 
     public ApiTest() {}
 
