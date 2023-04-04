@@ -1,4 +1,4 @@
-package ulaval.glo2003.domain.infrastructure.mongo;
+package ulaval.glo2003.utils;
 
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
@@ -7,7 +7,7 @@ import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 import java.util.concurrent.TimeUnit;
 
-public class MongoTestUtils {
+public class MongoUtils {
 
     private static final int TIMEOUT = 5000;
 

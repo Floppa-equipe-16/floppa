@@ -12,14 +12,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import ulaval.glo2003.api.offer.OfferCollectionResponse;
 import ulaval.glo2003.api.product.ProductCollectionResponse;
-import ulaval.glo2003.api.product.ProductEquals;
 import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.domain.product.Product;
 import ulaval.glo2003.domain.product.ProductFactory;
-import ulaval.glo2003.domain.product.ProductTestUtils;
 import ulaval.glo2003.domain.seller.Seller;
-import ulaval.glo2003.domain.seller.SellerTestUtils;
+import ulaval.glo2003.utils.ProductUtils;
+import ulaval.glo2003.utils.SellerUtils;
+import ulaval.glo2003.utils.equals.ProductEquals;
 
 class ProductMapperTest {
 
@@ -37,7 +37,7 @@ class ProductMapperTest {
     @BeforeEach
     public void setUp() {
         mapper = new ProductMapper(factory, offerMapper);
-        productStub = ProductTestUtils.createProductStub();
+        productStub = ProductUtils.createProductStub();
     }
 
     @Test
@@ -46,9 +46,9 @@ class ProductMapperTest {
                 .when(factory)
                 .createProduct(anyString(), anyString(), anyString(), anyDouble(), anyString());
 
-        ProductRequest request = ProductTestUtils.createProductRequest();
+        ProductRequest request = ProductUtils.createProductRequest();
 
-        Product product = mapper.requestToProduct(ProductTestUtils.SELLER_ID, request);
+        Product product = mapper.requestToProduct(ProductUtils.SELLER_ID, request);
 
         assertThat(ProductEquals.productRequestEqualsProduct(request, product)).isTrue();
     }
@@ -80,7 +80,7 @@ class ProductMapperTest {
 
     @Test
     public void canMapProductToResponseWithSeller() {
-        Seller seller = SellerTestUtils.createSellerStub();
+        Seller seller = SellerUtils.createSellerStub();
 
         ProductResponse response = mapper.productToResponseWithSeller(productStub, seller);
 

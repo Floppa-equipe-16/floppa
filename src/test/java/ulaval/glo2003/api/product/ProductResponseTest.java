@@ -4,7 +4,8 @@ import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ulaval.glo2003.domain.product.ProductTestUtils;
+import ulaval.glo2003.api.offer.OfferCollectionResponse;
+import ulaval.glo2003.utils.ProductUtils;
 
 public class ProductResponseTest {
 
@@ -12,7 +13,7 @@ public class ProductResponseTest {
 
     @BeforeEach
     public void setUp() {
-        productResponse = ProductTestUtils.createProductResponse();
+        productResponse = ProductUtils.createProductResponse();
     }
 
     @Test
@@ -22,14 +23,14 @@ public class ProductResponseTest {
 
     @Test
     public void productResponseEqualsToProductResponse() {
-        ProductResponse newProductResponse = ProductTestUtils.createProductResponse();
+        ProductResponse newProductResponse = ProductUtils.createProductResponse();
 
         assertThat(productResponse).isEqualTo(newProductResponse);
     }
 
     @Test
     public void productResponseNotEqualsToProductResponseWhenIdDiff() {
-        ProductResponse newProductResponse = ProductTestUtils.createProductResponse();
+        ProductResponse newProductResponse = ProductUtils.createProductResponse();
         productResponse.id = "???";
 
         assertThat(productResponse).isNotEqualTo(newProductResponse);
@@ -37,7 +38,7 @@ public class ProductResponseTest {
 
     @Test
     public void productResponseNotEqualsToProductResponseWhenCreateAtDiff() {
-        ProductResponse newProductResponse = ProductTestUtils.createProductResponse();
+        ProductResponse newProductResponse = ProductUtils.createProductResponse();
         productResponse.createdAt = "???";
 
         assertThat(productResponse).isNotEqualTo(newProductResponse);
@@ -45,7 +46,7 @@ public class ProductResponseTest {
 
     @Test
     public void productResponseNotEqualsToProductResponseWhenTitleDiff() {
-        ProductResponse newProductResponse = ProductTestUtils.createProductResponse();
+        ProductResponse newProductResponse = ProductUtils.createProductResponse();
         productResponse.title = "???";
 
         assertThat(productResponse).isNotEqualTo(newProductResponse);
@@ -53,7 +54,7 @@ public class ProductResponseTest {
 
     @Test
     public void productResponseNotEqualsToProductResponseWhenCategoryDiff() {
-        ProductResponse newProductResponse = ProductTestUtils.createProductResponse();
+        ProductResponse newProductResponse = ProductUtils.createProductResponse();
         productResponse.category = "???";
 
         assertThat(productResponse).isNotEqualTo(newProductResponse);
@@ -61,7 +62,7 @@ public class ProductResponseTest {
 
     @Test
     public void productResponseNotEqualsToProductResponseWhenDescriptionDiff() {
-        ProductResponse newProductResponse = ProductTestUtils.createProductResponse();
+        ProductResponse newProductResponse = ProductUtils.createProductResponse();
         productResponse.description = "???";
 
         assertThat(productResponse).isNotEqualTo(newProductResponse);
@@ -69,8 +70,24 @@ public class ProductResponseTest {
 
     @Test
     public void productResponseNotEqualsToProductResponseWhenSuggestedPriceDiff() {
-        ProductResponse newProductResponse = ProductTestUtils.createProductResponse();
+        ProductResponse newProductResponse = ProductUtils.createProductResponse();
         productResponse.suggestedPrice = 1d;
+
+        assertThat(productResponse).isNotEqualTo(newProductResponse);
+    }
+
+    @Test
+    public void productResponseNotEqualsToProductResponseWhenSellerDiff() {
+        ProductResponse newProductResponse = ProductUtils.createProductResponse();
+        productResponse.seller = new ProductResponse.SellerInfo();
+
+        assertThat(productResponse).isNotEqualTo(newProductResponse);
+    }
+
+    @Test
+    public void productResponseNotEqualsToProductResponseWhenOffersDiff() {
+        ProductResponse newProductResponse = ProductUtils.createProductResponse();
+        productResponse.offers = new OfferCollectionResponse();
 
         assertThat(productResponse).isNotEqualTo(newProductResponse);
     }

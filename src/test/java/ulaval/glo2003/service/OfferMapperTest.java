@@ -9,11 +9,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import ulaval.glo2003.api.offer.OfferCollectionResponse;
-import ulaval.glo2003.api.offer.OfferEquals;
 import ulaval.glo2003.api.offer.OfferRequest;
 import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.offer.OfferFactory;
-import ulaval.glo2003.domain.offer.OfferTestUtils;
+import ulaval.glo2003.utils.OfferUtils;
+import ulaval.glo2003.utils.equals.OfferEquals;
 
 class OfferMapperTest {
 
@@ -27,16 +27,16 @@ class OfferMapperTest {
     public void setUp() {
         mapper = new OfferMapper(factory);
         offerStubs = new ArrayList<>();
-        offerStubs.add(OfferTestUtils.createOfferStub());
-        offerStubs.add(OfferTestUtils.createOfferStub2());
+        offerStubs.add(OfferUtils.createOfferStub());
+        offerStubs.add(OfferUtils.createOfferStub2());
     }
 
     @Test
     public void canMapRequestToOffer() {
         doReturn(offerStubs.get(0)).when(factory).createOffer(anyString(), anyString(), anyDouble(), anyString());
-        OfferRequest request = OfferTestUtils.createOfferRequest();
+        OfferRequest request = OfferUtils.createOfferRequest();
 
-        Offer offer = mapper.requestToOffer(OfferTestUtils.PRODUCT_ID, OfferTestUtils.USERNAME, request);
+        Offer offer = mapper.requestToOffer(OfferUtils.PRODUCT_ID, OfferUtils.USERNAME, request);
 
         assertThat(OfferEquals.OfferRequestEqualsOffer(request, offer)).isTrue();
     }
@@ -114,7 +114,7 @@ class OfferMapperTest {
     @Test
     public void canCreateCompleteResponseWithMultipleOffersCheckAvgAmount() {
         OfferCollectionResponse response = mapper.offersToCompleteCollectionResponse(offerStubs);
-        Double result = (OfferTestUtils.HIGHEST_AMOUNT + OfferTestUtils.LOWEST_AMOUNT) / 2;
+        Double result = (OfferUtils.HIGHEST_AMOUNT + OfferUtils.LOWEST_AMOUNT) / 2;
 
         assertThat(response.avgAmount).isEqualTo(result);
     }
@@ -123,14 +123,14 @@ class OfferMapperTest {
     public void canCreateCompleteResponseWithMultipleOffersCheckMaxAmount() {
         OfferCollectionResponse response = mapper.offersToCompleteCollectionResponse(offerStubs);
 
-        assertThat(response.maxAmount).isEqualTo(OfferTestUtils.HIGHEST_AMOUNT);
+        assertThat(response.maxAmount).isEqualTo(OfferUtils.HIGHEST_AMOUNT);
     }
 
     @Test
     public void canCreateCompleteResponseWithMultipleOffersCheckMinAmount() {
         OfferCollectionResponse response = mapper.offersToCompleteCollectionResponse(offerStubs);
 
-        assertThat(response.minAmount).isEqualTo(OfferTestUtils.LOWEST_AMOUNT);
+        assertThat(response.minAmount).isEqualTo(OfferUtils.LOWEST_AMOUNT);
     }
 
     @Test

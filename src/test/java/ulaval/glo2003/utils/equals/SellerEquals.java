@@ -1,5 +1,7 @@
-package ulaval.glo2003.api.seller;
+package ulaval.glo2003.utils.equals;
 
+import ulaval.glo2003.api.seller.SellerRequest;
+import ulaval.glo2003.api.seller.SellerResponse;
 import ulaval.glo2003.domain.seller.Seller;
 
 public class SellerEquals {

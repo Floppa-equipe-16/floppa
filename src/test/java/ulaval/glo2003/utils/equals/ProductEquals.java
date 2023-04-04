@@ -1,5 +1,7 @@
-package ulaval.glo2003.api.product;
+package ulaval.glo2003.utils.equals;
 
+import ulaval.glo2003.api.product.ProductRequest;
+import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.domain.product.Product;
 
 public class ProductEquals {

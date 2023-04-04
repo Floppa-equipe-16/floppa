@@ -7,14 +7,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.domain.exceptions.MissingParamException;
-import ulaval.glo2003.domain.seller.SellerTestUtils;
+import ulaval.glo2003.utils.SellerUtils;
 
 public class SellerRequestTest {
     private SellerRequest sellerRequest;
 
     @BeforeEach
     public void setUp() {
-        sellerRequest = SellerTestUtils.createSellerRequest();
+        sellerRequest = SellerUtils.createSellerRequest();
     }
 
     @Test
@@ -79,41 +79,41 @@ public class SellerRequestTest {
 
     @Test
     public void sellerRequestEqualsToSellerRequest() {
-        assertThat(sellerRequest).isEqualTo(SellerTestUtils.createSellerRequest());
+        assertThat(sellerRequest).isEqualTo(SellerUtils.createSellerRequest());
     }
 
     @Test
     public void sellerRequestNotEqualsToSellerRequestWhenNameDiff() {
         sellerRequest.name = "???";
 
-        assertThat(sellerRequest).isNotEqualTo(SellerTestUtils.createSellerRequest());
+        assertThat(sellerRequest).isNotEqualTo(SellerUtils.createSellerRequest());
     }
 
     @Test
     public void sellerRequestNotEqualsToSellerRequestWhenBirthdateDiff() {
         sellerRequest.birthdate = "???";
 
-        assertThat(sellerRequest).isNotEqualTo(SellerTestUtils.createSellerRequest());
+        assertThat(sellerRequest).isNotEqualTo(SellerUtils.createSellerRequest());
     }
 
     @Test
     public void sellerRequestNotEqualsToSellerRequestWhenEmailDiff() {
         sellerRequest.email = "???";
 
-        assertThat(sellerRequest).isNotEqualTo(SellerTestUtils.createSellerRequest());
+        assertThat(sellerRequest).isNotEqualTo(SellerUtils.createSellerRequest());
     }
 
     @Test
     public void sellerRequestNotEqualsToSellerRequestWhenPhoneNumberDiff() {
         sellerRequest.phoneNumber = "???";
 
-        assertThat(sellerRequest).isNotEqualTo(SellerTestUtils.createSellerRequest());
+        assertThat(sellerRequest).isNotEqualTo(SellerUtils.createSellerRequest());
     }
 
     @Test
     public void sellerRequestNotEqualsToSellerRequestWhenBioDiff() {
         sellerRequest.bio = "???";
 
-        assertThat(sellerRequest).isNotEqualTo(SellerTestUtils.createSellerRequest());
+        assertThat(sellerRequest).isNotEqualTo(SellerUtils.createSellerRequest());
     }
 }

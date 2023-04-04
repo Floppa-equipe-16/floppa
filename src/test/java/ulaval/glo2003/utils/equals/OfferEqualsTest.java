@@ -1,11 +1,13 @@
-package ulaval.glo2003.api.offer;
+package ulaval.glo2003.utils.equals;
 
 import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ulaval.glo2003.api.offer.OfferRequest;
+import ulaval.glo2003.api.offer.OfferResponse;
 import ulaval.glo2003.domain.offer.Offer;
-import ulaval.glo2003.domain.offer.OfferTestUtils;
+import ulaval.glo2003.utils.OfferUtils;
 
 public class OfferEqualsTest {
 
@@ -13,19 +15,19 @@ public class OfferEqualsTest {
 
     @BeforeEach
     public void setUp() {
-        offer = OfferTestUtils.createOffer();
+        offer = OfferUtils.createOffer();
     }
 
     @Test
     public void offerRequestEqualsToOffer() {
-        OfferRequest request = OfferTestUtils.createOfferRequest();
+        OfferRequest request = OfferUtils.createOfferRequest();
 
         assertThat(OfferEquals.OfferRequestEqualsOffer(request, offer)).isTrue();
     }
 
     @Test
     public void offerRequestNotEqualsToOfferWhenMessageDiff() {
-        OfferRequest request = OfferTestUtils.createOfferRequest();
+        OfferRequest request = OfferUtils.createOfferRequest();
         request.message = "new message";
 
         assertThat(OfferEquals.OfferRequestEqualsOffer(request, offer)).isFalse();
@@ -33,7 +35,7 @@ public class OfferEqualsTest {
 
     @Test
     public void offerRequestNotEqualsToOfferWhenAmountDiff() {
-        OfferRequest request = OfferTestUtils.createOfferRequest();
+        OfferRequest request = OfferUtils.createOfferRequest();
         request.amount = 1d;
 
         assertThat(OfferEquals.OfferRequestEqualsOffer(request, offer)).isFalse();
@@ -41,14 +43,14 @@ public class OfferEqualsTest {
 
     @Test
     public void offerResponseEqualsToOffer() {
-        OfferResponse response = OfferTestUtils.createOfferResponse();
+        OfferResponse response = OfferUtils.createOfferResponse();
 
         assertThat(OfferEquals.OfferResponseEqualsOffer(response, offer)).isTrue();
     }
 
     @Test
     public void productResponseNotEqualsToProductWhenMessageDiff() {
-        OfferResponse response = OfferTestUtils.createOfferResponse();
+        OfferResponse response = OfferUtils.createOfferResponse();
         response.message = "new message";
 
         assertThat(OfferEquals.OfferResponseEqualsOffer(response, offer)).isFalse();
@@ -56,7 +58,7 @@ public class OfferEqualsTest {
 
     @Test
     public void productResponseNotEqualsToProductWhenAmountDiff() {
-        OfferResponse response = OfferTestUtils.createOfferResponse();
+        OfferResponse response = OfferUtils.createOfferResponse();
         response.amount = 1d;
 
         assertThat(OfferEquals.OfferResponseEqualsOffer(response, offer)).isFalse();
@@ -64,7 +66,7 @@ public class OfferEqualsTest {
 
     @Test
     public void productResponseNotEqualsToProductWhenUsernameDiff() {
-        OfferResponse response = OfferTestUtils.createOfferResponse();
+        OfferResponse response = OfferUtils.createOfferResponse();
         response.username = "new username";
 
         assertThat(OfferEquals.OfferResponseEqualsOffer(response, offer)).isFalse();
@@ -72,7 +74,7 @@ public class OfferEqualsTest {
 
     @Test
     public void productResponseNotEqualsToProductWhenCreateAtDiff() {
-        OfferResponse response = OfferTestUtils.createOfferResponse();
+        OfferResponse response = OfferUtils.createOfferResponse();
         response.createdAt = "???";
 
         assertThat(OfferEquals.OfferResponseEqualsOffer(response, offer)).isFalse();

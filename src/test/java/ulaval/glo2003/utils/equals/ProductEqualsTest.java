@@ -1,11 +1,13 @@
-package ulaval.glo2003.api.product;
+package ulaval.glo2003.utils.equals;
 
 import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ulaval.glo2003.api.product.ProductRequest;
+import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.domain.product.Product;
-import ulaval.glo2003.domain.product.ProductTestUtils;
+import ulaval.glo2003.utils.ProductUtils;
 
 public class ProductEqualsTest {
 
@@ -13,19 +15,19 @@ public class ProductEqualsTest {
 
     @BeforeEach
     public void setUp() {
-        product = ProductTestUtils.createProduct();
+        product = ProductUtils.createProduct();
     }
 
     @Test
     public void productRequestEqualsToProduct() {
-        ProductRequest request = ProductTestUtils.createProductRequest();
+        ProductRequest request = ProductUtils.createProductRequest();
 
         assertThat(ProductEquals.productRequestEqualsProduct(request, product)).isTrue();
     }
 
     @Test
     public void productRequestNotEqualsToProductWhenTitleDiff() {
-        ProductRequest request = ProductTestUtils.createProductRequest();
+        ProductRequest request = ProductUtils.createProductRequest();
         request.title = "new title";
 
         assertThat(ProductEquals.productRequestEqualsProduct(request, product)).isFalse();
@@ -33,7 +35,7 @@ public class ProductEqualsTest {
 
     @Test
     public void productRequestNotEqualsToProductWhenDescriptionDiff() {
-        ProductRequest request = ProductTestUtils.createProductRequest();
+        ProductRequest request = ProductUtils.createProductRequest();
         request.description = "new description";
 
         assertThat(ProductEquals.productRequestEqualsProduct(request, product)).isFalse();
@@ -41,7 +43,7 @@ public class ProductEqualsTest {
 
     @Test
     public void productRequestNotEqualsToProductWhenCategoryDiff() {
-        ProductRequest request = ProductTestUtils.createProductRequest();
+        ProductRequest request = ProductUtils.createProductRequest();
         request.category = "new category";
 
         assertThat(ProductEquals.productRequestEqualsProduct(request, product)).isFalse();
@@ -49,7 +51,7 @@ public class ProductEqualsTest {
 
     @Test
     public void productRequestNotEqualsToProductWhenSuggestedPriceDiff() {
-        ProductRequest request = ProductTestUtils.createProductRequest();
+        ProductRequest request = ProductUtils.createProductRequest();
         request.suggestedPrice = 1d;
 
         assertThat(ProductEquals.productRequestEqualsProduct(request, product)).isFalse();
@@ -57,7 +59,7 @@ public class ProductEqualsTest {
 
     @Test
     public void productResponseEqualsToProduct() {
-        ProductResponse response = ProductTestUtils.createProductResponse();
+        ProductResponse response = ProductUtils.createProductResponse();
 
         assertThat(ProductEquals.productResponseEqualsProduct(response, product))
                 .isTrue();
@@ -65,7 +67,7 @@ public class ProductEqualsTest {
 
     @Test
     public void productResponseNotEqualsToProductWhenIdDiff() {
-        ProductResponse response = ProductTestUtils.createProductResponse();
+        ProductResponse response = ProductUtils.createProductResponse();
         response.id = "new id";
 
         assertThat(ProductEquals.productResponseEqualsProduct(response, product))
@@ -74,7 +76,7 @@ public class ProductEqualsTest {
 
     @Test
     public void productResponseNotEqualsToProductWhenCreateAtDiff() {
-        ProductResponse response = ProductTestUtils.createProductResponse();
+        ProductResponse response = ProductUtils.createProductResponse();
         response.createdAt = "???";
 
         assertThat(ProductEquals.productResponseEqualsProduct(response, product))
@@ -83,7 +85,7 @@ public class ProductEqualsTest {
 
     @Test
     public void productResponseNotEqualsToProductWhenTitleDiff() {
-        ProductResponse response = ProductTestUtils.createProductResponse();
+        ProductResponse response = ProductUtils.createProductResponse();
         response.title = "???";
 
         assertThat(ProductEquals.productResponseEqualsProduct(response, product))
@@ -92,7 +94,7 @@ public class ProductEqualsTest {
 
     @Test
     public void productResponseNotEqualsToProductWhenDescriptionDiff() {
-        ProductResponse response = ProductTestUtils.createProductResponse();
+        ProductResponse response = ProductUtils.createProductResponse();
         response.description = "???";
 
         assertThat(ProductEquals.productResponseEqualsProduct(response, product))
@@ -101,7 +103,7 @@ public class ProductEqualsTest {
 
     @Test
     public void productResponseNotEqualsToProductWhenCategoryDiff() {
-        ProductResponse response = ProductTestUtils.createProductResponse();
+        ProductResponse response = ProductUtils.createProductResponse();
         response.category = "???";
 
         assertThat(ProductEquals.productResponseEqualsProduct(response, product))
@@ -110,7 +112,7 @@ public class ProductEqualsTest {
 
     @Test
     public void productResponseNotEqualsToProductWhenSuggestedPriceDiff() {
-        ProductResponse response = ProductTestUtils.createProductResponse();
+        ProductResponse response = ProductUtils.createProductResponse();
         response.suggestedPrice = 1d;
 
         assertThat(ProductEquals.productResponseEqualsProduct(response, product))

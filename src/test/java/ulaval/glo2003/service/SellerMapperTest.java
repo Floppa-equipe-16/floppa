@@ -7,12 +7,12 @@ import static org.mockito.Mockito.mock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import ulaval.glo2003.api.seller.SellerEquals;
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
 import ulaval.glo2003.domain.seller.Seller;
 import ulaval.glo2003.domain.seller.SellerFactory;
-import ulaval.glo2003.domain.seller.SellerTestUtils;
+import ulaval.glo2003.utils.SellerUtils;
+import ulaval.glo2003.utils.equals.SellerEquals;
 
 class SellerMapperTest {
 
@@ -31,8 +31,8 @@ class SellerMapperTest {
 
     @Test
     public void canMapRequestToSeller() {
-        SellerRequest request = SellerTestUtils.createSellerRequest();
-        doReturn(SellerTestUtils.createSellerStub())
+        SellerRequest request = SellerUtils.createSellerRequest();
+        doReturn(SellerUtils.createSellerStub())
                 .when(factory)
                 .createSeller(request.name, request.birthdate, request.email, request.phoneNumber, request.bio);
 
@@ -43,7 +43,7 @@ class SellerMapperTest {
 
     @Test
     public void canMapSellerToResponse() {
-        Seller seller = SellerTestUtils.createSellerStub();
+        Seller seller = SellerUtils.createSellerStub();
 
         SellerResponse response = mapper.sellerToResponse(seller);
 
