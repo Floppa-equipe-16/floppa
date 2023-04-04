@@ -1,6 +1,5 @@
 package ulaval.glo2003.api.exceptionMappers;
 
-import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import ulaval.glo2003.domain.exceptions.ParamValidationException;
@@ -11,7 +10,6 @@ public class ParamExceptionMapper implements ExceptionMapper<ParamValidationExce
     public Response toResponse(ParamValidationException exception) {
         return Response.status(Response.Status.BAD_REQUEST)
                 .entity(exception.errorDescription)
-                .type(MediaType.APPLICATION_JSON)
                 .build();
     }
 }
