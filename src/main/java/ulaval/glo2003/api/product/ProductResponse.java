@@ -50,6 +50,7 @@ public class ProductResponse {
                 && Objects.equals(category, response.category)
                 && Objects.equals(id, response.id)
                 && Objects.equals(createdAt, response.createdAt)
+                && Objects.equals(saleStatus, response.saleStatus)
                 && isSellerEquals(response.seller)
                 && Objects.equals(offers, response.offers);
     }
