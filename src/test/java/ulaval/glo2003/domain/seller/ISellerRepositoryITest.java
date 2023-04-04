@@ -41,7 +41,6 @@ public abstract class ISellerRepositoryITest {
     @Test
     public void canSaveWhenSellerAlreadyExists() {
         repository.save(sellerStub);
-
         repository.save(sellerStub);
 
         Seller foundSeller = repository.findById(sellerStub.getId());

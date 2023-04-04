@@ -60,10 +60,10 @@ public abstract class IOfferRepositoryITest {
     @Test
     public void canSaveWhenOfferAlreadyExists() {
         repository.save(offerStub);
-
         repository.save(offerStub);
 
         Offer foundOffer = repository.findById(offerStub.getId());
+        
         assertThat(foundOffer.getId()).isEqualTo(offerStub.getId());
     }
 

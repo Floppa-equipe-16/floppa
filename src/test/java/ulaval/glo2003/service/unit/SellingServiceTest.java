@@ -14,6 +14,7 @@ import ulaval.glo2003.api.offer.OfferRequest;
 import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.api.seller.SellerRequest;
+import ulaval.glo2003.domain.exceptions.MissingParamException;
 import ulaval.glo2003.domain.offer.IOfferRepository;
 import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.offer.OfferTestUtils;
@@ -156,6 +157,15 @@ class SellingServiceTest {
     }
 
     @Test
+    public void createProductThrowsWhenSellerIdIsNull() {
+        ProductRequest request = ProductTestUtils.createProductRequest();
+        when(productMapperMock.requestToProduct(null, request)).thenReturn(productStub);
+        when(sellerRepositoryMock.findById(null)).thenThrow(NotFoundException.class);
+
+        assertThrows(MissingParamException.class, () -> sellingService.createProduct(null, request));
+    }
+
+    @Test
     public void canGetProductWithNoOffer() {
         when(sellerRepositoryMock.findById(SELLER_ID)).thenReturn(sellerStub);
         when(productRepositoryMock.findById(PRODUCT_ID)).thenReturn(productStub);
@@ -238,5 +248,14 @@ class SellingServiceTest {
         when(productRepositoryMock.findById(PRODUCT_ID)).thenThrow(NotFoundException.class);
 
         assertThrows(NotFoundException.class, () -> sellingService.createOffer(buyerName, PRODUCT_ID, request));
+    }
+
+    @Test
+    public void createOfferThrowsWhenBuyerNameisNull() {
+        OfferRequest request = OfferTestUtils.createOfferRequest();
+        when(offerMapperMock.requestToOffer(PRODUCT_ID, null, request)).thenReturn(offerStub);
+        when(productRepositoryMock.findById(PRODUCT_ID)).thenThrow(NotFoundException.class);
+
+        assertThrows(MissingParamException.class, () -> sellingService.createOffer(null, PRODUCT_ID, request));
     }
 }

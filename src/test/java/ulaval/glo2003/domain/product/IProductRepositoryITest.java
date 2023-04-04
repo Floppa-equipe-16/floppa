@@ -64,7 +64,6 @@ public abstract class IProductRepositoryITest {
     public void findAllReturnsOnlyMatchingSellerIDProduct() {
         repository.save(productStub);
         repository.save(otherProductStub);
-
         ProductFilter filter = createProductFilterWithPriceRange();
 
         List<Product> products = repository.findAll(filter);
@@ -76,7 +75,6 @@ public abstract class IProductRepositoryITest {
     public void findAllReturnsOnlyPriceInRangeProduct() {
         repository.save(productStub);
         repository.save(otherProductStub);
-
         ProductFilter filter = createProductFilterWithPriceRange();
 
         List<Product> products = repository.findAll(filter);
@@ -104,7 +102,6 @@ public abstract class IProductRepositoryITest {
     @Test
     public void canSaveWhenProductAlreadyExists() {
         repository.save(productStub);
-
         repository.save(productStub);
 
         Product foundProduct = repository.findById(productStub.getId());

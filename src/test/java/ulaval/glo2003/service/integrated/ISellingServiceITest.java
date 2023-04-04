@@ -14,6 +14,7 @@ import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
+import ulaval.glo2003.domain.exceptions.MissingParamException;
 import ulaval.glo2003.domain.offer.IOfferRepository;
 import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.offer.OfferFactory;
@@ -30,6 +31,7 @@ import ulaval.glo2003.service.SellingService;
 
 public abstract class ISellingServiceITest {
     private static final String SELLER_ID = "SELLER";
+    private static final String PRODUCT_ID = "PRODUCT";
     private static final String BUYER_USERNAME = "BUYER";
     private ISellerRepository sellerRepository;
     private IProductRepository productRepository;
@@ -120,6 +122,13 @@ public abstract class ISellingServiceITest {
     }
 
     @Test
+    public void createProductThrowsWhenSellerIdIsNull() {
+        ProductRequest request = ProductTestUtils.createProductRequest();
+
+        assertThrows(MissingParamException.class, () -> sellingService.createProduct(null, request));
+    }
+
+    @Test
     public void canGetProductWithNoOffer() {
         saveSellerToRepository();
         saveProductToRepository();
@@ -178,7 +187,14 @@ public abstract class ISellingServiceITest {
         OfferRequest offerRequest = OfferTestUtils.createOfferRequest();
 
         assertThrows(
-                NotFoundException.class, () -> sellingService.createOffer(BUYER_USERNAME, SELLER_ID, offerRequest));
+                NotFoundException.class, () -> sellingService.createOffer(BUYER_USERNAME, PRODUCT_ID, offerRequest));
+    }
+
+    @Test
+    public void createOfferThrowsWhenBuyerNameIsNull() {
+        OfferRequest request = OfferTestUtils.createOfferRequest();
+
+        assertThrows(MissingParamException.class, () -> sellingService.createOffer(null, PRODUCT_ID, request));
     }
 
     private void saveSellerToRepository() {
