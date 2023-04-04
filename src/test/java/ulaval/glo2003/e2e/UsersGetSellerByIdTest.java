@@ -41,7 +41,7 @@ public class UsersGetSellerByIdTest extends ApiTestUtils {
     @Test
     public void failUserGetSellersByInvalidId() {
         Response response = target("/sellers/{sellerId}")
-                .resolveTemplate("sellerId", "do not exist")
+                .resolveTemplate("sellerId", "do_not_exist")
                 .request()
                 .get();
 
