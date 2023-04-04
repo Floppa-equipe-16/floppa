@@ -1,4 +1,4 @@
-package ulaval.glo2003.domain.offer;
+package ulaval.glo2003.utils;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -23,6 +23,10 @@ public class OfferUtils {
 
     public static Offer createOffer() {
         return new Offer(ID, PRODUCT_ID, USERNAME, LOWEST_AMOUNT, MESSAGE, CREATED_AT);
+    }
+
+    public static Offer createOffer2() {
+        return new Offer(ID_2, PRODUCT_ID, USERNAME, HIGHEST_AMOUNT, MESSAGE, CREATED_AT);
     }
 
     public static Offer createSecondOffer() {

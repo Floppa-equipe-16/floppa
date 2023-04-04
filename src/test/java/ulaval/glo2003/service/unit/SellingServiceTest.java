@@ -1,4 +1,4 @@
-package ulaval.glo2003.service;
+package ulaval.glo2003.service.unit;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -25,7 +25,6 @@ import ulaval.glo2003.domain.seller.Seller;
 import ulaval.glo2003.utils.OfferUtils;
 import ulaval.glo2003.utils.ProductUtils;
 import ulaval.glo2003.utils.SellerUtils;
-import ulaval.glo2003.domain.seller.SellerTestUtils;
 import ulaval.glo2003.service.OfferMapper;
 import ulaval.glo2003.service.ProductMapper;
 import ulaval.glo2003.service.SellerMapper;
@@ -159,7 +158,7 @@ class SellingServiceTest {
 
     @Test
     public void createProductThrowsWhenSellerIdIsNull() {
-        ProductRequest request = ProductTestUtils.createProductRequest();
+        ProductRequest request = ProductUtils.createProductRequest();
         when(productMapperMock.requestToProduct(null, request)).thenReturn(productStub);
         when(sellerRepositoryMock.findById(null)).thenThrow(NotFoundException.class);
 
@@ -200,7 +199,7 @@ class SellingServiceTest {
 
     @Test
     public void canGetProducts() {
-        ProductFilter filter = ProductTestUtils.createEmptyFilter();
+        ProductFilter filter = ProductUtils.createEmptyFilter();
         when(productRepositoryMock.findAll(filter)).thenReturn(List.of(productStub));
         when(offerRepositoryMock.findAllByProductId(PRODUCT_ID)).thenReturn(Collections.emptyList());
         when(sellerRepositoryMock.findById(SELLER_ID)).thenReturn(sellerStub);
@@ -217,7 +216,7 @@ class SellingServiceTest {
 
     @Test
     public void canGetProductsWhenNoProduct() {
-        ProductFilter filter = ProductTestUtils.createEmptyFilter();
+        ProductFilter filter = ProductUtils.createEmptyFilter();
         when(productRepositoryMock.findAll(filter)).thenReturn(Collections.emptyList());
         when(productMapperMock.productsToCollectionResponse(any())).thenReturn(any());
 
@@ -253,7 +252,7 @@ class SellingServiceTest {
 
     @Test
     public void createOfferThrowsWhenBuyerNameisNull() {
-        OfferRequest request = OfferTestUtils.createOfferRequest();
+        OfferRequest request = OfferUtils.createOfferRequest();
         when(offerMapperMock.requestToOffer(PRODUCT_ID, null, request)).thenReturn(offerStub);
         when(productRepositoryMock.findById(PRODUCT_ID)).thenThrow(NotFoundException.class);
 

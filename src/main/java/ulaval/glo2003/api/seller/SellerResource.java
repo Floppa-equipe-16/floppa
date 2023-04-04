@@ -26,7 +26,6 @@ public class SellerResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public Response createSeller(@Context UriInfo uriInfo, SellerRequest sellerRequest) {
         String sellerId = sellingService.createSeller(sellerRequest);
         return Response.status(Response.Status.CREATED)

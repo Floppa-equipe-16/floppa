@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ulaval.glo2003.utils.ProductUtils;
 
 public abstract class IProductRepositoryITest {
     public static final String SELLER_ID = "SELLER";
@@ -20,8 +21,8 @@ public abstract class IProductRepositoryITest {
 
     @BeforeEach
     public void setUp() {
-        product = ProductTestUtils.createProduct();
-        otherProduct = ProductTestUtils.createSecondProduct();
+        product = ProductUtils.createProduct();
+        otherProduct = ProductUtils.createProduct2();
     }
 
     @AfterEach
@@ -48,14 +49,14 @@ public abstract class IProductRepositoryITest {
         repository.save(product);
         repository.save(otherProduct);
 
-        List<Product> products = repository.findAll(ProductTestUtils.createEmptyFilter());
+        List<Product> products = repository.findAll(ProductUtils.createEmptyFilter());
 
         assertThat(products.size()).isEqualTo(2);
     }
 
     @Test
     public void findAllReturnsEmptyWhenNoProduct() {
-        List<Product> products = repository.findAll(ProductTestUtils.createEmptyFilter());
+        List<Product> products = repository.findAll(ProductUtils.createEmptyFilter());
 
         assertThat(products).isEmpty();
     }

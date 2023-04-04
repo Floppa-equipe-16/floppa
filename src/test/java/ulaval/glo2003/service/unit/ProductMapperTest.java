@@ -1,4 +1,4 @@
-package ulaval.glo2003.service;
+package ulaval.glo2003.service.unit;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -20,7 +20,6 @@ import ulaval.glo2003.domain.seller.Seller;
 import ulaval.glo2003.utils.ProductUtils;
 import ulaval.glo2003.utils.SellerUtils;
 import ulaval.glo2003.utils.equals.ProductEquals;
-import ulaval.glo2003.domain.seller.SellerTestUtils;
 import ulaval.glo2003.service.OfferMapper;
 import ulaval.glo2003.service.ProductMapper;
 

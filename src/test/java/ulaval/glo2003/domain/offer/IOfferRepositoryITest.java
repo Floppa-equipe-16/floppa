@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import jakarta.ws.rs.NotFoundException;
 import java.util.List;
 import org.junit.jupiter.api.*;
+import ulaval.glo2003.utils.OfferUtils;
 
 public abstract class IOfferRepositoryITest {
 
@@ -17,7 +18,7 @@ public abstract class IOfferRepositoryITest {
 
     @BeforeEach
     public void setUp() {
-        offer = OfferTestUtils.createOffer();
+        offer = OfferUtils.createOffer();
     }
 
     @AfterEach
@@ -41,7 +42,7 @@ public abstract class IOfferRepositoryITest {
 
     @Test
     public void canFindAllByProductId() {
-        Offer otherOfferStub = OfferTestUtils.createSecondOffer();
+        Offer otherOfferStub = OfferUtils.createSecondOffer();
         repository.save(offer);
         repository.save(otherOfferStub);
 

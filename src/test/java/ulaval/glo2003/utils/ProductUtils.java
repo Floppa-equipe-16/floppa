@@ -10,20 +10,31 @@ import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.domain.product.Product;
 import ulaval.glo2003.domain.product.ProductCategory;
+import ulaval.glo2003.domain.product.ProductFilter;
 import ulaval.glo2003.domain.product.SaleStatus;
 
 public class ProductUtils {
     public static final String ID = "1";
-    public static final String SELLER_ID = "2a74sfs3d2g48";
+    public static final String ID_2 = "2";
+    public static final String SELLER_ID = "SELLER";
     public static final String TITLE = "Bob";
     public static final String DESCRIPTION = "description";
     public static final String CREATED_AT = Instant.MAX.toString();
-    public static final Double SUGGESTED_PRICE = 15d;
+    public static final Double SUGGESTED_PRICE = 200d;
+    public static final Double SUGGESTED_PRICE_2 = 25d;
     public static final SaleStatus SALE_STATUS = SaleStatus.ongoing;
     public static final String CATEGORY = ProductCategory.other.toString();
 
     public static Product createProduct() {
         return new Product(ID, SELLER_ID, TITLE, CREATED_AT, DESCRIPTION, SUGGESTED_PRICE, SALE_STATUS, CATEGORY);
+    }
+
+    public static Product createProduct2() {
+        return new Product(ID_2, SELLER_ID, TITLE, CREATED_AT, DESCRIPTION, SUGGESTED_PRICE_2, SALE_STATUS, CATEGORY);
+    }
+
+    public static ProductFilter createEmptyFilter(){
+        return new ProductFilter(null,null,null,null,null);
     }
 
     public static Product createProductStub() {
