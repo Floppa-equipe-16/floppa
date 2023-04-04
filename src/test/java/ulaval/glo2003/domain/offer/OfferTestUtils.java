@@ -22,6 +22,10 @@ public class OfferTestUtils {
         return new Offer(ID, PRODUCT_ID, USERNAME, LOWEST_AMOUNT, MESSAGE, CREATED_AT);
     }
 
+    public static Offer createSecondOffer() {
+        return new Offer(ID_2, PRODUCT_ID, USERNAME, HIGHEST_AMOUNT, MESSAGE, CREATED_AT);
+    }
+
     public static Offer createOfferStub() {
         Offer offer = mock(Offer.class);
         when(offer.getId()).thenReturn(ID);

@@ -2,28 +2,22 @@ package ulaval.glo2003.domain.offer;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import jakarta.ws.rs.NotFoundException;
 import java.util.List;
 import org.junit.jupiter.api.*;
-import org.mockito.Mock;
 
 public abstract class IOfferRepositoryITest {
 
-    public static final String ID = "1";
     private static final String PRODUCT_ID = "PRODUCT";
 
     private final IOfferRepository repository = createRepository();
 
-    @Mock
-    private Offer offerStub = mock(Offer.class);
+    private Offer offerStub;
 
     @BeforeEach
     public void setUp() {
-        when(offerStub.getId()).thenReturn(ID);
-        when(offerStub.getProductId()).thenReturn(PRODUCT_ID);
+        offerStub = OfferTestUtils.createOffer();
     }
 
     @AfterEach
@@ -47,9 +41,7 @@ public abstract class IOfferRepositoryITest {
 
     @Test
     public void canFindAllByProductId() {
-        Offer otherOfferStub = mock(Offer.class);
-        when(otherOfferStub.getId()).thenReturn("123");
-        when(otherOfferStub.getProductId()).thenReturn(PRODUCT_ID);
+        Offer otherOfferStub = OfferTestUtils.createSecondOffer();
         repository.save(offerStub);
         repository.save(otherOfferStub);
 

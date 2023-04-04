@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public abstract class IProductRepositoryITest {
-    public static final String SELLER_ID = "2a74sfs3d2g48";
+    public static final String SELLER_ID = "SELLER";
 
     private final IProductRepository repository = createRepository();
 

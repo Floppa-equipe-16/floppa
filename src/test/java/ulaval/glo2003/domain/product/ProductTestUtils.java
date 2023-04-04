@@ -10,7 +10,7 @@ import ulaval.glo2003.api.product.ProductResponse;
 public class ProductTestUtils {
     public static final String ID = "1";
     public static final String SECOND_ID = "2";
-    public static final String SELLER_ID = "2a74sfs3d2g48";
+    public static final String SELLER_ID = "SELLER";
     public static final String TITLE = "Bob";
     public static final String DESCRIPTION = "description";
     public static final String CREATED_AT = Instant.MAX.toString();
