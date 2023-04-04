@@ -20,6 +20,9 @@ import ulaval.glo2003.domain.seller.Seller;
 import ulaval.glo2003.utils.ProductUtils;
 import ulaval.glo2003.utils.SellerUtils;
 import ulaval.glo2003.utils.equals.ProductEquals;
+import ulaval.glo2003.domain.seller.SellerTestUtils;
+import ulaval.glo2003.service.OfferMapper;
+import ulaval.glo2003.service.ProductMapper;
 
 class ProductMapperTest {
 

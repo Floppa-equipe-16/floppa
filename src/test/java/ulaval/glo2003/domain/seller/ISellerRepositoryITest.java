@@ -2,26 +2,21 @@ package ulaval.glo2003.domain.seller;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import jakarta.ws.rs.NotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 
 public abstract class ISellerRepositoryITest {
-    private static final String ID = "1";
 
     private final ISellerRepository repository = createRepository();
 
-    @Mock
-    private Seller sellerStub = mock(Seller.class);
+    private Seller seller;
 
     @BeforeEach
     public void setUp() {
-        when(sellerStub.getId()).thenReturn(ID);
+        seller = SellerTestUtils.createSeller();
     }
 
     @AfterEach
@@ -31,26 +26,25 @@ public abstract class ISellerRepositoryITest {
 
     @Test
     public void canFindById() {
-        repository.save(sellerStub);
+        repository.save(seller);
 
-        Seller foundSeller = repository.findById(sellerStub.getId());
+        Seller foundSeller = repository.findById(seller.getId());
 
-        assertThat(foundSeller.getId()).isEqualTo(sellerStub.getId());
+        assertThat(foundSeller.getId()).isEqualTo(seller.getId());
     }
 
     @Test
     public void findByIdThrowsWhenIdIsAbsent() {
-        assertThrows(NotFoundException.class, () -> repository.findById(sellerStub.getId()));
+        assertThrows(NotFoundException.class, () -> repository.findById(seller.getId()));
     }
 
     @Test
     public void canSaveWhenSellerAlreadyExists() {
-        repository.save(sellerStub);
+        repository.save(seller);
+        repository.save(seller);
 
-        repository.save(sellerStub);
-
-        Seller foundSeller = repository.findById(sellerStub.getId());
-        assertThat(foundSeller.getId()).isEqualTo(sellerStub.getId());
+        Seller foundSeller = repository.findById(seller.getId());
+        assertThat(foundSeller.getId()).isEqualTo(seller.getId());
     }
 
     protected abstract ISellerRepository createRepository();
