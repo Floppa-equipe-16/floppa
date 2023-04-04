@@ -17,11 +17,11 @@ import ulaval.glo2003.domain.infrastructure.mongo.MongoProductRepository;
 import ulaval.glo2003.domain.infrastructure.mongo.MongoSellerRepository;
 import ulaval.glo2003.service.SellingService;
 import ulaval.glo2003.service.SellingServiceFactory;
-import ulaval.glo2003.utils.MongoUtils;
+import ulaval.glo2003.utils.MongoTestUtils;
 
-public abstract class ApiTestUtils extends JerseyTest {
+public abstract class ApiTest extends JerseyTest {
 
-    protected static Datastore datastore = MongoUtils.createLocalDatastore();
+    protected static Datastore datastore = MongoTestUtils.createLocalDatastore();
     protected static SellingService sellingService = new SellingServiceFactory().create(datastore);
 
     @BeforeEach

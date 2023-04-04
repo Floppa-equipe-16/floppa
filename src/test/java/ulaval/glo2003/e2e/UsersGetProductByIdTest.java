@@ -6,10 +6,10 @@ import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.api.product.ProductResponse;
-import ulaval.glo2003.utils.ProductUtils;
-import ulaval.glo2003.utils.SellerUtils;
+import ulaval.glo2003.utils.ProductTestUtils;
+import ulaval.glo2003.utils.SellerTestUtils;
 
-public class UsersGetProductByIdTest extends ApiTestUtils {
+public class UsersGetProductByIdTest extends ApiTest {
 
     private String productId;
 
@@ -17,8 +17,8 @@ public class UsersGetProductByIdTest extends ApiTestUtils {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        String sellerId = sellingService.createSeller(SellerUtils.createSellerRequest());
-        productId = sellingService.createProduct(sellerId, ProductUtils.createProductRequest());
+        String sellerId = sellingService.createSeller(SellerTestUtils.createSellerRequest());
+        productId = sellingService.createProduct(sellerId, ProductTestUtils.createProductRequest());
     }
 
     @Test

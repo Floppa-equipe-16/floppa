@@ -7,14 +7,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.domain.exceptions.MissingParamException;
-import ulaval.glo2003.utils.ProductUtils;
+import ulaval.glo2003.utils.ProductTestUtils;
 
 public class ProductRequestTest {
     private ProductRequest productRequest;
 
     @BeforeEach
     public void setUp() {
-        productRequest = ProductUtils.createProductRequest();
+        productRequest = ProductTestUtils.createProductRequest();
     }
 
     @Test
@@ -57,14 +57,14 @@ public class ProductRequestTest {
 
     @Test
     public void productRequestEqualsToProductRequest() {
-        ProductRequest newProductRequest = ProductUtils.createProductRequest();
+        ProductRequest newProductRequest = ProductTestUtils.createProductRequest();
 
         assertThat(productRequest).isEqualTo(newProductRequest);
     }
 
     @Test
     public void productRequestNotEqualsToProductRequestWhenTitleDiff() {
-        ProductRequest newProductRequest = ProductUtils.createProductRequest();
+        ProductRequest newProductRequest = ProductTestUtils.createProductRequest();
         newProductRequest.title = "new title";
 
         assertThat(productRequest).isNotEqualTo(newProductRequest);
@@ -72,7 +72,7 @@ public class ProductRequestTest {
 
     @Test
     public void productRequestNotEqualsToProductRequestWhenSuggestedPriceDiff() {
-        ProductRequest newProductRequest = ProductUtils.createProductRequest();
+        ProductRequest newProductRequest = ProductTestUtils.createProductRequest();
         newProductRequest.suggestedPrice = 1d;
 
         assertThat(productRequest).isNotEqualTo(newProductRequest);
@@ -80,7 +80,7 @@ public class ProductRequestTest {
 
     @Test
     public void productRequestNotEqualsToProductRequestWhenCategoryDiff() {
-        ProductRequest newProductRequest = ProductUtils.createProductRequest();
+        ProductRequest newProductRequest = ProductTestUtils.createProductRequest();
         newProductRequest.category = "new category";
 
         assertThat(productRequest).isNotEqualTo(newProductRequest);
@@ -88,7 +88,7 @@ public class ProductRequestTest {
 
     @Test
     public void productRequestNotEqualsToProductRequestWhenDescriptionDiff() {
-        ProductRequest newProductRequest = ProductUtils.createProductRequest();
+        ProductRequest newProductRequest = ProductTestUtils.createProductRequest();
         newProductRequest.description = "new description";
 
         assertThat(productRequest).isNotEqualTo(newProductRequest);

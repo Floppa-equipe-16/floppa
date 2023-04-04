@@ -5,7 +5,7 @@ import static com.google.common.truth.Truth.assertThat;
 import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ulaval.glo2003.utils.ProductUtils;
+import ulaval.glo2003.utils.ProductTestUtils;
 
 public class ProductCollectionResponseTest {
 
@@ -13,7 +13,7 @@ public class ProductCollectionResponseTest {
 
     @BeforeEach
     public void setUp() {
-        productCollectionResponse = ProductUtils.createProductCollectionResponse();
+        productCollectionResponse = ProductTestUtils.createProductCollectionResponse();
     }
 
     @Test
@@ -23,14 +23,14 @@ public class ProductCollectionResponseTest {
 
     @Test
     public void collectionEqualsToCollection() {
-        ProductCollectionResponse newCollection = ProductUtils.createProductCollectionResponse();
+        ProductCollectionResponse newCollection = ProductTestUtils.createProductCollectionResponse();
 
         assertThat(productCollectionResponse).isEqualTo(newCollection);
     }
 
     @Test
     public void collectionNotEqualsToCollectionWhenListDiff() {
-        ProductCollectionResponse newCollection = ProductUtils.createProductCollectionResponse();
+        ProductCollectionResponse newCollection = ProductTestUtils.createProductCollectionResponse();
         productCollectionResponse.products = new ArrayList<>();
 
         assertThat(productCollectionResponse).isNotEqualTo(newCollection);

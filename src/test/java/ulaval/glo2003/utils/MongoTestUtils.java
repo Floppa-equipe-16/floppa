@@ -7,7 +7,7 @@ import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 import java.util.concurrent.TimeUnit;
 
-public class MongoUtils {
+public class MongoTestUtils {
 
     private static final int TIMEOUT = 5000;
 

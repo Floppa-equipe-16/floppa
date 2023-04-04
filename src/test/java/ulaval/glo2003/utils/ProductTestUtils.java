@@ -13,7 +13,7 @@ import ulaval.glo2003.domain.product.ProductCategory;
 import ulaval.glo2003.domain.product.ProductFilter;
 import ulaval.glo2003.domain.product.SaleStatus;
 
-public class ProductUtils {
+public class ProductTestUtils {
     public static final String ID = "1";
     public static final String ID_2 = "2";
     public static final String SELLER_ID = "SELLER";
@@ -88,7 +88,7 @@ public class ProductUtils {
         ProductRequest request = new ProductRequest();
         request.title = "Prime";
         request.category = ProductCategory.sport.toString();
-        request.description = "Vitamine drink";
+        request.description = "Vitamin drink";
         request.suggestedPrice = 3.5d;
 
         return request;
@@ -111,99 +111,9 @@ public class ProductUtils {
         response.id = ID;
         response.createdAt = CREATED_AT;
         response.saleStatus = SaleStatus.ongoing.toString();
-        response.seller = SellerUtils.createSellerInfo();
-        response.seller.id = ID;
-        response.seller.name = "bob";
-        response.offers = OfferUtils.createOfferCollectionResponse();
+        response.seller = SellerTestUtils.createSellerInfo();
+        response.offers = OfferTestUtils.createOfferCollectionResponse();
 
         return response;
-    }
-
-    public static ProductRequest createProductRequestInvalidTitle() {
-
-        ProductRequest request = new ProductRequest();
-        request.title = "";
-        request.category = CATEGORY;
-        request.description = DESCRIPTION;
-        request.suggestedPrice = SUGGESTED_PRICE;
-
-        return request;
-    }
-
-    public static ProductRequest createProductRequestInvalidCategory() {
-
-        ProductRequest request = new ProductRequest();
-        request.title = TITLE;
-        request.category = "???";
-        request.description = DESCRIPTION;
-        request.suggestedPrice = SUGGESTED_PRICE;
-
-        return request;
-    }
-
-    public static ProductRequest createProductRequestInvalidDescription() {
-
-        ProductRequest request = new ProductRequest();
-        request.title = TITLE;
-        request.category = CATEGORY;
-        request.description = "";
-        request.suggestedPrice = SUGGESTED_PRICE;
-
-        return request;
-    }
-
-    public static ProductRequest createProductRequestInvalidSuggestedPrice() {
-
-        ProductRequest request = new ProductRequest();
-        request.title = TITLE;
-        request.category = CATEGORY;
-        request.description = DESCRIPTION;
-        request.suggestedPrice = -1d;
-
-        return request;
-    }
-
-    public static ProductRequest createProductRequestMissingTitle() {
-
-        ProductRequest request = new ProductRequest();
-        request.title = null;
-        request.category = CATEGORY;
-        request.description = DESCRIPTION;
-        request.suggestedPrice = SUGGESTED_PRICE;
-
-        return request;
-    }
-
-    public static ProductRequest createProductRequestMissingCategory() {
-
-        ProductRequest request = new ProductRequest();
-        request.title = TITLE;
-        request.category = null;
-        request.description = DESCRIPTION;
-        request.suggestedPrice = SUGGESTED_PRICE;
-
-        return request;
-    }
-
-    public static ProductRequest createProductRequestMissingDescription() {
-
-        ProductRequest request = new ProductRequest();
-        request.title = TITLE;
-        request.category = CATEGORY;
-        request.description = null;
-        request.suggestedPrice = SUGGESTED_PRICE;
-
-        return request;
-    }
-
-    public static ProductRequest createProductRequestMissingPrice() {
-
-        ProductRequest request = new ProductRequest();
-        request.title = TITLE;
-        request.category = CATEGORY;
-        request.description = DESCRIPTION;
-        request.suggestedPrice = null;
-
-        return request;
     }
 }

@@ -26,9 +26,9 @@ import ulaval.glo2003.service.OfferMapper;
 import ulaval.glo2003.service.ProductMapper;
 import ulaval.glo2003.service.SellerMapper;
 import ulaval.glo2003.service.SellingService;
-import ulaval.glo2003.utils.OfferUtils;
-import ulaval.glo2003.utils.ProductUtils;
-import ulaval.glo2003.utils.SellerUtils;
+import ulaval.glo2003.utils.OfferTestUtils;
+import ulaval.glo2003.utils.ProductTestUtils;
+import ulaval.glo2003.utils.SellerTestUtils;
 
 class SellingServiceTest {
     private static final String SELLER_ID = "SELLER";
@@ -100,7 +100,7 @@ class SellingServiceTest {
 
     @Test
     public void canCreateSeller() {
-        SellerRequest request = SellerUtils.createSellerRequest();
+        SellerRequest request = SellerTestUtils.createSellerRequest();
         when(sellerMapperMock.requestToSeller(request)).thenReturn(sellerStub);
 
         String id = sellingService.createSeller(request);
@@ -136,7 +136,7 @@ class SellingServiceTest {
 
     @Test
     public void canCreateProductWhenSellerExists() {
-        ProductRequest request = ProductUtils.createProductRequest();
+        ProductRequest request = ProductTestUtils.createProductRequest();
         when(productMapperMock.requestToProduct(SELLER_ID, request)).thenReturn(productStub);
         when(sellerRepositoryMock.findById(SELLER_ID)).thenReturn(sellerStub);
 
@@ -149,7 +149,7 @@ class SellingServiceTest {
 
     @Test
     public void createProductThrowsWhenSellerDoesNotExist() {
-        ProductRequest request = ProductUtils.createProductRequest();
+        ProductRequest request = ProductTestUtils.createProductRequest();
         when(productMapperMock.requestToProduct(SELLER_ID, request)).thenReturn(productStub);
         when(sellerRepositoryMock.findById(SELLER_ID)).thenThrow(NotFoundException.class);
 
@@ -158,7 +158,7 @@ class SellingServiceTest {
 
     @Test
     public void createProductThrowsWhenSellerIdIsNull() {
-        ProductRequest request = ProductUtils.createProductRequest();
+        ProductRequest request = ProductTestUtils.createProductRequest();
         when(productMapperMock.requestToProduct(null, request)).thenReturn(productStub);
         when(sellerRepositoryMock.findById(null)).thenThrow(NotFoundException.class);
 
@@ -199,7 +199,7 @@ class SellingServiceTest {
 
     @Test
     public void canGetProducts() {
-        ProductFilter filter = ProductUtils.createEmptyFilter();
+        ProductFilter filter = ProductTestUtils.createEmptyFilter();
         when(productRepositoryMock.findAll(filter)).thenReturn(List.of(productStub));
         when(offerRepositoryMock.findAllByProductId(PRODUCT_ID)).thenReturn(Collections.emptyList());
         when(sellerRepositoryMock.findById(SELLER_ID)).thenReturn(sellerStub);
@@ -216,7 +216,7 @@ class SellingServiceTest {
 
     @Test
     public void canGetProductsWhenNoProduct() {
-        ProductFilter filter = ProductUtils.createEmptyFilter();
+        ProductFilter filter = ProductTestUtils.createEmptyFilter();
         when(productRepositoryMock.findAll(filter)).thenReturn(Collections.emptyList());
         when(productMapperMock.productsToCollectionResponse(any())).thenReturn(any());
 
@@ -228,7 +228,7 @@ class SellingServiceTest {
 
     @Test
     public void canCreateOfferWhenProductExists() {
-        OfferRequest request = OfferUtils.createOfferRequest();
+        OfferRequest request = OfferTestUtils.createOfferRequest();
         String buyerName = "Alice";
         when(offerMapperMock.requestToOffer(PRODUCT_ID, buyerName, request)).thenReturn(offerStub);
         when(productRepositoryMock.findById(PRODUCT_ID)).thenReturn(productStub);
@@ -242,7 +242,7 @@ class SellingServiceTest {
 
     @Test
     public void createOfferThrowsWhenProductDoesNotExist() {
-        OfferRequest request = OfferUtils.createOfferRequest();
+        OfferRequest request = OfferTestUtils.createOfferRequest();
         String buyerName = "Alice";
         when(offerMapperMock.requestToOffer(PRODUCT_ID, buyerName, request)).thenReturn(offerStub);
         when(productRepositoryMock.findById(PRODUCT_ID)).thenThrow(NotFoundException.class);
@@ -252,7 +252,7 @@ class SellingServiceTest {
 
     @Test
     public void createOfferThrowsWhenBuyerNameisNull() {
-        OfferRequest request = OfferUtils.createOfferRequest();
+        OfferRequest request = OfferTestUtils.createOfferRequest();
         when(offerMapperMock.requestToOffer(PRODUCT_ID, null, request)).thenReturn(offerStub);
         when(productRepositoryMock.findById(PRODUCT_ID)).thenThrow(NotFoundException.class);
 

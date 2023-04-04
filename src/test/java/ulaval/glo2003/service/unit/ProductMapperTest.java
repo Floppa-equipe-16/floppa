@@ -19,8 +19,8 @@ import ulaval.glo2003.domain.product.ProductFactory;
 import ulaval.glo2003.domain.seller.Seller;
 import ulaval.glo2003.service.OfferMapper;
 import ulaval.glo2003.service.ProductMapper;
-import ulaval.glo2003.utils.ProductUtils;
-import ulaval.glo2003.utils.SellerUtils;
+import ulaval.glo2003.utils.ProductTestUtils;
+import ulaval.glo2003.utils.SellerTestUtils;
 import ulaval.glo2003.utils.equals.ProductEquals;
 
 class ProductMapperTest {
@@ -39,7 +39,7 @@ class ProductMapperTest {
     @BeforeEach
     public void setUp() {
         mapper = new ProductMapper(factory, offerMapper);
-        productStub = ProductUtils.createProductStub();
+        productStub = ProductTestUtils.createProductStub();
     }
 
     @Test
@@ -48,9 +48,9 @@ class ProductMapperTest {
                 .when(factory)
                 .createProduct(anyString(), anyString(), anyString(), anyDouble(), anyString());
 
-        ProductRequest request = ProductUtils.createProductRequest();
+        ProductRequest request = ProductTestUtils.createProductRequest();
 
-        Product product = mapper.requestToProduct(ProductUtils.SELLER_ID, request);
+        Product product = mapper.requestToProduct(ProductTestUtils.SELLER_ID, request);
 
         assertThat(ProductEquals.productRequestEqualsProduct(request, product)).isTrue();
     }
@@ -82,7 +82,7 @@ class ProductMapperTest {
 
     @Test
     public void canMapProductToResponseWithSeller() {
-        Seller seller = SellerUtils.createSellerStub();
+        Seller seller = SellerTestUtils.createSellerStub();
 
         ProductResponse response = mapper.productToResponseWithSeller(productStub, seller);
 

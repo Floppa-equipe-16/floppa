@@ -7,11 +7,11 @@ import ulaval.glo2003.domain.infrastructure.mongo.MongoSellerRepository;
 import ulaval.glo2003.domain.offer.IOfferRepository;
 import ulaval.glo2003.domain.product.IProductRepository;
 import ulaval.glo2003.domain.seller.ISellerRepository;
-import ulaval.glo2003.utils.MongoUtils;
+import ulaval.glo2003.utils.MongoTestUtils;
 
 public class MongoSellingServiceITest extends ISellingServiceITest {
 
-    Datastore dataStore = MongoUtils.createLocalDatastore();
+    Datastore dataStore = MongoTestUtils.createLocalDatastore();
 
     @Override
     protected ISellerRepository createSellerRepository() {

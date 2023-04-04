@@ -26,9 +26,9 @@ import ulaval.glo2003.service.OfferMapper;
 import ulaval.glo2003.service.ProductMapper;
 import ulaval.glo2003.service.SellerMapper;
 import ulaval.glo2003.service.SellingService;
-import ulaval.glo2003.utils.OfferUtils;
-import ulaval.glo2003.utils.ProductUtils;
-import ulaval.glo2003.utils.SellerUtils;
+import ulaval.glo2003.utils.OfferTestUtils;
+import ulaval.glo2003.utils.ProductTestUtils;
+import ulaval.glo2003.utils.SellerTestUtils;
 
 public abstract class ISellingServiceITest {
     private static final String SELLER_ID = "SELLER";
@@ -76,7 +76,7 @@ public abstract class ISellingServiceITest {
 
     @Test
     public void canCreateSeller() {
-        SellerRequest sellerRequest = SellerUtils.createSellerRequest();
+        SellerRequest sellerRequest = SellerTestUtils.createSellerRequest();
 
         String id = sellingService.createSeller(sellerRequest);
 
@@ -107,7 +107,7 @@ public abstract class ISellingServiceITest {
     @Test
     public void canCreateProductWhenSellerExists() {
         saveSellerToRepository();
-        ProductRequest productRequest = ProductUtils.createProductRequest();
+        ProductRequest productRequest = ProductTestUtils.createProductRequest();
 
         String id = sellingService.createProduct(seller.getId(), productRequest);
 
@@ -117,14 +117,14 @@ public abstract class ISellingServiceITest {
 
     @Test
     public void createProductThrowsWhenSellerDoesNotExist() {
-        ProductRequest productRequest = ProductUtils.createProductRequest();
+        ProductRequest productRequest = ProductTestUtils.createProductRequest();
 
         assertThrows(NotFoundException.class, () -> sellingService.createProduct(SELLER_ID, productRequest));
     }
 
     @Test
     public void createProductThrowsWhenSellerIdIsNull() {
-        ProductRequest request = ProductUtils.createProductRequest();
+        ProductRequest request = ProductTestUtils.createProductRequest();
 
         assertThrows(MissingParamException.class, () -> sellingService.createProduct(null, request));
     }
@@ -155,7 +155,7 @@ public abstract class ISellingServiceITest {
     public void canGetProducts() {
         saveSellerToRepository();
         saveProductToRepository();
-        ProductFilter productFilter = ProductUtils.createEmptyFilter();
+        ProductFilter productFilter = ProductTestUtils.createEmptyFilter();
 
         ProductCollectionResponse productResponses = sellingService.getProducts(productFilter);
 
@@ -164,7 +164,7 @@ public abstract class ISellingServiceITest {
 
     @Test
     public void canGetProductsWhenNoProduct() {
-        ProductFilter productFilter = ProductUtils.createEmptyFilter();
+        ProductFilter productFilter = ProductTestUtils.createEmptyFilter();
 
         ProductCollectionResponse productResponses = sellingService.getProducts(productFilter);
 
@@ -175,7 +175,7 @@ public abstract class ISellingServiceITest {
     public void canCreateOfferWhenProductExists() {
         saveSellerToRepository();
         saveProductToRepository();
-        OfferRequest offerRequest = OfferUtils.createOfferRequest();
+        OfferRequest offerRequest = OfferTestUtils.createOfferRequest();
 
         String id = sellingService.createOffer(BUYER_USERNAME, product.getId(), offerRequest);
 
@@ -185,7 +185,7 @@ public abstract class ISellingServiceITest {
 
     @Test
     public void createOfferThrowsWhenProductDoesNotExist() {
-        OfferRequest offerRequest = OfferUtils.createOfferRequest();
+        OfferRequest offerRequest = OfferTestUtils.createOfferRequest();
 
         assertThrows(
                 NotFoundException.class, () -> sellingService.createOffer(BUYER_USERNAME, PRODUCT_ID, offerRequest));
@@ -193,13 +193,13 @@ public abstract class ISellingServiceITest {
 
     @Test
     public void createOfferThrowsWhenBuyerNameIsNull() {
-        OfferRequest request = OfferUtils.createOfferRequest();
+        OfferRequest request = OfferTestUtils.createOfferRequest();
 
         assertThrows(MissingParamException.class, () -> sellingService.createOffer(null, PRODUCT_ID, request));
     }
 
     private void saveSellerToRepository() {
-        seller = SellerUtils.createSeller();
+        seller = SellerTestUtils.createSeller();
         sellerRepository.save(seller);
     }
 
@@ -209,7 +209,7 @@ public abstract class ISellingServiceITest {
     }
 
     private void saveOfferToRepository() {
-        offer = offerMapper.requestToOffer(product.getId(), BUYER_USERNAME, OfferUtils.createOfferRequest());
+        offer = offerMapper.requestToOffer(product.getId(), BUYER_USERNAME, OfferTestUtils.createOfferRequest());
         offerRepository.save(offer);
     }
 

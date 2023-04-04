@@ -13,7 +13,7 @@ import ulaval.glo2003.domain.seller.Seller;
 import ulaval.glo2003.domain.seller.SellerFactory;
 import ulaval.glo2003.service.ProductMapper;
 import ulaval.glo2003.service.SellerMapper;
-import ulaval.glo2003.utils.SellerUtils;
+import ulaval.glo2003.utils.SellerTestUtils;
 import ulaval.glo2003.utils.equals.SellerEquals;
 
 class SellerMapperTest {
@@ -33,8 +33,8 @@ class SellerMapperTest {
 
     @Test
     public void canMapRequestToSeller() {
-        SellerRequest request = SellerUtils.createSellerRequest();
-        doReturn(SellerUtils.createSellerStub())
+        SellerRequest request = SellerTestUtils.createSellerRequest();
+        doReturn(SellerTestUtils.createSellerStub())
                 .when(factory)
                 .createSeller(request.name, request.birthdate, request.email, request.phoneNumber, request.bio);
 
@@ -45,7 +45,7 @@ class SellerMapperTest {
 
     @Test
     public void canMapSellerToResponse() {
-        Seller seller = SellerUtils.createSellerStub();
+        Seller seller = SellerTestUtils.createSellerStub();
 
         SellerResponse response = mapper.sellerToResponse(seller);
 

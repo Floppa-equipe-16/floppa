@@ -8,10 +8,10 @@ import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.api.product.ProductRequest;
-import ulaval.glo2003.utils.ProductUtils;
-import ulaval.glo2003.utils.SellerUtils;
+import ulaval.glo2003.utils.ProductTestUtils;
+import ulaval.glo2003.utils.SellerTestUtils;
 
-public class UsersCreateProductsTest extends ApiTestUtils {
+public class UsersCreateProductsTest extends ApiTest {
 
     private String sellerId;
 
@@ -19,13 +19,13 @@ public class UsersCreateProductsTest extends ApiTestUtils {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        sellerId = sellingService.createSeller(SellerUtils.createSellerRequest());
+        sellerId = sellingService.createSeller(SellerTestUtils.createSellerRequest());
     }
 
     @Test
     public void canUserCreateProducts() {
 
-        ProductRequest productRequest = ProductUtils.createProductRequest();
+        ProductRequest productRequest = ProductTestUtils.createProductRequest();
 
         Response response = target("/products")
                 .request()
@@ -41,7 +41,7 @@ public class UsersCreateProductsTest extends ApiTestUtils {
     @Test
     public void failUserCreateProductsMissingSellerIdHeader() {
 
-        ProductRequest productRequest = ProductUtils.createProductRequest();
+        ProductRequest productRequest = ProductTestUtils.createProductRequest();
 
         Response response =
                 target("/products").request().post(Entity.entity(productRequest, MediaType.APPLICATION_JSON));
@@ -54,7 +54,7 @@ public class UsersCreateProductsTest extends ApiTestUtils {
     @Test
     public void failUserCreateProductsInvalidSellerId() {
 
-        ProductRequest productRequest = ProductUtils.createProductRequest();
+        ProductRequest productRequest = ProductTestUtils.createProductRequest();
 
         Response response = target("/products")
                 .request()
@@ -69,7 +69,7 @@ public class UsersCreateProductsTest extends ApiTestUtils {
     @Test
     public void failUserCreateProductsSellerIdDoesntExist() {
 
-        ProductRequest productRequest = ProductUtils.createProductRequest();
+        ProductRequest productRequest = ProductTestUtils.createProductRequest();
 
         Response response = target("/products")
                 .request()
@@ -84,7 +84,8 @@ public class UsersCreateProductsTest extends ApiTestUtils {
     @Test
     public void failUserCreateProductsInvalidTitle() {
 
-        ProductRequest productRequest = ProductUtils.createProductRequestInvalidTitle();
+        ProductRequest productRequest = ProductTestUtils.createProductRequest();
+        productRequest.title = "";
 
         Response response = createProduct(productRequest);
 
@@ -96,7 +97,8 @@ public class UsersCreateProductsTest extends ApiTestUtils {
     @Test
     public void failUserCreateProductsInvalidCategory() {
 
-        ProductRequest productRequest = ProductUtils.createProductRequestInvalidCategory();
+        ProductRequest productRequest = ProductTestUtils.createProductRequest();
+        productRequest.category = "";
 
         Response response = createProduct(productRequest);
 
@@ -108,7 +110,8 @@ public class UsersCreateProductsTest extends ApiTestUtils {
     @Test
     public void failUserCreateProductsInvalidDescription() {
 
-        ProductRequest productRequest = ProductUtils.createProductRequestInvalidDescription();
+        ProductRequest productRequest = ProductTestUtils.createProductRequest();
+        productRequest.description = "";
 
         Response response = createProduct(productRequest);
 
@@ -120,7 +123,8 @@ public class UsersCreateProductsTest extends ApiTestUtils {
     @Test
     public void failUserCreateProductsInvalidSuggestedPrice() {
 
-        ProductRequest productRequest = ProductUtils.createProductRequestInvalidSuggestedPrice();
+        ProductRequest productRequest = ProductTestUtils.createProductRequest();
+        productRequest.suggestedPrice = -1d;
 
         Response response = createProduct(productRequest);
 
@@ -132,7 +136,8 @@ public class UsersCreateProductsTest extends ApiTestUtils {
     @Test
     public void failUserCreateProductsMissingTitle() {
 
-        ProductRequest productRequest = ProductUtils.createProductRequestMissingTitle();
+        ProductRequest productRequest = ProductTestUtils.createProductRequest();
+        productRequest.title = null;
 
         Response response = createProduct(productRequest);
 
@@ -144,7 +149,8 @@ public class UsersCreateProductsTest extends ApiTestUtils {
     @Test
     public void failUserCreateProductsMissingCategory() {
 
-        ProductRequest productRequest = ProductUtils.createProductRequestMissingCategory();
+        ProductRequest productRequest = ProductTestUtils.createProductRequest();
+        productRequest.category = null;
 
         Response response = createProduct(productRequest);
 
@@ -156,7 +162,8 @@ public class UsersCreateProductsTest extends ApiTestUtils {
     @Test
     public void failUserCreateProductsMissingDescription() {
 
-        ProductRequest productRequest = ProductUtils.createProductRequestMissingDescription();
+        ProductRequest productRequest = ProductTestUtils.createProductRequest();
+        productRequest.description = null;
 
         Response response = createProduct(productRequest);
 
@@ -168,7 +175,8 @@ public class UsersCreateProductsTest extends ApiTestUtils {
     @Test
     public void failUserCreateProductsMissingSuggestedPrice() {
 
-        ProductRequest productRequest = ProductUtils.createProductRequestMissingPrice();
+        ProductRequest productRequest = ProductTestUtils.createProductRequest();
+        productRequest.suggestedPrice = null;
 
         Response response = createProduct(productRequest);
 

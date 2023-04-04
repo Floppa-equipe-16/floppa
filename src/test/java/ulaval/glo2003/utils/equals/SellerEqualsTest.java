@@ -7,26 +7,26 @@ import org.junit.jupiter.api.Test;
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
 import ulaval.glo2003.domain.seller.Seller;
-import ulaval.glo2003.utils.SellerUtils;
+import ulaval.glo2003.utils.SellerTestUtils;
 
 public class SellerEqualsTest {
     private Seller seller;
 
     @BeforeEach
     public void setUp() {
-        seller = SellerUtils.createSeller();
+        seller = SellerTestUtils.createSeller();
     }
 
     @Test
     public void sellerRequestEqualsToSeller() {
-        SellerRequest request = SellerUtils.createSellerRequest();
+        SellerRequest request = SellerTestUtils.createSellerRequest();
 
         assertThat(SellerEquals.sellerRequestEqualsSeller(request, seller)).isTrue();
     }
 
     @Test
     public void sellerRequestNotEqualsToSellerWhenNameDiff() {
-        SellerRequest request = SellerUtils.createSellerRequest();
+        SellerRequest request = SellerTestUtils.createSellerRequest();
         request.name = "???";
 
         assertThat(SellerEquals.sellerRequestEqualsSeller(request, seller)).isFalse();
@@ -34,7 +34,7 @@ public class SellerEqualsTest {
 
     @Test
     public void sellerRequestNotEqualsToSellerWhenEmailDiff() {
-        SellerRequest request = SellerUtils.createSellerRequest();
+        SellerRequest request = SellerTestUtils.createSellerRequest();
         request.email = "???";
 
         assertThat(SellerEquals.sellerRequestEqualsSeller(request, seller)).isFalse();
@@ -42,7 +42,7 @@ public class SellerEqualsTest {
 
     @Test
     public void sellerRequestNotEqualsToSellerWhenPhoneNumberDiff() {
-        SellerRequest request = SellerUtils.createSellerRequest();
+        SellerRequest request = SellerTestUtils.createSellerRequest();
         request.phoneNumber = "???";
 
         assertThat(SellerEquals.sellerRequestEqualsSeller(request, seller)).isFalse();
@@ -50,7 +50,7 @@ public class SellerEqualsTest {
 
     @Test
     public void sellerRequestNotEqualsToSellerWhenBioDiff() {
-        SellerRequest request = SellerUtils.createSellerRequest();
+        SellerRequest request = SellerTestUtils.createSellerRequest();
         request.bio = "???";
 
         assertThat(SellerEquals.sellerRequestEqualsSeller(request, seller)).isFalse();
@@ -58,7 +58,7 @@ public class SellerEqualsTest {
 
     @Test
     public void sellerRequestNotEqualsToSellerWhenBirthdateDiff() {
-        SellerRequest request = SellerUtils.createSellerRequest();
+        SellerRequest request = SellerTestUtils.createSellerRequest();
         request.birthdate = "???";
 
         assertThat(SellerEquals.sellerRequestEqualsSeller(request, seller)).isFalse();
@@ -66,14 +66,14 @@ public class SellerEqualsTest {
 
     @Test
     public void sellerResponseEqualsToSeller() {
-        SellerResponse response = SellerUtils.createSellerResponse();
+        SellerResponse response = SellerTestUtils.createSellerResponse();
 
         assertThat(SellerEquals.sellerResponseEqualsSeller(response, seller)).isTrue();
     }
 
     @Test
     public void sellerResponseNotEqualsToSellerWhenNameDiff() {
-        SellerResponse response = SellerUtils.createSellerResponse();
+        SellerResponse response = SellerTestUtils.createSellerResponse();
         response.name = "???";
 
         assertThat(SellerEquals.sellerResponseEqualsSeller(response, seller)).isFalse();
@@ -81,7 +81,7 @@ public class SellerEqualsTest {
 
     @Test
     public void sellerResponseNotEqualsToSellerWhenIdDiff() {
-        SellerResponse response = SellerUtils.createSellerResponse();
+        SellerResponse response = SellerTestUtils.createSellerResponse();
         response.id = "???";
 
         assertThat(SellerEquals.sellerResponseEqualsSeller(response, seller)).isFalse();
@@ -89,7 +89,7 @@ public class SellerEqualsTest {
 
     @Test
     public void sellerResponseNotEqualsToSellerWhenCreateAtDiff() {
-        SellerResponse response = SellerUtils.createSellerResponse();
+        SellerResponse response = SellerTestUtils.createSellerResponse();
         response.createdAt = "???";
 
         assertThat(SellerEquals.sellerResponseEqualsSeller(response, seller)).isFalse();
@@ -97,7 +97,7 @@ public class SellerEqualsTest {
 
     @Test
     public void sellerResponseNotEqualsToSellerWhenBioDiff() {
-        SellerResponse response = SellerUtils.createSellerResponse();
+        SellerResponse response = SellerTestUtils.createSellerResponse();
         response.bio = "???";
 
         assertThat(SellerEquals.sellerResponseEqualsSeller(response, seller)).isFalse();
@@ -105,7 +105,7 @@ public class SellerEqualsTest {
 
     @Test
     public void sellerResponseNotEqualsToSellerWhenBirthdateDiff() {
-        SellerResponse response = SellerUtils.createSellerResponse();
+        SellerResponse response = SellerTestUtils.createSellerResponse();
         response.birthdate = "???";
 
         assertThat(SellerEquals.sellerResponseEqualsSeller(response, seller)).isFalse();
@@ -113,7 +113,7 @@ public class SellerEqualsTest {
 
     @Test
     public void sellerResponseNotEqualsToSellerWhenEmailDiff() {
-        SellerResponse response = SellerUtils.createSellerResponse();
+        SellerResponse response = SellerTestUtils.createSellerResponse();
         response.email = "???";
 
         assertThat(SellerEquals.sellerResponseEqualsSeller(response, seller)).isFalse();
@@ -121,7 +121,7 @@ public class SellerEqualsTest {
 
     @Test
     public void sellerResponseNotEqualsToSellerWhenPhoneNumberDiff() {
-        SellerResponse response = SellerUtils.createSellerResponse();
+        SellerResponse response = SellerTestUtils.createSellerResponse();
         response.phoneNumber = "???";
 
         assertThat(SellerEquals.sellerResponseEqualsSeller(response, seller)).isFalse();

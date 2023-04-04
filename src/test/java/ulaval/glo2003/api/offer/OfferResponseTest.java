@@ -4,7 +4,7 @@ import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ulaval.glo2003.utils.OfferUtils;
+import ulaval.glo2003.utils.OfferTestUtils;
 
 public class OfferResponseTest {
 
@@ -12,7 +12,7 @@ public class OfferResponseTest {
 
     @BeforeEach
     public void setUp() {
-        offerResponse = OfferUtils.createOfferResponse();
+        offerResponse = OfferTestUtils.createOfferResponse();
     }
 
     @Test
@@ -22,14 +22,14 @@ public class OfferResponseTest {
 
     @Test
     public void offerResponseEqualsToOfferResponse() {
-        OfferResponse newOfferResponse = OfferUtils.createOfferResponse();
+        OfferResponse newOfferResponse = OfferTestUtils.createOfferResponse();
 
         assertThat(offerResponse).isEqualTo(newOfferResponse);
     }
 
     @Test
     public void offerResponseNotEqualsToOfferResponseWhenMessageDiff() {
-        OfferResponse newOfferResponse = OfferUtils.createOfferResponse();
+        OfferResponse newOfferResponse = OfferTestUtils.createOfferResponse();
         offerResponse.message = "new message";
 
         assertThat(offerResponse).isNotEqualTo(newOfferResponse);
@@ -37,7 +37,7 @@ public class OfferResponseTest {
 
     @Test
     public void offerResponseNotEqualsToOfferResponseWhenAmountDiff() {
-        OfferResponse newOfferResponse = OfferUtils.createOfferResponse();
+        OfferResponse newOfferResponse = OfferTestUtils.createOfferResponse();
         offerResponse.amount = 1d;
 
         assertThat(offerResponse).isNotEqualTo(newOfferResponse);
@@ -45,7 +45,7 @@ public class OfferResponseTest {
 
     @Test
     public void offerResponseNotEqualsToOfferResponseWhenUsernameDiff() {
-        OfferResponse newOfferResponse = OfferUtils.createOfferResponse();
+        OfferResponse newOfferResponse = OfferTestUtils.createOfferResponse();
         offerResponse.username = "new username";
 
         assertThat(offerResponse).isNotEqualTo(newOfferResponse);
@@ -53,7 +53,7 @@ public class OfferResponseTest {
 
     @Test
     public void offerResponseNotEqualsToOfferResponseWhenCreatedAtDiff() {
-        OfferResponse newOfferResponse = OfferUtils.createOfferResponse();
+        OfferResponse newOfferResponse = OfferTestUtils.createOfferResponse();
         offerResponse.createdAt = "????";
 
         assertThat(offerResponse).isNotEqualTo(newOfferResponse);

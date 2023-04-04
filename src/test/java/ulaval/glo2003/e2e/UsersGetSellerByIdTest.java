@@ -6,11 +6,11 @@ import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.api.seller.SellerResponse;
-import ulaval.glo2003.utils.OfferUtils;
-import ulaval.glo2003.utils.ProductUtils;
-import ulaval.glo2003.utils.SellerUtils;
+import ulaval.glo2003.utils.OfferTestUtils;
+import ulaval.glo2003.utils.ProductTestUtils;
+import ulaval.glo2003.utils.SellerTestUtils;
 
-public class UsersGetSellerByIdTest extends ApiTestUtils {
+public class UsersGetSellerByIdTest extends ApiTest {
 
     private String sellerId;
 
@@ -18,9 +18,9 @@ public class UsersGetSellerByIdTest extends ApiTestUtils {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        sellerId = sellingService.createSeller(SellerUtils.createSellerRequest());
-        String productId = sellingService.createProduct(sellerId, ProductUtils.createProductRequest());
-        sellingService.createOffer("buyerName", productId, OfferUtils.createOfferRequest());
+        sellerId = sellingService.createSeller(SellerTestUtils.createSellerRequest());
+        String productId = sellingService.createProduct(sellerId, ProductTestUtils.createProductRequest());
+        sellingService.createOffer("buyerName", productId, OfferTestUtils.createOfferRequest());
     }
 
     @Test

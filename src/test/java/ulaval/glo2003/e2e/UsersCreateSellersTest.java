@@ -7,14 +7,14 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.api.seller.SellerRequest;
-import ulaval.glo2003.utils.SellerUtils;
+import ulaval.glo2003.utils.SellerTestUtils;
 
-public class UsersCreateSellersTest extends ApiTestUtils {
+public class UsersCreateSellersTest extends ApiTest {
 
     @Test
     public void canUserCreateSellers() {
 
-        SellerRequest request = SellerUtils.createSellerRequest();
+        SellerRequest request = SellerTestUtils.createSellerRequest();
 
         Response response = createSeller(request);
         String location = response.getHeaderString("Location");
@@ -27,7 +27,8 @@ public class UsersCreateSellersTest extends ApiTestUtils {
     @Test
     public void failUserCreateSellersInvalidName() {
 
-        SellerRequest request = SellerUtils.createSellerRequestInvalidName();
+        SellerRequest request = SellerTestUtils.createSellerRequest();
+        request.name = "";
 
         Response response = createSeller(request);
 
@@ -39,7 +40,7 @@ public class UsersCreateSellersTest extends ApiTestUtils {
     @Test
     public void failUserCreateSellersInvalidBirthdateTooYoung() {
 
-        SellerRequest request = SellerUtils.createSellerRequestInvalidbirthdateTooYoung();
+        SellerRequest request = SellerTestUtils.createSellerRequestInvalidBirthdateTooYoung();
 
         Response response = createSeller(request);
 
@@ -51,7 +52,8 @@ public class UsersCreateSellersTest extends ApiTestUtils {
     @Test
     public void failUserCreateSellersInvalidEmail() {
 
-        SellerRequest request = SellerUtils.createSellerRequestInvalidEmail();
+        SellerRequest request = SellerTestUtils.createSellerRequest();
+        request.email = "";
 
         Response response = createSeller(request);
 
@@ -63,7 +65,8 @@ public class UsersCreateSellersTest extends ApiTestUtils {
     @Test
     public void failUserCreateSellersInvalidPhoneNumber() {
 
-        SellerRequest request = SellerUtils.createSellerRequestInvalidPhone();
+        SellerRequest request = SellerTestUtils.createSellerRequest();
+        request.phoneNumber = "123";
 
         Response response = createSeller(request);
 
@@ -75,7 +78,8 @@ public class UsersCreateSellersTest extends ApiTestUtils {
     @Test
     public void failUserCreateSellersInvalidBio() {
 
-        SellerRequest request = SellerUtils.createSellerRequestInvalidBio();
+        SellerRequest request = SellerTestUtils.createSellerRequest();
+        request.bio = "";
 
         Response response = createSeller(request);
 
@@ -87,7 +91,8 @@ public class UsersCreateSellersTest extends ApiTestUtils {
     @Test
     public void failUserCreateSellersMissingName() {
 
-        SellerRequest request = SellerUtils.createSellerRequestMissingName();
+        SellerRequest request = SellerTestUtils.createSellerRequest();
+        request.name = null;
 
         Response response = createSeller(request);
 
@@ -99,7 +104,8 @@ public class UsersCreateSellersTest extends ApiTestUtils {
     @Test
     public void failUserCreateSellersMissingBirthdate() {
 
-        SellerRequest request = SellerUtils.createSellerRequestMissingBirthdate();
+        SellerRequest request = SellerTestUtils.createSellerRequest();
+        request.birthdate = null;
 
         Response response = createSeller(request);
 
@@ -111,7 +117,8 @@ public class UsersCreateSellersTest extends ApiTestUtils {
     @Test
     public void failUserCreateSellersMissingEmail() {
 
-        SellerRequest request = SellerUtils.createSellerRequestMissingEmail();
+        SellerRequest request = SellerTestUtils.createSellerRequest();
+        request.email = null;
 
         Response response = createSeller(request);
 
@@ -123,7 +130,8 @@ public class UsersCreateSellersTest extends ApiTestUtils {
     @Test
     public void failUserCreateSellersMissingPhone() {
 
-        SellerRequest request = SellerUtils.createSellerRequestMissingPhone();
+        SellerRequest request = SellerTestUtils.createSellerRequest();
+        request.phoneNumber = null;
 
         Response response = createSeller(request);
 
@@ -135,7 +143,8 @@ public class UsersCreateSellersTest extends ApiTestUtils {
     @Test
     public void failUserCreateSellersMissingBio() {
 
-        SellerRequest request = SellerUtils.createSellerRequestMissingBio();
+        SellerRequest request = SellerTestUtils.createSellerRequest();
+        request.bio = null;
 
         Response response = createSeller(request);
 

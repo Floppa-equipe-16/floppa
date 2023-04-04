@@ -10,7 +10,7 @@ import ulaval.glo2003.api.offer.OfferRequest;
 import ulaval.glo2003.api.offer.OfferResponse;
 import ulaval.glo2003.domain.offer.Offer;
 
-public class OfferUtils {
+public class OfferTestUtils {
     public static final String ID = "1";
     public static final String ID_2 = "2";
     public static final String PRODUCT_ID = "PRODUCT";
@@ -26,10 +26,6 @@ public class OfferUtils {
     }
 
     public static Offer createOffer2() {
-        return new Offer(ID_2, PRODUCT_ID, USERNAME, HIGHEST_AMOUNT, MESSAGE, CREATED_AT);
-    }
-
-    public static Offer createSecondOffer() {
         return new Offer(ID_2, PRODUCT_ID, USERNAME, HIGHEST_AMOUNT, MESSAGE, CREATED_AT);
     }
 

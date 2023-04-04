@@ -7,26 +7,26 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.api.product.ProductCollectionResponse;
 import ulaval.glo2003.domain.product.ProductFilter;
-import ulaval.glo2003.utils.ProductUtils;
-import ulaval.glo2003.utils.SellerUtils;
+import ulaval.glo2003.utils.ProductTestUtils;
+import ulaval.glo2003.utils.SellerTestUtils;
 
-public class UsersGetProductsFilterTest extends ApiTestUtils {
+public class UsersGetProductsFilterTest extends ApiTest {
 
     @BeforeEach
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        String sellerId = sellingService.createSeller(SellerUtils.createSellerRequest());
-        sellingService.createProduct(sellerId, ProductUtils.createProductRequest());
-        sellingService.createProduct(sellerId, ProductUtils.createProductRequest2());
-        sellingService.createProduct(sellerId, ProductUtils.createProductRequest3());
-        sellingService.createProduct(sellerId, ProductUtils.createProductRequest4());
+        String sellerId = sellingService.createSeller(SellerTestUtils.createSellerRequest());
+        sellingService.createProduct(sellerId, ProductTestUtils.createProductRequest());
+        sellingService.createProduct(sellerId, ProductTestUtils.createProductRequest2());
+        sellingService.createProduct(sellerId, ProductTestUtils.createProductRequest3());
+        sellingService.createProduct(sellerId, ProductTestUtils.createProductRequest4());
     }
 
     @Test
     public void getProductsWithoutFilter() {
         Response response = target("/products").request().get();
-        ProductFilter filter = new ProductFilter(null, null, null, null, null);
+        ProductFilter filter = ProductTestUtils.createEmptyFilter();
 
         assertThat(response.getStatus()).isEqualTo(200);
         assertMediaTypeIsJson(response);

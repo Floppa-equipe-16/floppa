@@ -5,7 +5,7 @@ import static com.google.common.truth.Truth.assertThat;
 import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ulaval.glo2003.utils.SellerUtils;
+import ulaval.glo2003.utils.SellerTestUtils;
 
 public class SellerResponseTest {
 
@@ -13,7 +13,7 @@ public class SellerResponseTest {
 
     @BeforeEach
     public void setUp() {
-        sellerResponse = SellerUtils.createSellerResponse();
+        sellerResponse = SellerTestUtils.createSellerResponse();
     }
 
     @Test
@@ -23,14 +23,14 @@ public class SellerResponseTest {
 
     @Test
     public void sellerResponseEqualsToSellerResponse() {
-        SellerResponse newSellerResponse = SellerUtils.createSellerResponse();
+        SellerResponse newSellerResponse = SellerTestUtils.createSellerResponse();
 
         assertThat(sellerResponse).isEqualTo(newSellerResponse);
     }
 
     @Test
     public void sellerResponseNotEqualsToSellerResponseWhenNameDiff() {
-        SellerResponse newSellerResponse = SellerUtils.createSellerResponse();
+        SellerResponse newSellerResponse = SellerTestUtils.createSellerResponse();
         sellerResponse.name = "???";
 
         assertThat(sellerResponse).isNotEqualTo(newSellerResponse);
@@ -38,7 +38,7 @@ public class SellerResponseTest {
 
     @Test
     public void sellerResponseNotEqualsToSellerResponseWhenIdDiff() {
-        SellerResponse newSellerResponse = SellerUtils.createSellerResponse();
+        SellerResponse newSellerResponse = SellerTestUtils.createSellerResponse();
         sellerResponse.id = "???";
 
         assertThat(sellerResponse).isNotEqualTo(newSellerResponse);
@@ -46,7 +46,7 @@ public class SellerResponseTest {
 
     @Test
     public void sellerResponseNotEqualsToSellerResponseWhenPhoneNumberDiff() {
-        SellerResponse newSellerResponse = SellerUtils.createSellerResponse();
+        SellerResponse newSellerResponse = SellerTestUtils.createSellerResponse();
         sellerResponse.phoneNumber = "???";
 
         assertThat(sellerResponse).isNotEqualTo(newSellerResponse);
@@ -54,7 +54,7 @@ public class SellerResponseTest {
 
     @Test
     public void sellerResponseNotEqualsToSellerResponseWhenBioDiff() {
-        SellerResponse newSellerResponse = SellerUtils.createSellerResponse();
+        SellerResponse newSellerResponse = SellerTestUtils.createSellerResponse();
         sellerResponse.bio = "???";
 
         assertThat(sellerResponse).isNotEqualTo(newSellerResponse);
@@ -62,7 +62,7 @@ public class SellerResponseTest {
 
     @Test
     public void sellerResponseNotEqualsToSellerResponseWhenEamilDiff() {
-        SellerResponse newSellerResponse = SellerUtils.createSellerResponse();
+        SellerResponse newSellerResponse = SellerTestUtils.createSellerResponse();
         sellerResponse.email = "???";
 
         assertThat(sellerResponse).isNotEqualTo(newSellerResponse);
@@ -70,7 +70,7 @@ public class SellerResponseTest {
 
     @Test
     public void sellerResponseNotEqualsToSellerResponseWhenBirthdateDiff() {
-        SellerResponse newSellerResponse = SellerUtils.createSellerResponse();
+        SellerResponse newSellerResponse = SellerTestUtils.createSellerResponse();
         sellerResponse.birthdate = "???";
 
         assertThat(sellerResponse).isNotEqualTo(newSellerResponse);
@@ -78,7 +78,7 @@ public class SellerResponseTest {
 
     @Test
     public void sellerResponseNotEqualsToSellerResponseWhenCreateAtDiff() {
-        SellerResponse newSellerResponse = SellerUtils.createSellerResponse();
+        SellerResponse newSellerResponse = SellerTestUtils.createSellerResponse();
         sellerResponse.createdAt = "???";
 
         assertThat(sellerResponse).isNotEqualTo(newSellerResponse);
@@ -86,7 +86,7 @@ public class SellerResponseTest {
 
     @Test
     public void sellerResponseNotEqualsToSellerResponseWhenProductsDiff() {
-        SellerResponse newSellerResponse = SellerUtils.createSellerResponse();
+        SellerResponse newSellerResponse = SellerTestUtils.createSellerResponse();
 
         sellerResponse.products = new ArrayList<>();
 
