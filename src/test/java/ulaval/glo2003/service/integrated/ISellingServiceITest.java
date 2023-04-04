@@ -42,9 +42,9 @@ public abstract class ISellingServiceITest {
     private static final SellerFactory sellerFactory = new SellerFactory();
     private static final ProductFactory productFactory = new ProductFactory();
     private static final OfferFactory offerFactory = new OfferFactory();
-    private Seller sellerStub;
-    private Product productStub;
-    private Offer offerStub;
+    private Seller seller;
+    private Product product;
+    private Offer offer;
     private SellingService sellingService;
 
     @BeforeAll
@@ -68,9 +68,9 @@ public abstract class ISellingServiceITest {
         sellerRepository.reset();
         productRepository.reset();
         offerRepository.reset();
-        sellerStub = null;
-        productStub = null;
-        offerStub = null;
+        seller = null;
+        product = null;
+        offer = null;
     }
 
     @Test
@@ -87,9 +87,9 @@ public abstract class ISellingServiceITest {
     public void canGetSellerWithNoProduct() {
         saveSellerToRepository();
 
-        SellerResponse sellerResponse = sellingService.getSeller(sellerStub.getId());
+        SellerResponse sellerResponse = sellingService.getSeller(seller.getId());
 
-        assertThat(sellerResponse.id).isEqualTo(sellerStub.getId());
+        assertThat(sellerResponse.id).isEqualTo(seller.getId());
     }
 
     @Test
@@ -97,10 +97,10 @@ public abstract class ISellingServiceITest {
         saveSellerToRepository();
         saveProductToRepository();
 
-        SellerResponse sellerResponse = sellingService.getSeller(sellerStub.getId());
+        SellerResponse sellerResponse = sellingService.getSeller(seller.getId());
 
         assertThat(sellerResponse.products).hasSize(1);
-        assertThat(sellerResponse.id).isEqualTo(sellerStub.getId());
+        assertThat(sellerResponse.id).isEqualTo(seller.getId());
     }
 
     @Test
@@ -108,7 +108,7 @@ public abstract class ISellingServiceITest {
         saveSellerToRepository();
         ProductRequest productRequest = ProductTestUtils.createProductRequest();
 
-        String id = sellingService.createProduct(sellerStub.getId(), productRequest);
+        String id = sellingService.createProduct(seller.getId(), productRequest);
 
         Product product = productRepository.findById(id);
         assertThat(product).isNotNull();
@@ -133,9 +133,9 @@ public abstract class ISellingServiceITest {
         saveSellerToRepository();
         saveProductToRepository();
 
-        ProductResponse productResponse = sellingService.getProduct(productStub.getId());
+        ProductResponse productResponse = sellingService.getProduct(product.getId());
 
-        assertThat(productResponse.id).isEqualTo(productStub.getId());
+        assertThat(productResponse.id).isEqualTo(product.getId());
     }
 
     @Test
@@ -144,9 +144,9 @@ public abstract class ISellingServiceITest {
         saveProductToRepository();
         saveOfferToRepository();
 
-        ProductResponse productResponse = sellingService.getProduct(productStub.getId());
+        ProductResponse productResponse = sellingService.getProduct(product.getId());
 
-        assertThat(productResponse.id).isEqualTo(productStub.getId());
+        assertThat(productResponse.id).isEqualTo(product.getId());
         assertThat(productResponse.offers.count).isEqualTo(1);
     }
 
@@ -176,7 +176,7 @@ public abstract class ISellingServiceITest {
         saveProductToRepository();
         OfferRequest offerRequest = OfferTestUtils.createOfferRequest();
 
-        String id = sellingService.createOffer(BUYER_USERNAME, productStub.getId(), offerRequest);
+        String id = sellingService.createOffer(BUYER_USERNAME, product.getId(), offerRequest);
 
         Offer offer = offerRepository.findById(id);
         assertThat(offer).isNotNull();
@@ -198,19 +198,18 @@ public abstract class ISellingServiceITest {
     }
 
     private void saveSellerToRepository() {
-        sellerStub = SellerTestUtils.createSeller();
-        sellerRepository.save(sellerStub);
+        seller = SellerTestUtils.createSeller();
+        sellerRepository.save(seller);
     }
 
     private void saveProductToRepository() {
-        productStub = productMapper.requestToProduct(sellerStub.getId(), ProductTestUtils.createProductRequest());
-        productRepository.save(productStub);
+        product = productMapper.requestToProduct(seller.getId(), ProductTestUtils.createProductRequest());
+        productRepository.save(product);
     }
 
     private void saveOfferToRepository() {
-        offerStub =
-                offerMapper.requestToOffer(productStub.getId(), BUYER_USERNAME, OfferTestUtils.createOfferRequest());
-        offerRepository.save(offerStub);
+        offer = offerMapper.requestToOffer(product.getId(), BUYER_USERNAME, OfferTestUtils.createOfferRequest());
+        offerRepository.save(offer);
     }
 
     protected abstract ISellerRepository createSellerRepository();

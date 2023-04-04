@@ -13,11 +13,11 @@ public abstract class IOfferRepositoryITest {
 
     private final IOfferRepository repository = createRepository();
 
-    private Offer offerStub;
+    private Offer offer;
 
     @BeforeEach
     public void setUp() {
-        offerStub = OfferTestUtils.createOffer();
+        offer = OfferTestUtils.createOffer();
     }
 
     @AfterEach
@@ -27,22 +27,22 @@ public abstract class IOfferRepositoryITest {
 
     @Test
     public void canFindById() {
-        repository.save(offerStub);
+        repository.save(offer);
 
-        Offer foundOffer = repository.findById(offerStub.getId());
+        Offer foundOffer = repository.findById(offer.getId());
 
-        assertThat(foundOffer.getId()).isEqualTo(offerStub.getId());
+        assertThat(foundOffer.getId()).isEqualTo(offer.getId());
     }
 
     @Test
     public void findByIdThrowsWhenIdIsAbsent() {
-        assertThrows(NotFoundException.class, () -> repository.findById(offerStub.getId()));
+        assertThrows(NotFoundException.class, () -> repository.findById(offer.getId()));
     }
 
     @Test
     public void canFindAllByProductId() {
         Offer otherOfferStub = OfferTestUtils.createSecondOffer();
-        repository.save(offerStub);
+        repository.save(offer);
         repository.save(otherOfferStub);
 
         List<Offer> offers = repository.findAllByProductId(PRODUCT_ID);
@@ -59,12 +59,12 @@ public abstract class IOfferRepositoryITest {
 
     @Test
     public void canSaveWhenOfferAlreadyExists() {
-        repository.save(offerStub);
-        repository.save(offerStub);
+        repository.save(offer);
+        repository.save(offer);
 
-        Offer foundOffer = repository.findById(offerStub.getId());
+        Offer foundOffer = repository.findById(offer.getId());
 
-        assertThat(foundOffer.getId()).isEqualTo(offerStub.getId());
+        assertThat(foundOffer.getId()).isEqualTo(offer.getId());
     }
 
     protected abstract IOfferRepository createRepository();

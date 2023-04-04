@@ -12,11 +12,11 @@ public abstract class ISellerRepositoryITest {
 
     private final ISellerRepository repository = createRepository();
 
-    private Seller sellerStub;
+    private Seller seller;
 
     @BeforeEach
     public void setUp() {
-        sellerStub = SellerTestUtils.createSeller();
+        seller = SellerTestUtils.createSeller();
     }
 
     @AfterEach
@@ -26,25 +26,25 @@ public abstract class ISellerRepositoryITest {
 
     @Test
     public void canFindById() {
-        repository.save(sellerStub);
+        repository.save(seller);
 
-        Seller foundSeller = repository.findById(sellerStub.getId());
+        Seller foundSeller = repository.findById(seller.getId());
 
-        assertThat(foundSeller.getId()).isEqualTo(sellerStub.getId());
+        assertThat(foundSeller.getId()).isEqualTo(seller.getId());
     }
 
     @Test
     public void findByIdThrowsWhenIdIsAbsent() {
-        assertThrows(NotFoundException.class, () -> repository.findById(sellerStub.getId()));
+        assertThrows(NotFoundException.class, () -> repository.findById(seller.getId()));
     }
 
     @Test
     public void canSaveWhenSellerAlreadyExists() {
-        repository.save(sellerStub);
-        repository.save(sellerStub);
+        repository.save(seller);
+        repository.save(seller);
 
-        Seller foundSeller = repository.findById(sellerStub.getId());
-        assertThat(foundSeller.getId()).isEqualTo(sellerStub.getId());
+        Seller foundSeller = repository.findById(seller.getId());
+        assertThat(foundSeller.getId()).isEqualTo(seller.getId());
     }
 
     protected abstract ISellerRepository createRepository();
