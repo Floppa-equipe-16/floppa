@@ -13,7 +13,7 @@ public class SellerResponse {
     public String phoneNumber;
     public String bio;
     public List<ProductResponse> products;
-    public List<SelectedOfferResponse> selectedOffers;
+    public List<SelectedOfferResponse> selectedOffer;
 
     @Override
     public boolean equals(Object o) {

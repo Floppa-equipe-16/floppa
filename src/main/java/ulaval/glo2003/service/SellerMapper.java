@@ -32,9 +32,9 @@ public class SellerMapper {
         response.bio = seller.getBio();
         response.products = productMapper.productsMapToResponsesList(seller.getProducts());
         if (seller.getSelectedOffer().isEmpty()) {
-            response.selectedOffers = null;
+            response.selectedOffer = null;
         } else {
-            response.selectedOffers = offerMapper.OfferMapToResponseList(seller.getSelectedOffer());
+            response.selectedOffer = offerMapper.OfferMapToResponseList(seller.getSelectedOffer());
         }
         return response;
     }

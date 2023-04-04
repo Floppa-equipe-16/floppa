@@ -5,7 +5,6 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
-import java.util.Map;
 import ulaval.glo2003.domain.product.ProductFilter;
 import ulaval.glo2003.service.SellingService;
 
@@ -54,13 +53,11 @@ public class ProductResource {
     @Path("/{productId}/sell")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response sellProduct(
-            @HeaderParam("X-Seller-Id") String xSellerId,
+    public Response sellProducts(
             @PathParam("productId") String productId,
-            Map<String, String> body) {
-        var username = body.get("username");
-        sellingService.sellProduct(xSellerId, productId, username);
-
-        return Response.ok().build();
+            @HeaderParam("X-Seller-Id") String xSellerId,
+            ProductSellRequest productSellRequest) {
+        sellingService.sellProduct(xSellerId, productId, productSellRequest);
+        return Response.status(Response.Status.OK).build();
     }
 }
