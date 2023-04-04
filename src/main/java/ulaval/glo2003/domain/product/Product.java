@@ -14,6 +14,7 @@ public class Product {
     private final String category;
     private SaleStatus saleStatus;
     private final ArrayList<Offer> offers;
+    private Offer selectedOffer;
 
     public Product(
             String id,
@@ -33,6 +34,7 @@ public class Product {
         this.category = category;
         this.saleStatus = saleStatus;
         this.offers = new ArrayList<>();
+        this.selectedOffer = null;
     }
 
     public Product(Product that) {
@@ -47,6 +49,7 @@ public class Product {
 
         offers = new ArrayList<>();
         that.getOffers().forEach(offer -> offers.add(new Offer(offer)));
+        selectedOffer = that.getSelectedOffer();
     }
 
     public String getSellerId() {
@@ -87,6 +90,14 @@ public class Product {
 
     public List<Offer> getOffers() {
         return offers;
+    }
+
+    public Offer getSelectedOffer() {
+        return selectedOffer;
+    }
+
+    public void setSelectedOffer(Offer selectedOffer) {
+        this.selectedOffer = selectedOffer;
     }
 
     public void addOffer(Offer offer) {

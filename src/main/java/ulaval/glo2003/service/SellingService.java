@@ -1,5 +1,6 @@
 package ulaval.glo2003.service;
 
+import jakarta.ws.rs.NotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import ulaval.glo2003.api.offer.OfferRequest;
@@ -54,25 +55,24 @@ public class SellingService {
 
     public SellerResponse getSeller(String sellerId) {
         Seller seller = sellerRepository.findById(sellerId);
-        addProductsToSeller(seller);
-
+        addProductsAndSelectedOfferToSeller(seller);
         return sellerMapper.sellerToResponse(seller);
     }
 
-    private void addProductsToSeller(Seller seller) {
+    private void addProductsAndSelectedOfferToSeller(Seller seller) {
         productRepository.findAllBySellerId(seller.getId()).forEach(product -> {
             addOffersToProduct(product);
             if (product.getSaleStatus() == SaleStatus.sold) {
-                addSelectedOfferToSeller(seller, product.getId());
+                addSelectedOfferToProduct(product);
             }
             seller.addProduct(product);
         });
     }
 
-    private void addSelectedOfferToSeller(Seller seller, String productId) {
-        offerRepository.findAllByProductId(productId).forEach(offer -> {
+    private void addSelectedOfferToProduct(Product product) {
+        offerRepository.findAllByProductId(product.getId()).forEach(offer -> {
             if (offer.isSelected()) {
-                seller.addSelectedOffer(offer);
+                product.setSelectedOffer(offer);
             }
         });
     }
@@ -143,7 +143,7 @@ public class SellingService {
         if (sellerId == null) throw new MissingParamException("seller id");
         if (productId == null) throw new MissingParamException("product id");
         productRequest.validate();
-        Seller seller = sellerRepository.findById(sellerId);
+        sellerRepository.findById(sellerId);
         Product product = getProductWithOffers(productId);
 
         if (product.getSaleStatus() == SaleStatus.sold) {
@@ -156,14 +156,14 @@ public class SellingService {
                 .findFirst()
                 .orElse(null);
         if (matchingOffer == null) {
-            offerRepository.findById("No matching offer with the username: " + productRequest.username);
+            throw new NotFoundException(
+                    String.format("Offer with username: '%s' has no offer on this product", productRequest.username));
         }
         product.setSaleStatus(SaleStatus.sold);
-        seller.addSelectedOffer(matchingOffer);
+        product.setSelectedOffer(matchingOffer);
         matchingOffer.setSelected(true);
 
         productRepository.save(product);
-        sellerRepository.save(seller);
         offerRepository.save(matchingOffer);
     }
 

@@ -1,5 +1,7 @@
 package ulaval.glo2003.service;
 
+import java.util.ArrayList;
+import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
 import ulaval.glo2003.domain.seller.Seller;
@@ -31,11 +33,16 @@ public class SellerMapper {
         response.phoneNumber = seller.getPhoneNumber();
         response.bio = seller.getBio();
         response.products = productMapper.productsMapToResponsesList(seller.getProducts());
-        if (seller.getSelectedOffer().isEmpty()) {
-            response.selectedOffer = null;
-        } else {
-            response.selectedOffer = offerMapper.OfferMapToResponseList(seller.getSelectedOffer());
+        response.selectedOffer = new ArrayList<>();
+        for (ProductResponse product : response.products) {
+            if (product.selectedOffer != null) {
+                response.selectedOffer.add(offerMapper.offerToSelectedOfferResponse(product.selectedOffer));
+            }
         }
+        if (response.selectedOffer.isEmpty()) {
+            response.selectedOffer = null;
+        }
+
         return response;
     }
 }

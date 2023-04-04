@@ -60,6 +60,7 @@ public class ProductMapper {
         response.id = product.getId();
         response.createdAt = product.getCreatedAt();
         response.saleStatus = product.getSaleStatus().toString();
+        response.selectedOffer = product.getSelectedOffer();
 
         return response;
     }
