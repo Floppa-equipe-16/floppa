@@ -145,7 +145,7 @@ public abstract class ISellingServiceITest {
     public void canGetProducts() {
         saveSellerToRepository();
         saveProductToRepository();
-        ProductFilter productFilter = createEmptyFilter();
+        ProductFilter productFilter = ProductTestUtils.createEmptyFilter();
 
         ProductCollectionResponse productResponses = sellingService.getProducts(productFilter);
 
@@ -154,7 +154,7 @@ public abstract class ISellingServiceITest {
 
     @Test
     public void canGetProductsWhenNoProduct() {
-        ProductFilter productFilter = createEmptyFilter();
+        ProductFilter productFilter = ProductTestUtils.createEmptyFilter();
 
         ProductCollectionResponse productResponses = sellingService.getProducts(productFilter);
 
@@ -179,10 +179,6 @@ public abstract class ISellingServiceITest {
 
         assertThrows(
                 NotFoundException.class, () -> sellingService.createOffer(BUYER_USERNAME, SELLER_ID, offerRequest));
-    }
-
-    private ProductFilter createEmptyFilter() {
-        return new ProductFilter(null, null, null, null, null);
     }
 
     private void saveSellerToRepository() {

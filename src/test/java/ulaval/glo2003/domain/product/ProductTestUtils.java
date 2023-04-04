@@ -58,4 +58,8 @@ public class ProductTestUtils {
 
         return response;
     }
+    public static ProductFilter createEmptyFilter() {
+        return new ProductFilter(null, null, null, null, null);
+    }
+
 }

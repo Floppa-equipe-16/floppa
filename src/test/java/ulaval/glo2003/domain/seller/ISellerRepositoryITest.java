@@ -9,19 +9,18 @@ import jakarta.ws.rs.NotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ulaval.glo2003.domain.seller.SellerTestUtils;
 import org.mockito.Mock;
 
 public abstract class ISellerRepositoryITest {
-    private static final String ID = "1";
 
     private final ISellerRepository repository = createRepository();
 
-    @Mock
-    private Seller sellerStub = mock(Seller.class);
+    private Seller sellerStub;
 
     @BeforeEach
     public void setUp() {
-        when(sellerStub.getId()).thenReturn(ID);
+        sellerStub = SellerTestUtils.createSeller();
     }
 
     @AfterEach

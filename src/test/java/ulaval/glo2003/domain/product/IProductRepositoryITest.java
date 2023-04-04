@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import ulaval.glo2003.domain.product.ProductTestUtils;
 import jakarta.ws.rs.NotFoundException;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
@@ -20,7 +21,6 @@ public abstract class IProductRepositoryITest {
 
     private final IProductRepository repository = createRepository();
 
-    @Mock
     private Product productStub;
 
     @BeforeEach
@@ -53,14 +53,14 @@ public abstract class IProductRepositoryITest {
         repository.save(productStub);
         repository.save(otherProductStub);
 
-        List<Product> products = repository.findAll(createEmptyProductFilterStub());
+        List<Product> products = repository.findAll(ProductTestUtils.createEmptyFilter());
 
         assertThat(products.size()).isEqualTo(2);
     }
 
     @Test
     public void findAllReturnsEmptyWhenNoProduct() {
-        List<Product> products = repository.findAll(createEmptyProductFilterStub());
+        List<Product> products = repository.findAll(ProductTestUtils.createEmptyFilter());
 
         assertThat(products).isEmpty();
     }
@@ -71,7 +71,7 @@ public abstract class IProductRepositoryITest {
         repository.save(productStub);
         repository.save(otherProductStub);
 
-        ProductFilter filter = createEmptyProductFilterStub();
+        ProductFilter filter = createProductFilterWithPriceRange();
         when(filter.getSellerId()).thenReturn(SELLER_ID);
 
         List<Product> products = repository.findAll(filter);
@@ -86,23 +86,13 @@ public abstract class IProductRepositoryITest {
         repository.save(productStub);
         repository.save(otherProductStub);
 
-        ProductFilter filter = createEmptyProductFilterStub();
+        ProductFilter filter = createProductFilterWithPriceRange();
         when(filter.getMinPrice()).thenReturn(1d);
         when(filter.getMaxPrice()).thenReturn(100d);
 
         List<Product> products = repository.findAll(filter);
 
         assertThat(products.size()).isEqualTo(1);
-    }
-
-    private ProductFilter createEmptyProductFilterStub() {
-        ProductFilter productFilter = mock(ProductFilter.class);
-        when(productFilter.getSellerId()).thenReturn("");
-        when(productFilter.getTitle()).thenReturn("");
-        when(productFilter.getCategory()).thenReturn("");
-        when(productFilter.getMinPrice()).thenReturn(0d);
-        when(productFilter.getMaxPrice()).thenReturn(Double.MAX_VALUE);
-        return productFilter;
     }
 
     @Test
@@ -143,6 +133,14 @@ public abstract class IProductRepositoryITest {
         when(stub.getCategory()).thenReturn(ProductCategory.other.toString());
         return stub;
     }
-
+    private ProductFilter createProductFilterWithPriceRange() {
+        ProductFilter productFilter = mock(ProductFilter.class);
+        when(productFilter.getSellerId()).thenReturn("");
+        when(productFilter.getTitle()).thenReturn("");
+        when(productFilter.getCategory()).thenReturn("");
+        when(productFilter.getMinPrice()).thenReturn(0d);
+        when(productFilter.getMaxPrice()).thenReturn(Double.MAX_VALUE);
+        return productFilter;
+    }
     protected abstract IProductRepository createRepository();
 }

@@ -189,7 +189,7 @@ class SellingServiceTest {
 
     @Test
     public void canGetProducts() {
-        ProductFilter filter = createEmptyFilter();
+        ProductFilter filter = ProductTestUtils.createEmptyFilter();
         when(productRepositoryMock.findAll(filter)).thenReturn(List.of(productStub));
         when(offerRepositoryMock.findAllByProductId(PRODUCT_ID)).thenReturn(Collections.emptyList());
         when(sellerRepositoryMock.findById(SELLER_ID)).thenReturn(sellerStub);
@@ -206,7 +206,7 @@ class SellingServiceTest {
 
     @Test
     public void canGetProductsWhenNoProduct() {
-        ProductFilter filter = createEmptyFilter();
+        ProductFilter filter = ProductTestUtils.createEmptyFilter();
         when(productRepositoryMock.findAll(filter)).thenReturn(Collections.emptyList());
         when(productMapperMock.productsToCollectionResponse(any())).thenReturn(any());
 
@@ -214,10 +214,6 @@ class SellingServiceTest {
 
         verify(productRepositoryMock).findAll(filter);
         verify(productMapperMock).productsToCollectionResponse(Collections.emptyList());
-    }
-
-    private ProductFilter createEmptyFilter() {
-        return new ProductFilter(null, null, null, null, null);
     }
 
     @Test
