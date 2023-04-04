@@ -8,10 +8,12 @@ import ulaval.glo2003.domain.seller.SellerFactory;
 public class SellerMapper {
     private final SellerFactory factory;
     private final ProductMapper productMapper;
+    private final OfferMapper offerMapper;
 
-    public SellerMapper(SellerFactory factory, ProductMapper productMapper) {
+    public SellerMapper(SellerFactory factory, ProductMapper productMapper, OfferMapper offerMapper) {
         this.factory = factory;
         this.productMapper = productMapper;
+        this.offerMapper = offerMapper;
     }
 
     public Seller requestToSeller(SellerRequest request) {
@@ -29,7 +31,11 @@ public class SellerMapper {
         response.phoneNumber = seller.getPhoneNumber();
         response.bio = seller.getBio();
         response.products = productMapper.productsMapToResponsesList(seller.getProducts());
-
+        if (seller.getSelectedOffer().isEmpty()) {
+            response.selectedOffers = null;
+        } else {
+            response.selectedOffers = offerMapper.OfferMapToResponseList(seller.getSelectedOffer());
+        }
         return response;
     }
 }

@@ -1,6 +1,7 @@
 package ulaval.glo2003.domain.seller;
 
 import java.util.*;
+import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.product.Product;
 
 public class Seller {
@@ -12,6 +13,7 @@ public class Seller {
     private final String bio;
     private final String createdAt;
     private final Map<String, Product> productsMap;
+    private final Map<String, Offer> offersMap;
 
     public Seller(
             String id, String name, String createdAt, String birthdate, String email, String phoneNumber, String bio) {
@@ -23,6 +25,7 @@ public class Seller {
         this.phoneNumber = phoneNumber;
         this.bio = bio;
         this.productsMap = new HashMap<>();
+        this.offersMap = new HashMap<>();
     }
 
     public Seller(Seller that) {
@@ -36,6 +39,9 @@ public class Seller {
 
         productsMap = new HashMap<>();
         that.getProducts().forEach((s, product) -> productsMap.put(s, new Product(product)));
+
+        offersMap = new HashMap<>();
+        that.getSelectedOffer().forEach((s, offer) -> offersMap.put(s, new Offer(offer)));
     }
 
     public String getId() {
@@ -76,6 +82,14 @@ public class Seller {
 
     public void addProduct(Product product) {
         productsMap.put(product.getId(), product);
+    }
+
+    public Map<String, Offer> getSelectedOffer() {
+        return offersMap;
+    }
+
+    public void addSelectedOffer(Offer offer) {
+        offersMap.put(offer.getId(), offer);
     }
 
     @Override

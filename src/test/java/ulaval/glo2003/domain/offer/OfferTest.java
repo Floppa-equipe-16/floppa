@@ -37,7 +37,8 @@ public class OfferTest {
                 OfferTestUtils.USERNAME,
                 OfferTestUtils.LOWEST_AMOUNT,
                 OfferTestUtils.MESSAGE,
-                OfferTestUtils.CREATED_AT);
+                OfferTestUtils.CREATED_AT,
+                OfferTestUtils.SELECTED);
 
         assertThat(offer).isNotEqualTo(otherOffer);
     }

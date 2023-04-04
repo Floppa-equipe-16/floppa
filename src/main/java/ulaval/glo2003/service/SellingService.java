@@ -61,7 +61,18 @@ public class SellingService {
     private void addProductsToSeller(Seller seller) {
         productRepository.findAllBySellerId(seller.getId()).forEach(product -> {
             addOffersToProduct(product);
+            if (product.getSaleStatus() == SaleStatus.sold) {
+                addSelectedOfferToSeller(seller, product.getId());
+            }
             seller.addProduct(product);
+        });
+    }
+
+    private void addSelectedOfferToSeller(Seller seller, String productId) {
+        offerRepository.findAllByProductId(productId).forEach(offer -> {
+            if (offer.isSelected()) {
+                seller.addSelectedOffer(offer);
+            }
         });
     }
 
@@ -131,7 +142,7 @@ public class SellingService {
         if (sellerId == null) throw new MissingParamException("seller id");
         if (productId == null) throw new MissingParamException("product id");
         if (username == null) throw new MissingParamException("username");
-        sellerRepository.findById(sellerId);
+        Seller seller = sellerRepository.findById(sellerId);
         Product product = getProductWithOffers(productId);
 
         if (product.getSaleStatus() == SaleStatus.sold) {
@@ -147,8 +158,12 @@ public class SellingService {
             offerRepository.findById("No matching offer with the username: " + username);
         }
         product.setSaleStatus(SaleStatus.sold);
+        seller.addSelectedOffer(matchingOffer);
+        matchingOffer.setSelected(true);
 
         productRepository.save(product);
+        sellerRepository.save(seller);
+        offerRepository.save(matchingOffer);
     }
 
     private boolean canAddOfferToProduct(String productId, Offer offer) {

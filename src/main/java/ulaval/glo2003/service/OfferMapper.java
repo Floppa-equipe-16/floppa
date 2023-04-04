@@ -2,10 +2,12 @@ package ulaval.glo2003.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import ulaval.glo2003.api.offer.OfferCollectionResponse;
 import ulaval.glo2003.api.offer.OfferRequest;
 import ulaval.glo2003.api.offer.OfferResponse;
+import ulaval.glo2003.api.offer.SelectedOfferResponse;
 import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.offer.OfferFactory;
 
@@ -51,5 +53,15 @@ public class OfferMapper {
         }
 
         return response;
+    }
+
+    public SelectedOfferResponse offerToSelectedOfferResponse(Offer offer) {
+        return new SelectedOfferResponse(offer);
+    }
+
+    public List<SelectedOfferResponse> OfferMapToResponseList(Map<String, Offer> offerMap) {
+        return offerMap.values().stream()
+                .map(this::offerToSelectedOfferResponse)
+                .collect(Collectors.toList());
     }
 }

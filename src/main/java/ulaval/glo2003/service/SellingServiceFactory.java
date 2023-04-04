@@ -42,7 +42,7 @@ public class SellingServiceFactory {
 
         OfferMapper offerMapper = new OfferMapper(offerFactory);
         ProductMapper productMapper = new ProductMapper(productFactory, offerMapper);
-        SellerMapper sellerMapper = new SellerMapper(sellerFactory, productMapper);
+        SellerMapper sellerMapper = new SellerMapper(sellerFactory, productMapper, offerMapper);
 
         return new SellingService(
                 sellerRepository, productRepository, offerRepository, sellerMapper, productMapper, offerMapper);

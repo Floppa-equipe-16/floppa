@@ -17,9 +17,10 @@ public class OfferTestUtils {
     public static final String MESSAGE =
             "This is a description of at least a hundred characters. Let me count them: one, two, three, four, five.";
     public static final String CREATED_AT = Instant.MAX.toString();
+    public static final Boolean SELECTED = false;
 
     public static Offer createOffer() {
-        return new Offer(ID, PRODUCT_ID, USERNAME, LOWEST_AMOUNT, MESSAGE, CREATED_AT);
+        return new Offer(ID, PRODUCT_ID, USERNAME, LOWEST_AMOUNT, MESSAGE, CREATED_AT, SELECTED);
     }
 
     public static Offer createOfferStub() {

@@ -58,6 +58,7 @@ public class MongoOfferRepository implements IOfferRepository {
         mongoOffer.amount = offer.getAmount();
         mongoOffer.message = offer.getMessage();
         mongoOffer.createdAt = offer.getCreatedAt();
+        mongoOffer.selected = offer.isSelected();
         return mongoOffer;
     }
 
@@ -68,6 +69,7 @@ public class MongoOfferRepository implements IOfferRepository {
                 mongoOffer.username,
                 mongoOffer.amount,
                 mongoOffer.message,
-                mongoOffer.createdAt);
+                mongoOffer.createdAt,
+                mongoOffer.selected);
     }
 }
