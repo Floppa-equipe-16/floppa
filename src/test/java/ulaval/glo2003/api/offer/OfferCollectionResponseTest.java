@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.utils.OfferUtils;
 
-
 public class OfferCollectionResponseTest {
 
     private OfferCollectionResponse offerCollectionResponse;

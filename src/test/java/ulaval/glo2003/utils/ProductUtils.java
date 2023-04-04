@@ -33,8 +33,8 @@ public class ProductUtils {
         return new Product(ID_2, SELLER_ID, TITLE, CREATED_AT, DESCRIPTION, SUGGESTED_PRICE_2, SALE_STATUS, CATEGORY);
     }
 
-    public static ProductFilter createEmptyFilter(){
-        return new ProductFilter(null,null,null,null,null);
+    public static ProductFilter createEmptyFilter() {
+        return new ProductFilter(null, null, null, null, null);
     }
 
     public static Product createProductStub() {

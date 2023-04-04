@@ -11,10 +11,10 @@ import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
 import ulaval.glo2003.domain.seller.Seller;
 import ulaval.glo2003.domain.seller.SellerFactory;
-import ulaval.glo2003.utils.SellerUtils;
-import ulaval.glo2003.utils.equals.SellerEquals;
 import ulaval.glo2003.service.ProductMapper;
 import ulaval.glo2003.service.SellerMapper;
+import ulaval.glo2003.utils.SellerUtils;
+import ulaval.glo2003.utils.equals.SellerEquals;
 
 class SellerMapperTest {
 

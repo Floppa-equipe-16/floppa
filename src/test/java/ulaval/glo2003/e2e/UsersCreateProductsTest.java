@@ -44,9 +44,7 @@ public class UsersCreateProductsTest extends ApiTestUtils {
         ProductRequest productRequest = ProductUtils.createProductRequest();
 
         Response response =
-                target("/products")
-                        .request()
-                        .post(Entity.entity(productRequest, MediaType.APPLICATION_JSON));
+                target("/products").request().post(Entity.entity(productRequest, MediaType.APPLICATION_JSON));
 
         assertThat(response.getStatus()).isEqualTo(400);
         assertMediaTypeIsJson(response);
