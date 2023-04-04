@@ -15,9 +15,9 @@ import ulaval.glo2003.domain.exceptions.ErrorDescription;
 import ulaval.glo2003.domain.infrastructure.mongo.MongoOfferRepository;
 import ulaval.glo2003.domain.infrastructure.mongo.MongoProductRepository;
 import ulaval.glo2003.domain.infrastructure.mongo.MongoSellerRepository;
-import ulaval.glo2003.utils.MongoUtils;
 import ulaval.glo2003.service.SellingService;
 import ulaval.glo2003.service.SellingServiceFactory;
+import ulaval.glo2003.utils.MongoUtils;
 
 public abstract class ApiTestUtils extends JerseyTest {
 
