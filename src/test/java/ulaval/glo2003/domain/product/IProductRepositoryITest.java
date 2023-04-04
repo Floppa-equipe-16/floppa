@@ -2,30 +2,26 @@ package ulaval.glo2003.domain.product;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
-import ulaval.glo2003.domain.product.ProductTestUtils;
 import jakarta.ws.rs.NotFoundException;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 
 public abstract class IProductRepositoryITest {
-
-    private static final String ID = "1";
-    private static final String SECOND_ID = "2";
-    private static final String SELLER_ID = "SELLER";
+    public static final String SELLER_ID = "2a74sfs3d2g48";
 
     private final IProductRepository repository = createRepository();
 
     private Product productStub;
 
+    private Product otherProductStub;
+
     @BeforeEach
     public void setUp() {
-        productStub = createProductStub(ID, SELLER_ID);
+        productStub = ProductTestUtils.createProduct();
+        otherProductStub = ProductTestUtils.createSecondProduct();
     }
 
     @AfterEach
@@ -49,7 +45,6 @@ public abstract class IProductRepositoryITest {
 
     @Test
     public void canFindAllWhenFilterIsEmpty() {
-        Product otherProductStub = createProductStub(SECOND_ID, SELLER_ID);
         repository.save(productStub);
         repository.save(otherProductStub);
 
@@ -67,12 +62,10 @@ public abstract class IProductRepositoryITest {
 
     @Test
     public void findAllReturnsOnlyMatchingSellerIDProduct() {
-        Product otherProductStub = createProductStub(SECOND_ID, "WRONG");
         repository.save(productStub);
         repository.save(otherProductStub);
 
         ProductFilter filter = createProductFilterWithPriceRange();
-        when(filter.getSellerId()).thenReturn(SELLER_ID);
 
         List<Product> products = repository.findAll(filter);
 
@@ -81,14 +74,10 @@ public abstract class IProductRepositoryITest {
 
     @Test
     public void findAllReturnsOnlyPriceInRangeProduct() {
-        Product otherProductStub = createProductStub(SECOND_ID, SELLER_ID);
-        when(otherProductStub.getSuggestedPrice()).thenReturn(10000d);
         repository.save(productStub);
         repository.save(otherProductStub);
 
         ProductFilter filter = createProductFilterWithPriceRange();
-        when(filter.getMinPrice()).thenReturn(1d);
-        when(filter.getMaxPrice()).thenReturn(100d);
 
         List<Product> products = repository.findAll(filter);
 
@@ -97,7 +86,6 @@ public abstract class IProductRepositoryITest {
 
     @Test
     public void canFindAllBySellerId() {
-        Product otherProductStub = createProductStub(SECOND_ID, SELLER_ID);
         repository.save(productStub);
         repository.save(otherProductStub);
 
@@ -123,24 +111,9 @@ public abstract class IProductRepositoryITest {
         assertThat(foundProduct.getId()).isEqualTo(productStub.getId());
     }
 
-    private Product createProductStub(String id, String sellerId) {
-        Product stub = mock(Product.class);
-        when(stub.getId()).thenReturn(id);
-        when(stub.getSellerId()).thenReturn(sellerId);
-        when(stub.getTitle()).thenReturn("title");
-        when(stub.getSuggestedPrice()).thenReturn(10d);
-        when(stub.getSaleStatus()).thenReturn(SaleStatus.ongoing);
-        when(stub.getCategory()).thenReturn(ProductCategory.other.toString());
-        return stub;
-    }
     private ProductFilter createProductFilterWithPriceRange() {
-        ProductFilter productFilter = mock(ProductFilter.class);
-        when(productFilter.getSellerId()).thenReturn("");
-        when(productFilter.getTitle()).thenReturn("");
-        when(productFilter.getCategory()).thenReturn("");
-        when(productFilter.getMinPrice()).thenReturn(0d);
-        when(productFilter.getMaxPrice()).thenReturn(Double.MAX_VALUE);
-        return productFilter;
+        return new ProductFilter(SELLER_ID, null, null, 50d, Double.MAX_VALUE);
     }
+
     protected abstract IProductRepository createRepository();
 }
