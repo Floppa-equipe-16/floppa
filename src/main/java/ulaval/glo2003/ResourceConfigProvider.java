@@ -11,7 +11,6 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import ulaval.glo2003.api.HealthResource;
 import ulaval.glo2003.api.LostResource;
-import ulaval.glo2003.api.RootResource;
 import ulaval.glo2003.api.exceptionMappers.NotFoundExceptionMapper;
 import ulaval.glo2003.api.exceptionMappers.ParamExceptionMapper;
 import ulaval.glo2003.api.offer.OfferResource;
@@ -53,13 +52,12 @@ public class ResourceConfigProvider {
 
         return new ResourceConfig()
                 .register(new HealthResource(client))
-                .register(new LostResource())
-                .register(new RootResource())
+                .register(LostResource.class)
                 .register(new SellerResource(sellingService))
                 .register(new ProductResource(sellingService))
                 .register(new OfferResource(sellingService))
-                .register(new ParamExceptionMapper())
-                .register(new NotFoundExceptionMapper())
+                .register(ParamExceptionMapper.class)
+                .register(NotFoundExceptionMapper.class)
                 .register(JacksonFeature.class);
     }
 
