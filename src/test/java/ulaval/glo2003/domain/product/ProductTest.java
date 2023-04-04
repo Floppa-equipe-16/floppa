@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import ulaval.glo2003.domain.offer.Offer;
+import ulaval.glo2003.utils.ProductUtils;
 
 public class ProductTest {
 
@@ -19,7 +20,7 @@ public class ProductTest {
 
     @BeforeEach
     public void setUp() {
-        product = ProductTestUtils.createProduct();
+        product = ProductUtils.createProduct();
     }
 
     @Test
@@ -42,7 +43,7 @@ public class ProductTest {
 
     @Test
     public void canCompareIdenticalProducts() {
-        Product identicalProduct = ProductTestUtils.createProduct();
+        Product identicalProduct = ProductUtils.createProduct();
 
         assertThat(product).isEqualTo(identicalProduct);
     }
@@ -51,13 +52,13 @@ public class ProductTest {
     public void canCompareDifferentProducts() {
         Product differentProduct = new Product(
                 "ABC",
-                ProductTestUtils.SELLER_ID,
-                ProductTestUtils.TITLE,
-                ProductTestUtils.CREATED_AT,
-                ProductTestUtils.DESCRIPTION,
-                ProductTestUtils.SUGGESTED_PRICE,
-                ProductTestUtils.SALE_STATUS,
-                ProductTestUtils.CATEGORY);
+                ProductUtils.SELLER_ID,
+                ProductUtils.TITLE,
+                ProductUtils.CREATED_AT,
+                ProductUtils.DESCRIPTION,
+                ProductUtils.SUGGESTED_PRICE,
+                ProductUtils.SALE_STATUS,
+                ProductUtils.CATEGORY);
 
         assertThat(product).isNotEqualTo(differentProduct);
     }

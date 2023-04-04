@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import ulaval.glo2003.domain.product.Product;
+import ulaval.glo2003.utils.SellerUtils;
 
 public class SellerTest {
 
@@ -19,7 +20,7 @@ public class SellerTest {
 
     @BeforeEach
     public void setUp() {
-        seller = SellerTestUtils.createSeller();
+        seller = SellerUtils.createSeller();
 
         doReturn("id-test").when(productStub).getId();
     }
@@ -50,7 +51,7 @@ public class SellerTest {
 
     @Test
     public void canCompareIdenticalSellers() {
-        Seller identicalSeller = SellerTestUtils.createSeller();
+        Seller identicalSeller = SellerUtils.createSeller();
 
         assertThat(seller).isEqualTo(identicalSeller);
     }
