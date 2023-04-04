@@ -65,7 +65,7 @@ public class SellerUtils {
         response.bio = BIO;
         response.id = ID;
         response.createdAt = CREATED_AT;
-        response.products = new ArrayList<ProductResponse>();
+        response.products = new ArrayList<>();
         response.products.add(ProductUtils.createProductResponse());
 
         return response;
