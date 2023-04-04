@@ -18,9 +18,7 @@ public class UsersCreateOffersTest extends ApiTest {
     private static final String BUYER_USERNAME = "Bobi";
 
     @BeforeEach
-    @Override
     public void setUp() throws Exception {
-        super.setUp();
         String sellerId = sellingService.createSeller(SellerTestUtils.createSellerRequest());
         productId = sellingService.createProduct(sellerId, ProductTestUtils.createProductRequest());
     }

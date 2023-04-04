@@ -16,9 +16,7 @@ public class UsersCreateProductsTest extends ApiTest {
     private String sellerId;
 
     @BeforeEach
-    @Override
     public void setUp() throws Exception {
-        super.setUp();
         sellerId = sellingService.createSeller(SellerTestUtils.createSellerRequest());
     }
 
