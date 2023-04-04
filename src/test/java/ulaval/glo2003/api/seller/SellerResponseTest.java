@@ -89,7 +89,7 @@ public class SellerResponseTest {
     public void sellerResponseNotEqualsToSellerResponseWhenProductsDiff() {
         SellerResponse newSellerResponse = SellerUtils.createSellerResponse();
 
-        sellerResponse.products = new ArrayList<ProductResponse>();
+        sellerResponse.products = new ArrayList<>();
 
         assertThat(sellerResponse).isNotEqualTo(newSellerResponse);
     }

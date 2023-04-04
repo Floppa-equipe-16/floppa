@@ -59,21 +59,13 @@ public class OfferUtils {
         return request;
     }
 
-    public static OfferRequest createOfferRequest2() {
-        OfferRequest request = new OfferRequest();
-        request.amount = HIGHEST_AMOUNT;
-        request.message = MESSAGE;
-
-        return request;
-    }
-
     public static OfferCollectionResponse createOfferCollectionResponse() {
         OfferCollectionResponse response = new OfferCollectionResponse();
         response.count = 2;
         response.minAmount = LOWEST_AMOUNT;
         response.maxAmount = HIGHEST_AMOUNT;
         response.avgAmount = 50d;
-        response.items = new ArrayList<OfferResponse>();
+        response.items = new ArrayList<>();
         response.items.add(createOfferResponse());
         response.items.add(createOfferResponse2());
 

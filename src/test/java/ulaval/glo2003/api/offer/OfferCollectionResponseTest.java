@@ -63,7 +63,7 @@ public class OfferCollectionResponseTest {
     @Test
     public void CollectionNotEqualsToCollectionWhenItemsDiff() {
         OfferCollectionResponse newCollection = OfferUtils.createOfferCollectionResponse();
-        newCollection.items = new ArrayList<OfferResponse>();
+        newCollection.items = new ArrayList<>();
 
         assertThat(offerCollectionResponse).isNotEqualTo(newCollection);
     }

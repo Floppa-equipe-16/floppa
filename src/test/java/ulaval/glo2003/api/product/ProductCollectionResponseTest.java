@@ -31,7 +31,7 @@ public class ProductCollectionResponseTest {
     @Test
     public void collectionNotEqualsToCollectionWhenListDiff() {
         ProductCollectionResponse newCollection = ProductUtils.createProductCollectionResponse();
-        productCollectionResponse.products = new ArrayList<ProductResponse>();
+        productCollectionResponse.products = new ArrayList<>();
 
         assertThat(productCollectionResponse).isNotEqualTo(newCollection);
     }

@@ -85,7 +85,7 @@ public class ProductUtils {
 
     public static ProductCollectionResponse createProductCollectionResponse() {
         ProductCollectionResponse response = new ProductCollectionResponse();
-        response.products = new ArrayList<ProductResponse>();
+        response.products = new ArrayList<>();
         response.products.add(createProductResponse());
         return response;
     }
