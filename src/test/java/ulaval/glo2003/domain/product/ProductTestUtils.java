@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 import java.time.Instant;
 import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.api.product.ProductResponse;
+import ulaval.glo2003.api.product.ProductSellRequest;
 
 public class ProductTestUtils {
     public static final String ID = "1";
@@ -18,6 +19,7 @@ public class ProductTestUtils {
     public static final Double SECOND_SUGGESTED_PRICE = 25d;
     public static final SaleStatus SALE_STATUS = SaleStatus.ongoing;
     public static final String CATEGORY = ProductCategory.other.toString();
+    public static final String USERNAME = "username";
 
     public static Product createProduct() {
         return new Product(ID, SELLER_ID, TITLE, CREATED_AT, DESCRIPTION, SUGGESTED_PRICE, SALE_STATUS, CATEGORY);
@@ -48,6 +50,14 @@ public class ProductTestUtils {
         request.category = CATEGORY;
         request.description = DESCRIPTION;
         request.suggestedPrice = SUGGESTED_PRICE;
+
+        return request;
+    }
+
+    public static ProductSellRequest createProductSellRequest() {
+
+        ProductSellRequest request = new ProductSellRequest();
+        request.username = USERNAME;
 
         return request;
     }
