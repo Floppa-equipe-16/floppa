@@ -9,6 +9,7 @@ import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.api.product.ProductSellRequest;
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
+import ulaval.glo2003.domain.exceptions.InvalidParamException;
 import ulaval.glo2003.domain.exceptions.MissingParamException;
 import ulaval.glo2003.domain.offer.IOfferRepository;
 import ulaval.glo2003.domain.offer.Offer;
@@ -114,6 +115,9 @@ public class SellingService {
     public String createOffer(String buyerName, String productId, OfferRequest offerRequest) {
         if (buyerName == null) {
             throw new MissingParamException("buyer name");
+        }
+        if (buyerName.isBlank()) {
+            throw new InvalidParamException("buyer name");
         }
 
         offerRequest.validate();

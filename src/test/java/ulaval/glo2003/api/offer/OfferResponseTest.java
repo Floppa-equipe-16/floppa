@@ -4,7 +4,7 @@ import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ulaval.glo2003.domain.offer.OfferTestUtils;
+import ulaval.glo2003.utils.OfferTestUtils;
 
 public class OfferResponseTest {
 
@@ -52,7 +52,7 @@ public class OfferResponseTest {
     }
 
     @Test
-    public void offerResponseNotEqualsToOfferResponseWhenCreateAtDiff() {
+    public void offerResponseNotEqualsToOfferResponseWhenCreatedAtDiff() {
         OfferResponse newOfferResponse = OfferTestUtils.createOfferResponse();
         offerResponse.createdAt = "????";
 

@@ -1,11 +1,13 @@
-package ulaval.glo2003.api.seller;
+package ulaval.glo2003.utils.equals;
 
 import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ulaval.glo2003.api.seller.SellerRequest;
+import ulaval.glo2003.api.seller.SellerResponse;
 import ulaval.glo2003.domain.seller.Seller;
-import ulaval.glo2003.domain.seller.SellerTestUtils;
+import ulaval.glo2003.utils.SellerTestUtils;
 
 public class SellerEqualsTest {
     private Seller seller;

@@ -4,6 +4,7 @@ import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ulaval.glo2003.utils.OfferTestUtils;
 
 public class OfferTest {
 
@@ -31,14 +32,7 @@ public class OfferTest {
 
     @Test
     public void canCompareDifferentOffers() {
-        otherOffer = new Offer(
-                OfferTestUtils.ID_2,
-                OfferTestUtils.PRODUCT_ID,
-                OfferTestUtils.USERNAME,
-                OfferTestUtils.LOWEST_AMOUNT,
-                OfferTestUtils.MESSAGE,
-                OfferTestUtils.CREATED_AT,
-                OfferTestUtils.SELECTED);
+        otherOffer = OfferTestUtils.createOffer2();
 
         assertThat(offer).isNotEqualTo(otherOffer);
     }

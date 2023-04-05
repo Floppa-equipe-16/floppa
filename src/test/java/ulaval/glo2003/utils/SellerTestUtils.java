@@ -1,11 +1,16 @@
-package ulaval.glo2003.domain.seller;
+package ulaval.glo2003.utils;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
+import ulaval.glo2003.domain.seller.Seller;
 
 public class SellerTestUtils {
     private static final String ID = "1";
@@ -18,6 +23,14 @@ public class SellerTestUtils {
 
     public static Seller createSeller() {
         return new Seller(ID, NAME, CREATED_AT, BIRTHDATE, EMAIL, PHONE_NUMBER, BIO);
+    }
+
+    public static ProductResponse.SellerInfo createSellerInfo() {
+        ProductResponse.SellerInfo info = new ProductResponse.SellerInfo();
+        info.name = NAME;
+        info.id = ID;
+
+        return info;
     }
 
     public static Seller createSellerStub() {
@@ -52,7 +65,16 @@ public class SellerTestUtils {
         response.bio = BIO;
         response.id = ID;
         response.createdAt = CREATED_AT;
+        response.products = new ArrayList<>();
+        response.products.add(ProductTestUtils.createProductResponse());
 
         return response;
+    }
+
+    public static SellerRequest createSellerRequestInvalidBirthdateTooYoung() {
+        SellerRequest request = createSellerRequest();
+        request.birthdate = LocalDate.now().format(DateTimeFormatter.ISO_DATE);
+
+        return request;
     }
 }

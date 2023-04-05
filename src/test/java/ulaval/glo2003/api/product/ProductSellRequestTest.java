@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.domain.exceptions.MissingParamException;
-import ulaval.glo2003.domain.product.ProductTestUtils;
+import ulaval.glo2003.utils.ProductTestUtils;
 
 public class ProductSellRequestTest {
     private ProductSellRequest productSellRequest;

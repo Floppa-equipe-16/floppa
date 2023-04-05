@@ -1,11 +1,13 @@
-package ulaval.glo2003.api.product;
+package ulaval.glo2003.utils.equals;
 
 import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ulaval.glo2003.api.product.ProductRequest;
+import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.domain.product.Product;
-import ulaval.glo2003.domain.product.ProductTestUtils;
+import ulaval.glo2003.utils.ProductTestUtils;
 
 public class ProductEqualsTest {
 

@@ -18,16 +18,17 @@ import ulaval.glo2003.domain.exceptions.MissingParamException;
 import ulaval.glo2003.domain.offer.IOfferRepository;
 import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.offer.OfferFactory;
-import ulaval.glo2003.domain.offer.OfferTestUtils;
 import ulaval.glo2003.domain.product.*;
 import ulaval.glo2003.domain.seller.ISellerRepository;
 import ulaval.glo2003.domain.seller.Seller;
 import ulaval.glo2003.domain.seller.SellerFactory;
-import ulaval.glo2003.domain.seller.SellerTestUtils;
 import ulaval.glo2003.service.OfferMapper;
 import ulaval.glo2003.service.ProductMapper;
 import ulaval.glo2003.service.SellerMapper;
 import ulaval.glo2003.service.SellingService;
+import ulaval.glo2003.utils.OfferTestUtils;
+import ulaval.glo2003.utils.ProductTestUtils;
+import ulaval.glo2003.utils.SellerTestUtils;
 
 public abstract class ISellingServiceITest {
     private static final String SELLER_ID = "SELLER";

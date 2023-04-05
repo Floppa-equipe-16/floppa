@@ -1,5 +1,7 @@
-package ulaval.glo2003.api.offer;
+package ulaval.glo2003.utils.equals;
 
+import ulaval.glo2003.api.offer.OfferRequest;
+import ulaval.glo2003.api.offer.OfferResponse;
 import ulaval.glo2003.domain.offer.Offer;
 
 public class OfferEquals {

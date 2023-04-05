@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import ulaval.glo2003.domain.offer.Offer;
+import ulaval.glo2003.utils.ProductTestUtils;
 
 public class ProductTest {
 
@@ -49,15 +50,7 @@ public class ProductTest {
 
     @Test
     public void canCompareDifferentProducts() {
-        Product differentProduct = new Product(
-                "ABC",
-                ProductTestUtils.SELLER_ID,
-                ProductTestUtils.TITLE,
-                ProductTestUtils.CREATED_AT,
-                ProductTestUtils.DESCRIPTION,
-                ProductTestUtils.SUGGESTED_PRICE,
-                ProductTestUtils.SALE_STATUS,
-                ProductTestUtils.CATEGORY);
+        Product differentProduct = ProductTestUtils.createProduct2();
 
         assertThat(product).isNotEqualTo(differentProduct);
     }

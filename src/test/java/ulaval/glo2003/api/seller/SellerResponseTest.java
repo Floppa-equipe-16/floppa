@@ -2,9 +2,10 @@ package ulaval.glo2003.api.seller;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ulaval.glo2003.domain.seller.SellerTestUtils;
+import ulaval.glo2003.utils.SellerTestUtils;
 
 public class SellerResponseTest {
 
@@ -79,6 +80,15 @@ public class SellerResponseTest {
     public void sellerResponseNotEqualsToSellerResponseWhenCreateAtDiff() {
         SellerResponse newSellerResponse = SellerTestUtils.createSellerResponse();
         sellerResponse.createdAt = "???";
+
+        assertThat(sellerResponse).isNotEqualTo(newSellerResponse);
+    }
+
+    @Test
+    public void sellerResponseNotEqualsToSellerResponseWhenProductsDiff() {
+        SellerResponse newSellerResponse = SellerTestUtils.createSellerResponse();
+
+        sellerResponse.products = new ArrayList<>();
 
         assertThat(sellerResponse).isNotEqualTo(newSellerResponse);
     }

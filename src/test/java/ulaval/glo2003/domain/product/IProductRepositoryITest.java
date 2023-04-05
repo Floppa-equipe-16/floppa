@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ulaval.glo2003.utils.ProductTestUtils;
 
 public abstract class IProductRepositoryITest {
     public static final String SELLER_ID = "SELLER";
@@ -21,7 +22,7 @@ public abstract class IProductRepositoryITest {
     @BeforeEach
     public void setUp() {
         product = ProductTestUtils.createProduct();
-        otherProduct = ProductTestUtils.createSecondProduct();
+        otherProduct = ProductTestUtils.createProduct2();
     }
 
     @AfterEach

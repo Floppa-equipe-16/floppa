@@ -1,11 +1,14 @@
-package ulaval.glo2003.domain.offer;
+package ulaval.glo2003.utils;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import ulaval.glo2003.api.offer.OfferCollectionResponse;
 import ulaval.glo2003.api.offer.OfferRequest;
 import ulaval.glo2003.api.offer.OfferResponse;
+import ulaval.glo2003.domain.offer.Offer;
 
 public class OfferTestUtils {
     public static final String ID = "1";
@@ -23,7 +26,7 @@ public class OfferTestUtils {
         return new Offer(ID, PRODUCT_ID, USERNAME, LOWEST_AMOUNT, MESSAGE, CREATED_AT, SELECTED);
     }
 
-    public static Offer createSecondOffer() {
+    public static Offer createOffer2() {
         return new Offer(ID_2, PRODUCT_ID, USERNAME, HIGHEST_AMOUNT, MESSAGE, CREATED_AT, SELECTED);
     }
 
@@ -57,7 +60,25 @@ public class OfferTestUtils {
         return request;
     }
 
+    public static OfferCollectionResponse createOfferCollectionResponse() {
+        OfferCollectionResponse response = new OfferCollectionResponse();
+        response.count = 2;
+        response.minAmount = LOWEST_AMOUNT;
+        response.maxAmount = HIGHEST_AMOUNT;
+        response.avgAmount = 50d;
+        response.items = new ArrayList<>();
+        response.items.add(createOfferResponse());
+        response.items.add(createOfferResponse2());
+
+        return response;
+    }
+
     public static OfferResponse createOfferResponse() {
+
         return new OfferResponse(createOffer());
+    }
+
+    public static OfferResponse createOfferResponse2() {
+        return new OfferResponse(createOffer2());
     }
 }

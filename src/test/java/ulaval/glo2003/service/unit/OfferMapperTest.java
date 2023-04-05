@@ -1,4 +1,4 @@
-package ulaval.glo2003.service.unit;
+package ulaval.glo2003.service;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.*;
@@ -9,12 +9,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import ulaval.glo2003.api.offer.OfferCollectionResponse;
-import ulaval.glo2003.api.offer.OfferEquals;
 import ulaval.glo2003.api.offer.OfferRequest;
 import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.offer.OfferFactory;
-import ulaval.glo2003.domain.offer.OfferTestUtils;
-import ulaval.glo2003.service.OfferMapper;
+import ulaval.glo2003.utils.OfferTestUtils;
+import ulaval.glo2003.utils.equals.OfferEquals;
 
 class OfferMapperTest {
 

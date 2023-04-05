@@ -1,6 +1,7 @@
 package ulaval.glo2003.api.seller;
 
 import java.util.List;
+import java.util.Objects;
 import ulaval.glo2003.api.product.ProductResponse;
 
 public class SellerResponse {
@@ -12,6 +13,8 @@ public class SellerResponse {
     public String phoneNumber;
     public String bio;
     public List<ProductResponse> products;
+
+    public SellerResponse() {}
 
     @Override
     public boolean equals(Object o) {
@@ -25,13 +28,14 @@ public class SellerResponse {
         } else return false;
     }
 
-    private boolean isEqualsTo(SellerResponse sellerResponse) {
-        return name.equals(sellerResponse.name)
-                && birthdate.equals(sellerResponse.birthdate)
-                && email.equals(sellerResponse.email)
-                && phoneNumber.equals(sellerResponse.phoneNumber)
-                && bio.equals(sellerResponse.bio)
-                && id.equals(sellerResponse.id)
-                && createdAt.equals(sellerResponse.createdAt);
+    private boolean isEqualsTo(SellerResponse response) {
+        return Objects.equals(name, response.name)
+                && Objects.equals(birthdate, response.birthdate)
+                && Objects.equals(email, response.email)
+                && Objects.equals(phoneNumber, response.phoneNumber)
+                && Objects.equals(bio, response.bio)
+                && Objects.equals(id, response.id)
+                && Objects.equals(createdAt, response.createdAt)
+                && Objects.equals(products, response.products);
     }
 }

@@ -7,14 +7,14 @@ import static org.mockito.Mockito.mock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import ulaval.glo2003.api.seller.SellerEquals;
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
 import ulaval.glo2003.domain.seller.Seller;
 import ulaval.glo2003.domain.seller.SellerFactory;
-import ulaval.glo2003.domain.seller.SellerTestUtils;
 import ulaval.glo2003.service.ProductMapper;
 import ulaval.glo2003.service.SellerMapper;
+import ulaval.glo2003.utils.SellerTestUtils;
+import ulaval.glo2003.utils.equals.SellerEquals;
 
 class SellerMapperTest {
 

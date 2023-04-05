@@ -1,11 +1,13 @@
-package ulaval.glo2003.api.offer;
+package ulaval.glo2003.utils.equals;
 
 import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ulaval.glo2003.api.offer.OfferRequest;
+import ulaval.glo2003.api.offer.OfferResponse;
 import ulaval.glo2003.domain.offer.Offer;
-import ulaval.glo2003.domain.offer.OfferTestUtils;
+import ulaval.glo2003.utils.OfferTestUtils;
 
 public class OfferEqualsTest {
 

@@ -4,7 +4,8 @@ import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ulaval.glo2003.domain.product.ProductTestUtils;
+import ulaval.glo2003.api.offer.OfferCollectionResponse;
+import ulaval.glo2003.utils.ProductTestUtils;
 
 public class ProductResponseTest {
 
@@ -71,6 +72,22 @@ public class ProductResponseTest {
     public void productResponseNotEqualsToProductResponseWhenSuggestedPriceDiff() {
         ProductResponse newProductResponse = ProductTestUtils.createProductResponse();
         productResponse.suggestedPrice = 1d;
+
+        assertThat(productResponse).isNotEqualTo(newProductResponse);
+    }
+
+    @Test
+    public void productResponseNotEqualsToProductResponseWhenSellerDiff() {
+        ProductResponse newProductResponse = ProductTestUtils.createProductResponse();
+        productResponse.seller = new ProductResponse.SellerInfo();
+
+        assertThat(productResponse).isNotEqualTo(newProductResponse);
+    }
+
+    @Test
+    public void productResponseNotEqualsToProductResponseWhenOffersDiff() {
+        ProductResponse newProductResponse = ProductTestUtils.createProductResponse();
+        productResponse.offers = new OfferCollectionResponse();
 
         assertThat(productResponse).isNotEqualTo(newProductResponse);
     }

@@ -1,4 +1,4 @@
-package ulaval.glo2003.domain.infrastructure.mongo;
+package ulaval.glo2003.utils;
 
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
