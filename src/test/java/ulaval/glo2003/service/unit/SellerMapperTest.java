@@ -22,16 +22,13 @@ class SellerMapperTest {
     private ProductMapper productMapper = mock(ProductMapper.class);
 
     @Mock
-    private OfferMapper offerMapper = mock(OfferMapper.class);
-
-    @Mock
     private SellerFactory factory = mock(SellerFactory.class);
 
     private SellerMapper mapper;
 
     @BeforeEach
     public void setUp() {
-        mapper = new SellerMapper(factory, productMapper, offerMapper);
+        mapper = new SellerMapper(factory, productMapper);
     }
 
     @Test

@@ -8,12 +8,10 @@ import ulaval.glo2003.domain.seller.SellerFactory;
 public class SellerMapper {
     private final SellerFactory factory;
     private final ProductMapper productMapper;
-    private final OfferMapper offerMapper;
 
-    public SellerMapper(SellerFactory factory, ProductMapper productMapper, OfferMapper offerMapper) {
+    public SellerMapper(SellerFactory factory, ProductMapper productMapper) {
         this.factory = factory;
         this.productMapper = productMapper;
-        this.offerMapper = offerMapper;
     }
 
     public Seller requestToSeller(SellerRequest request) {

@@ -24,7 +24,7 @@ public class OfferTestUtils {
     }
 
     public static Offer createSecondOffer() {
-        return new Offer(ID_2, PRODUCT_ID, USERNAME, HIGHEST_AMOUNT, MESSAGE, CREATED_AT);
+        return new Offer(ID_2, PRODUCT_ID, USERNAME, HIGHEST_AMOUNT, MESSAGE, CREATED_AT, SELECTED);
     }
 
     public static Offer createOfferStub() {
