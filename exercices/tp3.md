@@ -15,11 +15,13 @@
 ### Tests
 #### 1. Quel proportion de temps passez-vous à faire l'implémentation du code fonctionnel versus celui des tests? Est-ce que cette proportion évolue au fil du temps? Pourquoi?
     La proportion était de 1/2 tests et 1/2 code fonctionnel. Cette proportion évolue au fil du temps car plus le projet
-    prend de l'envergure, plus une petite implémentation non fonctionnelle peut avoir un impact sur la fonctionnalité du projet.
+    prend de l'envergure, plus une petite implémentation non fonctionnelle peut avoir un impact sur la fonctionnalité 
+    du projet.
 
 
 #### 2. L'implémentation de tests augmente naturellement la charge de travail. Comment cela a-t-il affecté votre processus? (ex : taille des issues/PRs, temps d'implémentation, planification, etc.)
-    L'implémentation de tests ont augmenté le nombre de issue car on séparait le code fonctionnel avec l'implémentation des tests. 
+    L'implémentation de tests ont augmenté le nombre de issue car on séparait le code fonctionnel avec l'implémentation
+    des tests. 
     Cela a aussi augmenté le temps d'implémentation car il fallait implémenter les tests en même temps que le code fonctionnel.
     La planification a aussi été affecté car il fallait planifier le temps nécessaire pour implémenter les tests.
 #### 3. Avez-vous plus confiance en votre code maintenant que vous avez des tests? Justifiez.
@@ -31,4 +33,33 @@
     - Implémenter des tests d'intégration pour les fonctions qui ne sont pas testées.
     - Implémenter des tests end to end pour chaque routes.
 
+## Planification du travail sur Github
+### Github Project
+![g1](https://cdn.discordapp.com/attachments/1069318680736964628/1093216282641440878/image.png)
+### Milestone
+![m1](https://cdn.discordapp.com/attachments/1069318680736964628/1093218674766249994/image.png)
+![m1](https://cdn.discordapp.com/attachments/1069318680736964628/1093218614817062964/image.png)
+### Issues
+#### Issue # 1
+![i1](https://cdn.discordapp.com/attachments/1069318680736964628/1093219000181334146/image.png)
+![i1](https://cdn.discordapp.com/attachments/1069318680736964628/1093219249608208504/image.png)
+![i1](https://cdn.discordapp.com/attachments/1069318680736964628/1093219329685856377/image.png)
 
+#### Issue # 2
+![i2](https://cdn.discordapp.com/attachments/1069318680736964628/1093219576973643787/image.png)
+
+#### Issue # 3
+![i3](https://cdn.discordapp.com/attachments/1069318680736964628/1093219907958751353/image.png)
+
+### Pull Requests
+#### Pull request # 1
+![pr1](https://cdn.discordapp.com/attachments/1069318680736964628/1093220118915448872/image.png)
+![pr1](https://cdn.discordapp.com/attachments/1069318680736964628/1093221986785837157/image.png)
+#### Pull request # 2
+![pr2](https://cdn.discordapp.com/attachments/1069318680736964628/1093220225182351440/image.png)
+![pr2](https://cdn.discordapp.com/attachments/1069318680736964628/1093222209037811803/image.png)
+#### Pull request # 3
+![pr3](https://cdn.discordapp.com/attachments/1069318680736964628/1093222823423651850/image.png)
+![pr3](https://cdn.discordapp.com/attachments/1069318680736964628/1093222876850696292/image.png)
+### Arbre de commits
+![a1](https://cdn.discordapp.com/attachments/1069318680736964628/1093217842586992731/image.png)
