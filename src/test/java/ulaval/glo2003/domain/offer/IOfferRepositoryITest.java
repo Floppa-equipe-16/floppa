@@ -2,28 +2,22 @@ package ulaval.glo2003.domain.offer;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import jakarta.ws.rs.NotFoundException;
 import java.util.List;
 import org.junit.jupiter.api.*;
-import org.mockito.Mock;
 
 public abstract class IOfferRepositoryITest {
 
-    public static final String ID = "1";
     private static final String PRODUCT_ID = "PRODUCT";
 
     private final IOfferRepository repository = createRepository();
 
-    @Mock
-    private Offer offerStub = mock(Offer.class);
+    private Offer offer;
 
     @BeforeEach
     public void setUp() {
-        when(offerStub.getId()).thenReturn(ID);
-        when(offerStub.getProductId()).thenReturn(PRODUCT_ID);
+        offer = OfferTestUtils.createOffer();
     }
 
     @AfterEach
@@ -33,24 +27,22 @@ public abstract class IOfferRepositoryITest {
 
     @Test
     public void canFindById() {
-        repository.save(offerStub);
+        repository.save(offer);
 
-        Offer foundOffer = repository.findById(offerStub.getId());
+        Offer foundOffer = repository.findById(offer.getId());
 
-        assertThat(foundOffer.getId()).isEqualTo(offerStub.getId());
+        assertThat(foundOffer.getId()).isEqualTo(offer.getId());
     }
 
     @Test
     public void findByIdThrowsWhenIdIsAbsent() {
-        assertThrows(NotFoundException.class, () -> repository.findById(offerStub.getId()));
+        assertThrows(NotFoundException.class, () -> repository.findById(offer.getId()));
     }
 
     @Test
     public void canFindAllByProductId() {
-        Offer otherOfferStub = mock(Offer.class);
-        when(otherOfferStub.getId()).thenReturn("123");
-        when(otherOfferStub.getProductId()).thenReturn(PRODUCT_ID);
-        repository.save(offerStub);
+        Offer otherOfferStub = OfferTestUtils.createSecondOffer();
+        repository.save(offer);
         repository.save(otherOfferStub);
 
         List<Offer> offers = repository.findAllByProductId(PRODUCT_ID);
@@ -67,12 +59,12 @@ public abstract class IOfferRepositoryITest {
 
     @Test
     public void canSaveWhenOfferAlreadyExists() {
-        repository.save(offerStub);
+        repository.save(offer);
+        repository.save(offer);
 
-        repository.save(offerStub);
+        Offer foundOffer = repository.findById(offer.getId());
 
-        Offer foundOffer = repository.findById(offerStub.getId());
-        assertThat(foundOffer.getId()).isEqualTo(offerStub.getId());
+        assertThat(foundOffer.getId()).isEqualTo(offer.getId());
     }
 
     protected abstract IOfferRepository createRepository();
