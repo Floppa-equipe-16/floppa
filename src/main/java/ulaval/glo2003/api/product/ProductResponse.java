@@ -2,7 +2,7 @@ package ulaval.glo2003.api.product;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import ulaval.glo2003.api.offer.OfferCollectionResponse;
-import ulaval.glo2003.domain.offer.Offer;
+import ulaval.glo2003.api.offer.SelectedOfferResponse;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProductResponse {
@@ -22,7 +22,7 @@ public class ProductResponse {
 
     public SellerInfo seller;
     public OfferCollectionResponse offers;
-    public Offer selectedOffer;
+    public SelectedOfferResponse selectedOffer;
 
     public void addSellerInfo(String id, String name) {
         seller = new SellerInfo();

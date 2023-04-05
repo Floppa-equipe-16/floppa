@@ -1,6 +1,5 @@
 package ulaval.glo2003.service;
 
-import jakarta.ws.rs.NotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import ulaval.glo2003.api.offer.OfferRequest;
@@ -11,13 +10,11 @@ import ulaval.glo2003.api.product.ProductSellRequest;
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
 import ulaval.glo2003.domain.exceptions.MissingParamException;
-import ulaval.glo2003.domain.exceptions.NotPermittedException;
 import ulaval.glo2003.domain.offer.IOfferRepository;
 import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.product.IProductRepository;
 import ulaval.glo2003.domain.product.Product;
 import ulaval.glo2003.domain.product.ProductFilter;
-import ulaval.glo2003.domain.product.SaleStatus;
 import ulaval.glo2003.domain.seller.ISellerRepository;
 import ulaval.glo2003.domain.seller.Seller;
 
@@ -62,18 +59,7 @@ public class SellingService {
     private void addProductsAndSelectedOfferToSeller(Seller seller) {
         productRepository.findAllBySellerId(seller.getId()).forEach(product -> {
             addOffersToProduct(product);
-            if (product.getSaleStatus() == SaleStatus.sold) {
-                addSelectedOfferToProduct(product);
-            }
             seller.addProduct(product);
-        });
-    }
-
-    private void addSelectedOfferToProduct(Product product) {
-        offerRepository.findAllByProductId(product.getId()).forEach(offer -> {
-            if (offer.isSelected()) {
-                product.setSelectedOffer(offer);
-            }
         });
     }
 
@@ -143,28 +129,14 @@ public class SellingService {
         if (sellerId == null) throw new MissingParamException("seller id");
         if (productId == null) throw new MissingParamException("product id");
         productRequest.validate();
+
         sellerRepository.findById(sellerId);
         Product product = getProductWithOffers(productId);
 
-        if (product.getSaleStatus() == SaleStatus.sold) {
-            throw new NotPermittedException("product has already been sold");
-        }
-
-        var offerList = product.getOffers();
-        Offer matchingOffer = offerList.stream()
-                .filter(offer -> productRequest.username.equals(offer.getUsername()))
-                .findFirst()
-                .orElse(null);
-        if (matchingOffer == null) {
-            throw new NotFoundException(
-                    String.format("Offer with username: '%s' has no offer on this product", productRequest.username));
-        }
-        product.setSaleStatus(SaleStatus.sold);
-        product.setSelectedOffer(matchingOffer);
-        matchingOffer.setSelected(true);
+        product.sellTo(productRequest.username);
 
         productRepository.save(product);
-        offerRepository.save(matchingOffer);
+        offerRepository.save(product.getSelectedOffer());
     }
 
     private boolean canAddOfferToProduct(String productId, Offer offer) {

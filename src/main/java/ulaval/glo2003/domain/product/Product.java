@@ -1,7 +1,10 @@
 package ulaval.glo2003.domain.product;
 
+import jakarta.ws.rs.NotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import ulaval.glo2003.domain.exceptions.NotPermittedException;
 import ulaval.glo2003.domain.offer.Offer;
 
 public class Product {
@@ -13,8 +16,7 @@ public class Product {
     private final Double suggestedPrice;
     private final String category;
     private SaleStatus saleStatus;
-    private final ArrayList<Offer> offers;
-    private Offer selectedOffer;
+    private final List<Offer> offers;
 
     public Product(
             String id,
@@ -34,7 +36,6 @@ public class Product {
         this.category = category;
         this.saleStatus = saleStatus;
         this.offers = new ArrayList<>();
-        this.selectedOffer = null;
     }
 
     public Product(Product that) {
@@ -49,7 +50,6 @@ public class Product {
 
         offers = new ArrayList<>();
         that.getOffers().forEach(offer -> offers.add(new Offer(offer)));
-        selectedOffer = that.getSelectedOffer();
     }
 
     public String getSellerId() {
@@ -76,6 +76,10 @@ public class Product {
         return saleStatus;
     }
 
+    public boolean isSold() {
+        return saleStatus == SaleStatus.sold;
+    }
+
     public String getId() {
         return id;
     }
@@ -84,8 +88,25 @@ public class Product {
         return createdAt;
     }
 
-    public void setSaleStatus(SaleStatus saleStatus) {
-        this.saleStatus = saleStatus;
+    public void sellTo(String username) {
+        if (isSold()) {
+            throw new NotPermittedException("product has already been sold");
+        }
+
+        Optional<Offer> matchingOffer = findUserOffer(username);
+        if (matchingOffer.isEmpty()) {
+            throw new NotFoundException(
+                    String.format("Offer with username: '%s' has no offer on this product", username));
+        }
+
+        this.saleStatus = SaleStatus.sold;
+        matchingOffer.get().setSelected(true);
+    }
+
+    private Optional<Offer> findUserOffer(String username) {
+        return offers.stream()
+                .filter(offer -> username.equals(offer.getUsername()))
+                .findFirst();
     }
 
     public List<Offer> getOffers() {
@@ -93,11 +114,10 @@ public class Product {
     }
 
     public Offer getSelectedOffer() {
-        return selectedOffer;
-    }
-
-    public void setSelectedOffer(Offer selectedOffer) {
-        this.selectedOffer = selectedOffer;
+        if (saleStatus == SaleStatus.sold) {
+            return offers.stream().filter(Offer::isSelected).findFirst().orElse(null);
+        }
+        return null;
     }
 
     public void addOffer(Offer offer) {

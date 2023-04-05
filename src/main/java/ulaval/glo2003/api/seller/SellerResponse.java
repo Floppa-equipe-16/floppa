@@ -1,7 +1,6 @@
 package ulaval.glo2003.api.seller;
 
 import java.util.List;
-import ulaval.glo2003.api.offer.SelectedOfferResponse;
 import ulaval.glo2003.api.product.ProductResponse;
 
 public class SellerResponse {
@@ -13,7 +12,6 @@ public class SellerResponse {
     public String phoneNumber;
     public String bio;
     public List<ProductResponse> products;
-    public List<SelectedOfferResponse> selectedOffer;
 
     @Override
     public boolean equals(Object o) {
