@@ -1,60 +1,33 @@
 # TP3
-## User Stories
+## Architecture
+### Description du projet
+![g1](https://cdn.discordapp.com/attachments/1069318680736964628/1093283087590363206/diag.drawio_4.png)
 
-### Évaluation de vendeur
+SellingService est le seul lien de l'api vers le domaine. Celui-ci est initialisé par le ResourceConfigProvider pour choisir entre
+les Repository InMemory et Mongo. Il permet de traiter les requêtes de l'api en manipulant les différentes classes du domaine.
+Chaque entité du domaine (Seller, Offer, Product) est supporté par les classes suivantes :
+- Factory : Gère la logique de création des instances de l'entité
+- Validator: Effectue la validation des attributs des entités
+- Repository: Gère la persistance des entités. Pour les inMemoryRepository, on sauvegarde les entités dans la mémoire. 
+  Pour les MongoRepository, on sauvegarde les entités dans la base de données.
+- Mapper: Gère la conversion des entités du domaine en entités de l'api (Request, Response) et vice versa.
 
-#### Description
+Ensuite, chaque entité du domaine est représentée par une classe Resource dans l'api qui capte la requête et la redirige vers le SellingService.
+### 3 Problèmes rencontrés
+##### 1. Problème des validations dans les constructeurs
+Nous avons modifié les validations pour quil soient fait dans un factory pour que les tests soient 
+plus faciles à écrire. En même temps, ça nous a permis de réduire la complexité des objets du domaine
+##### 2. Problème d'initialisation des Repository
+Nous avons ajouté un ResourceConfigProvider pour choisir entre les Repository Mongo Atlas ou local. 
+#### 3. Problème conversion des Request en entités du domaine
+Nous avons ajouté des mappers pour chaque entité du domaine pour convertir les Request en entités du domaine 
+et vice-versa. Il y avait beaucoup de couplage et de logique dans les Responses pour des classes qui étaient censées être des DTO. 
 
-En tant qu'acheteur, je peux évaluer les vendeurs afin de donner mon opinion sur leur service après avoir acheté un produit.
+![g1](https://cdn.discordapp.com/attachments/1069318680736964628/1093234477746110554/diag.drawio_1.png)
+![g1](https://cdn.discordapp.com/attachments/1069318680736964628/1093234477947420732/diag.drawio_2.png)
+![g1](https://cdn.discordapp.com/attachments/1069318680736964628/1093234478207488010/diag.drawio_3.png)
 
-#### Critères de succès
 
-- L'acheteur du produit est spécifié.
-- L'acheteur est bel et bien le détenteur de l'offre sélectionné.
-- Le message de l'évaluation est d'au moins 100 caractères.
-- L'évaluation possède une date de création non modifiable.
-- Le vendeur et le produit doivent être spécifiés.
-- L'acheteur ne peut pas avoir déjà évalué le vendeur pour le même produit.
-
-### Notification du vendeur par courriel
-
-#### Description
-
-En tant que vendeur, je suis averti par courriel lorsqu'une nouvelle offre est créée pour un de mes produits afin de pouvoir la consulter.
-
-#### Critères de succès
-
-- Le courriel doit être envoyé au vendeur du produit.
-- Le courriel doit contenir le nom du produit.
-- Le courriel doit contenir le nom de l'acheteur.
-- Le courriel doit contenir le prix de l'offre.
-
-### Historique d'achats
-
-#### Description
-
-En tant qu'acheteur, je peux consulter l'historique de mes achats afin de pouvoir voir les produits que j'ai achetés.
-
-#### Critères de succès
-
-- Je vois l'information de base du produit.
-- Je vois le prix du produit à laquelle il a été acheté.
-- Je vois quelques statistiques sur les achats (montant total, moyenne, prix minimum, prix maximum).
-- Le prix minimum des statistiques est null si aucun produit n'a été acheté.
-- Le prix maximum des statistiques est null si aucun produit n'a été acheté.
-- La moyenne des statistiques est null si aucun produit n'a été acheté.
-
-### Classement des vendeurs
-
-#### Description
-En tant qu'utilisateur, je peux consulter les meilleurs vendeurs avec leurs scores respectifs
-
-#### Critères de succès
-
-- Je vois les informations de base du vendeur.
-- Je vois le score du vendeur.
-- Je vois les vendeurs classés par score décroissant.
-- Je vois le nombre de vendeurs demandé.
 
 
 ## Rétrospective sur le processus
@@ -121,3 +94,59 @@ En tant qu'utilisateur, je peux consulter les meilleurs vendeurs avec leurs scor
 ![pr3](https://cdn.discordapp.com/attachments/1069318680736964628/1093222876850696292/image.png)
 ### Arbre de commits
 ![a1](https://cdn.discordapp.com/attachments/1069318680736964628/1093217842586992731/image.png)
+## User Stories
+
+### Évaluation de vendeur
+
+#### Description
+
+En tant qu'acheteur, je peux évaluer les vendeurs afin de donner mon opinion sur leur service après avoir acheté un produit.
+
+#### Critères de succès
+
+- L'acheteur du produit est spécifié.
+- L'acheteur est bel et bien le détenteur de l'offre sélectionné.
+- Le message de l'évaluation est d'au moins 100 caractères.
+- L'évaluation possède une date de création non modifiable.
+- Le vendeur et le produit doivent être spécifiés.
+- L'acheteur ne peut pas avoir déjà évalué le vendeur pour le même produit.
+
+### Notification du vendeur par courriel
+
+#### Description
+
+En tant que vendeur, je suis averti par courriel lorsqu'une nouvelle offre est créée pour un de mes produits afin de pouvoir la consulter.
+
+#### Critères de succès
+
+- Le courriel doit être envoyé au vendeur du produit.
+- Le courriel doit contenir le nom du produit.
+- Le courriel doit contenir le nom de l'acheteur.
+- Le courriel doit contenir le prix de l'offre.
+
+### Historique d'achats
+
+#### Description
+
+En tant qu'acheteur, je peux consulter l'historique de mes achats afin de pouvoir voir les produits que j'ai achetés.
+
+#### Critères de succès
+
+- Je vois l'information de base du produit.
+- Je vois le prix du produit à laquelle il a été acheté.
+- Je vois quelques statistiques sur les achats (montant total, moyenne, prix minimum, prix maximum).
+- Le prix minimum des statistiques est null si aucun produit n'a été acheté.
+- Le prix maximum des statistiques est null si aucun produit n'a été acheté.
+- La moyenne des statistiques est null si aucun produit n'a été acheté.
+
+### Classement des vendeurs
+
+#### Description
+En tant qu'utilisateur, je peux consulter les meilleurs vendeurs avec leurs scores respectifs
+
+#### Critères de succès
+
+- Je vois les informations de base du vendeur.
+- Je vois le score du vendeur.
+- Je vois les vendeurs classés par score décroissant.
+- Je vois le nombre de vendeurs demandé.
