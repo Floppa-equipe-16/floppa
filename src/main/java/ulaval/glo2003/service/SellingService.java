@@ -6,6 +6,7 @@ import ulaval.glo2003.api.offer.OfferRequest;
 import ulaval.glo2003.api.product.ProductCollectionResponse;
 import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.api.product.ProductResponse;
+import ulaval.glo2003.api.product.ProductSellRequest;
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
 import ulaval.glo2003.domain.exceptions.MissingParamException;
@@ -51,12 +52,11 @@ public class SellingService {
 
     public SellerResponse getSeller(String sellerId) {
         Seller seller = sellerRepository.findById(sellerId);
-        addProductsToSeller(seller);
-
+        addProductsAndSelectedOfferToSeller(seller);
         return sellerMapper.sellerToResponse(seller);
     }
 
-    private void addProductsToSeller(Seller seller) {
+    private void addProductsAndSelectedOfferToSeller(Seller seller) {
         productRepository.findAllBySellerId(seller.getId()).forEach(product -> {
             addOffersToProduct(product);
             seller.addProduct(product);
@@ -123,6 +123,20 @@ public class SellingService {
             offerRepository.save(offer);
         }
         return offer.getId();
+    }
+
+    public void sellProduct(String sellerId, String productId, ProductSellRequest productRequest) {
+        if (sellerId == null) throw new MissingParamException("seller id");
+        if (productId == null) throw new MissingParamException("product id");
+        productRequest.validate();
+
+        sellerRepository.findById(sellerId);
+        Product product = getProductWithOffers(productId);
+
+        product.sellTo(productRequest.username);
+
+        productRepository.save(product);
+        offerRepository.save(product.getSelectedOffer());
     }
 
     private boolean canAddOfferToProduct(String productId, Offer offer) {
