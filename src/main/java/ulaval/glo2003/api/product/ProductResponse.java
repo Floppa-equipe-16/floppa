@@ -3,6 +3,7 @@ package ulaval.glo2003.api.product;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.Objects;
 import ulaval.glo2003.api.offer.OfferCollectionResponse;
+import ulaval.glo2003.api.offer.SelectedOfferResponse;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProductResponse {
@@ -22,6 +23,7 @@ public class ProductResponse {
 
     public SellerInfo seller;
     public OfferCollectionResponse offers;
+    public SelectedOfferResponse selectedOffer;
 
     public ProductResponse() {}
 

@@ -7,14 +7,23 @@ public class Offer {
     private final Double amount;
     private final String message;
     private final String createdAt;
+    private boolean selected;
 
-    public Offer(String id, String productId, String username, Double amount, String message, String createdAt) {
+    public Offer(
+            String id,
+            String productId,
+            String username,
+            Double amount,
+            String message,
+            String createdAt,
+            Boolean selected) {
         this.id = id;
         this.productId = productId;
         this.username = username;
         this.amount = amount;
         this.message = message;
         this.createdAt = createdAt;
+        this.selected = selected;
     }
 
     public Offer(Offer that) {
@@ -24,6 +33,7 @@ public class Offer {
         message = that.getMessage();
         id = that.getId();
         createdAt = that.getCreatedAt();
+        selected = that.isSelected();
     }
 
     public String getUsername() {
@@ -48,6 +58,14 @@ public class Offer {
 
     public String getId() {
         return id;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     @Override

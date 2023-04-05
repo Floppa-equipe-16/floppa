@@ -11,7 +11,7 @@ public class OfferFactory {
         amount = Math.round(amount * TWO_DECIMAL_ROUNDING_FACTOR) / TWO_DECIMAL_ROUNDING_FACTOR;
         String createdAt = Instant.now().toString();
 
-        Offer offer = new Offer(id, productId, username, amount, message, createdAt);
+        Offer offer = new Offer(id, productId, username, amount, message, createdAt, false);
         OfferValidator.validateParam(offer);
 
         return offer;

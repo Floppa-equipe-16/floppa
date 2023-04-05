@@ -48,4 +48,16 @@ public class ProductResource {
         ProductResponse productResponse = sellingService.getProduct(productId);
         return Response.ok().entity(productResponse).build();
     }
+
+    @POST
+    @Path("/{productId}/sell")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response sellProducts(
+            @PathParam("productId") String productId,
+            @HeaderParam("X-Seller-Id") String xSellerId,
+            ProductSellRequest productSellRequest) {
+        sellingService.sellProduct(xSellerId, productId, productSellRequest);
+        return Response.status(Response.Status.OK).build();
+    }
 }

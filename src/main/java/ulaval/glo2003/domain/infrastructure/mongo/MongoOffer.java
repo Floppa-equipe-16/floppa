@@ -14,4 +14,5 @@ public class MongoOffer {
     public Double amount;
     public String message;
     public String createdAt;
+    public Boolean selected;
 }
