@@ -14,7 +14,7 @@ import ulaval.glo2003.utils.OfferTestUtils;
 import ulaval.glo2003.utils.ProductTestUtils;
 import ulaval.glo2003.utils.SellerTestUtils;
 
-public class UsersSellProductTest extends ApiTest{
+public class UsersSellProductTest extends ApiTest {
     private String productId;
     private String sellerId;
 
@@ -26,7 +26,7 @@ public class UsersSellProductTest extends ApiTest{
     }
 
     @Test
-    public void canUsersSellProduct(){
+    public void canUsersSellProduct() {
         ProductSellRequest request = ProductTestUtils.createProductSellRequest();
 
         Response response = sellProduct(productId, sellerId, request);
@@ -36,7 +36,7 @@ public class UsersSellProductTest extends ApiTest{
     }
 
     @Test
-    public void failUsersSellProductInvalidProductId(){
+    public void failUsersSellProductInvalidProductId() {
         ProductSellRequest request = ProductTestUtils.createProductSellRequest();
 
         Response response = sellProduct("invalid", sellerId, request);
@@ -47,7 +47,7 @@ public class UsersSellProductTest extends ApiTest{
     }
 
     @Test
-    public void failUsersSellProductInvalidSellerId(){
+    public void failUsersSellProductInvalidSellerId() {
         ProductSellRequest request = ProductTestUtils.createProductSellRequest();
 
         Response response = sellProduct(productId, "invalid", request);
@@ -58,7 +58,7 @@ public class UsersSellProductTest extends ApiTest{
     }
 
     @Test
-    public void failUsersSellProductInvalidBuyerUsername(){
+    public void failUsersSellProductInvalidBuyerUsername() {
         ProductSellRequest request = ProductTestUtils.createProductSellRequest();
         request.username = "invalid";
 
@@ -70,7 +70,7 @@ public class UsersSellProductTest extends ApiTest{
     }
 
     @Test
-    public void failUsersSellProductMissingSellerId(){
+    public void failUsersSellProductMissingSellerId() {
         ProductSellRequest request = ProductTestUtils.createProductSellRequest();
 
         Response response = target("/products/{productId}/sell")
@@ -84,11 +84,11 @@ public class UsersSellProductTest extends ApiTest{
     }
 
     @Test
-    public void failUsersSellProductMissingBuyerUsername(){
+    public void failUsersSellProductMissingBuyerUsername() {
         ProductSellRequest request = ProductTestUtils.createProductSellRequest();
         request.username = null;
 
-        Response response = sellProduct(productId,sellerId,request);
+        Response response = sellProduct(productId, sellerId, request);
 
         assertThat(response.getStatus()).isEqualTo(400);
         assertMediaTypeIsJson(response);
@@ -96,32 +96,27 @@ public class UsersSellProductTest extends ApiTest{
     }
 
     @Test
-    public void failProductAlreadySold(){
+    public void failProductAlreadySold() {
         ProductSellRequest request = ProductTestUtils.createProductSellRequest();
-        sellingService.sellProduct(sellerId,productId,request);
+        sellingService.sellProduct(sellerId, productId, request);
 
-        Response response = sellProduct(productId,sellerId,request);
+        Response response = sellProduct(productId, sellerId, request);
 
         assertThat(response.getStatus()).isEqualTo(400);
         assertMediaTypeIsJson(response);
         assertThat(getErrorCode(response)).isEqualTo("NOT_PERMITTED");
     }
 
-
-
-
-    private void assertCheckProductStatusIsSold(){
-        ProductResponse response= sellingService.getProduct(productId);
-        System.out.println(response.saleStatus);
+    private void assertCheckProductStatusIsSold() {
+        ProductResponse response = sellingService.getProduct(productId);
         assertThat(response.saleStatus).isEqualTo(SaleStatus.sold.toString());
     }
 
-    private Response sellProduct(String productId, String sellerId, ProductSellRequest request){
+    private Response sellProduct(String productId, String sellerId, ProductSellRequest request) {
         return target("/products/{productId}/sell")
                 .resolveTemplate("productId", productId)
                 .request()
                 .header("X-Seller-Id", sellerId)
                 .post(Entity.entity(request, MediaType.APPLICATION_JSON));
     }
-
 }

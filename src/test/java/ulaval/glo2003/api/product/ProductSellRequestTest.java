@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import ulaval.glo2003.domain.exceptions.MissingParamException;
 import ulaval.glo2003.utils.ProductTestUtils;
 
-
 public class ProductSellRequestTest {
     private ProductSellRequest productSellRequest;
 

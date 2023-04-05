@@ -1,5 +1,10 @@
 package ulaval.glo2003.utils;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.time.Instant;
+import java.util.ArrayList;
 import ulaval.glo2003.api.product.ProductCollectionResponse;
 import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.api.product.ProductResponse;
@@ -8,12 +13,6 @@ import ulaval.glo2003.domain.product.Product;
 import ulaval.glo2003.domain.product.ProductCategory;
 import ulaval.glo2003.domain.product.ProductFilter;
 import ulaval.glo2003.domain.product.SaleStatus;
-
-import java.time.Instant;
-import java.util.ArrayList;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class ProductTestUtils {
     public static final String ID = "1";
@@ -30,7 +29,6 @@ public class ProductTestUtils {
 
     public static Product createProduct() {
         return new Product(ID, SELLER_ID, TITLE, CREATED_AT, DESCRIPTION, SUGGESTED_PRICE, SALE_STATUS, CATEGORY);
-
     }
 
     public static Product createProduct2() {
