@@ -12,7 +12,7 @@ import ulaval.glo2003.utils.OfferTestUtils;
 import ulaval.glo2003.utils.ProductTestUtils;
 import ulaval.glo2003.utils.SellerTestUtils;
 
-public class UsersCreateOffersTest extends ApiTest {
+public class CreateOffersITest extends ApiTest {
 
     private String productId;
     private static final String BUYER_USERNAME = "Bobi";
@@ -24,7 +24,7 @@ public class UsersCreateOffersTest extends ApiTest {
     }
 
     @Test
-    public void canUserCreateOfferOnProduct() {
+    public void canCreateOfferOnProduct() {
         OfferRequest offerRequest = OfferTestUtils.createOfferRequest();
 
         Response response = createOffer(offerRequest);
@@ -33,7 +33,7 @@ public class UsersCreateOffersTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateOfferOnProductMissingUsername() {
+    public void failCreateOfferOnProductMissingUsername() {
         OfferRequest offerRequest = OfferTestUtils.createOfferRequest();
 
         Response response = target("/products/{productId}/offers")
@@ -46,7 +46,7 @@ public class UsersCreateOffersTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateOfferOnProductInvalidProductId() {
+    public void failCreateOfferOnProductInvalidProductId() {
         OfferRequest offerRequest = OfferTestUtils.createOfferRequest();
 
         Response response = target("/products/{productId}/offers")
@@ -61,7 +61,7 @@ public class UsersCreateOffersTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateOfferOnProductInvalidUsername() {
+    public void failCreateOfferOnProductInvalidUsername() {
         OfferRequest offerRequest = OfferTestUtils.createOfferRequest();
 
         Response response = target("/products/{productId}/offers")
@@ -76,7 +76,7 @@ public class UsersCreateOffersTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateOfferOnProductInvalidAmount() {
+    public void failCreateOfferOnProductInvalidAmount() {
         OfferRequest offerRequest = OfferTestUtils.createOfferRequest();
         offerRequest.amount = -1d;
 
@@ -88,7 +88,7 @@ public class UsersCreateOffersTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateOfferOnProductInvalidMessage() {
+    public void failCreateOfferOnProductInvalidMessage() {
         OfferRequest offerRequest = OfferTestUtils.createOfferRequest();
         offerRequest.message = "not long enough";
 
@@ -100,7 +100,7 @@ public class UsersCreateOffersTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateOfferOnProductMissingAmount() {
+    public void failCreateOfferOnProductMissingAmount() {
         OfferRequest offerRequest = OfferTestUtils.createOfferRequest();
         offerRequest.amount = null;
 
@@ -112,7 +112,7 @@ public class UsersCreateOffersTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateOfferOnProductMissingMessage() {
+    public void failCreateOfferOnProductMissingMessage() {
         OfferRequest offerRequest = OfferTestUtils.createOfferRequest();
         offerRequest.message = null;
 

@@ -10,7 +10,7 @@ import ulaval.glo2003.domain.product.ProductFilter;
 import ulaval.glo2003.utils.ProductTestUtils;
 import ulaval.glo2003.utils.SellerTestUtils;
 
-public class UsersGetProductsFilterTest extends ApiTest {
+public class GetProductsFilterITest extends ApiTest {
 
     @BeforeEach
     public void setUp() throws Exception {

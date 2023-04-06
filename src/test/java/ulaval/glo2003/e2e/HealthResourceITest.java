@@ -6,7 +6,7 @@ import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.api.HealthResponse;
 
-public class HealthResourceTest extends ApiTest {
+public class HealthResourceITest extends ApiTest {
 
     @Test
     public void areAllServicesUp() {

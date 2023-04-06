@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.utils.SellerTestUtils;
 
-public class UsersCreateSellersTest extends ApiTest {
+public class CreateSellersITest extends ApiTest {
 
     @Test
-    public void canUserCreateSellers() {
+    public void canCreateSellers() {
 
         SellerRequest request = SellerTestUtils.createSellerRequest();
 
@@ -25,7 +25,7 @@ public class UsersCreateSellersTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateSellersInvalidName() {
+    public void failCreateSellersInvalidName() {
 
         SellerRequest request = SellerTestUtils.createSellerRequest();
         request.name = "";
@@ -38,7 +38,7 @@ public class UsersCreateSellersTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateSellersInvalidBirthdateTooYoung() {
+    public void failCreateSellersInvalidBirthdateTooYoung() {
 
         SellerRequest request = SellerTestUtils.createSellerRequestInvalidBirthdateTooYoung();
 
@@ -50,7 +50,7 @@ public class UsersCreateSellersTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateSellersInvalidEmail() {
+    public void failCreateSellersInvalidEmail() {
 
         SellerRequest request = SellerTestUtils.createSellerRequest();
         request.email = "";
@@ -63,7 +63,7 @@ public class UsersCreateSellersTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateSellersInvalidPhoneNumber() {
+    public void failCreateSellersInvalidPhoneNumber() {
 
         SellerRequest request = SellerTestUtils.createSellerRequest();
         request.phoneNumber = "123";
@@ -76,7 +76,7 @@ public class UsersCreateSellersTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateSellersInvalidBio() {
+    public void failCreateSellersInvalidBio() {
 
         SellerRequest request = SellerTestUtils.createSellerRequest();
         request.bio = "";
@@ -89,7 +89,7 @@ public class UsersCreateSellersTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateSellersMissingName() {
+    public void failCreateSellersMissingName() {
 
         SellerRequest request = SellerTestUtils.createSellerRequest();
         request.name = null;
@@ -102,7 +102,7 @@ public class UsersCreateSellersTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateSellersMissingBirthdate() {
+    public void failCreateSellersMissingBirthdate() {
 
         SellerRequest request = SellerTestUtils.createSellerRequest();
         request.birthdate = null;
@@ -115,7 +115,7 @@ public class UsersCreateSellersTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateSellersMissingEmail() {
+    public void failCreateSellersMissingEmail() {
 
         SellerRequest request = SellerTestUtils.createSellerRequest();
         request.email = null;
@@ -128,7 +128,7 @@ public class UsersCreateSellersTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateSellersMissingPhone() {
+    public void failCreateSellersMissingPhone() {
 
         SellerRequest request = SellerTestUtils.createSellerRequest();
         request.phoneNumber = null;
@@ -141,7 +141,7 @@ public class UsersCreateSellersTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateSellersMissingBio() {
+    public void failCreateSellersMissingBio() {
 
         SellerRequest request = SellerTestUtils.createSellerRequest();
         request.bio = null;

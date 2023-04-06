@@ -10,7 +10,7 @@ import ulaval.glo2003.utils.OfferTestUtils;
 import ulaval.glo2003.utils.ProductTestUtils;
 import ulaval.glo2003.utils.SellerTestUtils;
 
-public class UsersGetSellerByIdTest extends ApiTest {
+public class GetSellerByIdITest extends ApiTest {
 
     private String sellerId;
 
@@ -22,7 +22,7 @@ public class UsersGetSellerByIdTest extends ApiTest {
     }
 
     @Test
-    public void canUserGetSellersById() {
+    public void canGetSellersById() {
         Response response = target("/sellers/{sellerId}")
                 .resolveTemplate("sellerId", sellerId)
                 .request()
@@ -37,7 +37,7 @@ public class UsersGetSellerByIdTest extends ApiTest {
     }
 
     @Test
-    public void failUserGetSellersByInvalidId() {
+    public void failGetSellersByInvalidId() {
         Response response = target("/sellers/{sellerId}")
                 .resolveTemplate("sellerId", "do_not_exist")
                 .request()

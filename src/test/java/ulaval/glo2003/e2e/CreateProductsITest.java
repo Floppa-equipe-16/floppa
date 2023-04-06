@@ -11,7 +11,7 @@ import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.utils.ProductTestUtils;
 import ulaval.glo2003.utils.SellerTestUtils;
 
-public class UsersCreateProductsTest extends ApiTest {
+public class CreateProductsITest extends ApiTest {
 
     private String sellerId;
 
@@ -21,7 +21,7 @@ public class UsersCreateProductsTest extends ApiTest {
     }
 
     @Test
-    public void canUserCreateProducts() {
+    public void canCreateProducts() {
 
         ProductRequest productRequest = ProductTestUtils.createProductRequest();
 
@@ -37,7 +37,7 @@ public class UsersCreateProductsTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateProductsMissingSellerIdHeader() {
+    public void failCreateProductsMissingSellerIdHeader() {
 
         ProductRequest productRequest = ProductTestUtils.createProductRequest();
 
@@ -50,7 +50,7 @@ public class UsersCreateProductsTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateProductsInvalidSellerId() {
+    public void failCreateProductsInvalidSellerId() {
 
         ProductRequest productRequest = ProductTestUtils.createProductRequest();
 
@@ -65,7 +65,7 @@ public class UsersCreateProductsTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateProductsSellerIdDoesntExist() {
+    public void failCreateProductsSellerIdDoesntExist() {
 
         ProductRequest productRequest = ProductTestUtils.createProductRequest();
 
@@ -80,7 +80,7 @@ public class UsersCreateProductsTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateProductsInvalidTitle() {
+    public void failCreateProductsInvalidTitle() {
 
         ProductRequest productRequest = ProductTestUtils.createProductRequest();
         productRequest.title = "";
@@ -93,7 +93,7 @@ public class UsersCreateProductsTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateProductsInvalidCategory() {
+    public void failCreateProductsInvalidCategory() {
 
         ProductRequest productRequest = ProductTestUtils.createProductRequest();
         productRequest.category = "";
@@ -106,7 +106,7 @@ public class UsersCreateProductsTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateProductsInvalidDescription() {
+    public void failCreateProductsInvalidDescription() {
 
         ProductRequest productRequest = ProductTestUtils.createProductRequest();
         productRequest.description = "";
@@ -119,7 +119,7 @@ public class UsersCreateProductsTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateProductsInvalidSuggestedPrice() {
+    public void failCreateProductsInvalidSuggestedPrice() {
 
         ProductRequest productRequest = ProductTestUtils.createProductRequest();
         productRequest.suggestedPrice = -1d;
@@ -132,7 +132,7 @@ public class UsersCreateProductsTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateProductsMissingTitle() {
+    public void failCreateProductsMissingTitle() {
 
         ProductRequest productRequest = ProductTestUtils.createProductRequest();
         productRequest.title = null;
@@ -145,7 +145,7 @@ public class UsersCreateProductsTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateProductsMissingCategory() {
+    public void failCreateProductsMissingCategory() {
 
         ProductRequest productRequest = ProductTestUtils.createProductRequest();
         productRequest.category = null;
@@ -158,7 +158,7 @@ public class UsersCreateProductsTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateProductsMissingDescription() {
+    public void failCreateProductsMissingDescription() {
 
         ProductRequest productRequest = ProductTestUtils.createProductRequest();
         productRequest.description = null;
@@ -171,7 +171,7 @@ public class UsersCreateProductsTest extends ApiTest {
     }
 
     @Test
-    public void failUserCreateProductsMissingSuggestedPrice() {
+    public void failCreateProductsMissingSuggestedPrice() {
 
         ProductRequest productRequest = ProductTestUtils.createProductRequest();
         productRequest.suggestedPrice = null;
