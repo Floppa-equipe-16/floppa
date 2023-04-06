@@ -14,7 +14,7 @@ import ulaval.glo2003.utils.OfferTestUtils;
 import ulaval.glo2003.utils.ProductTestUtils;
 import ulaval.glo2003.utils.SellerTestUtils;
 
-public class UsersSellProductTest extends ApiTest {
+public class SellProductITest extends ApiTest {
     private String productId;
     private String sellerId;
 
@@ -26,7 +26,7 @@ public class UsersSellProductTest extends ApiTest {
     }
 
     @Test
-    public void canUsersSellProduct() {
+    public void canSellProduct() {
         ProductSellRequest request = ProductTestUtils.createProductSellRequest();
 
         Response response = sellProduct(productId, sellerId, request);
@@ -36,7 +36,7 @@ public class UsersSellProductTest extends ApiTest {
     }
 
     @Test
-    public void failUsersSellProductInvalidProductId() {
+    public void failSellProductInvalidProductId() {
         ProductSellRequest request = ProductTestUtils.createProductSellRequest();
 
         Response response = sellProduct("invalid", sellerId, request);
@@ -47,7 +47,7 @@ public class UsersSellProductTest extends ApiTest {
     }
 
     @Test
-    public void failUsersSellProductInvalidSellerId() {
+    public void failSellProductInvalidSellerId() {
         ProductSellRequest request = ProductTestUtils.createProductSellRequest();
 
         Response response = sellProduct(productId, "invalid", request);
@@ -58,7 +58,7 @@ public class UsersSellProductTest extends ApiTest {
     }
 
     @Test
-    public void failUsersSellProductInvalidBuyerUsername() {
+    public void failSellProductInvalidBuyerUsername() {
         ProductSellRequest request = ProductTestUtils.createProductSellRequest();
         request.username = "invalid";
 
@@ -70,7 +70,7 @@ public class UsersSellProductTest extends ApiTest {
     }
 
     @Test
-    public void failUsersSellProductMissingSellerId() {
+    public void failSellProductMissingSellerId() {
         ProductSellRequest request = ProductTestUtils.createProductSellRequest();
 
         Response response = target("/products/{productId}/sell")
@@ -84,7 +84,7 @@ public class UsersSellProductTest extends ApiTest {
     }
 
     @Test
-    public void failUsersSellProductMissingBuyerUsername() {
+    public void failSellProductMissingBuyerUsername() {
         ProductSellRequest request = ProductTestUtils.createProductSellRequest();
         request.username = null;
 

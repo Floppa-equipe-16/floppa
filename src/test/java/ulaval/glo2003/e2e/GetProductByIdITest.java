@@ -9,7 +9,7 @@ import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.utils.ProductTestUtils;
 import ulaval.glo2003.utils.SellerTestUtils;
 
-public class UsersGetProductByIdTest extends ApiTest {
+public class GetProductByIdITest extends ApiTest {
 
     private String productId;
 
@@ -20,7 +20,7 @@ public class UsersGetProductByIdTest extends ApiTest {
     }
 
     @Test
-    public void canUserGetProduct() {
+    public void canGetProduct() {
         Response response = target("/products/{productId}")
                 .resolveTemplate("productId", productId)
                 .request()
@@ -35,7 +35,7 @@ public class UsersGetProductByIdTest extends ApiTest {
     }
 
     @Test
-    public void failUserGetProductInvalidId() {
+    public void failGetProductInvalidId() {
         Response response = target("/products/{productId}")
                 .resolveTemplate("productId", "not valid")
                 .request()

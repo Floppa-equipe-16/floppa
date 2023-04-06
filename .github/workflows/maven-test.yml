@@ -28,3 +28,5 @@ jobs:
           mongodb-version: '6.0'
       - name: Tests
         run: mvn -B test --file pom.xml
+      - name: Integration test with Maven
+        run: mvn -B failsafe:integration-test --file pom.xml
