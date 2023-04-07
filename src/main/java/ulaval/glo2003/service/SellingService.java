@@ -13,6 +13,7 @@ import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
 import ulaval.glo2003.domain.exceptions.MissingParamException;
+import ulaval.glo2003.domain.exceptions.NotPermittedException;
 import ulaval.glo2003.domain.offer.IOfferRepository;
 import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.product.IProductRepository;
@@ -158,6 +159,10 @@ public class SellingService {
     private boolean canAddOfferToProduct(String productId, Offer offer) {
         Product product = getProductWithOffers(productId);
         product.addOffer(offer);
+
+        if (product.isSold()) {
+            throw new NotPermittedException("Product has already been sold");
+        }
 
         return true;
     }
