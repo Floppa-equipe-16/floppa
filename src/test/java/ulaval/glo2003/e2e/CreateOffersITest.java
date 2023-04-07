@@ -123,6 +123,18 @@ public class CreateOffersITest extends ApiTest {
         assertThat(getErrorCode(response)).isEqualTo("MISSING_PARAMETER");
     }
 
+    @Test
+    public void failCreateOfferOnProductAlreadySold() {
+        OfferRequest offerRequest = OfferTestUtils.createOfferRequest();
+
+        createOffer(offerRequest);
+        Response response = createOffer(offerRequest);
+
+        assertThat(response.getStatus()).isEqualTo(400);
+        assertMediaTypeIsJson(response);
+        assertThat(getErrorCode(response)).isEqualTo("NOT_PERMITTED");
+    }
+
     private Response createOffer(OfferRequest request) {
         return target("/products/{productId}/offers")
                 .resolveTemplate("productId", productId)
