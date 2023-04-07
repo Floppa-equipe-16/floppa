@@ -17,6 +17,7 @@ public class ProductResource {
     }
 
     @POST
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createProducts(
             @Context UriInfo uriInfo, @HeaderParam("X-Seller-Id") String xSellerId, ProductRequest productRequest) {
@@ -46,5 +47,17 @@ public class ProductResource {
     public Response getProduct(@PathParam("productId") String productId) {
         ProductResponse productResponse = sellingService.getProduct(productId);
         return Response.ok().entity(productResponse).build();
+    }
+
+    @POST
+    @Path("/{productId}/sell")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response sellProducts(
+            @PathParam("productId") String productId,
+            @HeaderParam("X-Seller-Id") String xSellerId,
+            ProductSellRequest productSellRequest) {
+        sellingService.sellProduct(xSellerId, productId, productSellRequest);
+        return Response.status(Response.Status.OK).build();
     }
 }

@@ -1,7 +1,10 @@
 package ulaval.glo2003.domain.product;
 
+import jakarta.ws.rs.NotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import ulaval.glo2003.domain.exceptions.NotPermittedException;
 import ulaval.glo2003.domain.offer.Offer;
 
 public class Product {
@@ -12,7 +15,8 @@ public class Product {
     private final String description;
     private final Double suggestedPrice;
     private final String category;
-    private final ArrayList<Offer> offers;
+    private SaleStatus saleStatus;
+    private final List<Offer> offers;
 
     public Product(
             String id,
@@ -21,6 +25,7 @@ public class Product {
             String createdAt,
             String description,
             Double suggestedPrice,
+            SaleStatus saleStatus,
             String category) {
         this.id = id;
         this.sellerId = sellerId;
@@ -29,6 +34,7 @@ public class Product {
         this.description = description;
         this.suggestedPrice = suggestedPrice;
         this.category = category;
+        this.saleStatus = saleStatus;
         this.offers = new ArrayList<>();
     }
 
@@ -40,6 +46,7 @@ public class Product {
         category = that.getCategory();
         id = that.getId();
         createdAt = that.getCreatedAt();
+        saleStatus = that.getSaleStatus();
 
         offers = new ArrayList<>();
         that.getOffers().forEach(offer -> offers.add(new Offer(offer)));
@@ -65,6 +72,14 @@ public class Product {
         return category;
     }
 
+    public SaleStatus getSaleStatus() {
+        return saleStatus;
+    }
+
+    public boolean isSold() {
+        return saleStatus == SaleStatus.sold;
+    }
+
     public String getId() {
         return id;
     }
@@ -73,8 +88,36 @@ public class Product {
         return createdAt;
     }
 
+    public void sellTo(String username) {
+        if (isSold()) {
+            throw new NotPermittedException("product has already been sold");
+        }
+
+        Optional<Offer> matchingOffer = findUserOffer(username);
+        if (matchingOffer.isEmpty()) {
+            throw new NotFoundException(
+                    String.format("Offer with username: '%s' has no offer on this product", username));
+        }
+
+        this.saleStatus = SaleStatus.sold;
+        matchingOffer.get().setSelected(true);
+    }
+
+    private Optional<Offer> findUserOffer(String username) {
+        return offers.stream()
+                .filter(offer -> username.equals(offer.getUsername()))
+                .findFirst();
+    }
+
     public List<Offer> getOffers() {
         return offers;
+    }
+
+    public Offer getSelectedOffer() {
+        if (saleStatus == SaleStatus.sold) {
+            return offers.stream().filter(Offer::isSelected).findFirst().orElse(null);
+        }
+        return null;
     }
 
     public void addOffer(Offer offer) {

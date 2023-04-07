@@ -29,10 +29,14 @@ public class ProductMapper {
     }
 
     public ProductResponse productToResponse(Product product) {
-        ProductResponse productResponse = initializeResponse(product);
-        productResponse.offers = offerMapper.offersToCompleteCollectionResponse(product.getOffers());
+        ProductResponse response = initializeResponse(product);
+        response.offers = offerMapper.offersToCompleteCollectionResponse(product.getOffers());
 
-        return productResponse;
+        if (product.isSold()) {
+            response.selectedOffer = offerMapper.offerToSelectedOfferResponse(product.getSelectedOffer());
+        }
+
+        return response;
     }
 
     public ProductResponse productToResponseWithSeller(Product product, Seller seller) {
@@ -59,6 +63,7 @@ public class ProductMapper {
         response.category = product.getCategory();
         response.id = product.getId();
         response.createdAt = product.getCreatedAt();
+        response.saleStatus = product.getSaleStatus().toString();
 
         return response;
     }

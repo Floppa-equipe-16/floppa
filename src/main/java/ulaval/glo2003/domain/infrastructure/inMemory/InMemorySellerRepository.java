@@ -1,9 +1,11 @@
-package ulaval.glo2003.domain.seller;
+package ulaval.glo2003.domain.infrastructure.inMemory;
 
 import jakarta.ws.rs.NotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import ulaval.glo2003.domain.seller.ISellerRepository;
+import ulaval.glo2003.domain.seller.Seller;
 
 public class InMemorySellerRepository implements ISellerRepository {
     private final Map<String, Seller> sellers;
@@ -23,5 +25,10 @@ public class InMemorySellerRepository implements ISellerRepository {
     @Override
     public void save(Seller seller) {
         sellers.put(seller.getId(), seller);
+    }
+
+    @Override
+    public void reset() {
+        sellers.clear();
     }
 }

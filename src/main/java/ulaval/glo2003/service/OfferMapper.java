@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import ulaval.glo2003.api.offer.OfferCollectionResponse;
 import ulaval.glo2003.api.offer.OfferRequest;
 import ulaval.glo2003.api.offer.OfferResponse;
+import ulaval.glo2003.api.offer.SelectedOfferResponse;
 import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.offer.OfferFactory;
 
@@ -45,11 +46,15 @@ public class OfferMapper {
             response.maxAmount =
                     offers.stream().mapToDouble(Offer::getAmount).max().orElse(Double.NaN);
 
-            response.offers = offers.stream().map(OfferResponse::new).collect(Collectors.toList());
+            response.items = offers.stream().map(OfferResponse::new).collect(Collectors.toList());
         } else {
-            response.offers = new ArrayList<>();
+            response.items = new ArrayList<>();
         }
 
         return response;
+    }
+
+    public SelectedOfferResponse offerToSelectedOfferResponse(Offer offer) {
+        return new SelectedOfferResponse(offer);
     }
 }

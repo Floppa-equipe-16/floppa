@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.domain.exceptions.MissingParamException;
-import ulaval.glo2003.domain.seller.SellerTestUtils;
+import ulaval.glo2003.utils.SellerTestUtils;
 
 public class SellerRequestTest {
     private SellerRequest sellerRequest;
@@ -70,5 +70,50 @@ public class SellerRequestTest {
 
         MissingParamException thrownMissingBio = assertThrows(MissingParamException.class, sellerRequest::validate);
         assertThat(thrownMissingBio.errorDescription.description).ignoringCase().contains("bio");
+    }
+
+    @Test
+    public void sellerRequestEqualsToHimSelf() {
+        assertThat(sellerRequest).isEqualTo(sellerRequest);
+    }
+
+    @Test
+    public void sellerRequestEqualsToSellerRequest() {
+        assertThat(sellerRequest).isEqualTo(SellerTestUtils.createSellerRequest());
+    }
+
+    @Test
+    public void sellerRequestNotEqualsToSellerRequestWhenNameDiff() {
+        sellerRequest.name = "???";
+
+        assertThat(sellerRequest).isNotEqualTo(SellerTestUtils.createSellerRequest());
+    }
+
+    @Test
+    public void sellerRequestNotEqualsToSellerRequestWhenBirthdateDiff() {
+        sellerRequest.birthdate = "???";
+
+        assertThat(sellerRequest).isNotEqualTo(SellerTestUtils.createSellerRequest());
+    }
+
+    @Test
+    public void sellerRequestNotEqualsToSellerRequestWhenEmailDiff() {
+        sellerRequest.email = "???";
+
+        assertThat(sellerRequest).isNotEqualTo(SellerTestUtils.createSellerRequest());
+    }
+
+    @Test
+    public void sellerRequestNotEqualsToSellerRequestWhenPhoneNumberDiff() {
+        sellerRequest.phoneNumber = "???";
+
+        assertThat(sellerRequest).isNotEqualTo(SellerTestUtils.createSellerRequest());
+    }
+
+    @Test
+    public void sellerRequestNotEqualsToSellerRequestWhenBioDiff() {
+        sellerRequest.bio = "???";
+
+        assertThat(sellerRequest).isNotEqualTo(SellerTestUtils.createSellerRequest());
     }
 }

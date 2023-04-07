@@ -1,4 +1,4 @@
-package ulaval.glo2003.service;
+package ulaval.glo2003.service.unit;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -14,6 +14,7 @@ import ulaval.glo2003.api.offer.OfferRequest;
 import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.api.seller.SellerRequest;
+import ulaval.glo2003.domain.exceptions.MissingParamException;
 import ulaval.glo2003.domain.offer.IOfferRepository;
 import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.product.IProductRepository;
@@ -21,7 +22,13 @@ import ulaval.glo2003.domain.product.Product;
 import ulaval.glo2003.domain.product.ProductFilter;
 import ulaval.glo2003.domain.seller.ISellerRepository;
 import ulaval.glo2003.domain.seller.Seller;
-import ulaval.glo2003.domain.seller.SellerTestUtils;
+import ulaval.glo2003.service.OfferMapper;
+import ulaval.glo2003.service.ProductMapper;
+import ulaval.glo2003.service.SellerMapper;
+import ulaval.glo2003.service.SellingService;
+import ulaval.glo2003.utils.OfferTestUtils;
+import ulaval.glo2003.utils.ProductTestUtils;
+import ulaval.glo2003.utils.SellerTestUtils;
 
 class SellingServiceTest {
     private static final String SELLER_ID = "SELLER";
@@ -129,7 +136,7 @@ class SellingServiceTest {
 
     @Test
     public void canCreateProductWhenSellerExists() {
-        ProductRequest request = createProductRequest();
+        ProductRequest request = ProductTestUtils.createProductRequest();
         when(productMapperMock.requestToProduct(SELLER_ID, request)).thenReturn(productStub);
         when(sellerRepositoryMock.findById(SELLER_ID)).thenReturn(sellerStub);
 
@@ -142,20 +149,20 @@ class SellingServiceTest {
 
     @Test
     public void createProductThrowsWhenSellerDoesNotExist() {
-        ProductRequest request = createProductRequest();
+        ProductRequest request = ProductTestUtils.createProductRequest();
         when(productMapperMock.requestToProduct(SELLER_ID, request)).thenReturn(productStub);
         when(sellerRepositoryMock.findById(SELLER_ID)).thenThrow(NotFoundException.class);
 
         assertThrows(NotFoundException.class, () -> sellingService.createProduct(SELLER_ID, request));
     }
 
-    private ProductRequest createProductRequest() {
-        ProductRequest request = new ProductRequest();
-        request.title = "TITLE";
-        request.description = "DESCRIPTION";
-        request.category = "CATEGORY";
-        request.suggestedPrice = 10d;
-        return request;
+    @Test
+    public void createProductThrowsWhenSellerIdIsNull() {
+        ProductRequest request = ProductTestUtils.createProductRequest();
+        when(productMapperMock.requestToProduct(null, request)).thenReturn(productStub);
+        when(sellerRepositoryMock.findById(null)).thenThrow(NotFoundException.class);
+
+        assertThrows(MissingParamException.class, () -> sellingService.createProduct(null, request));
     }
 
     @Test
@@ -192,7 +199,7 @@ class SellingServiceTest {
 
     @Test
     public void canGetProducts() {
-        ProductFilter filter = createEmptyFilter();
+        ProductFilter filter = ProductTestUtils.createEmptyFilter();
         when(productRepositoryMock.findAll(filter)).thenReturn(List.of(productStub));
         when(offerRepositoryMock.findAllByProductId(PRODUCT_ID)).thenReturn(Collections.emptyList());
         when(sellerRepositoryMock.findById(SELLER_ID)).thenReturn(sellerStub);
@@ -209,7 +216,7 @@ class SellingServiceTest {
 
     @Test
     public void canGetProductsWhenNoProduct() {
-        ProductFilter filter = createEmptyFilter();
+        ProductFilter filter = ProductTestUtils.createEmptyFilter();
         when(productRepositoryMock.findAll(filter)).thenReturn(Collections.emptyList());
         when(productMapperMock.productsToCollectionResponse(any())).thenReturn(any());
 
@@ -219,13 +226,9 @@ class SellingServiceTest {
         verify(productMapperMock).productsToCollectionResponse(Collections.emptyList());
     }
 
-    private ProductFilter createEmptyFilter() {
-        return new ProductFilter(null, null, null, null, null);
-    }
-
     @Test
     public void canCreateOfferWhenProductExists() {
-        OfferRequest request = createOfferRequest();
+        OfferRequest request = OfferTestUtils.createOfferRequest();
         String buyerName = "Alice";
         when(offerMapperMock.requestToOffer(PRODUCT_ID, buyerName, request)).thenReturn(offerStub);
         when(productRepositoryMock.findById(PRODUCT_ID)).thenReturn(productStub);
@@ -239,7 +242,7 @@ class SellingServiceTest {
 
     @Test
     public void createOfferThrowsWhenProductDoesNotExist() {
-        OfferRequest request = createOfferRequest();
+        OfferRequest request = OfferTestUtils.createOfferRequest();
         String buyerName = "Alice";
         when(offerMapperMock.requestToOffer(PRODUCT_ID, buyerName, request)).thenReturn(offerStub);
         when(productRepositoryMock.findById(PRODUCT_ID)).thenThrow(NotFoundException.class);
@@ -247,10 +250,12 @@ class SellingServiceTest {
         assertThrows(NotFoundException.class, () -> sellingService.createOffer(buyerName, PRODUCT_ID, request));
     }
 
-    private OfferRequest createOfferRequest() {
-        OfferRequest request = new OfferRequest();
-        request.message = "MESSAGE";
-        request.amount = 10d;
-        return request;
+    @Test
+    public void createOfferThrowsWhenBuyerNameisNull() {
+        OfferRequest request = OfferTestUtils.createOfferRequest();
+        when(offerMapperMock.requestToOffer(PRODUCT_ID, null, request)).thenReturn(offerStub);
+        when(productRepositoryMock.findById(PRODUCT_ID)).thenThrow(NotFoundException.class);
+
+        assertThrows(MissingParamException.class, () -> sellingService.createOffer(null, PRODUCT_ID, request));
     }
 }

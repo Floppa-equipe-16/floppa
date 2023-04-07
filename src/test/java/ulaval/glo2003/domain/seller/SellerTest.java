@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import ulaval.glo2003.domain.product.Product;
+import ulaval.glo2003.utils.SellerTestUtils;
 
 public class SellerTest {
 

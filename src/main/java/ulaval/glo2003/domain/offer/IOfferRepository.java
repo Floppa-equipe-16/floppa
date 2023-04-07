@@ -9,4 +9,6 @@ public interface IOfferRepository {
     List<Offer> findAllByProductId(String productId);
 
     void save(Offer offer);
+
+    void reset();
 }

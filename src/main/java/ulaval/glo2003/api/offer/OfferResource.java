@@ -14,6 +14,7 @@ public class OfferResource {
     }
 
     @POST
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createOffer(
             @HeaderParam("X-Buyer-Username") String xBuyerUsername,
