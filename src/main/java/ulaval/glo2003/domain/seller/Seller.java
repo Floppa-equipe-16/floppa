@@ -1,11 +1,7 @@
 package ulaval.glo2003.domain.seller;
 
 import java.util.*;
-
-import jakarta.ws.rs.NotFoundException;
 import ulaval.glo2003.domain.product.Product;
-
-import javax.swing.text.html.Option;
 
 public class Seller {
     private final String id;

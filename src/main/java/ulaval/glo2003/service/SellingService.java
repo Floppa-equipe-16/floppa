@@ -1,10 +1,9 @@
 package ulaval.glo2003.service;
 
+import jakarta.ws.rs.NotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import jakarta.ws.rs.NotFoundException;
 import ulaval.glo2003.api.offer.OfferRequest;
 import ulaval.glo2003.api.product.ProductCollectionResponse;
 import ulaval.glo2003.api.product.ProductRequest;
@@ -146,7 +145,7 @@ public class SellingService {
 
         Seller seller = getSellerWithProducts(sellerId);
         Optional<Product> product = seller.getProductById(productId);
-        if(product.isEmpty()) {
+        if (product.isEmpty()) {
             throw new NotFoundException(String.format("product with id %s", productId));
         }
 
