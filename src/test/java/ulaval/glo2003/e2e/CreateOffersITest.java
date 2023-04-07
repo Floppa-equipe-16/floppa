@@ -8,6 +8,7 @@ import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.api.offer.OfferRequest;
+import ulaval.glo2003.api.product.ProductSellRequest;
 import ulaval.glo2003.utils.OfferTestUtils;
 import ulaval.glo2003.utils.ProductTestUtils;
 import ulaval.glo2003.utils.SellerTestUtils;
@@ -15,11 +16,12 @@ import ulaval.glo2003.utils.SellerTestUtils;
 public class CreateOffersITest extends ApiTest {
 
     private String productId;
+    private String sellerId;
     private static final String BUYER_USERNAME = "Bobi";
 
     @BeforeEach
     public void setUp() throws Exception {
-        String sellerId = sellingService.createSeller(SellerTestUtils.createSellerRequest());
+        sellerId = sellingService.createSeller(SellerTestUtils.createSellerRequest());
         productId = sellingService.createProduct(sellerId, ProductTestUtils.createProductRequest());
     }
 
@@ -126,9 +128,12 @@ public class CreateOffersITest extends ApiTest {
     @Test
     public void failCreateOfferOnProductAlreadySold() {
         OfferRequest offerRequest = OfferTestUtils.createOfferRequest();
-
         createOffer(offerRequest);
-        Response response = createOffer(offerRequest);
+        ProductSellRequest productSellRequest = new ProductSellRequest();
+        productSellRequest.username = BUYER_USERNAME;
+        sellingService.sellProduct(sellerId, productId, productSellRequest);
+
+        Response response = createOtherOffer(offerRequest);
 
         assertThat(response.getStatus()).isEqualTo(400);
         assertMediaTypeIsJson(response);
@@ -140,6 +145,14 @@ public class CreateOffersITest extends ApiTest {
                 .resolveTemplate("productId", productId)
                 .request()
                 .header("X-Buyer-Username", BUYER_USERNAME)
+                .post(Entity.entity(request, MediaType.APPLICATION_JSON));
+    }
+
+    private Response createOtherOffer(OfferRequest request) {
+        return target("/products/{productId}/offers")
+                .resolveTemplate("productId", productId)
+                .request()
+                .header("X-Buyer-Username", BUYER_USERNAME + "2")
                 .post(Entity.entity(request, MediaType.APPLICATION_JSON));
     }
 }
