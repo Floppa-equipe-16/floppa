@@ -70,8 +70,8 @@ public class Seller {
         return productsMap;
     }
 
-    public Product getProductById(String productId) {
-        return productsMap.get(productId);
+    public Optional<Product> getProductById(String productId) {
+        return Optional.ofNullable(productsMap.get(productId));
     }
 
     public void addProduct(Product product) {

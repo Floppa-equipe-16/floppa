@@ -1,7 +1,9 @@
 package ulaval.glo2003.service;
 
+import jakarta.ws.rs.NotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import ulaval.glo2003.api.offer.OfferRequest;
 import ulaval.glo2003.api.product.ProductCollectionResponse;
 import ulaval.glo2003.api.product.ProductRequest;
@@ -52,9 +54,16 @@ public class SellingService {
     }
 
     public SellerResponse getSeller(String sellerId) {
+        Seller seller = getSellerWithProducts(sellerId);
+
+        return sellerMapper.sellerToResponse(seller);
+    }
+
+    private Seller getSellerWithProducts(String sellerId) {
         Seller seller = sellerRepository.findById(sellerId);
         addProductsAndSelectedOfferToSeller(seller);
-        return sellerMapper.sellerToResponse(seller);
+
+        return seller;
     }
 
     private void addProductsAndSelectedOfferToSeller(Seller seller) {
@@ -134,13 +143,16 @@ public class SellingService {
         if (productId == null) throw new MissingParamException("product id");
         productRequest.validate();
 
-        sellerRepository.findById(sellerId);
-        Product product = getProductWithOffers(productId);
+        Seller seller = getSellerWithProducts(sellerId);
+        Optional<Product> product = seller.getProductById(productId);
+        if (product.isEmpty()) {
+            throw new NotFoundException(String.format("product with id %s", productId));
+        }
 
-        product.sellTo(productRequest.username);
+        product.get().sellTo(productRequest.username);
 
-        productRepository.save(product);
-        offerRepository.save(product.getSelectedOffer());
+        productRepository.save(product.get());
+        offerRepository.save(product.get().getSelectedOffer());
     }
 
     private boolean canAddOfferToProduct(String productId, Offer offer) {
