@@ -58,6 +58,18 @@ public class SellProductITest extends ApiTest {
     }
 
     @Test
+    public void failSellProductOtherSellerId() {
+        String otherSellerId = sellingService.createSeller(SellerTestUtils.createSellerRequest());
+        ProductSellRequest request = ProductTestUtils.createProductSellRequest();
+
+        Response response = sellProduct(productId, otherSellerId, request);
+
+        assertThat(response.getStatus()).isEqualTo(404);
+        assertMediaTypeIsJson(response);
+        assertThat(getErrorCode(response)).isEqualTo("ITEM_NOT_FOUND");
+    }
+
+    @Test
     public void failSellProductInvalidBuyerUsername() {
         ProductSellRequest request = ProductTestUtils.createProductSellRequest();
         request.username = "invalid";
