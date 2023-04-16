@@ -222,6 +222,7 @@
                 <version>3.13.0</version>
                 <configuration>
                     <failOnViolation>true</failOnViolation>
+                    <failurePriority>2</failurePriority>
                     <printFailingErrors>true</printFailingErrors>
                 </configuration>
                 <executions>
