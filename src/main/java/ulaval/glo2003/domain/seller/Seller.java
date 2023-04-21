@@ -12,7 +12,7 @@ public class Seller {
     private final String bio;
     private final String createdAt;
 
-    private final double score;
+    private double score;
     private final Map<String, Product> productsMap;
 
     public Seller(
@@ -71,6 +71,8 @@ public class Seller {
     }
 
     public double getScore() { return score; }
+
+    public void addScore(double score) { this.score += score; }
 
     public Map<String, Product> getProducts() {
         return productsMap;

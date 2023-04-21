@@ -21,8 +21,10 @@ public class SellerTestUtils {
     private static final String BIO = "My name is Bob.";
     private static final String CREATED_AT = Instant.MAX.toString();
 
+    private static final double SCORE = 0;
+
     public static Seller createSeller() {
-        return new Seller(ID, NAME, CREATED_AT, BIRTHDATE, EMAIL, PHONE_NUMBER, BIO);
+        return new Seller(ID, NAME, CREATED_AT, BIRTHDATE, EMAIL, PHONE_NUMBER, BIO, SCORE);
     }
 
     public static ProductResponse.SellerInfo createSellerInfo() {

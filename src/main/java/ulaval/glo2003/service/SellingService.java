@@ -151,7 +151,9 @@ public class SellingService {
         }
 
         product.get().sellTo(productRequest.username);
+        seller.addScore(product.get().getSelectedOffer().getAmount());
 
+        sellerRepository.save(seller);
         productRepository.save(product.get());
         offerRepository.save(product.get().getSelectedOffer());
     }
