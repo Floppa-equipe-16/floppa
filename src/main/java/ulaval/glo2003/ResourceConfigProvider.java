@@ -18,12 +18,14 @@ import ulaval.glo2003.api.product.ProductResource;
 import ulaval.glo2003.api.seller.SellerResource;
 import ulaval.glo2003.service.SellingService;
 import ulaval.glo2003.service.SellingServiceFactory;
+import ulaval.glo2003.service.notification.EmailHost;
+import ulaval.glo2003.service.notification.SessionException;
 
 public class ResourceConfigProvider {
 
     private final int TIMEOUT = 5000;
 
-    public ResourceConfig provide(Boolean localDB) {
+    public ResourceConfig provide(Boolean localDB) throws SessionException {
         MongoClient client;
         Datastore datastore;
 
@@ -44,11 +46,13 @@ public class ResourceConfigProvider {
             databaseHealthCheck(client);
             datastore = Morphia.createDatastore(client, System.getenv("FLOPPA_MONGO_DATABASE"));
         }
+
+        EmailHost emailHost = new EmailHost("floppanotification@gmail.com", "vexwtppdwslsfcra");
         datastore.getMapper().mapPackage("ulaval.glo2003");
         datastore.ensureIndexes();
 
         SellingServiceFactory factory = new SellingServiceFactory();
-        SellingService sellingService = factory.create(datastore);
+        SellingService sellingService = factory.create(datastore, emailHost);
 
         return new ResourceConfig()
                 .register(new HealthResource(client))

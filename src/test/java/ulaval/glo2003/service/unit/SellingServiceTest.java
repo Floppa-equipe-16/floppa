@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 import jakarta.ws.rs.NotFoundException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,6 +27,8 @@ import ulaval.glo2003.service.OfferMapper;
 import ulaval.glo2003.service.ProductMapper;
 import ulaval.glo2003.service.SellerMapper;
 import ulaval.glo2003.service.SellingService;
+import ulaval.glo2003.service.notification.SessionException;
+import ulaval.glo2003.utils.EmailHostTestUtils;
 import ulaval.glo2003.utils.OfferTestUtils;
 import ulaval.glo2003.utils.ProductTestUtils;
 import ulaval.glo2003.utils.SellerTestUtils;
@@ -64,14 +67,16 @@ class SellingServiceTest {
     private SellingService sellingService;
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws SessionException {
         sellingService = new SellingService(
                 sellerRepositoryMock,
                 productRepositoryMock,
                 offerRepositoryMock,
                 sellerMapperMock,
                 productMapperMock,
-                offerMapperMock);
+                offerMapperMock,
+                EmailHostTestUtils.emailHost,
+                false);
 
         sellerStub = createSellerStub();
         productStub = createProductStub();
@@ -232,12 +237,15 @@ class SellingServiceTest {
         String buyerName = "Alice";
         when(offerMapperMock.requestToOffer(PRODUCT_ID, buyerName, request)).thenReturn(offerStub);
         when(productRepositoryMock.findById(PRODUCT_ID)).thenReturn(productStub);
+        when(sellerRepositoryMock.findById(any())).thenReturn(sellerStub);
+        when(productRepositoryMock.findAllBySellerId(any())).thenReturn(new ArrayList<>());
+        when(offerRepositoryMock.findAllByProductId(PRODUCT_ID)).thenReturn(new ArrayList<>());
 
         String id = sellingService.createOffer(buyerName, PRODUCT_ID, request);
 
         assertThat(id).isEqualTo(offerStub.getId());
         verify(offerRepositoryMock).save(offerStub);
-        verify(productRepositoryMock).findById(PRODUCT_ID);
+        verify(productRepositoryMock, times(2)).findById(PRODUCT_ID);
     }
 
     @Test
@@ -251,7 +259,7 @@ class SellingServiceTest {
     }
 
     @Test
-    public void createOfferThrowsWhenBuyerNameisNull() {
+    public void createOfferThrowsWhenBuyerNameIsNull() {
         OfferRequest request = OfferTestUtils.createOfferRequest();
         when(offerMapperMock.requestToOffer(PRODUCT_ID, null, request)).thenReturn(offerStub);
         when(productRepositoryMock.findById(PRODUCT_ID)).thenThrow(NotFoundException.class);

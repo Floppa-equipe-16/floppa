@@ -11,20 +11,22 @@ import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.service.SellingService;
 import ulaval.glo2003.service.SellingServiceFactory;
+import ulaval.glo2003.service.notification.SessionException;
+import ulaval.glo2003.utils.EmailHostTestUtils;
 
 class SellingServiceFactoryTest {
 
     @Test
-    public void canCreateInMemory() {
+    public void canCreateInMemory() throws SessionException {
         SellingServiceFactory factory = new SellingServiceFactory();
 
-        SellingService service = factory.create();
+        SellingService service = factory.create(EmailHostTestUtils.emailHost);
 
         assertThat(service).isNotNull();
     }
 
     @Test
-    public void canCreateWithMongo() {
+    public void canCreateWithMongo() throws SessionException {
         MongoClient client = MongoClients.create(MongoClientSettings.builder()
                 .applyToClusterSettings(builder -> builder.serverSelectionTimeout(5000, TimeUnit.MILLISECONDS))
                 .applyToConnectionPoolSettings(builder -> builder.maxConnectionIdleTime(5000, TimeUnit.MILLISECONDS))
@@ -34,7 +36,7 @@ class SellingServiceFactoryTest {
         datastore.ensureIndexes();
         SellingServiceFactory factory = new SellingServiceFactory();
 
-        SellingService service = factory.create(datastore);
+        SellingService service = factory.create(datastore, EmailHostTestUtils.emailHost);
 
         assertThat(service).isNotNull();
     }

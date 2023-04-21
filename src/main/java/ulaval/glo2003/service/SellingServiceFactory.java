@@ -13,29 +13,33 @@ import ulaval.glo2003.domain.product.IProductRepository;
 import ulaval.glo2003.domain.product.ProductFactory;
 import ulaval.glo2003.domain.seller.ISellerRepository;
 import ulaval.glo2003.domain.seller.SellerFactory;
+import ulaval.glo2003.service.notification.EmailHost;
+import ulaval.glo2003.service.notification.SessionException;
 
 public class SellingServiceFactory {
 
-    public SellingService create() {
+    public SellingService create(EmailHost emailHost) throws SessionException {
         ISellerRepository sellerRepository = new InMemorySellerRepository();
         IProductRepository productRepository = new InMemoryProductRepository();
         IOfferRepository offerRepository = new InMemoryOfferRepository();
 
-        return create(sellerRepository, productRepository, offerRepository);
+        return create(sellerRepository, productRepository, offerRepository, emailHost);
     }
 
-    public SellingService create(Datastore datastore) {
+    public SellingService create(Datastore datastore, EmailHost emailHost) throws SessionException {
         ISellerRepository sellerRepository = new MongoSellerRepository(datastore);
         IProductRepository productRepository = new MongoProductRepository(datastore);
         IOfferRepository offerRepository = new MongoOfferRepository(datastore);
 
-        return create(sellerRepository, productRepository, offerRepository);
+        return create(sellerRepository, productRepository, offerRepository, emailHost);
     }
 
     private SellingService create(
             ISellerRepository sellerRepository,
             IProductRepository productRepository,
-            IOfferRepository offerRepository) {
+            IOfferRepository offerRepository,
+            EmailHost emailHost)
+            throws SessionException {
         SellerFactory sellerFactory = new SellerFactory();
         ProductFactory productFactory = new ProductFactory();
         OfferFactory offerFactory = new OfferFactory();
@@ -45,6 +49,13 @@ public class SellingServiceFactory {
         SellerMapper sellerMapper = new SellerMapper(sellerFactory, productMapper);
 
         return new SellingService(
-                sellerRepository, productRepository, offerRepository, sellerMapper, productMapper, offerMapper);
+                sellerRepository,
+                productRepository,
+                offerRepository,
+                sellerMapper,
+                productMapper,
+                offerMapper,
+                emailHost,
+                true);
     }
 }

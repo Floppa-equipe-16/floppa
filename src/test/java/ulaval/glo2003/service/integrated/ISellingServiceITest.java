@@ -26,6 +26,8 @@ import ulaval.glo2003.service.OfferMapper;
 import ulaval.glo2003.service.ProductMapper;
 import ulaval.glo2003.service.SellerMapper;
 import ulaval.glo2003.service.SellingService;
+import ulaval.glo2003.service.notification.SessionException;
+import ulaval.glo2003.utils.EmailHostTestUtils;
 import ulaval.glo2003.utils.OfferTestUtils;
 import ulaval.glo2003.utils.ProductTestUtils;
 import ulaval.glo2003.utils.SellerTestUtils;
@@ -56,12 +58,19 @@ public abstract class ISellingServiceITest {
     }
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws SessionException {
         sellerRepository = createSellerRepository();
         productRepository = createProductRepository();
         offerRepository = createOfferRepository();
         sellingService = new SellingService(
-                sellerRepository, productRepository, offerRepository, sellerMapper, productMapper, offerMapper);
+                sellerRepository,
+                productRepository,
+                offerRepository,
+                sellerMapper,
+                productMapper,
+                offerMapper,
+                EmailHostTestUtils.emailHost,
+                false);
     }
 
     @AfterEach

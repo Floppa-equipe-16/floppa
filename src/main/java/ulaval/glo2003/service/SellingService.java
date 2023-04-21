@@ -21,6 +21,9 @@ import ulaval.glo2003.domain.product.Product;
 import ulaval.glo2003.domain.product.ProductFilter;
 import ulaval.glo2003.domain.seller.ISellerRepository;
 import ulaval.glo2003.domain.seller.Seller;
+import ulaval.glo2003.service.notification.EmailHost;
+import ulaval.glo2003.service.notification.Mail.NewOfferMail;
+import ulaval.glo2003.service.notification.SessionException;
 
 public class SellingService {
     private final ISellerRepository sellerRepository;
@@ -29,6 +32,7 @@ public class SellingService {
     private final SellerMapper sellerMapper;
     private final ProductMapper productMapper;
     private final OfferMapper offerMapper;
+    private final NotificationService notificationService;
 
     public SellingService(
             ISellerRepository sellerRepository,
@@ -36,13 +40,18 @@ public class SellingService {
             IOfferRepository offerRepository,
             SellerMapper sellerMapper,
             ProductMapper productMapper,
-            OfferMapper offerMapper) {
+            OfferMapper offerMapper,
+            EmailHost emailHost,
+            boolean checkSession)
+            throws SessionException {
         this.sellerRepository = sellerRepository;
         this.productRepository = productRepository;
         this.offerRepository = offerRepository;
         this.sellerMapper = sellerMapper;
         this.productMapper = productMapper;
         this.offerMapper = offerMapper;
+        this.notificationService = new NotificationService(emailHost, checkSession);
+        this.notificationService.startThread();
     }
 
     public String createSeller(SellerRequest sellerRequest) {
@@ -135,7 +144,9 @@ public class SellingService {
 
         if (canAddOfferToProduct(productId, offer)) {
             offerRepository.save(offer);
+            sendNewOfferNotification(offer);
         }
+
         return offer.getId();
     }
 
@@ -176,5 +187,15 @@ public class SellingService {
 
     private void addOffersToProduct(Product product) {
         offerRepository.findAllByProductId(product.getId()).forEach(product::addOffer);
+    }
+
+    private void sendNewOfferNotification(Offer offer) {
+        String productId = offer.getProductId();
+        String sellerId = getProductWithOffers(productId).getSellerId();
+        String sellerEmail = getSellerWithProducts(sellerId).getEmail();
+
+        NewOfferMail mail = new NewOfferMail(offer.getUsername(), offer.getAmount(), productId, sellerEmail);
+
+        notificationService.addMailToQueue(mail);
     }
 }
