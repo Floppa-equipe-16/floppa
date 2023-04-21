@@ -1,4 +1,4 @@
-package ulaval.glo2003.service.notification.Mail;
+package ulaval.glo2003.domain.notification.Mail;
 
 public abstract class Mail {
 

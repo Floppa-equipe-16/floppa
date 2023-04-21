@@ -1,13 +1,10 @@
-package ulaval.glo2003.service.unit;
+package ulaval.glo2003.domain.notification;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import ulaval.glo2003.service.notification.EmailHost;
-import ulaval.glo2003.service.notification.Mail.BlankMail;
-import ulaval.glo2003.service.notification.Notification;
-import ulaval.glo2003.service.notification.SessionException;
+import ulaval.glo2003.domain.notification.Mail.BlankMail;
 import ulaval.glo2003.utils.EmailHostTestUtils;
 
 public class NotificationTest {

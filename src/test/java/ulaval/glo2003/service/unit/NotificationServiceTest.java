@@ -4,24 +4,33 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.concurrent.TimeUnit;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ulaval.glo2003.domain.notification.Mail.BlankMail;
+import ulaval.glo2003.domain.notification.Notification;
+import ulaval.glo2003.domain.notification.SessionException;
 import ulaval.glo2003.service.NotificationService;
-import ulaval.glo2003.service.notification.Mail.BlankMail;
-import ulaval.glo2003.service.notification.SessionException;
 import ulaval.glo2003.utils.EmailHostTestUtils;
 
 public class NotificationServiceTest {
 
+    private Notification notification;
+
+    @BeforeEach
+    public void setUp() throws SessionException {
+        notification = new Notification(EmailHostTestUtils.emailHost, true);
+    }
+
     @Test
     public void constructorDoesNotThrow() {
         assertDoesNotThrow(
-                () -> new NotificationService(EmailHostTestUtils.emailHost, true),
+                () -> new NotificationService(notification),
                 "This should not throw check 'Notification' constructor Test");
     }
 
     @Test
-    public void canAddEmailToQueue() throws SessionException {
-        NotificationService service = new NotificationService(EmailHostTestUtils.emailHost, false);
+    public void canAddEmailToQueue() {
+        NotificationService service = new NotificationService(notification);
         BlankMail mail = new BlankMail("");
 
         assertThat(service.isQueueEmpty()).isTrue();
@@ -32,8 +41,8 @@ public class NotificationServiceTest {
     }
 
     @Test
-    public void canStartThread() throws SessionException, InterruptedException {
-        NotificationService service = new NotificationService(EmailHostTestUtils.emailHost, false);
+    public void canStartThread() throws InterruptedException {
+        NotificationService service = new NotificationService(notification);
         assertThat(service.isThreadAlive()).isFalse();
 
         service.startThread();
@@ -43,8 +52,8 @@ public class NotificationServiceTest {
     }
 
     @Test
-    public void canStopThread() throws SessionException, InterruptedException {
-        NotificationService service = new NotificationService(EmailHostTestUtils.emailHost, false);
+    public void canStopThread() throws InterruptedException {
+        NotificationService service = new NotificationService(notification);
         assertThat(service.isThreadAlive()).isFalse();
 
         service.startThread();
@@ -56,8 +65,8 @@ public class NotificationServiceTest {
     }
 
     @Test
-    void canSendMail() throws SessionException, InterruptedException {
-        NotificationService service = new NotificationService(EmailHostTestUtils.emailHost, false);
+    void canSendMail() throws InterruptedException {
+        NotificationService service = new NotificationService(notification);
         BlankMail mail = new BlankMail("");
 
         service.startThread();

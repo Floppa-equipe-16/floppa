@@ -23,12 +23,7 @@ import ulaval.glo2003.domain.product.Product;
 import ulaval.glo2003.domain.product.ProductFilter;
 import ulaval.glo2003.domain.seller.ISellerRepository;
 import ulaval.glo2003.domain.seller.Seller;
-import ulaval.glo2003.service.OfferMapper;
-import ulaval.glo2003.service.ProductMapper;
-import ulaval.glo2003.service.SellerMapper;
-import ulaval.glo2003.service.SellingService;
-import ulaval.glo2003.service.notification.SessionException;
-import ulaval.glo2003.utils.EmailHostTestUtils;
+import ulaval.glo2003.service.*;
 import ulaval.glo2003.utils.OfferTestUtils;
 import ulaval.glo2003.utils.ProductTestUtils;
 import ulaval.glo2003.utils.SellerTestUtils;
@@ -36,6 +31,9 @@ import ulaval.glo2003.utils.SellerTestUtils;
 class SellingServiceTest {
     private static final String SELLER_ID = "SELLER";
     private static final String PRODUCT_ID = "PRODUCT";
+
+    @Mock
+    private NotificationService notificationService = mock(NotificationService.class);
 
     @Mock
     private ISellerRepository sellerRepositoryMock = mock(ISellerRepository.class);
@@ -67,7 +65,7 @@ class SellingServiceTest {
     private SellingService sellingService;
 
     @BeforeEach
-    public void setUp() throws SessionException {
+    public void setUp() throws RuntimeException {
         sellingService = new SellingService(
                 sellerRepositoryMock,
                 productRepositoryMock,
@@ -75,8 +73,7 @@ class SellingServiceTest {
                 sellerMapperMock,
                 productMapperMock,
                 offerMapperMock,
-                EmailHostTestUtils.emailHost,
-                false);
+                notificationService);
 
         sellerStub = createSellerStub();
         productStub = createProductStub();

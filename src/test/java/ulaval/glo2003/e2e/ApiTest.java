@@ -17,9 +17,11 @@ import ulaval.glo2003.domain.exceptions.ErrorDescription;
 import ulaval.glo2003.domain.infrastructure.mongo.MongoOfferRepository;
 import ulaval.glo2003.domain.infrastructure.mongo.MongoProductRepository;
 import ulaval.glo2003.domain.infrastructure.mongo.MongoSellerRepository;
+import ulaval.glo2003.domain.notification.SessionException;
+import ulaval.glo2003.service.NotificationService;
+import ulaval.glo2003.service.NotificationServiceFactory;
 import ulaval.glo2003.service.SellingService;
 import ulaval.glo2003.service.SellingServiceFactory;
-import ulaval.glo2003.service.notification.SessionException;
 import ulaval.glo2003.utils.EmailHostTestUtils;
 import ulaval.glo2003.utils.MongoTestUtils;
 
@@ -31,7 +33,8 @@ public abstract class ApiTest {
 
     static {
         try {
-            sellingService = new SellingServiceFactory().create(datastore, EmailHostTestUtils.emailHost);
+            NotificationService service = new NotificationServiceFactory().create(EmailHostTestUtils.emailHost, false);
+            sellingService = new SellingServiceFactory().create(datastore, service);
         } catch (SessionException e) {
             throw new RuntimeException(e);
         }

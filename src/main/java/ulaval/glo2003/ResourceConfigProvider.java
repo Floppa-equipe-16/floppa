@@ -16,16 +16,17 @@ import ulaval.glo2003.api.exceptionMappers.ParamExceptionMapper;
 import ulaval.glo2003.api.offer.OfferResource;
 import ulaval.glo2003.api.product.ProductResource;
 import ulaval.glo2003.api.seller.SellerResource;
+import ulaval.glo2003.domain.notification.EmailHost;
+import ulaval.glo2003.service.NotificationService;
+import ulaval.glo2003.service.NotificationServiceFactory;
 import ulaval.glo2003.service.SellingService;
 import ulaval.glo2003.service.SellingServiceFactory;
-import ulaval.glo2003.service.notification.EmailHost;
-import ulaval.glo2003.service.notification.SessionException;
 
 public class ResourceConfigProvider {
 
     private final int TIMEOUT = 5000;
 
-    public ResourceConfig provide(Boolean localDB) throws SessionException {
+    public ResourceConfig provide(Boolean localDB) {
         MongoClient client;
         Datastore datastore;
 
@@ -47,12 +48,15 @@ public class ResourceConfigProvider {
             datastore = Morphia.createDatastore(client, System.getenv("FLOPPA_MONGO_DATABASE"));
         }
 
-        EmailHost emailHost = new EmailHost("floppanotification@gmail.com", "vexwtppdwslsfcra");
         datastore.getMapper().mapPackage("ulaval.glo2003");
         datastore.ensureIndexes();
 
+        EmailHost emailHost = new EmailHost("floppanotification@gmail.com", "vexwtppdwslsfcra");
+        NotificationServiceFactory notificationFactory = new NotificationServiceFactory();
+        NotificationService notificationService = notificationFactory.create(emailHost, true);
+
         SellingServiceFactory factory = new SellingServiceFactory();
-        SellingService sellingService = factory.create(datastore, emailHost);
+        SellingService sellingService = factory.create(datastore, notificationService);
 
         return new ResourceConfig()
                 .register(new HealthResource(client))

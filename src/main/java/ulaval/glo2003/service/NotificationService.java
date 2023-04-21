@@ -2,22 +2,20 @@ package ulaval.glo2003.service;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import ulaval.glo2003.service.notification.EmailHost;
-import ulaval.glo2003.service.notification.Mail.BlankMail;
-import ulaval.glo2003.service.notification.Mail.Mail;
-import ulaval.glo2003.service.notification.Notification;
-import ulaval.glo2003.service.notification.SessionException;
+import ulaval.glo2003.domain.notification.Mail.BlankMail;
+import ulaval.glo2003.domain.notification.Mail.Mail;
+import ulaval.glo2003.domain.notification.Notification;
 
 public class NotificationService {
 
     private boolean running;
     private final Thread thread;
     private final Notification notification;
-    private final BlockingQueue<Mail> fifoQueue;
+    private final BlockingQueue<Mail> UnsentMails;
 
-    public NotificationService(EmailHost host, boolean checkSession) throws SessionException {
-        notification = new Notification(host, checkSession);
-        fifoQueue = new LinkedBlockingQueue<Mail>();
+    public NotificationService(Notification notification) {
+        this.notification = notification;
+        UnsentMails = new LinkedBlockingQueue<Mail>();
         thread = new Thread(null, this::sendMailThread, "Notification-Thread");
         thread.setDaemon(true);
         running = false;
@@ -26,7 +24,7 @@ public class NotificationService {
     private void sendMailThread() {
         while (running) {
             try {
-                Mail mail = fifoQueue.take();
+                Mail mail = UnsentMails.take();
 
                 if (mail.getClass() == BlankMail.class) continue;
 
@@ -37,11 +35,11 @@ public class NotificationService {
     }
 
     public void addMailToQueue(Mail mail) {
-        fifoQueue.add(mail);
+        UnsentMails.add(mail);
     }
 
     public boolean isQueueEmpty() {
-        return fifoQueue.isEmpty();
+        return UnsentMails.isEmpty();
     }
 
     public boolean isThreadAlive() {

@@ -1,10 +1,10 @@
-package ulaval.glo2003.service.notification;
+package ulaval.glo2003.domain.notification;
 
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
-import ulaval.glo2003.service.notification.Mail.BlankMail;
-import ulaval.glo2003.service.notification.Mail.Mail;
+import ulaval.glo2003.domain.notification.Mail.BlankMail;
+import ulaval.glo2003.domain.notification.Mail.Mail;
 
 public class Notification {
 
@@ -12,7 +12,7 @@ public class Notification {
     private static final String SMTP_DOMAIN = "smtp.gmail.com";
     private static final String PORT = "465";
 
-    public Notification(EmailHost emailHost, boolean checkSession) throws SessionException {
+    public Notification(EmailHost emailHost, boolean checkSession) {
         Properties properties = getMailProp();
         session = Session.getInstance(properties, getAuthenticator(emailHost));
 
@@ -34,7 +34,7 @@ public class Notification {
         }
     }
 
-    private void checkConnection(String sendTo) throws SessionException {
+    private void checkConnection(String sendTo) {
         BlankMail mail = new BlankMail(sendTo);
         if (!sendEmail(mail)) throw new SessionException();
     }

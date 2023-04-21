@@ -14,6 +14,7 @@ import ulaval.glo2003.api.seller.SellerResponse;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
 import ulaval.glo2003.domain.exceptions.MissingParamException;
 import ulaval.glo2003.domain.exceptions.NotPermittedException;
+import ulaval.glo2003.domain.notification.Mail.NewOfferMail;
 import ulaval.glo2003.domain.offer.IOfferRepository;
 import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.product.IProductRepository;
@@ -21,9 +22,6 @@ import ulaval.glo2003.domain.product.Product;
 import ulaval.glo2003.domain.product.ProductFilter;
 import ulaval.glo2003.domain.seller.ISellerRepository;
 import ulaval.glo2003.domain.seller.Seller;
-import ulaval.glo2003.service.notification.EmailHost;
-import ulaval.glo2003.service.notification.Mail.NewOfferMail;
-import ulaval.glo2003.service.notification.SessionException;
 
 public class SellingService {
     private final ISellerRepository sellerRepository;
@@ -41,16 +39,14 @@ public class SellingService {
             SellerMapper sellerMapper,
             ProductMapper productMapper,
             OfferMapper offerMapper,
-            EmailHost emailHost,
-            boolean checkSession)
-            throws SessionException {
+            NotificationService notificationService) {
         this.sellerRepository = sellerRepository;
         this.productRepository = productRepository;
         this.offerRepository = offerRepository;
         this.sellerMapper = sellerMapper;
         this.productMapper = productMapper;
         this.offerMapper = offerMapper;
-        this.notificationService = new NotificationService(emailHost, checkSession);
+        this.notificationService = notificationService;
         this.notificationService.startThread();
     }
 
@@ -191,10 +187,13 @@ public class SellingService {
 
     private void sendNewOfferNotification(Offer offer) {
         String productId = offer.getProductId();
-        String sellerId = getProductWithOffers(productId).getSellerId();
+        Product product = getProductWithOffers(productId);
+        String sellerId = product.getSellerId();
+        String productTitle = product.getTitle();
         String sellerEmail = getSellerWithProducts(sellerId).getEmail();
 
-        NewOfferMail mail = new NewOfferMail(offer.getUsername(), offer.getAmount(), productId, sellerEmail);
+        NewOfferMail mail =
+                new NewOfferMail(offer.getUsername(), offer.getAmount(), productId, sellerEmail, productTitle);
 
         notificationService.addMailToQueue(mail);
     }

@@ -15,6 +15,7 @@ import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
 import ulaval.glo2003.domain.exceptions.MissingParamException;
+import ulaval.glo2003.domain.notification.SessionException;
 import ulaval.glo2003.domain.offer.IOfferRepository;
 import ulaval.glo2003.domain.offer.Offer;
 import ulaval.glo2003.domain.offer.OfferFactory;
@@ -22,11 +23,7 @@ import ulaval.glo2003.domain.product.*;
 import ulaval.glo2003.domain.seller.ISellerRepository;
 import ulaval.glo2003.domain.seller.Seller;
 import ulaval.glo2003.domain.seller.SellerFactory;
-import ulaval.glo2003.service.OfferMapper;
-import ulaval.glo2003.service.ProductMapper;
-import ulaval.glo2003.service.SellerMapper;
-import ulaval.glo2003.service.SellingService;
-import ulaval.glo2003.service.notification.SessionException;
+import ulaval.glo2003.service.*;
 import ulaval.glo2003.utils.EmailHostTestUtils;
 import ulaval.glo2003.utils.OfferTestUtils;
 import ulaval.glo2003.utils.ProductTestUtils;
@@ -62,6 +59,8 @@ public abstract class ISellingServiceITest {
         sellerRepository = createSellerRepository();
         productRepository = createProductRepository();
         offerRepository = createOfferRepository();
+        NotificationService notificationService =
+                new NotificationServiceFactory().create(EmailHostTestUtils.emailHost, false);
         sellingService = new SellingService(
                 sellerRepository,
                 productRepository,
@@ -69,8 +68,7 @@ public abstract class ISellingServiceITest {
                 sellerMapper,
                 productMapper,
                 offerMapper,
-                EmailHostTestUtils.emailHost,
-                false);
+                notificationService);
     }
 
     @AfterEach

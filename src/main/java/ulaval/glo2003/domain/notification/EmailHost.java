@@ -1,4 +1,4 @@
-package ulaval.glo2003.service.notification;
+package ulaval.glo2003.domain.notification;
 
 public class EmailHost {
     public final String email;
