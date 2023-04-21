@@ -1,7 +1,9 @@
 package ulaval.glo2003.domain.infrastructure.mongo;
 
 import dev.morphia.Datastore;
+import dev.morphia.query.FindOptions;
 import dev.morphia.query.Query;
+import dev.morphia.query.Sort;
 import dev.morphia.query.filters.Filters;
 import jakarta.ws.rs.NotFoundException;
 import java.util.List;
@@ -30,6 +32,15 @@ public class MongoSellerRepository implements ISellerRepository {
         } else {
             throw new NotFoundException(String.format("Seller with id '%s' not found", id));
         }
+    }
+
+    @Override
+    public List<Seller> findSome(Integer amount) {
+        FindOptions findOptions = new FindOptions();
+        findOptions.limit(amount);
+        findOptions.sort(Sort.descending("score"));
+        Query<MongoSeller> sellersQuery = datastore.find(MongoSeller.class);
+        return sellersQuery.stream(findOptions).map(this::deserialize).collect(Collectors.toList());
     }
 
     @Override

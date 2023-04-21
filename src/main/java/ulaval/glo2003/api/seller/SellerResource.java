@@ -32,4 +32,11 @@ public class SellerResource {
                 .header("Location", uriInfo.getAbsolutePath() + "/" + sellerId)
                 .build();
     }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRankedSellers(@QueryParam("top") Integer top) {
+        SellerRankedCollectionResponse response = sellingService.getRankedSellers(top);
+        return Response.ok().entity(response).build();
+    }
 }

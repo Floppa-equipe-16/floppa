@@ -3,12 +3,14 @@ package ulaval.glo2003.service;
 import jakarta.ws.rs.NotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import ulaval.glo2003.api.offer.OfferRequest;
 import ulaval.glo2003.api.product.ProductCollectionResponse;
 import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.api.product.ProductSellRequest;
+import ulaval.glo2003.api.seller.SellerRankedCollectionResponse;
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
@@ -58,6 +60,14 @@ public class SellingService {
         Seller seller = getSellerWithProducts(sellerId);
 
         return sellerMapper.sellerToResponse(seller);
+    }
+
+    public SellerRankedCollectionResponse getRankedSellers(Integer top) {
+        top = Objects.requireNonNullElse(top, 10);
+        List<Seller> sellers = sellerRepository.findSome(top);
+        sellers.forEach(this::addProductsAndSelectedOfferToSeller);
+
+        return sellerMapper.sellersToRankedCollectionResponse(sellers);
     }
 
     private Seller getSellerWithProducts(String sellerId) {

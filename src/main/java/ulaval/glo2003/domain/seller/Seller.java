@@ -16,7 +16,14 @@ public class Seller {
     private final Map<String, Product> productsMap;
 
     public Seller(
-            String id, String name, String createdAt, String birthdate, String email, String phoneNumber, String bio, double score) {
+            String id,
+            String name,
+            String createdAt,
+            String birthdate,
+            String email,
+            String phoneNumber,
+            String bio,
+            double score) {
         this.id = id;
         this.name = name;
         this.createdAt = createdAt;
@@ -70,9 +77,13 @@ public class Seller {
         return createdAt;
     }
 
-    public double getScore() { return score; }
+    public double getScore() {
+        return score;
+    }
 
-    public void addScore(double score) { this.score += score; }
+    public void addScore(double score) {
+        this.score += score;
+    }
 
     public Map<String, Product> getProducts() {
         return productsMap;

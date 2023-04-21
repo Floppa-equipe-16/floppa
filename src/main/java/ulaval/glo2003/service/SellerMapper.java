@@ -1,7 +1,12 @@
 package ulaval.glo2003.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import ulaval.glo2003.api.product.ProductsStatsResponse;
+import ulaval.glo2003.api.seller.SellerRankedCollectionResponse;
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
+import ulaval.glo2003.domain.product.Product;
 import ulaval.glo2003.domain.seller.Seller;
 import ulaval.glo2003.domain.seller.SellerFactory;
 
@@ -29,6 +34,33 @@ public class SellerMapper {
         response.phoneNumber = seller.getPhoneNumber();
         response.bio = seller.getBio();
         response.products = productMapper.productsMapToResponsesList(seller.getProducts());
+
+        return response;
+    }
+
+    public SellerResponse sellerToScoredSellerResponse(Seller seller) {
+        SellerResponse response = sellerToResponse(seller);
+        response.productsStats = new ProductsStatsResponse();
+        response.products = null;
+        response.score = seller.getScore();
+
+        response.productsStats.count = seller.getProducts().values().size();
+
+        if (!seller.getProducts().values().isEmpty()) {
+            response.productsStats.avgAmount = seller.getProducts().values().stream()
+                    .mapToDouble(Product::getSuggestedPrice)
+                    .average()
+                    .orElse(Double.NaN);
+        }
+
+        return response;
+    }
+
+    public SellerRankedCollectionResponse sellersToRankedCollectionResponse(List<Seller> sellers) {
+        SellerRankedCollectionResponse response = new SellerRankedCollectionResponse();
+
+        response.sellers =
+                sellers.stream().map(this::sellerToScoredSellerResponse).collect(Collectors.toList());
 
         return response;
     }
