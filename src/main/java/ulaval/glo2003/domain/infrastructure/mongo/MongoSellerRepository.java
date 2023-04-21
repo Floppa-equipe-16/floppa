@@ -51,6 +51,7 @@ public class MongoSellerRepository implements ISellerRepository {
         mongoSeller.phoneNumber = seller.getPhoneNumber();
         mongoSeller.bio = seller.getBio();
         mongoSeller.createdAt = seller.getCreatedAt();
+        mongoSeller.score = seller.getScore();
         return mongoSeller;
     }
 
@@ -62,6 +63,7 @@ public class MongoSellerRepository implements ISellerRepository {
                 mongoSeller.birthdate,
                 mongoSeller.email,
                 mongoSeller.phoneNumber,
-                mongoSeller.bio);
+                mongoSeller.bio,
+                mongoSeller.score);
     }
 }

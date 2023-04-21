@@ -15,4 +15,5 @@ public class MongoSeller {
     public String phoneNumber;
     public String bio;
     public String createdAt;
+    public double score;
 }

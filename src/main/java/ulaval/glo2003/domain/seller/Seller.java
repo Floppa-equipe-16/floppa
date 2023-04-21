@@ -11,10 +11,12 @@ public class Seller {
     private final String phoneNumber;
     private final String bio;
     private final String createdAt;
+
+    private final double score;
     private final Map<String, Product> productsMap;
 
     public Seller(
-            String id, String name, String createdAt, String birthdate, String email, String phoneNumber, String bio) {
+            String id, String name, String createdAt, String birthdate, String email, String phoneNumber, String bio, double score) {
         this.id = id;
         this.name = name;
         this.createdAt = createdAt;
@@ -22,6 +24,7 @@ public class Seller {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.bio = bio;
+        this.score = score;
         this.productsMap = new HashMap<>();
     }
 
@@ -33,6 +36,7 @@ public class Seller {
         bio = that.getBio();
         id = that.getId();
         createdAt = that.getCreatedAt();
+        score = that.getScore();
 
         productsMap = new HashMap<>();
         that.getProducts().forEach((s, product) -> productsMap.put(s, new Product(product)));
@@ -66,6 +70,8 @@ public class Seller {
         return createdAt;
     }
 
+    public double getScore() { return score; }
+
     public Map<String, Product> getProducts() {
         return productsMap;
     }
@@ -90,6 +96,7 @@ public class Seller {
                 && email.equalsIgnoreCase(that.getEmail())
                 && phoneNumber.equalsIgnoreCase(that.getPhoneNumber())
                 && bio.equalsIgnoreCase(that.getBio())
-                && createdAt.equalsIgnoreCase(that.getCreatedAt());
+                && createdAt.equalsIgnoreCase(that.getCreatedAt())
+                && score == that.getScore();
     }
 }
