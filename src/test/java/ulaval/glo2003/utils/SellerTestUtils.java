@@ -14,6 +14,7 @@ import ulaval.glo2003.domain.seller.Seller;
 
 public class SellerTestUtils {
     private static final String ID = "1";
+    private static final String ID_2 = "2";
     private static final String NAME = "Bob";
     private static final String BIRTHDATE = "2000-01-01";
     private static final String EMAIL = "Bob@bob.bob";
@@ -25,6 +26,10 @@ public class SellerTestUtils {
 
     public static Seller createSeller() {
         return new Seller(ID, NAME, CREATED_AT, BIRTHDATE, EMAIL, PHONE_NUMBER, BIO, SCORE);
+    }
+
+    public static Seller createSeller2() {
+        return new Seller(ID_2, NAME, CREATED_AT, BIRTHDATE, EMAIL, PHONE_NUMBER, BIO, SCORE);
     }
 
     public static ProductResponse.SellerInfo createSellerInfo() {

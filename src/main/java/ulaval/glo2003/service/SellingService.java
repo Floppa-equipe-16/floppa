@@ -10,7 +10,7 @@ import ulaval.glo2003.api.product.ProductCollectionResponse;
 import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.api.product.ProductResponse;
 import ulaval.glo2003.api.product.ProductSellRequest;
-import ulaval.glo2003.api.seller.SellerRankedCollectionResponse;
+import ulaval.glo2003.api.seller.SellerCollectionResponse;
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
@@ -62,7 +62,7 @@ public class SellingService {
         return sellerMapper.sellerToResponse(seller);
     }
 
-    public SellerRankedCollectionResponse getRankedSellers(Integer top) {
+    public SellerCollectionResponse getRankedSellers(Integer top) {
         top = Objects.requireNonNullElse(top, 10);
         List<Seller> sellers = sellerRepository.findSome(top);
         sellers.forEach(this::addProductsAndSelectedOfferToSeller);

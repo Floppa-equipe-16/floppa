@@ -3,7 +3,7 @@ package ulaval.glo2003.service;
 import java.util.List;
 import java.util.stream.Collectors;
 import ulaval.glo2003.api.product.ProductsStatsResponse;
-import ulaval.glo2003.api.seller.SellerRankedCollectionResponse;
+import ulaval.glo2003.api.seller.SellerCollectionResponse;
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
 import ulaval.glo2003.domain.product.Product;
@@ -38,7 +38,7 @@ public class SellerMapper {
         return response;
     }
 
-    public SellerResponse sellerToScoredSellerResponse(Seller seller) {
+    private SellerResponse sellerToScoredSellerResponse(Seller seller) {
         SellerResponse response = sellerToResponse(seller);
         response.productsStats = new ProductsStatsResponse();
         response.products = null;
@@ -56,8 +56,8 @@ public class SellerMapper {
         return response;
     }
 
-    public SellerRankedCollectionResponse sellersToRankedCollectionResponse(List<Seller> sellers) {
-        SellerRankedCollectionResponse response = new SellerRankedCollectionResponse();
+    public SellerCollectionResponse sellersToRankedCollectionResponse(List<Seller> sellers) {
+        SellerCollectionResponse response = new SellerCollectionResponse();
 
         response.sellers =
                 sellers.stream().map(this::sellerToScoredSellerResponse).collect(Collectors.toList());

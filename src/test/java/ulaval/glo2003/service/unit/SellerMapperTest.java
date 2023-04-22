@@ -4,9 +4,12 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
+import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import ulaval.glo2003.api.seller.SellerCollectionResponse;
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
 import ulaval.glo2003.domain.seller.Seller;
@@ -50,5 +53,18 @@ class SellerMapperTest {
         SellerResponse response = mapper.sellerToResponse(seller);
 
         assertThat(SellerEquals.sellerResponseEqualsSeller(response, seller)).isTrue();
+    }
+
+    @Test
+    public void canMapSellersToCollectionResponse() {
+        Seller seller1 = SellerTestUtils.createSellerStub();
+        Seller seller2 = SellerTestUtils.createSellerStub();
+        Seller seller3 = SellerTestUtils.createSellerStub();
+        List<Seller> sellers = Arrays.asList(seller1, seller2, seller3);
+
+        SellerCollectionResponse response = mapper.sellersToRankedCollectionResponse(sellers);
+
+        assertThat(SellerEquals.sellerCollectionResponseEqualsSellers(response, sellers))
+                .isTrue();
     }
 }

@@ -135,6 +135,18 @@ class SellingServiceTest {
     }
 
     @Test
+    public void canGetRankedSellers() {
+        when(sellerRepositoryMock.findSome(1)).thenReturn(List.of(sellerStub));
+        when(sellerMapperMock.sellersToRankedCollectionResponse(List.of(sellerStub)))
+                .thenReturn(any());
+
+        sellingService.getRankedSellers(1);
+
+        verify(sellerRepositoryMock).findSome(1);
+        verify(sellerMapperMock).sellersToRankedCollectionResponse(List.of(sellerStub));
+    }
+
+    @Test
     public void canCreateProductWhenSellerExists() {
         ProductRequest request = ProductTestUtils.createProductRequest();
         when(productMapperMock.requestToProduct(SELLER_ID, request)).thenReturn(productStub);

@@ -4,6 +4,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import jakarta.ws.rs.NotFoundException;
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,26 @@ public abstract class ISellerRepositoryITest {
         Seller foundSeller = repository.findById(seller.getId());
 
         assertThat(foundSeller.getId()).isEqualTo(seller.getId());
+    }
+
+    @Test
+    public void canFindSomeWhenLessOrEqThanTopSize() {
+        repository.save(seller);
+        repository.save(SellerTestUtils.createSeller2());
+
+        List<Seller> foundSellers = repository.findSome(2);
+
+        assertThat(foundSellers.size()).isEqualTo(2);
+    }
+
+    @Test
+    public void canFindSomeWhenMoreThanTopSize() {
+        repository.save(seller);
+        repository.save(SellerTestUtils.createSeller2());
+
+        List<Seller> foundSellers = repository.findSome(1);
+
+        assertThat(foundSellers.size()).isEqualTo(1);
     }
 
     @Test

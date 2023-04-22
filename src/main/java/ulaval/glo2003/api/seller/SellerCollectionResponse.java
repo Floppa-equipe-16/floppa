@@ -3,11 +3,11 @@ package ulaval.glo2003.api.seller;
 import java.util.List;
 import java.util.Objects;
 
-public class SellerRankedCollectionResponse {
+public class SellerCollectionResponse {
 
     public List<SellerResponse> sellers;
 
-    public SellerRankedCollectionResponse() {}
+    public SellerCollectionResponse() {}
 
     @Override
     public boolean equals(Object o) {
@@ -15,13 +15,13 @@ public class SellerRankedCollectionResponse {
             return true;
         }
 
-        if (o instanceof SellerRankedCollectionResponse) {
-            SellerRankedCollectionResponse response = ((SellerRankedCollectionResponse) o);
+        if (o instanceof SellerCollectionResponse) {
+            SellerCollectionResponse response = ((SellerCollectionResponse) o);
             return isEqualsTo(response);
         } else return false;
     }
 
-    private boolean isEqualsTo(SellerRankedCollectionResponse response) {
+    private boolean isEqualsTo(SellerCollectionResponse response) {
 
         return Objects.equals(sellers, response.sellers);
     }

@@ -36,7 +36,7 @@ public class SellerResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRankedSellers(@QueryParam("top") Integer top) {
-        SellerRankedCollectionResponse response = sellingService.getRankedSellers(top);
+        SellerCollectionResponse response = sellingService.getRankedSellers(top);
         return Response.ok().entity(response).build();
     }
 }
