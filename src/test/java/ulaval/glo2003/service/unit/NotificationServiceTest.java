@@ -10,16 +10,17 @@ import ulaval.glo2003.domain.notification.Mail.BlankMail;
 import ulaval.glo2003.domain.notification.Notification;
 import ulaval.glo2003.domain.notification.SessionException;
 import ulaval.glo2003.service.NotificationService;
-import ulaval.glo2003.utils.EmailTestUtils;
+import ulaval.glo2003.service.NotificationServiceFactory;
 
 public class NotificationServiceTest {
 
     private Notification notification;
-    private final EmailTestUtils emailTestUtils = new EmailTestUtils();
 
     @BeforeEach
     public void setUp() throws SessionException {
-        notification = new Notification(emailTestUtils.emailHost, emailTestUtils.emailAuthentication, true);
+        NotificationServiceFactory factory = new NotificationServiceFactory();
+
+        notification = new Notification(factory.getEmailHost(), factory.getEmailAuthentication(), true);
     }
 
     @Test

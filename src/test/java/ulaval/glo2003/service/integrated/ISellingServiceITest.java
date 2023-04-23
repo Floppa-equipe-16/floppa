@@ -24,7 +24,6 @@ import ulaval.glo2003.domain.seller.ISellerRepository;
 import ulaval.glo2003.domain.seller.Seller;
 import ulaval.glo2003.domain.seller.SellerFactory;
 import ulaval.glo2003.service.*;
-import ulaval.glo2003.utils.EmailTestUtils;
 import ulaval.glo2003.utils.OfferTestUtils;
 import ulaval.glo2003.utils.ProductTestUtils;
 import ulaval.glo2003.utils.SellerTestUtils;
@@ -46,7 +45,6 @@ public abstract class ISellingServiceITest {
     private Product product;
     private Offer offer;
     private SellingService sellingService;
-    private final EmailTestUtils emailTestUtils = new EmailTestUtils();
 
     @BeforeAll
     public static void setUpAll() {
@@ -60,8 +58,7 @@ public abstract class ISellingServiceITest {
         sellerRepository = createSellerRepository();
         productRepository = createProductRepository();
         offerRepository = createOfferRepository();
-        NotificationService notificationService = new NotificationServiceFactory()
-                .create(emailTestUtils.emailHost, emailTestUtils.emailAuthentication, false);
+        NotificationService notificationService = new NotificationServiceFactory().create(false);
         sellingService = new SellingService(
                 sellerRepository,
                 productRepository,

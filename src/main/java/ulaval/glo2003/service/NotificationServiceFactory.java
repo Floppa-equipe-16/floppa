@@ -1,13 +1,48 @@
 package ulaval.glo2003.service;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 import ulaval.glo2003.domain.notification.EmailAuthentication;
 import ulaval.glo2003.domain.notification.EmailHost;
 import ulaval.glo2003.domain.notification.Notification;
 
 public class NotificationServiceFactory {
 
-    public NotificationService create(EmailHost host, EmailAuthentication authentication, boolean sessionCheck) {
-        Notification notification = new Notification(host, authentication, sessionCheck);
+    public NotificationService create(boolean sessionCheck) {
+        EmailHost emailHost = getEmailHost();
+        EmailAuthentication emailAuthentication = getEmailAuthentication();
+        Notification notification = new Notification(emailHost, emailAuthentication, sessionCheck);
         return new NotificationService(notification);
+    }
+
+    public EmailAuthentication getEmailAuthentication() {
+        String email = System.getenv("FLOPPA_HOST_EMAIL");
+        String password = System.getenv("FLOPPA_HOST_PASSWORD");
+        return new EmailAuthentication(email, password);
+    }
+
+    public EmailHost getEmailHost() {
+        Properties properties = getNotificationProp();
+        String smtpDomain = properties.getProperty("smtpDomain", "");
+        String domainPort = properties.getProperty("domainPort", "");
+        return new EmailHost(smtpDomain, domainPort);
+    }
+
+    private Properties getNotificationProp() {
+
+        try (InputStream input =
+                getClass().getClassLoader().getResourceAsStream("EmailNotificationConfig.properties")) {
+            Properties prop = new Properties();
+
+            if (input == null) {
+                throw new RuntimeException("Config file not found");
+            }
+
+            prop.load(input);
+            return prop;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

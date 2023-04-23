@@ -22,7 +22,6 @@ import ulaval.glo2003.service.NotificationService;
 import ulaval.glo2003.service.NotificationServiceFactory;
 import ulaval.glo2003.service.SellingService;
 import ulaval.glo2003.service.SellingServiceFactory;
-import ulaval.glo2003.utils.EmailTestUtils;
 import ulaval.glo2003.utils.MongoTestUtils;
 
 public abstract class ApiTest {
@@ -33,9 +32,7 @@ public abstract class ApiTest {
 
     static {
         try {
-            EmailTestUtils emailTestUtils = new EmailTestUtils();
-            NotificationService service = new NotificationServiceFactory()
-                    .create(emailTestUtils.emailHost, emailTestUtils.emailAuthentication, false);
+            NotificationService service = new NotificationServiceFactory().create(false);
             sellingService = new SellingServiceFactory().create(datastore, service);
         } catch (SessionException e) {
             throw new RuntimeException(e);
