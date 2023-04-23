@@ -58,7 +58,7 @@ public class Notification {
     }
 
     private Properties getMailProp(EmailHost emailHost) {
-        Properties prop = System.getProperties();
+        Properties prop = new Properties();
         prop.put("mail.smtp.host", emailHost.smtpDomain);
         prop.put("mail.smtp.port", emailHost.port);
         prop.put("mail.smtp.ssl.enable", "true");
