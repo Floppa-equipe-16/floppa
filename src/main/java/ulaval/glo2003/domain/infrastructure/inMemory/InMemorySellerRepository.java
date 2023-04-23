@@ -22,7 +22,7 @@ public class InMemorySellerRepository implements ISellerRepository {
     }
 
     @Override
-    public List<Seller> findSome(Integer amount) {
+    public List<Seller> findTopRanked(Integer amount) {
         return sellers.values().stream()
                 .sorted(Comparator.comparingDouble(Seller::getScore).reversed())
                 .limit(amount)

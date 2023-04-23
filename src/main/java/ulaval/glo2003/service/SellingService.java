@@ -64,7 +64,7 @@ public class SellingService {
 
     public SellerCollectionResponse getRankedSellers(Integer top) {
         top = Objects.requireNonNullElse(top, 10);
-        List<Seller> sellers = sellerRepository.findSome(top);
+        List<Seller> sellers = sellerRepository.findTopRanked(top);
         sellers.forEach(this::addProductsAndSelectedOfferToSeller);
 
         return sellerMapper.sellersToRankedCollectionResponse(sellers);

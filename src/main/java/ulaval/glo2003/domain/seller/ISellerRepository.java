@@ -5,7 +5,7 @@ import java.util.List;
 public interface ISellerRepository {
     Seller findById(String id);
 
-    List<Seller> findSome(Integer amount);
+    List<Seller> findTopRanked(Integer amount);
 
     void save(Seller seller);
 

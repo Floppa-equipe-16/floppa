@@ -136,13 +136,13 @@ class SellingServiceTest {
 
     @Test
     public void canGetRankedSellers() {
-        when(sellerRepositoryMock.findSome(1)).thenReturn(List.of(sellerStub));
+        when(sellerRepositoryMock.findTopRanked(1)).thenReturn(List.of(sellerStub));
         when(sellerMapperMock.sellersToRankedCollectionResponse(List.of(sellerStub)))
                 .thenReturn(any());
 
         sellingService.getRankedSellers(1);
 
-        verify(sellerRepositoryMock).findSome(1);
+        verify(sellerRepositoryMock).findTopRanked(1);
         verify(sellerMapperMock).sellersToRankedCollectionResponse(List.of(sellerStub));
     }
 

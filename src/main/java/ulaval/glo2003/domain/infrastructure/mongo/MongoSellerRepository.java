@@ -35,7 +35,7 @@ public class MongoSellerRepository implements ISellerRepository {
     }
 
     @Override
-    public List<Seller> findSome(Integer amount) {
+    public List<Seller> findTopRanked(Integer amount) {
         FindOptions findOptions = new FindOptions();
         findOptions.limit(amount);
         findOptions.sort(Sort.descending("score"));

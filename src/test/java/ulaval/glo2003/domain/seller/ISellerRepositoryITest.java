@@ -36,21 +36,30 @@ public abstract class ISellerRepositoryITest {
     }
 
     @Test
-    public void canFindSomeWhenLessOrEqThanTopSize() {
+    public void canFindTopRankedWhenEqToTopSize() {
         repository.save(seller);
         repository.save(SellerTestUtils.createSeller2());
 
-        List<Seller> foundSellers = repository.findSome(2);
+        List<Seller> foundSellers = repository.findTopRanked(2);
 
         assertThat(foundSellers.size()).isEqualTo(2);
     }
 
     @Test
-    public void canFindSomeWhenMoreThanTopSize() {
+    public void canFindTopRankedWhenLessThanTopSize() {
+        repository.save(seller);
+
+        List<Seller> foundSellers = repository.findTopRanked(2);
+
+        assertThat(foundSellers.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void canFindTopRankedWhenMoreThanTopSize() {
         repository.save(seller);
         repository.save(SellerTestUtils.createSeller2());
 
-        List<Seller> foundSellers = repository.findSome(1);
+        List<Seller> foundSellers = repository.findTopRanked(1);
 
         assertThat(foundSellers.size()).isEqualTo(1);
     }
