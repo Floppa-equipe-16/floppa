@@ -21,7 +21,6 @@ import ulaval.glo2003.api.product.ProductResource;
 import ulaval.glo2003.api.seller.SellerResource;
 import ulaval.glo2003.domain.notification.EmailAuthentication;
 import ulaval.glo2003.domain.notification.EmailHost;
-import ulaval.glo2003.domain.notification.Notification;
 import ulaval.glo2003.service.NotificationService;
 import ulaval.glo2003.service.NotificationServiceFactory;
 import ulaval.glo2003.service.SellingService;
@@ -54,8 +53,8 @@ public class ResourceConfigProvider {
         }
 
         Properties notificationProp = getNotificationProp();
-        EmailHost emailHost = Notification.getEmailHostFromProp(notificationProp);
-        EmailAuthentication emailAuthentication = Notification.getEmailAuthentificationFromProp(notificationProp);
+        EmailHost emailHost = getEmailHostFromProp(notificationProp);
+        EmailAuthentication emailAuthentication = getEmailAuthentication();
         datastore.getMapper().mapPackage("ulaval.glo2003");
         datastore.ensureIndexes();
 
@@ -91,6 +90,18 @@ public class ResourceConfigProvider {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static EmailAuthentication getEmailAuthentication() {
+        String email = System.getenv("FLOPPA_HOST_EMAIL");
+        String password = System.getenv("FLOPPA_HOST_PASSWORD");
+        return new EmailAuthentication(email, password);
+    }
+
+    public static EmailHost getEmailHostFromProp(Properties properties) {
+        String smtpDomain = properties.getProperty("smtpDomain", "");
+        String domainPort = properties.getProperty("domainPort", "");
+        return new EmailHost(smtpDomain, domainPort);
     }
 
     private void databaseHealthCheck(MongoClient client) {

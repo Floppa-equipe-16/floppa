@@ -45,18 +45,6 @@ public class Notification {
         };
     }
 
-    public static EmailAuthentication getEmailAuthentificationFromProp(Properties properties) {
-        String email = properties.getProperty("hostEmail", "");
-        String password = properties.getProperty("hostPassword", "");
-        return new EmailAuthentication(email, password);
-    }
-
-    public static EmailHost getEmailHostFromProp(Properties properties) {
-        String smtpDomain = properties.getProperty("smtpDomain", "");
-        String domainPort = properties.getProperty("domainPort", "");
-        return new EmailHost(smtpDomain, domainPort);
-    }
-
     private Properties getMailProp(EmailHost emailHost) {
         Properties prop = new Properties();
         prop.put("mail.smtp.host", emailHost.smtpDomain);

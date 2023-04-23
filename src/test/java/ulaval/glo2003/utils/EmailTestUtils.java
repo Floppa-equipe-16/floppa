@@ -3,9 +3,9 @@ package ulaval.glo2003.utils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import ulaval.glo2003.ResourceConfigProvider;
 import ulaval.glo2003.domain.notification.EmailAuthentication;
 import ulaval.glo2003.domain.notification.EmailHost;
-import ulaval.glo2003.domain.notification.Notification;
 
 public class EmailTestUtils {
     public final EmailHost emailHost;
@@ -14,8 +14,8 @@ public class EmailTestUtils {
 
     public EmailTestUtils() {
         Properties prop = getNotificationProp();
-        emailHost = Notification.getEmailHostFromProp(prop);
-        emailAuthentication = Notification.getEmailAuthentificationFromProp(prop);
+        emailHost = ResourceConfigProvider.getEmailHostFromProp(prop);
+        emailAuthentication = ResourceConfigProvider.getEmailAuthentication();
     }
 
     private Properties getNotificationProp() {
