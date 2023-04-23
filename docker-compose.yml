@@ -9,7 +9,7 @@ services:
       FLOPPA_MONGO_CLUSTER_URL: "mongodb://db:27017/"
       FLOPPA_MONGO_DATABASE: "floppa-dev"
       FLOPPA_HOST_EMAIL: "floppanotification@gmail.com"
-      FLOPPA_HOST_PASSWORD: "vexwtppdwslsfcra"
+      FLOPPA_HOST_PASSWORD: "wgaxeddujjqlnvvu"
 
   db:
     image: mongo:5.0
