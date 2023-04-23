@@ -9,8 +9,6 @@ import ulaval.glo2003.domain.notification.Mail.Mail;
 public class Notification {
 
     private final Session session;
-    private static final String SMTP_DOMAIN = "smtp.gmail.com";
-    private static final String PORT = "465";
 
     public Notification(EmailHost emailHost, EmailAuthentication emailAuthentication, boolean checkSession) {
         Properties properties = getMailProp(emailHost);
