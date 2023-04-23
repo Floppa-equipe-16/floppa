@@ -1,4 +1,2 @@
 .idea/
 target/
-src/main/resources/EmailNotificationConfig.properties
-src/test/resources/EmailNotificationConfig.properties
