@@ -5,32 +5,35 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.domain.notification.Mail.BlankMail;
-import ulaval.glo2003.utils.EmailHostTestUtils;
+import ulaval.glo2003.utils.EmailTestUtils;
 
 public class NotificationTest {
 
+    private final EmailTestUtils emailTestUtils = new EmailTestUtils();
+
     @Test
     public void constructorHostValid() {
-        assertDoesNotThrow(() -> new Notification(EmailHostTestUtils.emailHost, true));
+        assertDoesNotThrow(() -> new Notification(emailTestUtils.emailHost, emailTestUtils.emailAuthentication, true));
     }
 
     @Test
     public void constructorHostInvalid() {
-        EmailHost invalidHost = new EmailHost("floppanotification@gmail.com", "notGood");
+        EmailAuthentication invalidAuthentication =
+                new EmailAuthentication(emailTestUtils.emailAuthentication.email, "notGood");
 
-        assertThrows(Exception.class, () -> new Notification(invalidHost, true));
+        assertThrows(Exception.class, () -> new Notification(emailTestUtils.emailHost, invalidAuthentication, true));
     }
 
     @Test
     public void canSendMail() {
         Notification notification;
         try {
-            notification = new Notification(EmailHostTestUtils.emailHost, true);
+            notification = new Notification(emailTestUtils.emailHost, emailTestUtils.emailAuthentication, true);
         } catch (SessionException ignored) {
             fail("Should not throw exception check test : constructorHostValid");
             return;
         }
-        BlankMail mail = new BlankMail(EmailHostTestUtils.emailHost.email);
+        BlankMail mail = new BlankMail(emailTestUtils.emailAuthentication.email);
 
         boolean result = notification.sendEmail(mail);
 

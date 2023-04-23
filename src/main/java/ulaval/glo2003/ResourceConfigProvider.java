@@ -6,6 +6,9 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -16,7 +19,9 @@ import ulaval.glo2003.api.exceptionMappers.ParamExceptionMapper;
 import ulaval.glo2003.api.offer.OfferResource;
 import ulaval.glo2003.api.product.ProductResource;
 import ulaval.glo2003.api.seller.SellerResource;
+import ulaval.glo2003.domain.notification.EmailAuthentication;
 import ulaval.glo2003.domain.notification.EmailHost;
+import ulaval.glo2003.domain.notification.Notification;
 import ulaval.glo2003.service.NotificationService;
 import ulaval.glo2003.service.NotificationServiceFactory;
 import ulaval.glo2003.service.SellingService;
@@ -48,12 +53,14 @@ public class ResourceConfigProvider {
             datastore = Morphia.createDatastore(client, System.getenv("FLOPPA_MONGO_DATABASE"));
         }
 
+        Properties notificationProp = getNotificationProp();
+        EmailHost emailHost = Notification.getEmailHostFromProp(notificationProp);
+        EmailAuthentication emailAuthentication = Notification.getEmailAuthentificationFromProp(notificationProp);
         datastore.getMapper().mapPackage("ulaval.glo2003");
         datastore.ensureIndexes();
 
-        EmailHost emailHost = new EmailHost("floppanotification@gmail.com", "vexwtppdwslsfcra");
         NotificationServiceFactory notificationFactory = new NotificationServiceFactory();
-        NotificationService notificationService = notificationFactory.create(emailHost, true);
+        NotificationService notificationService = notificationFactory.create(emailHost, emailAuthentication, true);
 
         SellingServiceFactory factory = new SellingServiceFactory();
         SellingService sellingService = factory.create(datastore, notificationService);
@@ -67,6 +74,23 @@ public class ResourceConfigProvider {
                 .register(ParamExceptionMapper.class)
                 .register(NotFoundExceptionMapper.class)
                 .register(JacksonFeature.class);
+    }
+
+    private Properties getNotificationProp() {
+
+        try (InputStream input =
+                getClass().getClassLoader().getResourceAsStream("EmailNotificationConfig.properties")) {
+            Properties prop = new Properties();
+
+            if (input == null) {
+                throw new RuntimeException("Config file not found");
+            }
+
+            prop.load(input);
+            return prop;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void databaseHealthCheck(MongoClient client) {
