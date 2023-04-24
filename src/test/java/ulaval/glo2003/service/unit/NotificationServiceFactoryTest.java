@@ -36,9 +36,9 @@ public class NotificationServiceFactoryTest {
         String email = "test";
         String password = "something";
         try (MockedStatic<EnvironmentVariable> environmentVariableMockedStatic =
-                     Mockito.mockStatic(EnvironmentVariable.class, Mockito.CALLS_REAL_METHODS)) {
+                Mockito.mockStatic(EnvironmentVariable.class, Mockito.CALLS_REAL_METHODS)) {
 
-            EnvironmentVarMock.mockEnvVarEmail(environmentVariableMockedStatic,email);
+            EnvironmentVarMock.mockEnvVarEmail(environmentVariableMockedStatic, email);
             EnvironmentVarMock.mockEnvVarPassword(environmentVariableMockedStatic, password);
 
             EmailAuthentication emailAuthentication = factory.getEmailAuthentication();
@@ -49,18 +49,17 @@ public class NotificationServiceFactoryTest {
         }
     }
 
-    @Test void canGetEmailAuthenticationWhenEnvVarMissing() {
+    @Test
+    void canGetEmailAuthenticationWhenEnvVarMissing() {
         try (MockedStatic<EnvironmentVariable> environmentVariableMockedStatic =
-                     Mockito.mockStatic(EnvironmentVariable.class, Mockito.CALLS_REAL_METHODS)) {
+                Mockito.mockStatic(EnvironmentVariable.class, Mockito.CALLS_REAL_METHODS)) {
 
-            EnvironmentVarMock.mockEnvVarEmail(environmentVariableMockedStatic,null);
+            EnvironmentVarMock.mockEnvVarEmail(environmentVariableMockedStatic, null);
             EnvironmentVarMock.mockEnvVarPassword(environmentVariableMockedStatic, null);
 
             EmailAuthentication emailAuthentication = factory.getEmailAuthentication();
 
             assertThat(emailAuthentication).isNull();
         }
-
     }
-
 }

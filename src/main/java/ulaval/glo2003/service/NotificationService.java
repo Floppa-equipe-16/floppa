@@ -15,7 +15,7 @@ public class NotificationService {
 
     public NotificationService(Notification notification) {
         this.notification = notification;
-        UnsentMails = new LinkedBlockingQueue<Mail>();
+        UnsentMails = new LinkedBlockingQueue<>();
         thread = new Thread(null, this::sendMailThread, "Notification-Thread");
         thread.setDaemon(true);
         running = false;
@@ -57,10 +57,11 @@ public class NotificationService {
         thread.join();
     }
 
-    public void stopThread() {
+    public void stopThread() throws InterruptedException {
         if (running) {
             running = false;
             if (isQueueEmpty()) addMailToQueue(new BlankMail(""));
         }
+        joinThread();
     }
 }

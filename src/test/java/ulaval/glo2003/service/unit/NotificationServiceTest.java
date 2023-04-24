@@ -6,21 +6,30 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+import ulaval.glo2003.EnvironmentVariable;
 import ulaval.glo2003.domain.notification.Mail.BlankMail;
 import ulaval.glo2003.domain.notification.Notification;
-import ulaval.glo2003.domain.notification.SessionException;
 import ulaval.glo2003.service.NotificationService;
 import ulaval.glo2003.service.NotificationServiceFactory;
+import ulaval.glo2003.utils.EnvironmentVarMock;
 
 public class NotificationServiceTest {
 
     private Notification notification;
 
     @BeforeEach
-    public void setUp() throws SessionException {
-        NotificationServiceFactory factory = new NotificationServiceFactory();
+    public void setUp() {
+        try (MockedStatic<EnvironmentVariable> environmentVariableMockedStatic =
+                Mockito.mockStatic(EnvironmentVariable.class, Mockito.CALLS_REAL_METHODS)) {
 
-        notification = new Notification(factory.getEmailHost(), factory.getEmailAuthentication(), true);
+            EnvironmentVarMock.mockEnvVarEmail(environmentVariableMockedStatic, null);
+            EnvironmentVarMock.mockEnvVarPassword(environmentVariableMockedStatic, null);
+
+            NotificationServiceFactory factory = new NotificationServiceFactory();
+            notification = new Notification(factory.getEmailHost(), factory.getEmailAuthentication(), true);
+        }
     }
 
     @Test
@@ -51,6 +60,8 @@ public class NotificationServiceTest {
         TimeUnit.MILLISECONDS.sleep(100);
 
         assertThat(service.isThreadAlive()).isTrue();
+
+        service.stopThread();
     }
 
     @Test
@@ -61,7 +72,6 @@ public class NotificationServiceTest {
         service.startThread();
         TimeUnit.MILLISECONDS.sleep(100);
         service.stopThread();
-        TimeUnit.MILLISECONDS.sleep(100);
 
         assertThat(service.isThreadAlive()).isFalse();
     }
@@ -74,8 +84,8 @@ public class NotificationServiceTest {
         service.startThread();
         TimeUnit.MILLISECONDS.sleep(100);
         service.addMailToQueue(mail);
+        TimeUnit.MILLISECONDS.sleep(100);
         service.stopThread();
-        service.joinThread();
 
         assertThat(service.isQueueEmpty()).isTrue();
     }

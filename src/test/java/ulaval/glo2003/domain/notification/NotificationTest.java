@@ -19,11 +19,16 @@ public class NotificationTest {
 
     @BeforeEach
     public void setUp() {
+        try (MockedStatic<EnvironmentVariable> environmentVariableMockedStatic =
+                Mockito.mockStatic(EnvironmentVariable.class, Mockito.CALLS_REAL_METHODS)) {
 
-        NotificationServiceFactory factory = new NotificationServiceFactory();
-        emailHost = factory.getEmailHost();
-        emailAuthentication = factory.getEmailAuthentication();
+            EnvironmentVarMock.mockEnvVarEmail(environmentVariableMockedStatic, null);
+            EnvironmentVarMock.mockEnvVarPassword(environmentVariableMockedStatic, null);
 
+            NotificationServiceFactory factory = new NotificationServiceFactory();
+            emailHost = factory.getEmailHost();
+            emailAuthentication = factory.getEmailAuthentication();
+        }
     }
 
     @Test
@@ -50,15 +55,14 @@ public class NotificationTest {
 
         boolean result = notification.sendEmail(mail);
 
-        if (isEnvVarSet()){
+        if (isEnvVarSet()) {
             assertThat(result).isFalse();
-        }
-        else {
+        } else {
             assertThat(result).isTrue();
         }
     }
 
-    private boolean isEnvVarSet(){
+    private boolean isEnvVarSet() {
         return emailAuthentication == null;
     }
 }

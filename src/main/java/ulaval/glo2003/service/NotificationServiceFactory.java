@@ -3,7 +3,6 @@ package ulaval.glo2003.service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-
 import ulaval.glo2003.EnvironmentVariable;
 import ulaval.glo2003.domain.notification.EmailAuthentication;
 import ulaval.glo2003.domain.notification.EmailHost;
@@ -23,10 +22,8 @@ public class NotificationServiceFactory {
         String password = EnvironmentVariable.getFloppaHostPassword();
         EmailAuthentication authentication;
 
-        if (email == null || password == null)
-            authentication = null;
-        else
-            authentication = new EmailAuthentication(email, password);
+        if (email == null || password == null) authentication = null;
+        else authentication = new EmailAuthentication(email, password);
 
         return authentication;
     }
