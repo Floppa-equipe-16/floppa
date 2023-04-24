@@ -41,10 +41,10 @@ public class ResourceConfigProvider {
                     .applyToClusterSettings(builder -> builder.serverSelectionTimeout(TIMEOUT, TimeUnit.MILLISECONDS))
                     .applyToConnectionPoolSettings(
                             builder -> builder.maxConnectionIdleTime(TIMEOUT, TimeUnit.MILLISECONDS))
-                    .applyConnectionString(new ConnectionString(System.getenv("FLOPPA_MONGO_CLUSTER_URL")))
+                    .applyConnectionString(new ConnectionString(EnvironmentVariable.getFloppaMongoClusterUrl()))
                     .build());
             databaseHealthCheck(client);
-            datastore = Morphia.createDatastore(client, System.getenv("FLOPPA_MONGO_DATABASE"));
+            datastore = Morphia.createDatastore(client, EnvironmentVariable.getFloppaMongoDatabase());
         }
 
         datastore.getMapper().mapPackage("ulaval.glo2003");

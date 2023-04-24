@@ -5,8 +5,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+import ulaval.glo2003.EnvironmentVariable;
 import ulaval.glo2003.domain.notification.Mail.BlankMail;
 import ulaval.glo2003.service.NotificationServiceFactory;
+import ulaval.glo2003.utils.EnvironmentVarMock;
 
 public class NotificationTest {
 
@@ -15,9 +19,11 @@ public class NotificationTest {
 
     @BeforeEach
     public void setUp() {
+
         NotificationServiceFactory factory = new NotificationServiceFactory();
         emailHost = factory.getEmailHost();
         emailAuthentication = factory.getEmailAuthentication();
+
     }
 
     @Test
@@ -27,8 +33,7 @@ public class NotificationTest {
 
     @Test
     public void constructorHostInvalid() {
-        EmailAuthentication invalidAuthentication = new EmailAuthentication(emailAuthentication.email, "notGood");
-
+        EmailAuthentication invalidAuthentication = new EmailAuthentication("Floppanotification@gmail.com", "notGood");
         assertThrows(Exception.class, () -> new Notification(emailHost, invalidAuthentication, true));
     }
 
@@ -41,10 +46,19 @@ public class NotificationTest {
             fail("Should not throw exception check test : constructorHostValid");
             return;
         }
-        BlankMail mail = new BlankMail(emailAuthentication.email);
+        BlankMail mail = new BlankMail("floppanotification@gmail.com");
 
         boolean result = notification.sendEmail(mail);
 
-        assertThat(result).isTrue();
+        if (isEnvVarSet()){
+            assertThat(result).isFalse();
+        }
+        else {
+            assertThat(result).isTrue();
+        }
+    }
+
+    private boolean isEnvVarSet(){
+        return emailAuthentication == null;
     }
 }

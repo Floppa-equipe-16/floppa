@@ -10,14 +10,23 @@ public class Notification {
 
     private final Session session;
 
+
     public Notification(EmailHost emailHost, EmailAuthentication emailAuthentication, boolean checkSession) {
         Properties properties = getMailProp(emailHost);
-        session = Session.getInstance(properties, getAuthenticator(emailAuthentication));
 
-        if (checkSession) checkConnection(emailAuthentication.email);
+        if (emailAuthentication != null){
+            session = Session.getInstance(properties, getAuthenticator(emailAuthentication));
+
+            if (checkSession)
+                checkConnection(emailAuthentication.email);
+        }
+        else session = null;
+
     }
 
     public boolean sendEmail(Mail message) {
+        if (session == null)
+            return false;
         try {
             MimeMessage mimeMessage = new MimeMessage(session);
 
