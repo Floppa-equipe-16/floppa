@@ -1,6 +1,7 @@
 package ulaval.glo2003.service.unit;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.Mockito.mock;
 
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
@@ -9,16 +10,21 @@ import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import ulaval.glo2003.service.NotificationService;
 import ulaval.glo2003.service.SellingService;
 import ulaval.glo2003.service.SellingServiceFactory;
 
 class SellingServiceFactoryTest {
+    @Mock
+    private NotificationService notificationService = mock(NotificationService.class);
 
     @Test
     public void canCreateInMemory() {
+
         SellingServiceFactory factory = new SellingServiceFactory();
 
-        SellingService service = factory.create();
+        SellingService service = factory.create(notificationService);
 
         assertThat(service).isNotNull();
     }
@@ -34,7 +40,7 @@ class SellingServiceFactoryTest {
         datastore.ensureIndexes();
         SellingServiceFactory factory = new SellingServiceFactory();
 
-        SellingService service = factory.create(datastore);
+        SellingService service = factory.create(datastore, notificationService);
 
         assertThat(service).isNotNull();
     }
