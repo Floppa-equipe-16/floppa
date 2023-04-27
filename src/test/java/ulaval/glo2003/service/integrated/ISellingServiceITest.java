@@ -12,6 +12,7 @@ import ulaval.glo2003.api.offer.OfferRequest;
 import ulaval.glo2003.api.product.ProductCollectionResponse;
 import ulaval.glo2003.api.product.ProductRequest;
 import ulaval.glo2003.api.product.ProductResponse;
+import ulaval.glo2003.api.seller.SellerCollectionResponse;
 import ulaval.glo2003.api.seller.SellerRequest;
 import ulaval.glo2003.api.seller.SellerResponse;
 import ulaval.glo2003.domain.exceptions.MissingParamException;
@@ -107,6 +108,16 @@ public abstract class ISellingServiceITest {
 
         assertThat(sellerResponse.products).hasSize(1);
         assertThat(sellerResponse.id).isEqualTo(seller.getId());
+    }
+
+    @Test
+    public void canGetRankedSellers() {
+        saveSellerToRepository();
+
+        SellerCollectionResponse response = sellingService.getRankedSellers(1);
+
+        assertThat(response.sellers).hasSize(1);
+        assertThat(response.sellers.get(0).id).isEqualTo(seller.getId());
     }
 
     @Test

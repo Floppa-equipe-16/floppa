@@ -1,9 +1,12 @@
 package ulaval.glo2003.api.seller;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 import java.util.Objects;
 import ulaval.glo2003.api.product.ProductResponse;
+import ulaval.glo2003.api.product.ProductsStatsResponse;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SellerResponse {
     public String id;
     public String createdAt;
@@ -12,6 +15,9 @@ public class SellerResponse {
     public String email;
     public String phoneNumber;
     public String bio;
+    public Double score;
+    public ProductsStatsResponse productsStats;
+
     public List<ProductResponse> products;
 
     public SellerResponse() {}
