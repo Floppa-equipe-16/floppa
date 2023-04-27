@@ -6,8 +6,7 @@
 ![issues](https://img.shields.io/github/issues/Floppa-equipe-16/floppa)
 ![license](https://img.shields.io/github/license/Floppa-equipe-16/floppa)
 
-## Description
-Floppa is a blbalblala
+Floppa is a REST API for a marketplace or auction website that allows sellers to list and sell their products, and buyers to browse and purchase products from various sellers.
 
 <details>
   <summary>How to run</summary>
@@ -41,17 +40,25 @@ Floppa is a blbalblala
 </details>
 
 <details>
-  <summary>How to use</summary>
+  <summary>Endpoints</summary><br>
   
-  ### Endpoints
-  - Java 11
-  - Maven
+  - `GET /health` - Checks the health satus of the API
+  - `POST /sellers` - Allows sellers to create an account and list their products.
+  - `GET /sellers` - Retrieves a list of top sellers based on a ranking criteria.
+  - `GET /sellers/{sellerId}` - Retrieves information about a specific seller.
+  - `POST /products` - Allows sellers to create a new product listing.
+  - `GET /products` - Retrieves a list of products with optional filters such as sellerId, title, category, minPrice and maxPrice
+  - `GET /products/{productId}` - Retrieves detailed information about a specific product.
+  - `POST /products/{productId}/sell` - Marks a product as sold by the seller
+  - `POST /products/{productId}/offers` - Allows buyers to make an offer on a product
   
 </details>
 
 <details>
-  <summary>How to contribute</summary>
-    See the ![Contributing guide](CONTRIBUTING.MD)
+  <summary>How to contribute</summary><br>
+  
+  Everyone is welcomed to contribute! If you are interested, see the [Contribution Guide](CONTRIBUTIONS.md).
+  
 </details>
 
 
