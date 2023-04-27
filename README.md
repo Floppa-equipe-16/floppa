@@ -6,7 +6,7 @@
 ![issues](https://img.shields.io/github/issues/Floppa-equipe-16/floppa)
 ![license](https://img.shields.io/github/license/Floppa-equipe-16/floppa)
 
-Floppa is a REST API for a marketplace or auction website that allows sellers to list and sell their products, and buyers to browse and purchase products from various sellers.
+Floppa is a API for a marketplace or auction website that allows sellers to list and sell their products, and buyers to browse and purchase products from various sellers.
 
 <details>
   <summary>How to run</summary>
