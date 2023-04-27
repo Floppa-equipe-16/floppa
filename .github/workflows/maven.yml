@@ -69,7 +69,5 @@ jobs:
         uses: supercharge/mongodb-github-action@1.8.0
         with:
            mongodb-version: '6.0'
-      - name: Test with Maven
-        run: mvn -B test --file pom.xml
-      - name: Integration test with Maven
-        run: mvn -B failsafe:integration-test --file pom.xml
+      - name: Tests with Maven
+        run: mvn -B verify --file pom.xml
