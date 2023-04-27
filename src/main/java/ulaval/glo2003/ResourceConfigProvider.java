@@ -16,6 +16,8 @@ import ulaval.glo2003.api.exceptionMappers.ParamExceptionMapper;
 import ulaval.glo2003.api.offer.OfferResource;
 import ulaval.glo2003.api.product.ProductResource;
 import ulaval.glo2003.api.seller.SellerResource;
+import ulaval.glo2003.service.NotificationService;
+import ulaval.glo2003.service.NotificationServiceFactory;
 import ulaval.glo2003.service.SellingService;
 import ulaval.glo2003.service.SellingServiceFactory;
 
@@ -39,16 +41,20 @@ public class ResourceConfigProvider {
                     .applyToClusterSettings(builder -> builder.serverSelectionTimeout(TIMEOUT, TimeUnit.MILLISECONDS))
                     .applyToConnectionPoolSettings(
                             builder -> builder.maxConnectionIdleTime(TIMEOUT, TimeUnit.MILLISECONDS))
-                    .applyConnectionString(new ConnectionString(System.getenv("FLOPPA_MONGO_CLUSTER_URL")))
+                    .applyConnectionString(new ConnectionString(EnvironmentVariable.getFloppaMongoClusterUrl()))
                     .build());
             databaseHealthCheck(client);
-            datastore = Morphia.createDatastore(client, System.getenv("FLOPPA_MONGO_DATABASE"));
+            datastore = Morphia.createDatastore(client, EnvironmentVariable.getFloppaMongoDatabase());
         }
+
         datastore.getMapper().mapPackage("ulaval.glo2003");
         datastore.ensureIndexes();
 
+        NotificationServiceFactory notificationFactory = new NotificationServiceFactory();
+        NotificationService notificationService = notificationFactory.create(true);
+
         SellingServiceFactory factory = new SellingServiceFactory();
-        SellingService sellingService = factory.create(datastore);
+        SellingService sellingService = factory.create(datastore, notificationService);
 
         return new ResourceConfig()
                 .register(new HealthResource(client))

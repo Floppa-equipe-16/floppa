@@ -17,6 +17,9 @@ import ulaval.glo2003.domain.exceptions.ErrorDescription;
 import ulaval.glo2003.domain.infrastructure.mongo.MongoOfferRepository;
 import ulaval.glo2003.domain.infrastructure.mongo.MongoProductRepository;
 import ulaval.glo2003.domain.infrastructure.mongo.MongoSellerRepository;
+import ulaval.glo2003.domain.notification.SessionException;
+import ulaval.glo2003.service.NotificationService;
+import ulaval.glo2003.service.NotificationServiceFactory;
 import ulaval.glo2003.service.SellingService;
 import ulaval.glo2003.service.SellingServiceFactory;
 import ulaval.glo2003.utils.MongoTestUtils;
@@ -25,7 +28,16 @@ public abstract class ApiTest {
 
     private static final Datastore datastore = MongoTestUtils.createLocalDatastore();
     private static JerseyTest jerseyTest;
-    protected static SellingService sellingService = new SellingServiceFactory().create(datastore);
+    protected static SellingService sellingService;
+
+    static {
+        try {
+            NotificationService service = new NotificationServiceFactory().create(false);
+            sellingService = new SellingServiceFactory().create(datastore, service);
+        } catch (SessionException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public ApiTest() {}
 
@@ -67,7 +79,11 @@ public abstract class ApiTest {
         jerseyTest = new JerseyTest() {
             @Override
             protected Application configure() {
-                return new ResourceConfigProvider().provide(true);
+                try {
+                    return new ResourceConfigProvider().provide(true);
+                } catch (SessionException e) {
+                    throw new RuntimeException(e);
+                }
             }
         };
     }

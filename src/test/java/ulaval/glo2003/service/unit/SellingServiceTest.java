@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 import jakarta.ws.rs.NotFoundException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,10 +23,7 @@ import ulaval.glo2003.domain.product.Product;
 import ulaval.glo2003.domain.product.ProductFilter;
 import ulaval.glo2003.domain.seller.ISellerRepository;
 import ulaval.glo2003.domain.seller.Seller;
-import ulaval.glo2003.service.OfferMapper;
-import ulaval.glo2003.service.ProductMapper;
-import ulaval.glo2003.service.SellerMapper;
-import ulaval.glo2003.service.SellingService;
+import ulaval.glo2003.service.*;
 import ulaval.glo2003.utils.OfferTestUtils;
 import ulaval.glo2003.utils.ProductTestUtils;
 import ulaval.glo2003.utils.SellerTestUtils;
@@ -33,6 +31,9 @@ import ulaval.glo2003.utils.SellerTestUtils;
 class SellingServiceTest {
     private static final String SELLER_ID = "SELLER";
     private static final String PRODUCT_ID = "PRODUCT";
+
+    @Mock
+    private NotificationService notificationService = mock(NotificationService.class);
 
     @Mock
     private ISellerRepository sellerRepositoryMock = mock(ISellerRepository.class);
@@ -64,14 +65,15 @@ class SellingServiceTest {
     private SellingService sellingService;
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws RuntimeException {
         sellingService = new SellingService(
                 sellerRepositoryMock,
                 productRepositoryMock,
                 offerRepositoryMock,
                 sellerMapperMock,
                 productMapperMock,
-                offerMapperMock);
+                offerMapperMock,
+                notificationService);
 
         sellerStub = createSellerStub();
         productStub = createProductStub();
@@ -132,6 +134,18 @@ class SellingServiceTest {
         verify(sellerStub).addProduct(productStub);
         verify(sellerRepositoryMock).findById(SELLER_ID);
         verify(sellerMapperMock).sellerToResponse(sellerStub);
+    }
+
+    @Test
+    public void canGetRankedSellers() {
+        when(sellerRepositoryMock.findTopRanked(1)).thenReturn(List.of(sellerStub));
+        when(sellerMapperMock.sellersToRankedCollectionResponse(List.of(sellerStub)))
+                .thenReturn(any());
+
+        sellingService.getRankedSellers(1);
+
+        verify(sellerRepositoryMock).findTopRanked(1);
+        verify(sellerMapperMock).sellersToRankedCollectionResponse(List.of(sellerStub));
     }
 
     @Test
@@ -232,12 +246,15 @@ class SellingServiceTest {
         String buyerName = "Alice";
         when(offerMapperMock.requestToOffer(PRODUCT_ID, buyerName, request)).thenReturn(offerStub);
         when(productRepositoryMock.findById(PRODUCT_ID)).thenReturn(productStub);
+        when(sellerRepositoryMock.findById(any())).thenReturn(sellerStub);
+        when(productRepositoryMock.findAllBySellerId(any())).thenReturn(new ArrayList<>());
+        when(offerRepositoryMock.findAllByProductId(PRODUCT_ID)).thenReturn(new ArrayList<>());
 
         String id = sellingService.createOffer(buyerName, PRODUCT_ID, request);
 
         assertThat(id).isEqualTo(offerStub.getId());
         verify(offerRepositoryMock).save(offerStub);
-        verify(productRepositoryMock).findById(PRODUCT_ID);
+        verify(productRepositoryMock, times(2)).findById(PRODUCT_ID);
     }
 
     @Test
@@ -251,7 +268,7 @@ class SellingServiceTest {
     }
 
     @Test
-    public void createOfferThrowsWhenBuyerNameisNull() {
+    public void createOfferThrowsWhenBuyerNameIsNull() {
         OfferRequest request = OfferTestUtils.createOfferRequest();
         when(offerMapperMock.requestToOffer(PRODUCT_ID, null, request)).thenReturn(offerStub);
         when(productRepositoryMock.findById(PRODUCT_ID)).thenThrow(NotFoundException.class);

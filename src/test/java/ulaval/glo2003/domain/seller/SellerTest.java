@@ -59,7 +59,7 @@ public class SellerTest {
     @Test
     public void canCompareDifferentSellers() {
         Seller differentSeller = new Seller(
-                "ID", "Gertrude", Instant.MIN.toString(), "1010-10-10", "Gertrude@email.com", "11231231234", "Not");
+                "ID", "Gertrude", Instant.MIN.toString(), "1010-10-10", "Gertrude@email.com", "11231231234", "Not", 0);
 
         assertThat(seller).isNotEqualTo(differentSeller);
     }

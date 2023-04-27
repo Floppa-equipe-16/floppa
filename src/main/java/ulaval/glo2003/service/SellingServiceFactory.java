@@ -16,26 +16,27 @@ import ulaval.glo2003.domain.seller.SellerFactory;
 
 public class SellingServiceFactory {
 
-    public SellingService create() {
+    public SellingService create(NotificationService notificationService) {
         ISellerRepository sellerRepository = new InMemorySellerRepository();
         IProductRepository productRepository = new InMemoryProductRepository();
         IOfferRepository offerRepository = new InMemoryOfferRepository();
 
-        return create(sellerRepository, productRepository, offerRepository);
+        return create(sellerRepository, productRepository, offerRepository, notificationService);
     }
 
-    public SellingService create(Datastore datastore) {
+    public SellingService create(Datastore datastore, NotificationService notificationService) {
         ISellerRepository sellerRepository = new MongoSellerRepository(datastore);
         IProductRepository productRepository = new MongoProductRepository(datastore);
         IOfferRepository offerRepository = new MongoOfferRepository(datastore);
 
-        return create(sellerRepository, productRepository, offerRepository);
+        return create(sellerRepository, productRepository, offerRepository, notificationService);
     }
 
     private SellingService create(
             ISellerRepository sellerRepository,
             IProductRepository productRepository,
-            IOfferRepository offerRepository) {
+            IOfferRepository offerRepository,
+            NotificationService notificationService) {
         SellerFactory sellerFactory = new SellerFactory();
         ProductFactory productFactory = new ProductFactory();
         OfferFactory offerFactory = new OfferFactory();
@@ -45,6 +46,12 @@ public class SellingServiceFactory {
         SellerMapper sellerMapper = new SellerMapper(sellerFactory, productMapper);
 
         return new SellingService(
-                sellerRepository, productRepository, offerRepository, sellerMapper, productMapper, offerMapper);
+                sellerRepository,
+                productRepository,
+                offerRepository,
+                sellerMapper,
+                productMapper,
+                offerMapper,
+                notificationService);
     }
 }
