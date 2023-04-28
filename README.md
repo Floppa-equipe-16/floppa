@@ -57,6 +57,6 @@ mvn exec:java
 <details>
 <summary>How to contribute</summary><br>
 
-Everyone is welcomed to contribute! If you are interested, see the [Contribution Guide](CONTRIBUTIONS.md).
+Everyone is welcomed to contribute! If you are interested, see the [Contribution Guide](CONTRIBUTING.md).
 
 </details>
