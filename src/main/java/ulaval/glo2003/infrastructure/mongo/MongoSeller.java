@@ -1,4 +1,4 @@
-package ulaval.glo2003.domain.infrastructure.mongo;
+package ulaval.glo2003.infrastructure.mongo;
 
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
@@ -15,4 +15,5 @@ public class MongoSeller {
     public String phoneNumber;
     public String bio;
     public String createdAt;
+    public double score;
 }

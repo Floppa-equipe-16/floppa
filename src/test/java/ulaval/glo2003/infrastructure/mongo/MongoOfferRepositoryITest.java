@@ -1,4 +1,4 @@
-package ulaval.glo2003.domain.infrastructure.mongo;
+package ulaval.glo2003.infrastructure.mongo;
 
 import ulaval.glo2003.domain.offer.IOfferRepository;
 import ulaval.glo2003.domain.offer.IOfferRepositoryITest;

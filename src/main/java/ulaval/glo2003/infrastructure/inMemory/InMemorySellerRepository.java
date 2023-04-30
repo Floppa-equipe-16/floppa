@@ -1,9 +1,8 @@
-package ulaval.glo2003.domain.infrastructure.inMemory;
+package ulaval.glo2003.infrastructure.inMemory;
 
 import jakarta.ws.rs.NotFoundException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 import ulaval.glo2003.domain.seller.ISellerRepository;
 import ulaval.glo2003.domain.seller.Seller;
 
@@ -20,6 +19,14 @@ public class InMemorySellerRepository implements ISellerRepository {
                 .orElseThrow(() -> new NotFoundException(String.format("Seller with id '%s' not found", id)));
 
         return new Seller(seller);
+    }
+
+    @Override
+    public List<Seller> findTopRanked(Integer amount) {
+        return sellers.values().stream()
+                .sorted(Comparator.comparingDouble(Seller::getScore).reversed())
+                .limit(amount)
+                .collect(Collectors.toList());
     }
 
     @Override

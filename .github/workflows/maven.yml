@@ -1,12 +1,4 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
-
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-name: Java CI with Maven
+name: Format, Build and Tests
 
 on:
   push:
@@ -54,6 +46,8 @@ jobs:
     env:
       FLOPPA_MONGO_CLUSTER_URL: ${{ secrets.FLOPPA_MONGO_CLUSTER_URL }} 
       FLOPPA_MONGO_DATABASE : ${{ secrets.FLOPPA_MONGO_DATABASE }}
+      FLOPPA_HOST_EMAIL : ${{ secrets.FLOPPA_HOST_EMAIL }}
+      FLOPPA_HOST_PASSWORD : ${{ secrets.FLOPPA_HOST_PASSWORD }}
 
     steps:
       - uses: actions/checkout@v3
@@ -67,7 +61,5 @@ jobs:
         uses: supercharge/mongodb-github-action@1.8.0
         with:
            mongodb-version: '6.0'
-      - name: Test with Maven
-        run: mvn -B test --file pom.xml
-      - name: Integration test with Maven
-        run: mvn -B failsafe:integration-test --file pom.xml
+      - name: Tests with Maven
+        run: mvn -B verify --file pom.xml
