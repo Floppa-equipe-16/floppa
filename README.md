@@ -42,7 +42,7 @@ mvn exec:java
 <details>
 <summary>Endpoints</summary><br>
 
-- `GET /health` - Checks the health satus of the API
+- `GET /health` - Checks the health status of the API
 - `POST /sellers` - Allows sellers to create an account and list their products.
 - `GET /sellers` - Retrieves a list of top sellers based on a ranking criteria.
 - `GET /sellers/{sellerId}` - Retrieves information about a specific seller.
