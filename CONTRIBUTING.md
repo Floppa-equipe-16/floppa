@@ -1,7 +1,7 @@
 [Contributor Code of Conduct](CODE_OF_CONDUCT.md)
 
 Pendant un projet, avec les connaissances que nous possédons désormais suite à
-l'apprentissage effectué durant le cours GLO-2003, nous souhaitons encourager les pratique suivant :
+l'apprentissage effectué durant le cours GLO-2003, nous souhaitons encourager les pratiques suivantes :
 1. La méthode agile : La méthode agile est une méthode de gestion de projet itérative qui encourage la collaboration.
 Les membres de l'équipe travaillent ensemble pour résoudre les problèmes et
 s'adaptent aux changements au fur et à mesure qu'ils se produisent.
