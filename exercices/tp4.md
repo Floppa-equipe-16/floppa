@@ -1,4 +1,14 @@
 # TP4
+
+## Publication
+### Raison pour avoir utilisé le template du Code of Conduct
+Nous avons choisi le Contributor Convenant template parce qu'il couvrait toutes les bases pour un bon code de conduite. Il est aussi très populaire et est utilisé par plusieurs projets open source.
+### Raisons d'avoir choisis la license MIT
+1. La license MIT est une license permissive, ce qui veut dire que les utilisateurs peuvent faire ce qu'ils veulent avec le code source. C'est un bon choix pour nous puisque nous voulons que notre code puissent être utilisé par le plus de monde possible.
+2. La license MIT est compatible avec plusieurs autres licenses open source, ce qui veut dire que notre code peut être utilisé dans d'autres projets open source.
+3. La license MIT est courte et facile à comprendre, ce qui veut dire que les utilisateurs n'ont pas besoin de passer beaucoup de temps à comprendre les restrictions de la license.
+
+
 ## Open Sourcing 
 ### 1. Nommez 3 avantages à contribuer à des projets open source en tant qu'entreprise et justifiez en quoi cela peut être bénéfique pour tous.
 - Visibilité : En contribuant a des projets open source, une entreprise peut se faire connaître par la communauté open source et par les utilisateurs de ces projets.
@@ -11,6 +21,7 @@
 ### 3. Quelle information vous a-t-elle le plus surprise à propos de l'open source?
 L'ampleur de l'open source. Nous avons été surpris d'apprendre que l'open source était adapté à travers le monde entier et que autant de projets open source existaient. Des projets open source sont utilisés par des millions de personnes et sont maintenus par des milliers de contributeurs.
     
+
 ## Planification du travail sur Github
 ### Github Project
 ![g1](https://cdn.discordapp.com/attachments/1069318680736964628/1101645303863582801/image.png)
@@ -38,6 +49,7 @@ L'ampleur de l'open source. Nous avons été surpris d'apprendre que l'open sour
 ![pr3](https://cdn.discordapp.com/attachments/1069318680736964628/1101646744107896892/image.png)
 ### Arbre de commits
 ![a1](https://cdn.discordapp.com/attachments/1069318680736964628/1101647199575748618/image.png)
+
 ## Outils d'analyse de code
 ### Qualité du code - PMD
 Extrait des logs pendant l'exécution de verify
