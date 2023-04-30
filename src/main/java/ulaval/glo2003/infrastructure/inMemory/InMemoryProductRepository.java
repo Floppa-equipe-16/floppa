@@ -1,4 +1,4 @@
-package ulaval.glo2003.domain.infrastructure.inMemory;
+package ulaval.glo2003.infrastructure.inMemory;
 
 import jakarta.ws.rs.NotFoundException;
 import java.util.HashMap;

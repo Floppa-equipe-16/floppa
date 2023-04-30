@@ -1,4 +1,4 @@
-package ulaval.glo2003.domain.infrastructure.mongo;
+package ulaval.glo2003.infrastructure.mongo;
 
 import dev.morphia.Datastore;
 import dev.morphia.query.FindOptions;
