@@ -28,6 +28,7 @@ FLOPPA_MONGO_DATABASE=[A MongoDB database name]
 FLOPPA_HOST_EMAIL=[Whatever email you want to use as the sender for the email service]
 FOPPA_HOST_PASSWORD=[The app password for the particular email]
 ```
+You also need to specify the email domain used specified in `src/main/resources/EmailNotificationConfig.properties` (default is `gmail.com`)
 ### Commands
 #### Build
 ```
