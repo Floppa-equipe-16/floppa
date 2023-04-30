@@ -11,6 +11,33 @@
 ### 3. Quelle information vous a-t-elle le plus surprise à propos de l'open source?
 L'ampleur de l'open source. Nous avons été surpris d'apprendre que l'open source était adapté à travers le monde entier et que autant de projets open source existaient. Des projets open source sont utilisés par des millions de personnes et sont maintenus par des milliers de contributeurs.
     
+## Planification du travail sur Github
+### Github Project
+![g1](https://cdn.discordapp.com/attachments/1069318680736964628/1101645303863582801/image.png)
+### Milestone
+![m1](https://cdn.discordapp.com/attachments/1069318680736964628/1101645453944180877/image.png)
+![m1](https://cdn.discordapp.com/attachments/1069318680736964628/1101645496222765137/image.png)
+### Issues
+#### Issue # 1
+![i1](https://cdn.discordapp.com/attachments/1069318680736964628/1101645860028297286/image.png)
+
+#### Issue # 2
+![i2](https://cdn.discordapp.com/attachments/1069318680736964628/1101645920623403088/image.png)
+
+#### Issue # 3
+![i3](https://cdn.discordapp.com/attachments/1069318680736964628/1101646019931947190/image.png)
+![i3](https://cdn.discordapp.com/attachments/1069318680736964628/1101646087380553849/image.png)
+
+### Pull Requests
+#### Pull request # 1
+![pr1](https://cdn.discordapp.com/attachments/1069318680736964628/1101646479296311396/image.png)
+#### Pull request # 2
+![pr2](https://cdn.discordapp.com/attachments/1069318680736964628/1101646582656540832/image.png)
+#### Pull request # 3
+![pr3](https://cdn.discordapp.com/attachments/1069318680736964628/1101646653351530558/image.png)
+![pr3](https://cdn.discordapp.com/attachments/1069318680736964628/1101646744107896892/image.png)
+### Arbre de commits
+![a1](https://cdn.discordapp.com/attachments/1069318680736964628/1101647199575748618/image.png)
 ## Outils d'analyse de code
 ### Qualité du code - PMD
 Extrait des logs pendant l'exécution de verify
