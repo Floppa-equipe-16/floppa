@@ -1,4 +1,22 @@
 # TP4
+## Rétrospective finale
+### 1. Décrivez 2 problématiques que possèdent votre processus et développez 2 plans distincts afin de les résoudre. Soyez constructifs dans vos critiques et évitez de mettre la faute sur une ou un groupe de personne en particulier.
+- Moins de communication entre les membres de l'équipe. On divise les features par personne donc il y a moins de communication entre les différentes branches. Il arrive parfois qu'il y a des conflits et que l'on les détecte seulement lors de la pull request. 
+Pour régler ce problème, on pourrait diviser les features en plus petites parties et les assigner à des personnes différentes. Ainsi, tout le monde serait sur la même longueur d'onde.
+- La taille des issues est parfois trop grande. Certaines pull requests contenait des centaines de lignes et des dizaines de fichiers modifiés. Cela rendait la revue de code plus difficile et plus longue. La solution est de séparer les issues en plusieurs et de faire des pull requests pour chacune d'entre elles.
+
+### 2. Décrivez la démarche que vous aviez entrepris afin d'intégrer de nouveaux outils technologiques. Quelles étaient les étapes du processus? Comment avez-vous réagis aux différents bogues? Exploriez-vous à l'aide de tests unitaires ou manuels? Qu'avez-vous appris suite à cette démarche?
+On commençait par faire la recherche de l'outil technologique. Ensuite, on faisait un essai d'implémentation sur un projet à part pour voir si l'outil fonctionnait bien. Si l'outil fonctionnait bien, on l'adaptait au projet. On faisait des tests pour s'assurer que l'outil fonctionnait bien. Finalement, on intégrait l'outil au projet. On explorait avec des tests manuels et ensuite compléter avec des tests unitaires. On a appris que l'intégration d'outils technologiques peut être longue et difficile. Il faut faire beaucoup de recherche et d'essais avant de trouver un outil qui fonctionne bien et qui répond à nos besoins.
+### 3. Quels sont les bons coups de votre équipe? De quelles parties êtes-vous fiers? Nommez-en 3.
+- Des revues de code approfondies. On faisait des pull requests pour chaque feature et on faisait des revues de code approfondies. On trouvait des problèmes et on les corrigeait avant de merger la pull request.
+- Des tests end to end très complets. On a fait des tests end to end pour chaque feature. On a testé toutes les fonctionnalités de l'application ce qui n'était pas demandé dans le projet. 
+- On a bien réparti la charge de travail. À chaque semaine, on avançait de plus en plus vers la complétion du projet. On faisait une réunion par semaine et on s'écrivait activement pour se poser des questions ou s'entraider. On avait souvent terminé les features 1 ou 2 semaines avant la remise. 
+
+### 4. Quel conseil donneriez-vous aux prochains étudiants qui doivent faire ce projet?
+Commencez vos tests le plus tôt possible même lors de la remise 1. Cela vous permettra de faire un meilleur design de l'architecture et aussi de rendre les classes plus faciles à tester.
+### 5. Quels apprentissages, trucs ou techniques appris dans ce projet croyez-vous pouvoir utiliser plus tard? Décrivez-en au moins 2. Cela peut être des apprentissages techniques, pratiques, sur le travail d'équipe ou encore par rapport au processus.
+- Dans les projets futurs, c'est certain que nous utiliserons une ou plusieurs catégories de test apprises lors du cours.
+- Nous prévoyons aussi utiliser Github en utilisant les issues, les projects, les pull requests et les github actions.
 
 ## Publication
 ### Raison pour avoir utilisé le template du Code of Conduct
