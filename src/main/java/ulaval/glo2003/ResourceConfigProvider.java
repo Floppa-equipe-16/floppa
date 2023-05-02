@@ -34,6 +34,7 @@ public class ResourceConfigProvider {
                     .applyToClusterSettings(builder -> builder.serverSelectionTimeout(TIMEOUT, TimeUnit.MILLISECONDS))
                     .applyToConnectionPoolSettings(
                             builder -> builder.maxConnectionIdleTime(TIMEOUT, TimeUnit.MILLISECONDS))
+                    .applyConnectionString(new ConnectionString(EnvironmentVariable.getFloppaMongoClusterUrl()))
                     .build());
             datastore = Morphia.createDatastore(client, "floppa-dev");
         } else {
