@@ -44,7 +44,7 @@ jobs:
     needs : build
     runs-on: ubuntu-latest
     env:
-      FLOPPA_MONGO_CLUSTER_URL: ${{ secrets.FLOPPA_MONGO_CLUSTER_URL }} 
+      FLOPPA_MONGO_CLUSTER_URL: "mongodb://localhost:27017"
       FLOPPA_MONGO_DATABASE : ${{ secrets.FLOPPA_MONGO_DATABASE }}
       FLOPPA_HOST_EMAIL : ${{ secrets.FLOPPA_HOST_EMAIL }}
       FLOPPA_HOST_PASSWORD : ${{ secrets.FLOPPA_HOST_PASSWORD }}
