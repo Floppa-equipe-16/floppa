@@ -28,12 +28,12 @@ public class ResourceConfigProvider {
     public ResourceConfig provide(Boolean isDevDB) {
         MongoClient client = MongoClients.create(MongoClientSettings.builder()
                 .applyToClusterSettings(builder -> builder.serverSelectionTimeout(TIMEOUT, TimeUnit.MILLISECONDS))
-                .applyToConnectionPoolSettings(
-                        builder -> builder.maxConnectionIdleTime(TIMEOUT, TimeUnit.MILLISECONDS))
+                .applyToConnectionPoolSettings(builder -> builder.maxConnectionIdleTime(TIMEOUT, TimeUnit.MILLISECONDS))
                 .applyConnectionString(new ConnectionString(EnvironmentVariable.getFloppaMongoClusterUrl()))
                 .build());
 
-        Datastore datastore = Morphia.createDatastore(client, isDevDB ? "floppa-dev" : EnvironmentVariable.getFloppaMongoDatabase());
+        Datastore datastore =
+                Morphia.createDatastore(client, isDevDB ? "floppa-dev" : EnvironmentVariable.getFloppaMongoDatabase());
         databaseHealthCheck(client);
 
         datastore.getMapper().mapPackage("ulaval.glo2003");
