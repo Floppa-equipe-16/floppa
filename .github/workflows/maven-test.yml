@@ -9,6 +9,8 @@ on:
         type: string
 
 jobs:
+  FLOPPA_MONGO_CLUSTER_URL: "mongodb://localhost:27017"
+
   test:
     runs-on: ubuntu-latest
 
