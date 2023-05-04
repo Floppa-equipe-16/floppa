@@ -11,6 +11,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      FLOPPA_MONGO_CLUSTER_URL: "mongodb://localhost:27017"
 
     steps:
       - uses: actions/checkout@v3
